@@ -8,7 +8,6 @@ export default function useWalk(animSteps = 1, speed = 0, startPos: Position = {
 
     function walk(dir: Direction | undefined) {
         if (dir !== undefined && dir in Direction) {
-            console.log(dir);
             setDir(dir);
             setStep(prev => prev < animSteps - 1 ? prev + 1 : 0);
             move(dir);

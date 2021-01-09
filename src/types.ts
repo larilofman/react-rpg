@@ -14,3 +14,21 @@ export enum Direction {
     right = 2,
     up = 3
 }
+
+export interface SpriteData {
+    offset_x: number,
+    offset_y: number,
+    image: string,
+    layer: number
+}
+
+export enum TileType {
+    floor,
+    wall
+}
+
+export interface Tile {
+    type: TileType,
+    id: number,
+    position: Position
+}

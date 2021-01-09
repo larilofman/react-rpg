@@ -1,13 +1,18 @@
-import { State, Action } from '../state';
-import { Position } from '../../types';
+import { State, Action, ActionType } from '../state';
+import { Position, Tile } from '../../types';
 
 
 export const reducer = (state: State, action: Action): State => {
     switch (action.type) {
-        case "SET_PLAYER_POSITION":
+        case ActionType.SET_PLAYER_POSITION:
             return {
                 ...state,
                 playerPosition: action.payload
+            };
+        case ActionType.SET_MAP:
+            return {
+                ...state,
+                mapData: action.payload
             };
         default:
             return state;
@@ -15,27 +20,19 @@ export const reducer = (state: State, action: Action): State => {
 };
 
 export const setPlayerPosition = (position: Position) => {
-    console.log('reducer', position);
     return (
         {
-            type: "SET_PLAYER_POSITION",
+            type: ActionType.SET_PLAYER_POSITION,
             payload: position
         }
     );
 };
 
-// export const setActiveList = async (user: User, dispatch: React.Dispatch<Action>) => {
-//     const userFromApi: User = await userService.getUser(user.id);
-//     const list = userFromApi.activeList;
-
-//     if (list) {
-//         if (list.guests.map(g => g.id).includes(userFromApi.id) || list.user.id === userFromApi.id) {
-//             dispatch(
-//                 {
-//                     type: "SET_ACTIVE_LIST" as "SET_ACTIVE_LIST",
-//                     payload: list
-//                 }
-//             );
-//         }
-//     }
-// };
+export const setMap = (map: Tile[]) => {
+    return (
+        {
+            type: ActionType.SET_MAP,
+            payload: map
+        }
+    );
+};

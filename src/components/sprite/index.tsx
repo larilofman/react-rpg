@@ -1,9 +1,15 @@
 import React from 'react';
 import { useStateValue } from '../state';
+import { Position, SpriteData } from '../../types';
 
-export default function Sprite({ image, data, position }) {
+interface Props {
+    data: SpriteData,
+    position: Position
+}
+
+const Sprite: React.FC<Props> = ({ data, position }) => {
     const [{ tileSize }] = useStateValue();
-    const { step, dir } = data;
+    const { offset_x, offset_y } = data;
 
     return (
         <div
@@ -13,12 +19,15 @@ export default function Sprite({ image, data, position }) {
                 left: position.x * tileSize.w,
                 height: `${tileSize.h}px`,
                 width: `${tileSize.w}px`,
-                backgroundImage: `url(${image})`,
+                backgroundImage: `url(${data.image})`,
                 backgroundRepeat: "no-repeat",
-                backgroundPosition: `-${tileSize.w * step}px -${tileSize.h * dir}px`
+                backgroundPosition: `-${tileSize.w * offset_x}px -${tileSize.h * offset_y}px`,
+                zIndex: data.layer
             }}>
         </div>
     );
-}
+};
+
+export default Sprite;
 
 

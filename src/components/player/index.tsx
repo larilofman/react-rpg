@@ -14,13 +14,6 @@ const Player: React.FC<Props> = ({ skin }) => {
 
     const { dir, step, walk, position } = useWalk(3, 1, playerPosition);
 
-    // useKeyPress((e) => {
-
-    //     walk(e.key.replace("Arrow", "").toLowerCase());
-
-    //     e.preventDefault();
-    // })
-
     useKeyPress((e: KeyboardEvent) => {
         let keyPressed;
         switch (e.key) {
@@ -44,18 +37,22 @@ const Player: React.FC<Props> = ({ skin }) => {
                 break;
         }
         walk(keyPressed);
-        e.preventDefault();
+        // e.preventDefault();
     });
 
     useEffect(() => {
-        // dispatch(setPlayerPosition(position));
+        dispatch(setPlayerPosition(position));
     }, [position, dispatch]);
 
     return <GameObject
-        sprite={`/sprites/skins/${skin}.png`}
-        dir={dir}
-        step={step}
+        spriteData={{
+            offset_x: step,
+            offset_y: dir,
+            image: `/sprites/skins/${skin}.png`,
+            layer: 1
+        }}
         position={position}
+        collision={true}
     />;
 
 };

@@ -1,19 +1,19 @@
 import React from 'react';
 import GameObject from '../game-object';
-import { Position } from '../../types';
+import { Position, SpriteData } from '../../types';
 
 interface Props {
-    skin: string,
     position: Position,
     collision: boolean;
+    spriteData: SpriteData
 }
 
-const Tile: React.FC<Props> = ({ skin, position = { x: 0, y: 0 }, collision = true }) => {
+const Tile: React.FC<Props> = ({ position = { x: 0, y: 0 }, spriteData, collision = true }) => {
 
     return <GameObject
-        sprite={`/sprites/skins/${skin}.png`}
+        spriteData={spriteData}
         position={position}
-    // collision={collision}
+        collision={collision}
     />;
 
 };
