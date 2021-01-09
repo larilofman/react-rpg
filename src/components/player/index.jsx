@@ -9,8 +9,36 @@ export default function Player({ skin }) {
 
     const { dir, step, walk, position } = useWalk(3, 1, playerPosition);
 
+    // useKeyPress((e) => {
+
+    //     walk(e.key.replace("Arrow", "").toLowerCase());
+
+    //     e.preventDefault();
+    // })
+
     useKeyPress((e) => {
-        walk(e.key.replace("Arrow", "").toLowerCase());
+        let keyPressed;
+        switch (e.key) {
+            case "s":
+            case "ArrowDown":
+                keyPressed = "down"
+                break;
+            case "d":
+            case "ArrowRight":
+                keyPressed = "right"
+                break;
+            case "w":
+            case "ArrowUp" || "w":
+                keyPressed = "up"
+                break;
+            case "a":
+            case "ArrowLeft" || "a":
+                keyPressed = "left"
+                break;
+            default:
+                break;
+        }
+        walk(keyPressed);
         e.preventDefault();
     })
 

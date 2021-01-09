@@ -18,12 +18,20 @@ export default function useWalk(animSteps = 1, speed = 0, startPos = { x: 0, y: 
         up: { x: 0, y: -speed },
     };
 
+    // function walk(dir) {
+    //     setDir(prev => {
+    //         if (directions[dir] === prev) move(dir);
+    //         return directions[dir]
+    //     })
+    //     setStep(prev => prev < animSteps - 1 ? prev + 1 : 0);
+    // }
+
     function walk(dir) {
-        setDir(prev => {
-            if (directions[dir] === prev) move(dir);
-            return directions[dir]
-        })
-        setStep(prev => prev < animSteps - 1 ? prev + 1 : 0);
+        if (dir in directions) {
+            setDir(directions[dir]);
+            setStep(prev => prev < animSteps - 1 ? prev + 1 : 0);
+            move(dir)
+        }
     }
 
     function move(dir) {
