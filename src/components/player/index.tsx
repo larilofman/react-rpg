@@ -3,8 +3,13 @@ import GameObject from '../game-object';
 import useKeyPress from '../../hooks/use-key-press';
 import useWalk from '../../hooks/use-walk';
 import { useStateValue, setPlayerPosition } from '../state';
+import { Direction } from '../../types';
 
-export default function Player({ skin }) {
+interface Props {
+    skin: string
+}
+
+const Player: React.FC<Props> = ({ skin }) => {
     const [{ playerPosition }, dispatch] = useStateValue();
 
     const { dir, step, walk, position } = useWalk(3, 1, playerPosition);
@@ -16,24 +21,24 @@ export default function Player({ skin }) {
     //     e.preventDefault();
     // })
 
-    useKeyPress((e) => {
+    useKeyPress((e: KeyboardEvent) => {
         let keyPressed;
         switch (e.key) {
             case "s":
             case "ArrowDown":
-                keyPressed = "down";
+                keyPressed = Direction.down;
                 break;
             case "d":
             case "ArrowRight":
-                keyPressed = "right";
+                keyPressed = Direction.right;
                 break;
             case "w":
-            case "ArrowUp" || "w":
-                keyPressed = "up";
+            case "ArrowUp":
+                keyPressed = Direction.up;
                 break;
             case "a":
-            case "ArrowLeft" || "a":
-                keyPressed = "left";
+            case "ArrowLeft":
+                keyPressed = Direction.left;
                 break;
             default:
                 break;
@@ -43,7 +48,7 @@ export default function Player({ skin }) {
     });
 
     useEffect(() => {
-        dispatch(setPlayerPosition({ x: position.x, y: position.y }));
+        // dispatch(setPlayerPosition(position));
     }, [position, dispatch]);
 
     return <GameObject
@@ -53,5 +58,6 @@ export default function Player({ skin }) {
         position={position}
     />;
 
-}
+};
 
+export default Player;

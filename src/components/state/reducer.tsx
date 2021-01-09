@@ -1,10 +1,8 @@
-const ACTION =
-{
-    "SET_PLAYER_POSITION": "SET_PLAYER_POSITION",
+import { State, Action } from '../state';
+import { Position } from '../../types';
 
-};
 
-export const reducer = (state, action) => {
+export const reducer = (state: State, action: Action): State => {
     switch (action.type) {
         case "SET_PLAYER_POSITION":
             return {
@@ -16,11 +14,11 @@ export const reducer = (state, action) => {
     }
 };
 
-export const setPlayerPosition = (position) => {
+export const setPlayerPosition = (position: Position) => {
     console.log('reducer', position);
     return (
         {
-            type: ACTION.SET_PLAYER_POSITION,
+            type: "SET_PLAYER_POSITION",
             payload: position
         }
     );
