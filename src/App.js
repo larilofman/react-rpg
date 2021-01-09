@@ -1,5 +1,5 @@
 import React from 'react';
-import Player from './components/player'
+import Player from './components/player';
 
 function App() {
 

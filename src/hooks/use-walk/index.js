@@ -9,7 +9,7 @@ export default function useWalk(animSteps = 1, speed = 0, startPos = { x: 0, y: 
         left: 1,
         right: 2,
         up: 3
-    }
+    };
 
     const modifier = {
         down: { x: 0, y: speed },
@@ -30,7 +30,7 @@ export default function useWalk(animSteps = 1, speed = 0, startPos = { x: 0, y: 
         if (dir in directions) {
             setDir(directions[dir]);
             setStep(prev => prev < animSteps - 1 ? prev + 1 : 0);
-            move(dir)
+            move(dir);
         }
     }
 
@@ -38,10 +38,10 @@ export default function useWalk(animSteps = 1, speed = 0, startPos = { x: 0, y: 
         setPosition((prev) => ({
             x: prev.x + modifier[dir].x,
             y: prev.y + modifier[dir].y,
-        }))
+        }));
     }
 
     return {
         walk, dir, step, position
-    }
+    };
 }

@@ -2,7 +2,7 @@ const ACTION =
 {
     "SET_PLAYER_POSITION": "SET_PLAYER_POSITION",
 
-}
+};
 
 export const reducer = (state, action) => {
     switch (action.type) {
@@ -17,7 +17,7 @@ export const reducer = (state, action) => {
 };
 
 export const setPlayerPosition = (position) => {
-    console.log('reducer', position)
+    console.log('reducer', position);
     return (
         {
             type: ACTION.SET_PLAYER_POSITION,

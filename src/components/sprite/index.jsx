@@ -1,5 +1,5 @@
-import React from 'react'
-import { useStateValue } from '../state'
+import React from 'react';
+import { useStateValue } from '../state';
 
 export default function Sprite({ image, data, position }) {
     const [{ tileSize }] = useStateValue();
@@ -18,7 +18,7 @@ export default function Sprite({ image, data, position }) {
                 backgroundPosition: `-${tileSize.w * step}px -${tileSize.h * dir}px`
             }}>
         </div>
-    )
+    );
 }
 
 
