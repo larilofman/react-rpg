@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Floor from '../tile/floor';
 import Wall from '../tile/wall';
-import { TileType, Tile, MapData } from '../../types';
+import { TileType, Tile, MapData, Position } from '../../types';
 import { useStateValue } from '../state';
 import useSetMap from '../state/action-hooks/useSetMap';
 import useGenerateMap from '../../hooks/use-generate-map';
@@ -43,19 +43,26 @@ const Map: React.FC = () => {
         }
     }, [mapLoaded]);
 
+    const tileToRender = (tile: Tile) => {
+        switch (tile.type) {
+            case TileType.floor:
+                return <Floor key={tile.id} position={tile.position} />;
+            case TileType.wall:
+                return <Wall key={tile.id} position={tile.position} />;
+            default:
+                break;
+        }
+    };
+
     if (!mapData.tiles) return null;
 
     return (
         <>
             {mapData.tiles.map((row, index) => (
                 <div key={index}>
-                    {row.map((tile) => (
-                        tile.type === TileType.floor
-                            ?
-                            <Floor key={tile.id} position={tile.position} />
-                            :
-                            <Wall key={tile.id} position={tile.position} />
-                    ))}
+                    {row.map((tile) => {
+                        return tileToRender(tile);
+                    })}
                 </div>
             ))}
         </>

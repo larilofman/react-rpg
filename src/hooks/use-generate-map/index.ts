@@ -1,4 +1,4 @@
-import { Dimensions, MapData, TileType, Tile, Position } from '../../types';
+import { Dimensions, MapData, TileType, Tile, Position, WallTile, FloorTile } from '../../types';
 
 export default function useGenerateMap() {
 
@@ -32,7 +32,7 @@ export default function useGenerateMap() {
                     y === pos.y + size.h - 1 ||
                     x === pos.x + size.w - 1) {
 
-                    const tile = {
+                    const tile: WallTile = {
                         type: TileType.wall,
                         id: (size.h * y) + x,
                         position: { x, y },
@@ -72,7 +72,7 @@ export default function useGenerateMap() {
         for (let y = 0; y < size.h; y++) {
             const row: Tile[] = [];
             for (let x = 0; x < size.w; x++) {
-                const tile = {
+                const tile: FloorTile = {
                     // type: mapTiles[y][x] === 1 ? TileType.floor : TileType.wall,
                     // id: (mapTiles.length * y) + x,
                     // position: { x, y },
