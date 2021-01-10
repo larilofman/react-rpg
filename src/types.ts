@@ -27,12 +27,29 @@ export enum TileType {
     wall
 }
 
-export interface Tile {
+// export interface Tile {
+//     type: TileType,
+//     id: number,
+//     position: Position,
+//     passable: boolean
+// }
+
+interface BaseTile {
     type: TileType,
     id: number,
     position: Position,
     passable: boolean
 }
+
+export interface FloorTile extends BaseTile {
+    passable: true
+}
+
+export interface WallTile extends BaseTile {
+    passable: false
+}
+
+export type Tile = FloorTile | WallTile
 
 export interface MapData {
     size: Dimensions,
