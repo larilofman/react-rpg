@@ -78,9 +78,9 @@ export default function useGenerateMap() {
                     // position: { x, y },
                     // passable: mapTiles[y][x] === 1 ? true : false
                     type: TileType.floor,
+                    passable: true,
                     id: (size.h * y) + x,
                     position: { x, y },
-                    passable: true
                 };
                 row.push(tile);
             }
