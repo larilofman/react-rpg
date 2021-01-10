@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { Position, Dimensions, Tile, MapData } from '../../types';
+import { Position, Dimensions, MapData } from '../../types';
 import { Action } from './action';
 
 export type State = {

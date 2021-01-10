@@ -1,4 +1,4 @@
-import { Position, Direction, Tile } from '../../types';
+import { Position, Tile } from '../../types';
 import { useStateValue } from '../../components/state';
 
 export default function useCheckCollision() {

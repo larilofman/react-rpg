@@ -5,10 +5,9 @@ import { Position, SpriteData } from '../../types';
 interface Props {
     position: Position,
     spriteData: SpriteData
-    collision?: boolean
 }
 
-const GameObject: React.FC<Props> = ({ position = { x: 0, y: 0 }, spriteData }, collision = false) => {
+const GameObject: React.FC<Props> = ({ position = { x: 0, y: 0 }, spriteData }) => {
 
     return (
         <div>

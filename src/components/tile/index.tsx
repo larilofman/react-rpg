@@ -4,16 +4,14 @@ import { Position, SpriteData } from '../../types';
 
 interface Props {
     position: Position,
-    collision: boolean;
     spriteData: SpriteData
 }
 
-const Tile: React.FC<Props> = ({ position = { x: 0, y: 0 }, spriteData, collision = true }) => {
+const Tile: React.FC<Props> = ({ position = { x: 0, y: 0 }, spriteData }) => {
 
     return <GameObject
         spriteData={spriteData}
         position={position}
-        collision={collision}
     />;
 
 };

@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import GameObject from '../game-object';
 import useKeyPress from '../../hooks/use-key-press';
 import useWalk from '../../hooks/use-walk';
-import { useStateValue, setPlayerPosition, Action, ActionType } from '../state';
+import { useStateValue } from '../state';
+import useSetPlayerPosition from '../state/action-hooks/useSetPlayerPosition';
 import { Direction } from '../../types';
 
 interface Props {
@@ -10,8 +11,8 @@ interface Props {
 }
 
 const Player: React.FC<Props> = ({ skin }) => {
-    const [{ playerPosition }, dispatch] = useStateValue();
-
+    const [{ playerPosition }] = useStateValue();
+    const { setPlayerPosition } = useSetPlayerPosition();
     const { dir, step, walk, position } = useWalk(3, 1, playerPosition);
 
     useKeyPress((e: KeyboardEvent) => {
@@ -36,13 +37,13 @@ const Player: React.FC<Props> = ({ skin }) => {
             default:
                 break;
         }
-        walk(keyPressed);
+        keyPressed !== undefined && walk(keyPressed);
         // e.preventDefault();
     });
 
     useEffect(() => {
-        dispatch(setPlayerPosition(position));
-    }, [position, dispatch]);
+        setPlayerPosition(position);
+    }, [position]);
 
     return <GameObject
         spriteData={{
@@ -52,7 +53,6 @@ const Player: React.FC<Props> = ({ skin }) => {
             layer: 1
         }}
         position={position}
-        collision={true}
     />;
 
 };

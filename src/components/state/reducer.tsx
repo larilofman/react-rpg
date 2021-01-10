@@ -19,20 +19,3 @@ export const reducer = (state: State, action: Action): State => {
     }
 };
 
-export const setPlayerPosition = (position: Position): Action => {
-    return (
-        {
-            type: ActionType.SET_PLAYER_POSITION,
-            payload: position
-        }
-    );
-};
-
-export const setMap = (map: MapData): Action => {
-    return (
-        {
-            type: ActionType.SET_MAP,
-            payload: map
-        }
-    );
-};

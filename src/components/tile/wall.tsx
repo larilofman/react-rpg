@@ -4,10 +4,9 @@ import { Position } from '../../types';
 
 interface Props {
     position?: Position,
-    collision?: boolean;
 }
 
-const Wall: React.FC<Props> = ({ position = { x: 8, y: 8 }, collision = true }) => {
+const Wall: React.FC<Props> = ({ position = { x: 0, y: 0 } }) => {
 
     return <Tile
         spriteData={{
@@ -17,7 +16,6 @@ const Wall: React.FC<Props> = ({ position = { x: 8, y: 8 }, collision = true }) 
             layer: 0
         }}
         position={position}
-        collision={collision}
     />;
 
 };

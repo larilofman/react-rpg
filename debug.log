@@ -4,3 +4,4 @@
 [0109/163910.306:ERROR:directory_reader_win.cc(43)] FindFirstFile: Määritettyä polkua ei löydy. (0x3)
 [0109/175528.417:ERROR:directory_reader_win.cc(43)] FindFirstFile: Määritettyä polkua ei löydy. (0x3)
 [0109/200007.268:ERROR:directory_reader_win.cc(43)] FindFirstFile: Määritettyä polkua ei löydy. (0x3)
+[0110/023133.581:ERROR:directory_reader_win.cc(43)] FindFirstFile: Määritettyä polkua ei löydy. (0x3)

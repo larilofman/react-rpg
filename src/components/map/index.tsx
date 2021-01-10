@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Floor from '../tile/floor';
 import Wall from '../tile/wall';
 import { TileType, Tile, MapData } from '../../types';
-import { useStateValue, setMap } from '../state';
+import { useStateValue } from '../state';
+import useSetMap from '../state/action-hooks/useSetMap';
 
 const Map: React.FC = () => {
     const [tiles, setTiles] = useState<Tile[]>();
     const [, dispatch] = useStateValue();
+    const { setMap } = useSetMap();
     const mapTiles = require("../../data/maps/map0.json").tiles;
 
     useEffect(() => {
@@ -32,7 +34,7 @@ const Map: React.FC = () => {
             tiles: _tiles
         };
 
-        dispatch(setMap(mapData));
+        setMap(mapData);
     }, [mapTiles]);
 
     if (!tiles) return null;
@@ -41,9 +43,9 @@ const Map: React.FC = () => {
             {tiles.map((t) => (
                 t.type === TileType.floor
                     ?
-                    <Floor key={t.id} position={t.position} collision={false} />
+                    <Floor key={t.id} position={t.position} />
                     :
-                    <Wall key={t.id} position={t.position} collision={true} />
+                    <Wall key={t.id} position={t.position} />
             ))}
         </>
     );

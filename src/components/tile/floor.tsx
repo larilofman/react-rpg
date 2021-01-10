@@ -7,7 +7,7 @@ interface Props {
     collision?: boolean;
 }
 
-const Floor: React.FC<Props> = ({ position = { x: 0, y: 0 }, collision = true }) => {
+const Floor: React.FC<Props> = ({ position = { x: 0, y: 0 } }) => {
 
     return <Tile
         spriteData={{
@@ -17,7 +17,6 @@ const Floor: React.FC<Props> = ({ position = { x: 0, y: 0 }, collision = true })
             layer: 0
         }}
         position={position}
-        collision={collision}
     />;
 
 };

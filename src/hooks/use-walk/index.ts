@@ -8,7 +8,7 @@ export default function useWalk(animSteps = 1, speed = 0, startPos: Position = {
     const [step, setStep] = useState(0);
     const { checkCollision } = useCheckCollision();
 
-    function walk(dir: Direction | undefined) {
+    function walk(dir: Direction) {
         if (dir !== undefined && dir in Direction) {
             setDir(dir);
             setStep(prev => prev < animSteps - 1 ? prev + 1 : 0);
@@ -35,7 +35,7 @@ export default function useWalk(animSteps = 1, speed = 0, startPos: Position = {
             default:
                 break;
         }
-        if (collides && checkCollision(newPos))
+        if (!collides || (collides && checkCollision(newPos)))
             setPosition(newPos);
     }
 
