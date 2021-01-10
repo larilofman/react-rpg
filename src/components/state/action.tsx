@@ -1,4 +1,4 @@
-import { Position, Tile } from '../../types';
+import { Position, MapData } from '../../types';
 
 export enum ActionType {
     "SET_PLAYER_POSITION",
@@ -8,11 +8,10 @@ export enum ActionType {
 export type Action =
     {
         type: ActionType.SET_PLAYER_POSITION;
-        // payload: Position;
-        payload: any
+        payload: Position;
+
     }
     | {
         type: ActionType.SET_MAP;
-        // payload: Tile[];
-        payload: any
+        payload: MapData;
     };

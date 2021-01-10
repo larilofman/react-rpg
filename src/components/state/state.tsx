@@ -1,19 +1,19 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { Position, Dimensions, Tile, TileType } from '../../types';
+import { Position, Dimensions, Tile, MapData } from '../../types';
 import { Action } from './action';
 
 export type State = {
     playerPosition: Position,
     tileSize: Dimensions
     wallPosition: Position,
-    mapData: Tile[]
+    mapData: MapData
 };
 
 const initialState: State = {
     playerPosition: { x: 1, y: 1 },
     tileSize: { w: 32, h: 32 },
     wallPosition: { x: 8, y: 8 },
-    mapData: [{ type: TileType.wall, position: { x: 11, y: 11 }, id: -1 }]
+    mapData: { size: { w: 0, h: 0 }, tiles: [] }
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([

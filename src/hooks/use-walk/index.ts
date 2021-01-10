@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Position, Direction } from '../../types';
+import useCheckCollision from '../use-check-collision';
 
-export default function useWalk(animSteps = 1, speed = 0, startPos: Position = { x: 0, y: 0 }) {
+export default function useWalk(animSteps = 1, speed = 0, startPos: Position = { x: 0, y: 0 }, collides = true) {
     const [position, setPosition] = useState<Position>(startPos);
     const [dir, setDir] = useState<Direction>(0);
     const [step, setStep] = useState(0);
+    const { checkCollision } = useCheckCollision();
 
     function walk(dir: Direction | undefined) {
         if (dir !== undefined && dir in Direction) {
@@ -33,7 +35,8 @@ export default function useWalk(animSteps = 1, speed = 0, startPos: Position = {
             default:
                 break;
         }
-        setPosition(newPos);
+        if (collides && checkCollision(newPos))
+            setPosition(newPos);
     }
 
     return {

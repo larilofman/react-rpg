@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import GameObject from '../game-object';
 import useKeyPress from '../../hooks/use-key-press';
 import useWalk from '../../hooks/use-walk';
-import { useStateValue, setPlayerPosition } from '../state';
+import { useStateValue, setPlayerPosition, Action, ActionType } from '../state';
 import { Direction } from '../../types';
 
 interface Props {

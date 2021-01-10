@@ -30,5 +30,11 @@ export enum TileType {
 export interface Tile {
     type: TileType,
     id: number,
-    position: Position
+    position: Position,
+    passable: boolean
+}
+
+export interface MapData {
+    size: Dimensions,
+    tiles: Tile[]
 }
