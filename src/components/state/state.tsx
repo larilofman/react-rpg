@@ -6,14 +6,18 @@ export type State = {
     playerPosition: Position,
     tileSize: Dimensions
     wallPosition: Position,
-    mapData: MapData
+    mapData: MapData,
+    mapLoaded: boolean,
+    playerTurn: boolean
 };
 
 const initialState: State = {
-    playerPosition: { x: 1, y: 1 },
+    playerPosition: { x: 3, y: 2 },
     tileSize: { w: 32, h: 32 },
     wallPosition: { x: 8, y: 8 },
-    mapData: { size: { w: 0, h: 0 }, tiles: [] }
+    mapData: { size: { w: 0, h: 0 }, tiles: [] },
+    mapLoaded: false,
+    playerTurn: false
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([

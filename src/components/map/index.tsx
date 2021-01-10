@@ -1,51 +1,62 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Floor from '../tile/floor';
 import Wall from '../tile/wall';
 import { TileType, Tile, MapData } from '../../types';
 import { useStateValue } from '../state';
 import useSetMap from '../state/action-hooks/useSetMap';
+import useGenerateMap from '../../hooks/use-generate-map';
 
 const Map: React.FC = () => {
-    const [tiles, setTiles] = useState<Tile[]>();
-    const [, dispatch] = useStateValue();
+    const [{ mapData, mapLoaded }] = useStateValue();
     const { setMap } = useSetMap();
     const mapTiles = require("../../data/maps/map0.json").tiles;
+    const { generateMap } = useGenerateMap();
 
+    // useEffect(() => {
+    //     const _tiles = [];
+
+    //     for (let y = 0; y < mapTiles.length; y++) {
+    //         const row: Tile[] = [];
+    //         for (let x = 0; x < mapTiles[0].length; x++) {
+    //             const tile = {
+    //                 type: mapTiles[y][x] === 1 ? TileType.floor : TileType.wall,
+    //                 id: (mapTiles.length * y) + x,
+    //                 position: { x, y },
+    //                 passable: mapTiles[y][x] === 1 ? true : false
+    //             };
+    //             row.push(tile);
+    //         }
+    //         _tiles.push(row);
+    //     }
+
+    //     const mapData: MapData = {
+    //         size: { h: mapTiles.length, w: mapTiles[0].length },
+    //         tiles: _tiles
+    //     };
+
+    //     setMap(mapData);
+    // }, [mapTiles]);
     useEffect(() => {
-        const _tiles = [];
-
-        for (let y = 0; y < mapTiles.length; y++) {
-            for (let x = 0; x < mapTiles[0].length; x++) {
-                const tile = {
-                    type: mapTiles[y][x] === 1 ? TileType.floor : TileType.wall,
-                    id: (mapTiles.length * y) + x,
-                    position: { x, y },
-                    passable: mapTiles[y][x] === 1 ? true : false
-                };
-
-                _tiles.push(tile);
-
-            }
+        if (!mapLoaded) {
+            const map = generateMap({ h: 22, w: 31 });
+            setMap(map);
         }
-        setTiles(_tiles);
+    }, [mapLoaded]);
 
-        const mapData: MapData = {
-            size: { h: mapTiles.length, w: mapTiles[0].length },
-            tiles: _tiles
-        };
+    if (!mapData.tiles) return null;
 
-        setMap(mapData);
-    }, [mapTiles]);
-
-    if (!tiles) return null;
     return (
         <>
-            {tiles.map((t) => (
-                t.type === TileType.floor
-                    ?
-                    <Floor key={t.id} position={t.position} />
-                    :
-                    <Wall key={t.id} position={t.position} />
+            {mapData.tiles.map((row, index) => (
+                <div key={index}>
+                    {row.map((tile) => (
+                        tile.type === TileType.floor
+                            ?
+                            <Floor key={tile.id} position={tile.position} />
+                            :
+                            <Wall key={tile.id} position={tile.position} />
+                    ))}
+                </div>
             ))}
         </>
     );

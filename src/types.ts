@@ -36,5 +36,5 @@ export interface Tile {
 
 export interface MapData {
     size: Dimensions,
-    tiles: Tile[]
+    tiles: Tile[][]
 }

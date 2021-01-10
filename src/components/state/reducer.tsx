@@ -12,7 +12,18 @@ export const reducer = (state: State, action: Action): State => {
         case ActionType.SET_MAP:
             return {
                 ...state,
-                mapData: action.payload
+                mapData: action.payload,
+                mapLoaded: true
+            };
+        case ActionType.USE_PLAYER_TURN:
+            return {
+                ...state,
+                playerTurn: false
+            };
+        case ActionType.USE_ENEMY_TURN:
+            return {
+                ...state,
+                playerTurn: true
             };
         default:
             return state;

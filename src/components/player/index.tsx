@@ -4,6 +4,7 @@ import useKeyPress from '../../hooks/use-key-press';
 import useWalk from '../../hooks/use-walk';
 import { useStateValue } from '../state';
 import useSetPlayerPosition from '../state/action-hooks/useSetPlayerPosition';
+import useUsePlayerTurn from '../state/action-hooks/useUsePlayerTurn';
 import { Direction } from '../../types';
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
 const Player: React.FC<Props> = ({ skin }) => {
     const [{ playerPosition }] = useStateValue();
     const { setPlayerPosition } = useSetPlayerPosition();
+    const { usePlayerTurn } = useUsePlayerTurn();
     const { dir, step, walk, position } = useWalk(3, 1, playerPosition);
 
     useKeyPress((e: KeyboardEvent) => {
@@ -43,6 +45,7 @@ const Player: React.FC<Props> = ({ skin }) => {
 
     useEffect(() => {
         setPlayerPosition(position);
+        usePlayerTurn();
     }, [position]);
 
     return <GameObject
