@@ -38,7 +38,7 @@ interface BaseTile {
     type: TileType,
     id: number,
     position: Position,
-    passable: boolean
+    passable?: boolean
 }
 
 export interface FloorTile extends BaseTile {

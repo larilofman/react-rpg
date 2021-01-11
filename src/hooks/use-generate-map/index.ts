@@ -2,28 +2,31 @@ import { Dimensions, MapData, TileType, Tile, Position, WallTile, FloorTile } fr
 
 export default function useGenerateMap() {
 
-    const generateRoom = (size: Dimensions, mapSize: Dimensions, pos: Position, tiles: Tile[][]) => {
-        // const tiles = [];
-        // for (let y = pos.y; y < pos.y + size.w; y++) {
-        //     const row: Tile[] = [];
-        //     for (let x = pos.x; x < pos.x + size.h; x++) {
-        //         if (y === pos.y || x === pos.x) {
+    const generateRooms = (numRooms = 5, size: Dimensions, mapSize: Dimensions, pos: Position, tiles: Tile[][]) => {
+        const rooms = [];
 
-        //             const tile = {
-        //                 type: TileType.wall,
-        //                 id: (size.h * y) + x,
-        //                 position: { x, y },
-        //                 passable: false
-        //             };
-
-        //             row.push(tile);
-        //         }
-
+        const wallTiles = generateRoom({ w: 5, h: 5 }, { x: 1, y: 1 });
+        wallTiles.forEach(tile => {
+            tiles[tile.position.y][tile.position.x] = tile;
+        });
+        // wallTiles.forEach(row => {
+        //     row.forEach(tile => {
+        //         tiles[tile.position.y][tile.position.x] = tile;
+        //     });
+        // });
+        // for (let y = 0; y < wallTiles.length; y++) {
+        //     for (let x = 0; x < wallTiles[0].length; x++) {
+        //         console.log(wallTiles[y][x]);
+        //         tiles[y][x] = wallTiles[y][x];
         //     }
-        //     tiles.push(row);
         // }
 
-        const nonCornerTiles = [];
+        return tiles;
+    };
+
+    const generateRoom = (size: Dimensions, pos: Position) => {
+        const roomTiles: Tile[] = [];
+        const nonCornerTiles: Tile[] = [];
 
         for (let y = pos.y; y < pos.y + size.w; y++) {
             for (let x = pos.x; x < pos.x + size.h; x++) {
@@ -39,17 +42,16 @@ export default function useGenerateMap() {
                         passable: false
                     };
 
-                    tiles[y][x] = tile;
+                    roomTiles.push(tile);
 
+                    // Find tiles that are not the corner pieces of the room's walls
                     if (!(y === pos.y && x === pos.x) &&
                         !(y === pos.y && x === pos.x + size.w - 1) &&
                         !(x === pos.x && y === pos.y + size.h - 1) &&
                         !(y === pos.y + size.h - 1 && x === pos.x + size.w - 1)
                     ) {
-                        const nonCornerTile = {
-                            position: { x, y }
-                        };
-                        nonCornerTiles.push(nonCornerTile);
+
+                        nonCornerTiles.push(tile);
                     }
                 }
 
@@ -57,14 +59,9 @@ export default function useGenerateMap() {
         }
 
         const doorTile = nonCornerTiles[Math.floor(Math.random() * nonCornerTiles.length)];
-        tiles[doorTile.position.y][doorTile.position.x] = {
-            ...tiles[doorTile.position.y][doorTile.position.x],
-            type: TileType.floor,
-            passable: true
-        };
-        console.log(nonCornerTiles);
+        const wallTiles = roomTiles.filter(t => t.id !== doorTile.id);
 
-        return tiles;
+        return wallTiles;
     };
 
     const generateMap = (size: Dimensions): MapData => {
@@ -86,7 +83,7 @@ export default function useGenerateMap() {
             }
             tiles.push(row);
         }
-        const tiles2 = generateRoom({ w: 5, h: 5 }, size, { x: 1, y: 1 }, tiles);
+        const tiles2 = generateRooms(2, { w: 5, h: 5 }, size, { x: 1, y: 1 }, tiles);
         return (
             {
                 tiles: tiles2,
