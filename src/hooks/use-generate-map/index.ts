@@ -13,24 +13,25 @@ export default function useGenerateMap() {
 
         for (let i = 0; i < numRooms; i++) {
 
-            const createBounds = (): Rectangle => {
-                const h = getRandomArbitrary(sizeMin.h, sizeMax.h);
-                const w = getRandomArbitrary(sizeMax.w, sizeMax.w);
+            const createBounds = (sizeReduction = 0): Rectangle => {
+                const h = getRandomArbitrary(sizeMin.h, sizeMax.h - sizeReduction);
+                const w = getRandomArbitrary(sizeMax.w, sizeMax.w - sizeReduction);
                 const y = getRandomArbitrary(1, mapSize.h - h);
                 const x = getRandomArbitrary(1, mapSize.w - w);
                 return { pos: { x, y }, size: { w, h } };
             };
 
             let bounds = createBounds();
+            const roomGap = 1;
 
             // first room will never collide with another one
             if (rooms.length === 0) {
                 rooms.push(bounds);
-            } else if (collisionWithAny(bounds, rooms)) {
-
-                for (let retries = 5; retries > 0; retries--) {
-                    bounds = createBounds();
-                    if (!collisionWithAny(bounds, rooms)) {
+            } else if (collisionWithAny(bounds, rooms, roomGap)) {
+                const retries = 5;
+                for (let r = 5; r > 0; r--) {
+                    bounds = createBounds(retries - r);
+                    if (!collisionWithAny(bounds, rooms, roomGap)) {
                         rooms.push(bounds);
                         break;
                     }
