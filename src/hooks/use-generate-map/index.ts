@@ -1,6 +1,7 @@
 import { Dimensions, MapData, TileType, Tile, Position, WallTile, FloorTile } from '../../types';
 import collision from '../../utils/collision';
 import getRandomArbitrary from '../../utils/random-between-values';
+import weightedRandom from '../../utils/weighted-random';
 
 export default function useGenerateMap() {
 
@@ -41,9 +42,9 @@ export default function useGenerateMap() {
             // const room = generateRoom({ h: 5, w: 5 }, { x: 1, y: 1 });
             wallTiles = wallTiles.concat(room);
 
-            if (i === 1) {
-                collision(roomData, roomData) ? console.log('collision') : console.log('no collision');
-            }
+            // if (i === 1) {
+            //     collision(roomData, roomData) ? console.log('collision') : console.log('no collision');
+            // }
         }
 
         wallTiles.forEach(tile => {
@@ -68,7 +69,8 @@ export default function useGenerateMap() {
                         type: TileType.wall,
                         id: (mapSize.h * y) + x,
                         position: { x, y },
-                        passable: false
+                        passable: false,
+                        spriteIndex: weightedRandom(0, 7, 2)
                     };
 
                     roomTiles.push(tile);
@@ -87,12 +89,8 @@ export default function useGenerateMap() {
             }
         }
 
-
-
         const doorTile = nonCornerTiles[Math.floor(Math.random() * nonCornerTiles.length)];
         const wallTiles = roomTiles.filter(t => t.id !== doorTile.id);
-        console.log(doorTile);
-        console.log(roomTiles);
 
         return wallTiles;
     };
@@ -103,14 +101,11 @@ export default function useGenerateMap() {
             const row: Tile[] = [];
             for (let x = 0; x < size.w; x++) {
                 const tile: FloorTile = {
-                    // type: mapTiles[y][x] === 1 ? TileType.floor : TileType.wall,
-                    // id: (mapTiles.length * y) + x,
-                    // position: { x, y },
-                    // passable: mapTiles[y][x] === 1 ? true : false
                     type: TileType.floor,
                     passable: true,
                     id: (size.h * y) + x,
                     position: { x, y },
+                    spriteIndex: weightedRandom(0, 8, 2)
                 };
                 row.push(tile);
             }

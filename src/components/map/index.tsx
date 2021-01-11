@@ -43,12 +43,16 @@ const Map: React.FC = () => {
         }
     }, [mapLoaded]);
 
+    useEffect(() => {
+        console.log('mapDataChanged', mapLoaded);
+    }, [mapData]);
+
     const tileToRender = (tile: Tile) => {
         switch (tile.type) {
             case TileType.floor:
-                return <Floor key={tile.id} position={tile.position} />;
+                return <Floor key={tile.id} position={tile.position} spriteIndex={tile.spriteIndex} />;
             case TileType.wall:
-                return <Wall key={tile.id} position={tile.position} />;
+                return <Wall key={tile.id} position={tile.position} spriteIndex={tile.spriteIndex} />;
             default:
                 break;
         }

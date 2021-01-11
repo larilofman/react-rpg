@@ -38,7 +38,8 @@ interface BaseTile {
     type: TileType,
     id: number,
     position: Position,
-    passable?: boolean
+    passable?: boolean,
+    spriteIndex?: number
 }
 
 export interface FloorTile extends BaseTile {
