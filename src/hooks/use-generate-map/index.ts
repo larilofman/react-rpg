@@ -1,35 +1,64 @@
 import { Dimensions, MapData, TileType, Tile, Position, WallTile, FloorTile } from '../../types';
+import collision from '../../utils/collision';
+import getRandomArbitrary from '../../utils/random-between-values';
 
 export default function useGenerateMap() {
 
-    const generateRooms = (numRooms = 5, size: Dimensions, mapSize: Dimensions, pos: Position, tiles: Tile[][]) => {
-        const rooms = [];
+    const generateRoomData = (numRooms: number, mapSize: Dimensions) => {
 
-        const wallTiles = generateRoom({ w: 5, h: 5 }, { x: 1, y: 1 });
+        const rooms: { size: Dimensions, pos: Position }[] = [];
+
+        for (let i = 0; i < numRooms; i++) {
+            const height = getRandomArbitrary(3, 8);
+            const width = getRandomArbitrary(3, 8);
+            const yPos = Math.floor(Math.random() * (mapSize.h - height));
+            const xPos = Math.floor(Math.random() * (mapSize.w - width));
+
+            const room = {
+                size: { h: height, w: width },
+                pos: { x: xPos, y: yPos }
+            };
+            rooms.push(room);
+        }
+
+        return rooms;
+
+    };
+
+    const generateRooms = (numRooms = 5, size: Dimensions, mapSize: Dimensions, pos: Position, tiles: Tile[][]) => {
+        let wallTiles: Tile[] = [];
+
+        const roomDatas = generateRoomData(numRooms, mapSize);
+
+        for (let i = 0; i < numRooms; i++) {
+
+            const roomData = roomDatas[i];
+            // console.log(roomData);
+
+            // console.log(roomData.size, roomData.pos);
+            // const room = generateRoom({ h: roomData.size.h, w: roomData.size.w }, { x: roomData.pos.x, y: roomData.pos.y });
+            const room = generateRoom(roomData.size, roomData.pos, mapSize);
+            // const room = generateRoom({ h: 5, w: 5 }, { x: 1, y: 1 });
+            wallTiles = wallTiles.concat(room);
+
+            if (i === 1) {
+                collision(roomData, roomData) ? console.log('collision') : console.log('no collision');
+            }
+        }
+
         wallTiles.forEach(tile => {
             tiles[tile.position.y][tile.position.x] = tile;
         });
-        // wallTiles.forEach(row => {
-        //     row.forEach(tile => {
-        //         tiles[tile.position.y][tile.position.x] = tile;
-        //     });
-        // });
-        // for (let y = 0; y < wallTiles.length; y++) {
-        //     for (let x = 0; x < wallTiles[0].length; x++) {
-        //         console.log(wallTiles[y][x]);
-        //         tiles[y][x] = wallTiles[y][x];
-        //     }
-        // }
 
         return tiles;
     };
 
-    const generateRoom = (size: Dimensions, pos: Position) => {
+    const generateRoom = (size: Dimensions, pos: Position, mapSize: Dimensions) => {
         const roomTiles: Tile[] = [];
         const nonCornerTiles: Tile[] = [];
 
-        for (let y = pos.y; y < pos.y + size.w; y++) {
-            for (let x = pos.x; x < pos.x + size.h; x++) {
+        for (let y = pos.y; y < pos.y + size.h; y++) {
+            for (let x = pos.x; x < pos.x + size.w; x++) {
                 if (y === pos.y ||
                     x === pos.x ||
                     y === pos.y + size.h - 1 ||
@@ -37,7 +66,7 @@ export default function useGenerateMap() {
 
                     const tile: WallTile = {
                         type: TileType.wall,
-                        id: (size.h * y) + x,
+                        id: (mapSize.h * y) + x,
                         position: { x, y },
                         passable: false
                     };
@@ -58,8 +87,12 @@ export default function useGenerateMap() {
             }
         }
 
+
+
         const doorTile = nonCornerTiles[Math.floor(Math.random() * nonCornerTiles.length)];
         const wallTiles = roomTiles.filter(t => t.id !== doorTile.id);
+        console.log(doorTile);
+        console.log(roomTiles);
 
         return wallTiles;
     };
@@ -83,7 +116,7 @@ export default function useGenerateMap() {
             }
             tiles.push(row);
         }
-        const tiles2 = generateRooms(2, { w: 5, h: 5 }, size, { x: 1, y: 1 }, tiles);
+        const tiles2 = generateRooms(1, { w: 5, h: 5 }, size, { x: 1, y: 1 }, tiles);
         return (
             {
                 tiles: tiles2,
