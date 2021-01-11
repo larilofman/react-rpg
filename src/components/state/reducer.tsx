@@ -1,6 +1,4 @@
 import { State, Action, ActionType } from '../state';
-import { Position, MapData } from '../../types';
-
 
 export const reducer = (state: State, action: Action): State => {
     switch (action.type) {
