@@ -8,6 +8,11 @@ export interface Dimensions {
     h: number
 }
 
+export interface Rectangle {
+    pos: Position,
+    size: Dimensions
+}
+
 export enum Direction {
     down = 0,
     left = 1,

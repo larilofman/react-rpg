@@ -1,25 +1,43 @@
-import { Dimensions, MapData, TileType, Tile, Position, WallTile, FloorTile } from '../../types';
+import { Dimensions, MapData, TileType, Tile, Position, WallTile, FloorTile, Rectangle } from '../../types';
 import getRandomArbitrary from '../../utils/random-between-values';
 import weightedRandom from '../../utils/weighted-random';
+import { collision, collisionWithAny } from '../../utils/collision';
 
 export default function useGenerateMap() {
+
     let mapSize: Dimensions = { w: 0, h: 0 };
 
     const generateRoomData = (numRooms: number, sizeMin: Dimensions, sizeMax: Dimensions) => {
 
-        const rooms: { size: Dimensions, pos: Position }[] = [];
+        const rooms: Rectangle[] = [];
 
         for (let i = 0; i < numRooms; i++) {
-            const height = getRandomArbitrary(sizeMin.h, sizeMax.h);
-            const width = getRandomArbitrary(sizeMax.w, sizeMax.w);
-            const yPos = getRandomArbitrary(1, mapSize.h - height);
-            const xPos = getRandomArbitrary(1, mapSize.w - width);
 
-            const room = {
-                size: { h: height, w: width },
-                pos: { x: xPos, y: yPos }
+            const createBounds = (): Rectangle => {
+                const h = getRandomArbitrary(sizeMin.h, sizeMax.h);
+                const w = getRandomArbitrary(sizeMax.w, sizeMax.w);
+                const y = getRandomArbitrary(1, mapSize.h - h);
+                const x = getRandomArbitrary(1, mapSize.w - w);
+                return { pos: { x, y }, size: { w, h } };
             };
-            rooms.push(room);
+
+            let bounds = createBounds();
+
+            // first room will never collide with another one
+            if (rooms.length === 0) {
+                rooms.push(bounds);
+            } else if (collisionWithAny(bounds, rooms)) {
+
+                for (let retries = 5; retries > 0; retries--) {
+                    bounds = createBounds();
+                    if (!collisionWithAny(bounds, rooms)) {
+                        rooms.push(bounds);
+                        break;
+                    }
+                }
+            } else {
+                rooms.push(bounds);
+            }
         }
 
         return rooms;
@@ -31,7 +49,7 @@ export default function useGenerateMap() {
 
         const roomDatas = generateRoomData(numRooms, sizeMin, sizeMax);
 
-        for (let i = 0; i < numRooms; i++) {
+        for (let i = 0; i < roomDatas.length; i++) {
 
             const roomData = roomDatas[i];
             const room = generateRoom(roomData.size, roomData.pos, mapSize);
@@ -103,7 +121,7 @@ export default function useGenerateMap() {
             }
             floorTiles.push(row);
         }
-        const allTiles = generateRooms(2, { w: 5, h: 5 }, { w: 10, h: 10 }, floorTiles);
+        const allTiles = generateRooms(3, { w: 5, h: 5 }, { w: 10, h: 10 }, floorTiles);
         return (
             {
                 tiles: allTiles,
