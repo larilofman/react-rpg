@@ -11,8 +11,8 @@ export default function useGenerateMap() {
         for (let i = 0; i < numRooms; i++) {
             const height = getRandomArbitrary(3, 8);
             const width = getRandomArbitrary(3, 8);
-            const yPos = Math.floor(Math.random() * (mapSize.h - height));
-            const xPos = Math.floor(Math.random() * (mapSize.w - width));
+            const yPos = getRandomArbitrary(1, mapSize.h - height);
+            const xPos = getRandomArbitrary(1, mapSize.w - width);
 
             const room = {
                 size: { h: height, w: width },
@@ -116,7 +116,7 @@ export default function useGenerateMap() {
             }
             tiles.push(row);
         }
-        const tiles2 = generateRooms(1, { w: 5, h: 5 }, size, { x: 1, y: 1 }, tiles);
+        const tiles2 = generateRooms(2, { w: 5, h: 5 }, size, { x: 1, y: 1 }, tiles);
         return (
             {
                 tiles: tiles2,
