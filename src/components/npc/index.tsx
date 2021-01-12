@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import GameObject from '../game-object';
 import useWalk from '../../hooks/use-walk';
+import useAnimation from '../../hooks/use-animation';
 import useWander from '../../hooks/use-wander';
 import { useStateValue } from '../state';
 import { Position } from '../../types';
 import useUseEnemyTurn from '../state/action-hooks/useUseEnemyTurn';
+import useCheckCollision from '../../hooks/use-check-collision';
 
 interface Props {
     skin: string,
@@ -12,35 +14,42 @@ interface Props {
 }
 
 const Npc: React.FC<Props> = ({ skin }) => {
-    // const [{ mapLoaded, playerTurn }] = useStateValue();
-    // const { useEnemyTurn } = useUseEnemyTurn();
-    // const { getRandomDirection } = useWander();
+    const [{ mapLoaded, playerTurn }] = useStateValue();
+    const { useEnemyTurn } = useUseEnemyTurn();
+    const { getRandomDirection } = useWander();
+    const { checkCollision } = useCheckCollision();
+    const { walk, position } = useWalk();
+    const { dir, step, setAnimState } = useAnimation(3);
 
-    // const { dir, step, walk, position } = useWalk(3);
+    useEffect(() => {
+        if (mapLoaded) {
+            if (!playerTurn) {
+                wander();
+            }
+        }
+    }, [playerTurn, mapLoaded]);
 
-    // useEffect(() => {
-    //     if (mapLoaded) {
-    //         if (!playerTurn) {
-    //             walk(getRandomDirection());
-    //             useEnemyTurn();
-    //         }
-    //     }
-    // }, [playerTurn, mapLoaded]);
+    const wander = () => {
+        const dir = getRandomDirection();
+        const newPos = checkCollision(position, dir);
 
-    // // useEffect(() => {
-    // //     walk(Direction.left);
-    // // }, []);
+        if (newPos?.passable) {
+            walk(newPos);
+        }
 
-    // return <GameObject
-    //     spriteData={{
-    //         offset_x: step,
-    //         offset_y: dir,
-    //         image: `/sprites/skins/${skin}.png`,
-    //         layer: 1
-    //     }}
-    //     position={position}
-    // />;
-    return null;
+        useEnemyTurn();
+        setAnimState(dir);
+    };
+
+    return <GameObject
+        spriteData={{
+            offset_x: step,
+            offset_y: dir,
+            image: `/sprites/skins/${skin}.png`,
+            layer: 1
+        }}
+        position={position}
+    />;
 
 };
 

@@ -15,7 +15,7 @@ const App = () => {
         height: displaySize.h * tileSize.h
       }}>
       <Player skin="f1" />
-      {/* <Npc skin="e1" /> */}
+      <Npc skin="e1" />
       <Map />
     </div>
   );
