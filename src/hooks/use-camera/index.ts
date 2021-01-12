@@ -8,8 +8,11 @@ export default function useCamera() {
     const { setCameraPosition } = useSetCameraPosition();
 
     const updateCamera = (pos: Position) => {
-        const x = clamp(0, mapData.size.w - displaySize.w, pos.x - (displaySize.w / 2));
-        const y = clamp(0, mapData.size.h - displaySize.h, pos.y - (displaySize.h / 2));
+        const x_adjust = displaySize.w % 2 !== 0 ? 0.5 : 0;
+        const y_adjust = displaySize.h % 2 !== 0 ? 0.5 : 0;
+
+        const x = clamp(0, mapData.size.w - displaySize.w, pos.x - (displaySize.w / 2) + x_adjust);
+        const y = clamp(0, mapData.size.h - displaySize.h, pos.y - (displaySize.h / 2) + y_adjust);
 
         setCameraPosition({ x, y });
     };

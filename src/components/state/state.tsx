@@ -19,7 +19,7 @@ const initialState: State = {
     mapLoaded: false,
     playerTurn: true,
     cameraPosition: { x: 0, y: 0 },
-    displaySize: { w: 12, h: 8 }
+    displaySize: { w: 19, h: 15 }
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([
