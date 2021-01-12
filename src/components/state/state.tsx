@@ -5,19 +5,21 @@ import { Action } from './action';
 export type State = {
     playerPosition: Position,
     tileSize: Dimensions
-    wallPosition: Position,
     mapData: MapData,
     mapLoaded: boolean,
-    playerTurn: boolean
+    playerTurn: boolean,
+    cameraPosition: Position,
+    displaySize: Dimensions
 };
 
 const initialState: State = {
-    playerPosition: { x: 3, y: 3 },
+    playerPosition: { x: 0, y: 0 },
     tileSize: { w: 32, h: 32 },
-    wallPosition: { x: 8, y: 8 },
     mapData: { size: { w: 0, h: 0 }, tiles: [] },
     mapLoaded: false,
-    playerTurn: true
+    playerTurn: true,
+    cameraPosition: { x: 0, y: 0 },
+    displaySize: { w: 12, h: 8 }
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([

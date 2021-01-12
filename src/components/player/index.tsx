@@ -4,6 +4,7 @@ import useKeyPress from '../../hooks/use-key-press';
 import useWalk from '../../hooks/use-walk';
 import useSetPlayerPosition from '../state/action-hooks/useSetPlayerPosition';
 import useUsePlayerTurn from '../state/action-hooks/useUsePlayerTurn';
+import useCamera from '../../hooks/use-camera';
 import { Direction } from '../../types';
 
 
@@ -15,6 +16,7 @@ const Player: React.FC<Props> = ({ skin }) => {
     const { setPlayerPosition } = useSetPlayerPosition();
     const { usePlayerTurn } = useUsePlayerTurn();
     const { dir, step, walk, position } = useWalk(3, 1);
+    const { updateCamera } = useCamera();
 
 
     useKeyPress((e: KeyboardEvent) => {
@@ -49,6 +51,7 @@ const Player: React.FC<Props> = ({ skin }) => {
 
     useEffect(() => {
         setPlayerPosition(position);
+        updateCamera(position);
     }, [position]);
 
     return <GameObject

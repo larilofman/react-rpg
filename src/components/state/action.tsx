@@ -4,7 +4,8 @@ export enum ActionType {
     "SET_PLAYER_POSITION",
     "SET_MAP",
     "USE_PLAYER_TURN",
-    "USE_ENEMY_TURN"
+    "USE_ENEMY_TURN",
+    "SET_CAMERA_POSITION"
 }
 
 export type Action =
@@ -22,4 +23,8 @@ export type Action =
     }
     | {
         type: ActionType.USE_ENEMY_TURN;
+    }
+    | {
+        type: ActionType.SET_CAMERA_POSITION;
+        payload: Position;
     };

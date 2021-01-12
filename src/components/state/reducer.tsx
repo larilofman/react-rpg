@@ -23,6 +23,11 @@ export const reducer = (state: State, action: Action): State => {
                 ...state,
                 playerTurn: true
             };
+        case ActionType.SET_CAMERA_POSITION:
+            return {
+                ...state,
+                cameraPosition: action.payload
+            };
         default:
             return state;
     }

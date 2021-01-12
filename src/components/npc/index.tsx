@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import GameObject from '../game-object';
 import useWalk from '../../hooks/use-walk';
 import useWander from '../../hooks/use-wander';
 import { useStateValue } from '../state';
-import { Direction, Position } from '../../types';
+import { Position } from '../../types';
 import useUseEnemyTurn from '../state/action-hooks/useUseEnemyTurn';
 
 interface Props {

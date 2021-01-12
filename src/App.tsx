@@ -5,14 +5,14 @@ import Map from './components/map';
 import { useStateValue } from './components/state';
 
 const App = () => {
-  const [{ mapData, tileSize }] = useStateValue();
+  const [{ tileSize, displaySize }] = useStateValue();
 
   return (
     <div
       className="zone-container"
       style={{
-        width: mapData.size.w * tileSize.w,
-        height: mapData.size.h * tileSize.h
+        width: displaySize.w * tileSize.w,
+        height: displaySize.h * tileSize.h
       }}>
       <Player skin="f1" />
       <Npc skin="e1" />

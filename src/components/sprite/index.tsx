@@ -8,15 +8,15 @@ interface Props {
 }
 
 const Sprite: React.FC<Props> = ({ data, position }) => {
-    const [{ tileSize }] = useStateValue();
+    const [{ tileSize, cameraPosition }] = useStateValue();
     const { offset_x, offset_y } = data;
 
     return (
         <div
             style={{
                 position: "absolute",
-                top: position.y * tileSize.h,
-                left: position.x * tileSize.w,
+                top: position.y * tileSize.h - (cameraPosition.y * tileSize.h),
+                left: position.x * tileSize.w - (cameraPosition.x * tileSize.w),
                 height: `${tileSize.h}px`,
                 width: `${tileSize.w}px`,
                 backgroundImage: `url(${data.image})`,

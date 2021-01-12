@@ -13,7 +13,7 @@ const Map: React.FC = () => {
 
     useEffect(() => {
         if (!mapLoaded) {
-            const map = generateMap({ h: 22, w: 31 });
+            const map = generateMap({ h: 22, w: 32 });
             setMap(map);
         }
     }, [mapLoaded]);
