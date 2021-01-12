@@ -2,10 +2,12 @@ import React, { useEffect } from 'react';
 import GameObject from '../game-object';
 import useKeyPress from '../../hooks/use-key-press';
 import useWalk from '../../hooks/use-walk';
+import useAnimation from '../../hooks/use-animation';
 import useSetPlayerPosition from '../state/action-hooks/useSetPlayerPosition';
 import useUsePlayerTurn from '../state/action-hooks/useUsePlayerTurn';
 import useCamera from '../../hooks/use-camera';
 import { Direction } from '../../types';
+import useCheckCollision from '../../hooks/use-check-collision';
 
 
 interface Props {
@@ -15,8 +17,10 @@ interface Props {
 const Player: React.FC<Props> = ({ skin }) => {
     const { setPlayerPosition } = useSetPlayerPosition();
     const { usePlayerTurn } = useUsePlayerTurn();
-    const { dir, step, walk, position } = useWalk(3, 1);
+    const { walk, position } = useWalk();
+    const { dir, step, setAnimState } = useAnimation(3);
     const { updateCamera } = useCamera();
+    const { checkCollision } = useCheckCollision();
 
 
     useKeyPress((e: KeyboardEvent) => {
@@ -43,8 +47,16 @@ const Player: React.FC<Props> = ({ skin }) => {
         }
 
         if (keyPressed !== undefined) {
-            walk(keyPressed);
+
+            const newPos = checkCollision(position, keyPressed);
+
             usePlayerTurn();
+
+            if (newPos?.passable) {
+                walk(newPos);
+            }
+            setAnimState(keyPressed);
+
         }
         // e.preventDefault();
     });
