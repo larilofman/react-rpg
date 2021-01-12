@@ -1,7 +1,7 @@
 import { Dimensions, MapData, TileType, Tile, Position, WallTile, FloorTile, Rectangle } from '../../types';
 import getRandomArbitrary from '../../utils/random-between-values';
 import weightedRandom from '../../utils/weighted-random';
-import { collision, collisionWithAny } from '../../utils/collision';
+import { collisionWithAny } from '../../utils/collision';
 
 export default function useGenerateMap() {
 
@@ -18,6 +18,9 @@ export default function useGenerateMap() {
                 const w = getRandomArbitrary(sizeMax.w, sizeMax.w - sizeReduction);
                 const y = getRandomArbitrary(1, mapSize.h - h);
                 const x = getRandomArbitrary(1, mapSize.w - w);
+                // const y = weightedRandom(1, mapSize.h - h, (mapSize.h - h) * (i / (numRooms - 1)));
+                // const x = weightedRandom(1, mapSize.w - w, (mapSize.w - w) * (i / (numRooms - 1)));
+
                 return { pos: { x, y }, size: { w, h } };
             };
 
@@ -122,7 +125,7 @@ export default function useGenerateMap() {
             }
             floorTiles.push(row);
         }
-        const allTiles = generateRooms(3, { w: 5, h: 5 }, { w: 10, h: 10 }, floorTiles);
+        const allTiles = generateRooms(5, { w: 5, h: 5 }, { w: 10, h: 10 }, floorTiles);
         return (
             {
                 tiles: allTiles,

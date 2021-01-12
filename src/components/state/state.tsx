@@ -17,7 +17,7 @@ const initialState: State = {
     wallPosition: { x: 8, y: 8 },
     mapData: { size: { w: 0, h: 0 }, tiles: [] },
     mapLoaded: false,
-    playerTurn: false
+    playerTurn: true
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([

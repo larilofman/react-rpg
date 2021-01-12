@@ -39,13 +39,16 @@ const Player: React.FC<Props> = ({ skin }) => {
             default:
                 break;
         }
-        keyPressed !== undefined && walk(keyPressed);
+
+        if (keyPressed !== undefined) {
+            walk(keyPressed);
+            usePlayerTurn();
+        }
         // e.preventDefault();
     });
 
     useEffect(() => {
         setPlayerPosition(position);
-        usePlayerTurn();
     }, [position]);
 
     return <GameObject
