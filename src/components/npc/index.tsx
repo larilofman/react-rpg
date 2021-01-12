@@ -12,34 +12,35 @@ interface Props {
 }
 
 const Npc: React.FC<Props> = ({ skin }) => {
-    const [{ mapLoaded, playerTurn }] = useStateValue();
-    const { useEnemyTurn } = useUseEnemyTurn();
-    const { getRandomDirection } = useWander();
+    // const [{ mapLoaded, playerTurn }] = useStateValue();
+    // const { useEnemyTurn } = useUseEnemyTurn();
+    // const { getRandomDirection } = useWander();
 
-    const { dir, step, walk, position } = useWalk(3, 1);
-
-    useEffect(() => {
-        if (mapLoaded) {
-            if (!playerTurn) {
-                walk(getRandomDirection());
-                useEnemyTurn();
-            }
-        }
-    }, [playerTurn, mapLoaded]);
+    // const { dir, step, walk, position } = useWalk(3);
 
     // useEffect(() => {
-    //     walk(Direction.left);
-    // }, []);
+    //     if (mapLoaded) {
+    //         if (!playerTurn) {
+    //             walk(getRandomDirection());
+    //             useEnemyTurn();
+    //         }
+    //     }
+    // }, [playerTurn, mapLoaded]);
 
-    return <GameObject
-        spriteData={{
-            offset_x: step,
-            offset_y: dir,
-            image: `/sprites/skins/${skin}.png`,
-            layer: 1
-        }}
-        position={position}
-    />;
+    // // useEffect(() => {
+    // //     walk(Direction.left);
+    // // }, []);
+
+    // return <GameObject
+    //     spriteData={{
+    //         offset_x: step,
+    //         offset_y: dir,
+    //         image: `/sprites/skins/${skin}.png`,
+    //         layer: 1
+    //     }}
+    //     position={position}
+    // />;
+    return null;
 
 };
 

@@ -1,4 +1,4 @@
-import { Position, Tile } from '../../types';
+import { Position, Tile, Direction } from '../../types';
 import { useStateValue } from '../../components/state';
 
 export default function useCheckCollision() {
@@ -19,10 +19,29 @@ export default function useCheckCollision() {
         }
     };
 
-    const checkCollision = (pos: Position) => {
-        const tile = getTileAt(pos);
-        return !tile ? false : tile.passable;
-        // return getTileAt(pos).passable;
+    const checkCollision = (pos: Position, dir: Direction) => {
+        let newPos = pos;
+
+        switch (dir) {
+            case Direction.down:
+                newPos = { x: pos.x, y: pos.y + 1 };
+                break;
+            case Direction.up:
+                newPos = { x: pos.x, y: pos.y - 1 };
+                break;
+            case Direction.left:
+                newPos = { x: pos.x - 1, y: pos.y };
+                break;
+            case Direction.right:
+                newPos = { x: pos.x + 1, y: pos.y };
+                break;
+            default:
+                break;
+        }
+
+        const tile = getTileAt(newPos);
+        // return !tile ? false : tile.passable;
+        return tile;
     };
 
     return {
