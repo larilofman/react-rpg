@@ -11,12 +11,12 @@ interface Props {
     startPosition?: Position
 }
 
-const Npc: React.FC<Props> = ({ skin, startPosition = { x: 8, y: 8 } }) => {
+const Npc: React.FC<Props> = ({ skin }) => {
     const [{ mapLoaded, playerTurn }] = useStateValue();
     const { useEnemyTurn } = useUseEnemyTurn();
     const { getRandomDirection } = useWander();
 
-    const { dir, step, walk, position } = useWalk(3, 1, startPosition);
+    const { dir, step, walk, position } = useWalk(3, 1);
 
     useEffect(() => {
         if (mapLoaded) {

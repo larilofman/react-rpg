@@ -2,20 +2,20 @@ import React, { useEffect } from 'react';
 import GameObject from '../game-object';
 import useKeyPress from '../../hooks/use-key-press';
 import useWalk from '../../hooks/use-walk';
-import { useStateValue } from '../state';
 import useSetPlayerPosition from '../state/action-hooks/useSetPlayerPosition';
 import useUsePlayerTurn from '../state/action-hooks/useUsePlayerTurn';
 import { Direction } from '../../types';
+
 
 interface Props {
     skin: string
 }
 
 const Player: React.FC<Props> = ({ skin }) => {
-    const [{ playerPosition }] = useStateValue();
     const { setPlayerPosition } = useSetPlayerPosition();
     const { usePlayerTurn } = useUsePlayerTurn();
-    const { dir, step, walk, position } = useWalk(3, 1, playerPosition);
+    const { dir, step, walk, position } = useWalk(3, 1);
+
 
     useKeyPress((e: KeyboardEvent) => {
         let keyPressed;

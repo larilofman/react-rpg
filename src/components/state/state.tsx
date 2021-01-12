@@ -12,7 +12,7 @@ export type State = {
 };
 
 const initialState: State = {
-    playerPosition: { x: 3, y: 2 },
+    playerPosition: { x: 3, y: 3 },
     tileSize: { w: 32, h: 32 },
     wallPosition: { x: 8, y: 8 },
     mapData: { size: { w: 0, h: 0 }, tiles: [] },
