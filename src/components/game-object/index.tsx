@@ -10,12 +10,10 @@ interface Props {
 const GameObject: React.FC<Props> = ({ position = { x: 0, y: 0 }, spriteData }) => {
 
     return (
-        <div>
-            <Sprite
-                position={position}
-                data={spriteData}
-            />
-        </div>
+        <Sprite
+            position={position}
+            data={spriteData}
+        />
     );
 };
 
