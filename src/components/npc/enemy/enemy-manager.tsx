@@ -19,30 +19,35 @@ const EnemyManager: React.FC = () => {
 
     }, [mapLoaded]);
 
-    // useEffect(() => {
-    //     // const occupied = [];
-    //     // for (let y = 0; y < zoneData.tiles.length; y++) {
-    //     //     for (let x = 0; x < zoneData.tiles.length; x++) {
-    //     //         if (zoneData.tiles[y][x].occupant) {
-    //     //             occupied.push(zoneData.tiles[y][x]);
-    //     //         }
-    //     //     }
-    //     // }
-    //     // console.log(occupied);
-    //     console.log(zoneData.creatures);
-    //     // console.log(turnOf);
-    // }, [zoneData]);
+    useEffect(() => {
+        const occupied = [];
+        for (let y = 0; y < zoneData.tiles.length; y++) {
+            for (let x = 0; x < zoneData.tiles.length; x++) {
+                if (zoneData.tiles[y][x].occupant) {
+                    occupied.push(zoneData.tiles[y][x]);
+                }
+            }
+        }
+        console.log(occupied);
+        // console.log(zoneData.creatures);
+        // console.log(turnOf);
+    }, [zoneData]);
 
     const spawnEnemies = () => {
         const enemies = [];
-        for (let index = 0; index < 1; index++) {
-            const enemy: Creature = { faction: Faction.Hostile, pos: findFloorTile().position, id: nanoid() };
+        for (let index = 0; index < 5; index++) {
+            const enemy: Creature = {
+                faction: Faction.Hostile,
+                pos: findFloorTile().position,
+                id: nanoid(),
+                stats: { health: 10 }
+            };
             enemies.push(enemy);
         }
         addCreatures(enemies, Faction.Hostile);
     };
 
-    if (!mapLoaded || !zoneData.creatures) return null;
+    if (!mapLoaded || !zoneData.creatures[Faction.Hostile]) return null;
 
     return (
         <>

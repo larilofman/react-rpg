@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Creature, Attack } from '../../types';
 import { useStateValue } from '../../components/state';
-import useAttackCreature from '../../components/state/action-hooks/useAttackCreature';
+import useDamageCreature from '../../components/state/action-hooks/useDamageCreature';
 
 export default function useMelee(attacker: Creature) {
-    const { attackCreature } = useAttackCreature();
+    const { damageCreature } = useDamageCreature();
 
     function meleeAttack(target: Creature, attack: Attack) {
-        attackCreature(target, attack, attacker);
+        damageCreature(target, attack, attacker);
     }
 
     return {

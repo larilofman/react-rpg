@@ -69,10 +69,15 @@ export interface ZoneData {
     }
 }
 
+export interface Stats {
+    health: number
+}
+
 export interface Creature {
     id: string,
     faction: Faction,
-    pos: Position
+    pos: Position,
+    stats: Stats
 }
 
 export enum DamageType {

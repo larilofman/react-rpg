@@ -7,7 +7,8 @@ export enum ActionType {
     "SET_CAMERA_POSITION",
     "OCCUPY_TILE",
     "ADD_CREATURES",
-    "ATTACK_CREATURE"
+    "DAMAGE_CREATURE",
+    "REMOVE_CREATURE"
 }
 
 export type Action =
@@ -37,6 +38,10 @@ export type Action =
         payload: { creatures: Creature[], faction: Faction };
     }
     | {
-        type: ActionType.ATTACK_CREATURE;
-        payload: { target: Creature, attack: Attack, attacker: Creature }
+        type: ActionType.DAMAGE_CREATURE;
+        payload: Creature
+    }
+    | {
+        type: ActionType.REMOVE_CREATURE;
+        payload: Creature
     };

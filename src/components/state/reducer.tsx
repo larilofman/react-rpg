@@ -57,11 +57,18 @@ export const reducer = (state: State, action: Action): State => {
                 ...state,
                 zoneData: {
                     ...state.zoneData,
-                    tiles: tiles
+                    tiles: tiles,
+                    creatures: {
+                        ...state.zoneData.creatures,
+                        [action.payload.creature.faction]: state.zoneData.creatures[action.payload.creature.faction].map(
+                            c => c.id !== action.payload.creature.id ? c : { ...c, pos: { x: occupiedX, y: occupiedY } }
+                        )
+                    }
+
                 }
             };
         }
-        case ActionType.ADD_CREATURES: {
+        case ActionType.ADD_CREATURES:
             return {
                 ...state,
                 zoneData: {
@@ -72,18 +79,31 @@ export const reducer = (state: State, action: Action): State => {
                     }
                 }
             };
-        }
-        case ActionType.ATTACK_CREATURE: {
-            const attackedCreature = state.zoneData.creatures[action.payload.target.faction].find(c => c.id === action.payload.target.id);
-            console.log(attackedCreature);
+        case ActionType.DAMAGE_CREATURE:
             return {
                 ...state,
                 zoneData: {
                     ...state.zoneData,
                     creatures: {
                         ...state.zoneData.creatures,
-                        [action.payload.target.faction]: state.zoneData.creatures[action.payload.target.faction].filter(c => c.id !== action.payload.target.id)
+                        [action.payload.faction]: state.zoneData.creatures[action.payload.faction].map(
+                            c => c.id === action.payload.id ? action.payload : c
+                        )
                     }
+                }
+            };
+        case ActionType.REMOVE_CREATURE: {
+            const tiles = state.zoneData.tiles;
+            tiles[action.payload.pos.y][action.payload.pos.x].occupant = undefined;
+            console.log(tiles[action.payload.pos.y][action.payload.pos.x]);
+            return {
+                ...state,
+                zoneData: {
+                    ...state.zoneData,
+                    creatures: {
+                        ...state.zoneData.creatures,
+                        [action.payload.faction]: state.zoneData.creatures[action.payload.faction].filter(c => c.id !== action.payload.id)
+                    }, tiles //: (() => { return state.zoneData.tiles; })()
                 }
             };
         }

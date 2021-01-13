@@ -12,7 +12,8 @@ const GameManager: React.FC = () => {
     const playerData: Creature = {
         id: 'player',
         faction: Faction.Player,
-        pos: { x: 0, y: 0 }
+        pos: { x: 0, y: 0 },
+        stats: { health: 100 }
     };
 
     return (
