@@ -7,7 +7,7 @@ import { Creature, Faction } from '../../types';
 
 
 const GameManager: React.FC = () => {
-    const [{ zoneData }] = useStateValue();
+    const [{ zoneData, playerPosition }] = useStateValue();
 
     const playerData: Creature = {
         id: 'player',
@@ -17,7 +17,7 @@ const GameManager: React.FC = () => {
 
     return (
         <>
-            <Player skin="f1" startPos={{ x: 0, y: 0 }} data={playerData} />
+            <Player skin="f1" startPos={playerPosition} data={playerData} />
             <EnemyManager />
         </>
     );

@@ -8,7 +8,7 @@ import { nanoid } from 'nanoid';
 
 
 const EnemyManager: React.FC = () => {
-    const [{ zoneData, mapLoaded }] = useStateValue();
+    const [{ zoneData, mapLoaded, turnOf }] = useStateValue();
     const { findFloorTile } = useFindRandomFloorTile();
     const { addCreatures } = useAddCreatures();
 
@@ -19,22 +19,23 @@ const EnemyManager: React.FC = () => {
 
     }, [mapLoaded]);
 
-    useEffect(() => {
-        // const occupied = [];
-        // for (let y = 0; y < zoneData.tiles.length; y++) {
-        //     for (let x = 0; x < zoneData.tiles.length; x++) {
-        //         if (zoneData.tiles[y][x].occupant) {
-        //             occupied.push(zoneData.tiles[y][x]);
-        //         }
-        //     }
-        // }
-        // console.log(occupied);
-        console.log(zoneData.creatures);
-    }, [zoneData]);
+    // useEffect(() => {
+    //     const occupied = [];
+    //     for (let y = 0; y < zoneData.tiles.length; y++) {
+    //         for (let x = 0; x < zoneData.tiles.length; x++) {
+    //             if (zoneData.tiles[y][x].occupant) {
+    //                 occupied.push(zoneData.tiles[y][x]);
+    //             }
+    //         }
+    //     }
+    //     console.log(occupied);
+    //     // console.log(zoneData.creatures);
+    //     // console.log(turnOf);
+    // }, [zoneData]);
 
     const spawnEnemies = () => {
         const enemies = [];
-        for (let index = 0; index < 1; index++) {
+        for (let index = 0; index < 3; index++) {
             const enemy: Creature = { faction: Faction.Hostile, pos: findFloorTile().position, id: nanoid() };
             enemies.push(enemy);
         }

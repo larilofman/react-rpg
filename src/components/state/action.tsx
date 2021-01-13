@@ -1,13 +1,13 @@
-import { Position, ZoneData, Creature, Tile } from '../../types';
+import { Position, ZoneData, Creature, Faction, Attack } from '../../types';
 
 export enum ActionType {
     "SET_PLAYER_POSITION",
     "SET_MAP",
-    "USE_PLAYER_TURN",
-    "USE_ENEMY_TURN",
+    "USE_TURN",
     "SET_CAMERA_POSITION",
     "OCCUPY_TILE",
-    "ADD_CREATURES"
+    "ADD_CREATURES",
+    "ATTACK_CREATURE"
 }
 
 export type Action =
@@ -21,10 +21,8 @@ export type Action =
         payload: ZoneData;
     }
     | {
-        type: ActionType.USE_PLAYER_TURN;
-    }
-    | {
-        type: ActionType.USE_ENEMY_TURN;
+        type: ActionType.USE_TURN;
+        payload: Faction
     }
     | {
         type: ActionType.SET_CAMERA_POSITION;
@@ -37,4 +35,8 @@ export type Action =
     | {
         type: ActionType.ADD_CREATURES;
         payload: Creature[];
+    }
+    | {
+        type: ActionType.ATTACK_CREATURE;
+        payload: { target: Creature, attack: Attack, attacker: Creature }
     };

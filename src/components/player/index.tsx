@@ -4,9 +4,9 @@ import useKeyPress from '../../hooks/use-key-press';
 import useWalk from '../../hooks/use-walk';
 import useAnimation from '../../hooks/use-animation';
 import useSetPlayerPosition from '../state/action-hooks/useSetPlayerPosition';
-import useUsePlayerTurn from '../state/action-hooks/useUsePlayerTurn';
+import useUseTurn from '../state/action-hooks/useUseTurn';
 import useCamera from '../../hooks/use-camera';
-import { Direction, Position, Creature } from '../../types';
+import { Direction, Position, Creature, Attack, DamageType } from '../../types';
 import useCheckCollision from '../../hooks/use-check-collision';
 import useOccupyTile from '../state/action-hooks/useOccupyTile';
 import useMelee from '../../hooks/use-melee';
@@ -20,14 +20,14 @@ interface Props {
 
 const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     const { setPlayerPosition } = useSetPlayerPosition();
-    const { usePlayerTurn } = useUsePlayerTurn();
+    const { useTurn, canAct } = useUseTurn(data.faction);
     const { walk, position } = useWalk(startPos);
     const { dir, step, setAnimState } = useAnimation(3);
     const { updateCamera } = useCamera();
     const { checkCollision } = useCheckCollision();
     const { occupyTile } = useOccupyTile();
     const [creature, setCreature] = useState(data);
-    const { meleeAttack } = useMelee();
+    const { meleeAttack } = useMelee(data);
 
     useEffect(() => {
         occupyTile(data, position);
@@ -57,12 +57,16 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
                 break;
         }
 
-        if (keyPressed !== undefined) {
+        if (keyPressed !== undefined && canAct) {
             const newPos = checkCollision(position, keyPressed);
 
             if (newPos) {
                 if (newPos.occupant) {
-                    meleeAttack(newPos.occupant);
+                    const attack: Attack = {
+                        type: DamageType.Physical,
+                        damage: 5
+                    };
+                    meleeAttack(newPos.occupant, attack);
                 } else {
                     if (newPos.passable) {
                         const newCreature: Creature = {
@@ -76,7 +80,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
                 }
 
             }
-            usePlayerTurn();
+            useTurn();
             setAnimState(keyPressed);
 
         }

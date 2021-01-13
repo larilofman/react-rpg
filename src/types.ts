@@ -70,3 +70,12 @@ export interface Creature {
     faction: Faction,
     pos: Position
 }
+
+export enum DamageType {
+    Physical
+}
+
+export interface Attack {
+    type: DamageType,
+    damage: number
+}

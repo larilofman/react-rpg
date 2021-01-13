@@ -14,16 +14,13 @@ export const reducer = (state: State, action: Action): State => {
                 zoneData: action.payload,
                 mapLoaded: true
             };
-        case ActionType.USE_PLAYER_TURN:
+        case ActionType.USE_TURN: {
+            const turnOf = action.payload === Faction.Player ? Faction.Hostile : Faction.Player;
             return {
                 ...state,
-                playerTurn: false
+                turnOf
             };
-        case ActionType.USE_ENEMY_TURN:
-            return {
-                ...state,
-                playerTurn: true
-            };
+        }
         case ActionType.SET_CAMERA_POSITION:
             return {
                 ...state,
@@ -52,6 +49,17 @@ export const reducer = (state: State, action: Action): State => {
                 zoneData: {
                     ...state.zoneData,
                     creatures: state.zoneData.creatures.concat(action.payload)
+                }
+            };
+        }
+        case ActionType.ATTACK_CREATURE: {
+            const attackedCreature = state.zoneData.creatures.find(c => c.id === action.payload.target.id);
+            console.log(attackedCreature);
+            return {
+                ...state,
+                zoneData: {
+                    ...state.zoneData,
+                    creatures: state.zoneData.creatures.filter(c => c.id !== action.payload.target.id)
                 }
             };
         }

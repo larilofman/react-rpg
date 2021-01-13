@@ -5,7 +5,7 @@ import useAnimation from '../../hooks/use-animation';
 import useWander from '../../hooks/use-wander';
 import { useStateValue } from '../state';
 import { Position, Creature } from '../../types';
-import useUseEnemyTurn from '../state/action-hooks/useUseEnemyTurn';
+import useUseTurn from '../state/action-hooks/useUseTurn';
 import useCheckCollision from '../../hooks/use-check-collision';
 import useOccupyTile from '../state/action-hooks/useOccupyTile';
 
@@ -16,8 +16,8 @@ interface Props {
 }
 
 const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
-    const [{ mapLoaded, playerTurn }] = useStateValue();
-    const { useEnemyTurn } = useUseEnemyTurn();
+    const [{ mapLoaded }] = useStateValue();
+    const { useTurn, canAct } = useUseTurn(data.faction);
     const { getRandomDirection } = useWander();
     const { checkCollision } = useCheckCollision();
     const { walk, position } = useWalk(startPosition);
@@ -27,13 +27,15 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
 
     useEffect(() => {
         if (mapLoaded) {
-            // console.log(data, position);
             occupyTile(data, position);
-            if (!playerTurn) {
-                // wander();
-            }
         }
-    }, [playerTurn, mapLoaded]);
+    }, [mapLoaded]);
+
+    useEffect(() => {
+        if (canAct) {
+            wander();
+        }
+    }, [canAct]);
 
     const wander = () => {
         const dir = getRandomDirection();
@@ -56,7 +58,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
 
         }
 
-        useEnemyTurn();
+        useTurn();
         setAnimState(dir);
     };
 

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { Position, Dimensions, ZoneData } from '../../types';
+import { Position, Dimensions, ZoneData, Faction } from '../../types';
 import { Action } from './action';
 
 export type State = {
@@ -7,17 +7,17 @@ export type State = {
     tileSize: Dimensions
     zoneData: ZoneData,
     mapLoaded: boolean,
-    playerTurn: boolean,
+    turnOf: Faction,
     cameraPosition: Position,
     displaySize: Dimensions,
 };
 
 const initialState: State = {
-    playerPosition: { x: 1, y: 1 },
+    playerPosition: { x: 0, y: 0 },
     tileSize: { w: 32, h: 32 },
     zoneData: { size: { w: 20, h: 20 }, tiles: [], creatures: [] },
     mapLoaded: false,
-    playerTurn: true,
+    turnOf: Faction.Player,
     cameraPosition: { x: 0, y: 0 },
     displaySize: { w: 19, h: 15 }
 };
