@@ -1,0 +1,4 @@
+map generator
+map renderer, hakee tilet joiden x = x >= cam.x + displaySize.w jne. ja rendaa vain ne
+
+creature manager useEffectissä tarkkailee hyökkäyksiä, creatureAttacked(pos, attack{ dmg: number})

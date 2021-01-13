@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import GameObject from '../game-object';
 import useKeyPress from '../../hooks/use-key-press';
 import useWalk from '../../hooks/use-walk';
@@ -6,21 +6,28 @@ import useAnimation from '../../hooks/use-animation';
 import useSetPlayerPosition from '../state/action-hooks/useSetPlayerPosition';
 import useUsePlayerTurn from '../state/action-hooks/useUsePlayerTurn';
 import useCamera from '../../hooks/use-camera';
-import { Direction } from '../../types';
+import { Direction, Position, Creature } from '../../types';
 import useCheckCollision from '../../hooks/use-check-collision';
+import useOccupyTile from '../state/action-hooks/useOccupyTile';
+import useMelee from '../../hooks/use-melee';
 
 
 interface Props {
     skin: string
+    startPos: Position
+    data: Creature
 }
 
-const Player: React.FC<Props> = ({ skin }) => {
+const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     const { setPlayerPosition } = useSetPlayerPosition();
     const { usePlayerTurn } = useUsePlayerTurn();
-    const { walk, position } = useWalk();
+    const { walk, position } = useWalk(startPos);
     const { dir, step, setAnimState } = useAnimation(3);
     const { updateCamera } = useCamera();
     const { checkCollision } = useCheckCollision();
+    const { occupyTile } = useOccupyTile();
+    const [creature, setCreature] = useState(data);
+    const { meleeAttack } = useMelee();
 
 
     useKeyPress((e: KeyboardEvent) => {
@@ -52,8 +59,21 @@ const Player: React.FC<Props> = ({ skin }) => {
 
             usePlayerTurn();
 
-            if (newPos?.passable) {
-                walk(newPos);
+            if (newPos) {
+                if (newPos.occupant) {
+                    meleeAttack(newPos.occupant);
+                } else {
+                    if (newPos.passable) {
+                        const newCreature: Creature = {
+                            ...creature,
+                            pos: newPos.position
+                        };
+                        occupyTile(newCreature, position);
+                        setCreature(newCreature);
+                        walk(newPos);
+                    }
+                }
+
             }
             setAnimState(keyPressed);
 

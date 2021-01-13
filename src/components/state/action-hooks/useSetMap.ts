@@ -1,10 +1,10 @@
-import { MapData } from '../../../types';
+import { ZoneData } from '../../../types';
 import { useStateValue, ActionType } from '../index';
 
 export default function useSetMap() {
     const [, dispatch] = useStateValue();
 
-    const setMap = (map: MapData) => {
+    const setMap = (map: ZoneData) => {
         dispatch(
             {
                 type: ActionType.SET_MAP,

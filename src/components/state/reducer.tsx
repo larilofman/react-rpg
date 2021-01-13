@@ -10,7 +10,7 @@ export const reducer = (state: State, action: Action): State => {
         case ActionType.SET_MAP:
             return {
                 ...state,
-                mapData: action.payload,
+                zoneData: action.payload,
                 mapLoaded: true
             };
         case ActionType.USE_PLAYER_TURN:
@@ -28,8 +28,32 @@ export const reducer = (state: State, action: Action): State => {
                 ...state,
                 cameraPosition: action.payload
             };
+        case ActionType.OCCUPY_TILE: {
+            const occupiedX = action.payload.creature.pos.x;
+            const occupiedY = action.payload.creature.pos.y;
+            const freedX = action.payload.oldPos.x;
+            const freedY = action.payload.oldPos.y;
+            const tiles = state.zoneData.tiles;
+            tiles[occupiedY][occupiedX].occupant = action.payload.creature;
+            tiles[freedY][freedX].occupant = null;
+
+
+            return {
+                ...state,
+                zoneData: {
+                    ...state.zoneData,
+                    tiles: tiles
+                }
+            };
+        }
         default:
             return state;
     }
 };
+
+
+                // zoneData: {
+                //     tiles: 
+                //     })
+                //}
 

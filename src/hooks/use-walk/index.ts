@@ -1,21 +1,8 @@
-import { useState, useEffect } from 'react';
-import { Position, Direction, Tile } from '../../types';
-import { useStateValue } from '../../components/state';
-import useFindRandomFloorTile from '../use-find-floor-tile';
+import { useState } from 'react';
+import { Position, Tile } from '../../types';
 
-export default function useWalk(startPos?: Position) {
-    const [{ mapLoaded }] = useStateValue();
-    const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
-
-    const { findFloorTile } = useFindRandomFloorTile();
-
-    useEffect(() => {
-        if (mapLoaded && !startPos) {
-            const tile = findFloorTile();
-            setPosition(tile.position);
-        }
-
-    }, [mapLoaded]);
+export default function useWalk(startPos?: Position,) {
+    const [position, setPosition] = useState<Position>(startPos || { x: 0, y: 0 });
 
     function walk(tile: Tile) {
         setPosition(tile.position);

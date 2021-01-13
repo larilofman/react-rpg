@@ -1,4 +1,4 @@
-import { Dimensions, MapData, TileType, Tile, Position, WallTile, FloorTile, Rectangle } from '../../types';
+import { Dimensions, ZoneData, TileType, Tile, Position, WallTile, FloorTile, Rectangle } from '../../types';
 import getRandomArbitrary from '../../utils/random-between-values';
 import weightedRandom from '../../utils/weighted-random';
 import { collisionWithAny } from '../../utils/collision';
@@ -108,7 +108,7 @@ export default function useGenerateMap() {
         return wallTiles;
     };
 
-    const generateMap = (size: Dimensions): MapData => {
+    const generateMap = (size: Dimensions): ZoneData => {
         mapSize = size;
         const floorTiles = [];
         for (let y = 0; y < size.h; y++) {

@@ -1,21 +1,21 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { Position, Dimensions, MapData } from '../../types';
+import { Position, Dimensions, ZoneData } from '../../types';
 import { Action } from './action';
 
 export type State = {
     playerPosition: Position,
     tileSize: Dimensions
-    mapData: MapData,
+    zoneData: ZoneData,
     mapLoaded: boolean,
     playerTurn: boolean,
     cameraPosition: Position,
-    displaySize: Dimensions
+    displaySize: Dimensions,
 };
 
 const initialState: State = {
-    playerPosition: { x: 0, y: 0 },
+    playerPosition: { x: 1, y: 1 },
     tileSize: { w: 32, h: 32 },
-    mapData: { size: { w: 0, h: 0 }, tiles: [] },
+    zoneData: { size: { w: 20, h: 20 }, tiles: [] },
     mapLoaded: false,
     playerTurn: true,
     cameraPosition: { x: 0, y: 0 },

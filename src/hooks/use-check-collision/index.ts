@@ -2,12 +2,12 @@ import { Position, Tile, Direction } from '../../types';
 import { useStateValue } from '../../components/state';
 
 export default function useCheckCollision() {
-    const [{ mapData }] = useStateValue();
+    const [{ zoneData }] = useStateValue();
 
     const isInBounds = (pos: Position): boolean => {
         return (
-            mapData.size.h > pos.y &&
-            mapData.size.w > pos.x &&
+            zoneData.size.h > pos.y &&
+            zoneData.size.w > pos.x &&
             pos.y >= 0 &&
             pos.x >= 0
         );
@@ -15,7 +15,7 @@ export default function useCheckCollision() {
 
     const getTileAt = (pos: Position): Tile | undefined => {
         if (isInBounds(pos)) {
-            return mapData.tiles[pos.y][pos.x];
+            return zoneData.tiles[pos.y][pos.x];
         }
     };
 

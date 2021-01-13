@@ -2,14 +2,14 @@ import { Tile } from '../../types';
 import { useStateValue } from '../../components/state';
 
 export default function useFindRandomFloorTile() {
-    const [{ mapData }] = useStateValue();
+    const [{ zoneData }] = useStateValue();
 
     const findFloorTile = () => {
         const floorTiles: Tile[] = [];
-        for (let y = 0; y < mapData.tiles.length; y++) {
-            for (let x = 0; x < mapData.tiles[y].length; x++) {
-                if (mapData.tiles[y][x].passable) {
-                    floorTiles.push(mapData.tiles[y][x]);
+        for (let y = 0; y < zoneData.tiles.length; y++) {
+            for (let x = 0; x < zoneData.tiles[y].length; x++) {
+                if (zoneData.tiles[y][x].passable) {
+                    floorTiles.push(zoneData.tiles[y][x]);
                 }
             }
         }
