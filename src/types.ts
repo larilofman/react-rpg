@@ -53,16 +53,20 @@ export interface WallTile extends BaseTile {
 
 export type Tile = FloorTile | WallTile
 
-export interface ZoneData {
-    size: Dimensions,
-    tiles: Tile[][],
-    creatures: Creature[]
-}
-
 export enum Faction {
     Player,
     Friendly,
     Hostile,
+}
+
+export interface ZoneData {
+    size: Dimensions,
+    tiles: Tile[][],
+    creatures: {
+        [Faction.Player]: Creature[],
+        [Faction.Friendly]: Creature[],
+        [Faction.Hostile]: Creature[]
+    }
 }
 
 export interface Creature {

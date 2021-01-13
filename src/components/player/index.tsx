@@ -10,6 +10,8 @@ import { Direction, Position, Creature, Attack, DamageType } from '../../types';
 import useCheckCollision from '../../hooks/use-check-collision';
 import useOccupyTile from '../state/action-hooks/useOccupyTile';
 import useMelee from '../../hooks/use-melee';
+import { useStateValue } from '../state';
+import useAddCreatures from '../state/action-hooks/useAddCreatures';
 
 
 interface Props {
@@ -28,10 +30,15 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     const { occupyTile } = useOccupyTile();
     const [creature, setCreature] = useState(data);
     const { meleeAttack } = useMelee(data);
+    const [{ mapLoaded }] = useStateValue();
+    const { addCreatures } = useAddCreatures();
 
     useEffect(() => {
-        occupyTile(data, position);
-    }, []);
+        if (mapLoaded) {
+            occupyTile(data, position);
+            addCreatures([data], data.faction);
+        }
+    }, [mapLoaded]);
 
 
     useKeyPress((e: KeyboardEvent) => {

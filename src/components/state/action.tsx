@@ -34,7 +34,7 @@ export type Action =
     }
     | {
         type: ActionType.ADD_CREATURES;
-        payload: Creature[];
+        payload: { creatures: Creature[], faction: Faction };
     }
     | {
         type: ActionType.ATTACK_CREATURE;
