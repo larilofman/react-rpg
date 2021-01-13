@@ -27,8 +27,10 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
 
     useEffect(() => {
         if (mapLoaded) {
+            // console.log(data, position);
+            occupyTile(data, position);
             if (!playerTurn) {
-                wander();
+                // wander();
             }
         }
     }, [playerTurn, mapLoaded]);
@@ -37,14 +39,21 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
         const dir = getRandomDirection();
         const newPos = checkCollision(position, dir);
 
-        if (newPos?.passable) {
-            const newCreature: Creature = {
-                ...creature,
-                pos: newPos.position
-            };
-            occupyTile(newCreature, position);
-            setCreature(newCreature);
-            walk(newPos);
+        if (newPos) {
+            if (newPos.occupant) {
+                // meleeAttack(newPos.occupant);
+            } else {
+                if (newPos.passable) {
+                    const newCreature: Creature = {
+                        ...creature,
+                        pos: newPos.position
+                    };
+                    occupyTile(newCreature, position);
+                    setCreature(newCreature);
+                    walk(newPos);
+                }
+            }
+
         }
 
         useEnemyTurn();

@@ -29,6 +29,10 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     const [creature, setCreature] = useState(data);
     const { meleeAttack } = useMelee();
 
+    useEffect(() => {
+        occupyTile(data, position);
+    }, []);
+
 
     useKeyPress((e: KeyboardEvent) => {
         let keyPressed;
@@ -54,10 +58,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
         }
 
         if (keyPressed !== undefined) {
-
             const newPos = checkCollision(position, keyPressed);
-
-            usePlayerTurn();
 
             if (newPos) {
                 if (newPos.occupant) {
@@ -75,6 +76,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
                 }
 
             }
+            usePlayerTurn();
             setAnimState(keyPressed);
 
         }

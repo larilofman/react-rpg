@@ -129,7 +129,8 @@ export default function useGenerateMap() {
         return (
             {
                 tiles: allTiles,
-                size
+                size,
+                creatures: []
             }
         );
     };

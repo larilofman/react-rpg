@@ -18,9 +18,9 @@ const Map: React.FC = () => {
         }
     }, [mapLoaded]);
 
-    useEffect(() => {
-        console.log('zoneDataChanged', mapLoaded);
-    }, [zoneData]);
+    // useEffect(() => {
+    //     console.log('zoneDataChanged', mapLoaded);
+    // }, [zoneData]);
 
     const tilesOnCamera = () => {
         const cam_y = cameraPosition.y;

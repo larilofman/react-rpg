@@ -6,7 +6,8 @@ export enum ActionType {
     "USE_PLAYER_TURN",
     "USE_ENEMY_TURN",
     "SET_CAMERA_POSITION",
-    "OCCUPY_TILE"
+    "OCCUPY_TILE",
+    "ADD_CREATURES"
 }
 
 export type Action =
@@ -32,4 +33,8 @@ export type Action =
     | {
         type: ActionType.OCCUPY_TILE;
         payload: { creature: Creature, oldPos: Position };
+    }
+    | {
+        type: ActionType.ADD_CREATURES;
+        payload: Creature[];
     };

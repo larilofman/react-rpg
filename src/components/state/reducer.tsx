@@ -1,3 +1,4 @@
+import { Faction } from '../../types';
 import { State, Action, ActionType } from '../state';
 
 export const reducer = (state: State, action: Action): State => {
@@ -34,15 +35,23 @@ export const reducer = (state: State, action: Action): State => {
             const freedX = action.payload.oldPos.x;
             const freedY = action.payload.oldPos.y;
             const tiles = state.zoneData.tiles;
+            tiles[freedY][freedX].occupant = undefined;
             tiles[occupiedY][occupiedX].occupant = action.payload.creature;
-            tiles[freedY][freedX].occupant = null;
-
 
             return {
                 ...state,
                 zoneData: {
                     ...state.zoneData,
                     tiles: tiles
+                }
+            };
+        }
+        case ActionType.ADD_CREATURES: {
+            return {
+                ...state,
+                zoneData: {
+                    ...state.zoneData,
+                    creatures: state.zoneData.creatures.concat(action.payload)
                 }
             };
         }

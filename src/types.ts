@@ -38,7 +38,7 @@ interface BaseTile {
     position: Position,
     passable?: boolean,
     spriteIndex?: number,
-    occupant?: Creature | null
+    occupant?: Creature
 }
 
 export interface FloorTile extends BaseTile {
@@ -55,7 +55,8 @@ export type Tile = FloorTile | WallTile
 
 export interface ZoneData {
     size: Dimensions,
-    tiles: Tile[][]
+    tiles: Tile[][],
+    creatures: Creature[]
 }
 
 export enum Faction {
