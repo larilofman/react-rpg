@@ -4,7 +4,7 @@ import { useStateValue } from '../../components/state';
 export default function useFindRandomFloorTile() {
     const [{ zoneData }] = useStateValue();
 
-    const findFloorTile = () => {
+    const findRandomFloorTile = () => {
         const floorTiles: Tile[] = [];
         for (let y = 0; y < zoneData.tiles.length; y++) {
             for (let x = 0; x < zoneData.tiles[y].length; x++) {
@@ -16,5 +16,5 @@ export default function useFindRandomFloorTile() {
         return floorTiles[Math.floor(Math.floor(Math.random() * floorTiles.length))];
     };
 
-    return { findFloorTile };
+    return { findRandomFloorTile };
 }

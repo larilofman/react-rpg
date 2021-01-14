@@ -7,7 +7,7 @@ import { useStateValue } from '../state';
 import { Position, Creature } from '../../types';
 import useUseTurn from '../state/action-hooks/useUseTurn';
 import useCheckCollision from '../../hooks/use-check-collision';
-import useOccupyTile from '../state/action-hooks/useOccupyTile';
+import useMoveCreature from '../state/action-hooks/useMoveCreature';
 
 interface Props {
     skin: string,
@@ -22,12 +22,12 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
     const { checkCollision } = useCheckCollision();
     const { walk, position } = useWalk(startPosition);
     const { dir, step, setAnimState } = useAnimation(3);
-    const { occupyTile } = useOccupyTile();
+    const { moveCreature } = useMoveCreature();
     const [creature, setCreature] = useState(data);
 
     useEffect(() => {
         if (mapLoaded) {
-            occupyTile(data, position);
+            moveCreature(data, position);
         }
     }, [mapLoaded]);
 
@@ -50,7 +50,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
                         ...creature,
                         pos: newPos.position
                     };
-                    occupyTile(newCreature, position);
+                    moveCreature(newCreature, position);
                     setCreature(newCreature);
                     walk(newPos);
                 }

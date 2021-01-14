@@ -5,7 +5,7 @@ export enum ActionType {
     "SET_MAP",
     "USE_TURN",
     "SET_CAMERA_POSITION",
-    "OCCUPY_TILE",
+    "MOVE_CREATURE",
     "ADD_CREATURES",
     "DAMAGE_CREATURE",
     "REMOVE_CREATURE"
@@ -30,7 +30,7 @@ export type Action =
         payload: Position;
     }
     | {
-        type: ActionType.OCCUPY_TILE;
+        type: ActionType.MOVE_CREATURE;
         payload: { creature: Creature, oldPos: Position };
     }
     | {

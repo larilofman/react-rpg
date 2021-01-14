@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useStateValue } from '../../state';
-import useFindRandomFloorTile from '../../../hooks/use-find-floor-tile';
+import useFindRandomFloorTile from '../../../hooks/use-find-random-floor-tile';
 import Npc from '..';
 import { Creature, Faction } from '../../../types';
 import useAddCreatures from '../../state/action-hooks/useAddCreatures';
@@ -9,7 +9,7 @@ import { nanoid } from 'nanoid';
 
 const EnemyManager: React.FC = () => {
     const [{ zoneData, mapLoaded, turnOf }] = useStateValue();
-    const { findFloorTile } = useFindRandomFloorTile();
+    const { findRandomFloorTile } = useFindRandomFloorTile();
     const { addCreatures } = useAddCreatures();
 
     useEffect(() => {
@@ -19,26 +19,26 @@ const EnemyManager: React.FC = () => {
 
     }, [mapLoaded]);
 
-    useEffect(() => {
-        const occupied = [];
-        for (let y = 0; y < zoneData.tiles.length; y++) {
-            for (let x = 0; x < zoneData.tiles.length; x++) {
-                if (zoneData.tiles[y][x].occupant) {
-                    occupied.push(zoneData.tiles[y][x]);
-                }
-            }
-        }
-        console.log(occupied);
-        // console.log(zoneData.creatures);
-        // console.log(turnOf);
-    }, [zoneData]);
+    // useEffect(() => {
+    //     const occupied = [];
+    //     for (let y = 0; y < zoneData.tiles.length; y++) {
+    //         for (let x = 0; x < zoneData.tiles.length; x++) {
+    //             if (zoneData.tiles[y][x].occupant) {
+    //                 occupied.push(zoneData.tiles[y][x]);
+    //             }
+    //         }
+    //     }
+    //     // console.log(occupied);
+    //     // console.log(zoneData.creatures);
+    //     // console.log(turnOf);
+    // }, [zoneData]);
 
     const spawnEnemies = () => {
         const enemies = [];
-        for (let index = 0; index < 5; index++) {
+        for (let index = 0; index < 1; index++) {
             const enemy: Creature = {
                 faction: Faction.Hostile,
-                pos: findFloorTile().position,
+                pos: findRandomFloorTile().position,
                 id: nanoid(),
                 stats: { health: 10 }
             };

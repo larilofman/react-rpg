@@ -4,8 +4,6 @@ import EnemyManager from '../npc/enemy/enemy-manager';
 import Player from '../player';
 import { Creature, Faction } from '../../types';
 
-
-
 const GameManager: React.FC = () => {
     const [{ zoneData, playerPosition }] = useStateValue();
 

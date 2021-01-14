@@ -38,7 +38,7 @@ interface BaseTile {
     position: Position,
     passable?: boolean,
     spriteIndex?: number,
-    occupant?: Creature
+    occupant?: string // creatureId
 }
 
 export interface FloorTile extends BaseTile {

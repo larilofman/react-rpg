@@ -44,14 +44,14 @@ export const reducer = (state: State, action: Action): State => {
                 ...state,
                 cameraPosition: action.payload
             };
-        case ActionType.OCCUPY_TILE: {
+        case ActionType.MOVE_CREATURE: {
             const occupiedX = action.payload.creature.pos.x;
             const occupiedY = action.payload.creature.pos.y;
             const freedX = action.payload.oldPos.x;
             const freedY = action.payload.oldPos.y;
             const tiles = state.zoneData.tiles;
             tiles[freedY][freedX].occupant = undefined;
-            tiles[occupiedY][occupiedX].occupant = action.payload.creature;
+            tiles[occupiedY][occupiedX].occupant = action.payload.creature.id;
 
             return {
                 ...state,
@@ -95,7 +95,6 @@ export const reducer = (state: State, action: Action): State => {
         case ActionType.REMOVE_CREATURE: {
             const tiles = state.zoneData.tiles;
             tiles[action.payload.pos.y][action.payload.pos.x].occupant = undefined;
-            console.log(tiles[action.payload.pos.y][action.payload.pos.x]);
             return {
                 ...state,
                 zoneData: {

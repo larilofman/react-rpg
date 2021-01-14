@@ -8,7 +8,7 @@ import useUseTurn from '../state/action-hooks/useUseTurn';
 import useCamera from '../../hooks/use-camera';
 import { Direction, Position, Creature, Attack, DamageType } from '../../types';
 import useCheckCollision from '../../hooks/use-check-collision';
-import useOccupyTile from '../state/action-hooks/useOccupyTile';
+import useMoveCreature from '../state/action-hooks/useMoveCreature';
 import useMelee from '../../hooks/use-melee';
 import { useStateValue } from '../state';
 import useAddCreatures from '../state/action-hooks/useAddCreatures';
@@ -27,7 +27,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     const { dir, step, setAnimState } = useAnimation(3);
     const { updateCamera } = useCamera();
     const { checkCollision } = useCheckCollision();
-    const { occupyTile } = useOccupyTile();
+    const { moveCreature } = useMoveCreature();
     const [creature, setCreature] = useState(data);
     const { meleeAttack } = useMelee(data);
     const [{ mapLoaded }] = useStateValue();
@@ -35,7 +35,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
 
     useEffect(() => {
         if (mapLoaded) {
-            occupyTile(data, position);
+            moveCreature(data, position);
             addCreatures([data], data.faction);
         }
     }, [mapLoaded]);
@@ -80,7 +80,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
                             ...creature,
                             pos: newPos.position
                         };
-                        occupyTile(newCreature, position);
+                        moveCreature(newCreature, position);
                         setCreature(newCreature);
                         walk(newPos);
                     }
