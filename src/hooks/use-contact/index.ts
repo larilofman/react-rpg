@@ -1,12 +1,39 @@
-import { Creature, Attack } from '../../types';
+import { Creature, Attack, ReducedCreature, Faction } from '../../types';
 import useDamageCreature from '../../components/state/action-hooks/useDamageCreature';
 import useGetCreature from '../use-get-creature';
+import useMelee from '../use-melee';
 
-export default function useUseContact() {
+export default function useContact() {
     const { damageCreature } = useDamageCreature();
     const { getCreatureById } = useGetCreature();
+    const { meleeAttack } = useMelee();
 
-    function meleeAttack(actor: Creature, targetId: string) {
+    function contact(actor: ReducedCreature, targetId: string) {
+        const target = getCreatureById(targetId);
+
+        if (target) {
+            if (actor.faction === Faction.Player) {
+                switch (target.faction) {
+                    case Faction.Hostile:
+                        meleeAttack(actor.id, target);
+                        break;
+                    case Faction.Friendly:
+                        console.log('Bumped into friendly');
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                if (actor.faction === target.faction) {
+                    // Npc bumped into friendly
+                } else {
+                    // TODO: Npc attack
+                    console.log('Npc bumped into player');
+                }
+            }
+        }
+
+
         // if (newPos.occupant) {
         //     const attack: Attack = {
         //         type: DamageType.Physical,
@@ -28,6 +55,6 @@ export default function useUseContact() {
     }
 
     return {
-        meleeAttack
+        contact
     };
 }

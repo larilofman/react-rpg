@@ -8,7 +8,7 @@ import { nanoid } from 'nanoid';
 
 
 const EnemyManager: React.FC = () => {
-    const [{ zoneData, mapLoaded, turnOf }] = useStateValue();
+    const [{ zoneData, mapLoaded }] = useStateValue();
     const { findRandomFloorTile } = useFindRandomFloorTile();
     const { addCreatures } = useAddCreatures();
 
@@ -35,12 +35,12 @@ const EnemyManager: React.FC = () => {
 
     const spawnEnemies = () => {
         const enemies = [];
-        for (let index = 0; index < 1; index++) {
+        for (let index = 0; index < 3; index++) {
             const enemy: Creature = {
                 faction: Faction.Hostile,
                 pos: findRandomFloorTile().position,
                 id: nanoid(),
-                stats: { health: 10 }
+                stats: { health: 10, damage: 5 }
             };
             enemies.push(enemy);
         }

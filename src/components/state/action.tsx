@@ -1,4 +1,4 @@
-import { Position, ZoneData, Creature, Faction, Attack } from '../../types';
+import { Position, ZoneData, ReducedCreature, Creature, Faction } from '../../types';
 
 export enum ActionType {
     "SET_PLAYER_POSITION",
@@ -31,7 +31,7 @@ export type Action =
     }
     | {
         type: ActionType.MOVE_CREATURE;
-        payload: { creature: Creature, oldPos: Position };
+        payload: { creature: ReducedCreature, newPos: Position, oldPos?: Position };
     }
     | {
         type: ActionType.ADD_CREATURES;

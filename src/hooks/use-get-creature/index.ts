@@ -1,4 +1,3 @@
-import { Tile } from '../../types';
 import { useStateValue } from '../../components/state';
 
 export default function useGetCreature() {

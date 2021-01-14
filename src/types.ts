@@ -70,12 +70,16 @@ export interface ZoneData {
 }
 
 export interface Stats {
-    health: number
+    health: number,
+    damage: number
 }
 
-export interface Creature {
+export interface ReducedCreature {
     id: string,
-    faction: Faction,
+    faction: Faction
+}
+
+export interface Creature extends ReducedCreature {
     pos: Position,
     stats: Stats
 }

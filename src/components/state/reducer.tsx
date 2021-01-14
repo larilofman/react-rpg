@@ -45,12 +45,17 @@ export const reducer = (state: State, action: Action): State => {
                 cameraPosition: action.payload
             };
         case ActionType.MOVE_CREATURE: {
-            const occupiedX = action.payload.creature.pos.x;
-            const occupiedY = action.payload.creature.pos.y;
-            const freedX = action.payload.oldPos.x;
-            const freedY = action.payload.oldPos.y;
+            const occupiedX = action.payload.newPos.x;
+            const occupiedY = action.payload.newPos.y;
+
             const tiles = state.zoneData.tiles;
-            tiles[freedY][freedX].occupant = undefined;
+
+            if (action.payload.oldPos) {
+                const freedX = action.payload.oldPos.x;
+                const freedY = action.payload.oldPos.y;
+                tiles[freedY][freedX].occupant = undefined;
+            }
+
             tiles[occupiedY][occupiedX].occupant = action.payload.creature.id;
 
             return {
@@ -61,7 +66,12 @@ export const reducer = (state: State, action: Action): State => {
                     creatures: {
                         ...state.zoneData.creatures,
                         [action.payload.creature.faction]: state.zoneData.creatures[action.payload.creature.faction].map(
-                            c => c.id !== action.payload.creature.id ? c : { ...c, pos: { x: occupiedX, y: occupiedY } }
+                            c => c.id !== action.payload.creature.id
+                                ? c
+                                : {
+                                    ...c,
+                                    pos: { x: occupiedX, y: occupiedY }
+                                }
                         )
                     }
 

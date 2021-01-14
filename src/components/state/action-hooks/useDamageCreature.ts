@@ -1,33 +1,33 @@
 import { useStateValue, ActionType } from '../index';
-import { Attack, Creature } from '../../../types';
+import { Creature, Attack } from '../../../types';
 import useRemoveCreature from './useRemoveCreature';
 import useGetCreature from '../../../hooks/use-get-creature';
 
 export default function useDamageCreature() {
-    const [{ zoneData }, dispatch] = useStateValue();
+    const [, dispatch] = useStateValue();
     const { removeCreature } = useRemoveCreature();
     const { getCreatureById } = useGetCreature();
 
-    const damageCreature = (targetId: string, attack: Attack, attacker: Creature) => {
-        let damagedCreature = getCreatureById(targetId);
+    const damageCreature = (attackerId: string, target: Creature) => {
+        const attacker = getCreatureById(attackerId);
 
-        if (damagedCreature) {
-            const healthRemaining = damagedCreature.stats.health - attack.damage;
+        if (target && attacker) {
+            const healthRemaining = target.stats.health - attacker.stats.damage;
             if (healthRemaining > 0) {
-                damagedCreature = {
-                    ...damagedCreature,
+                target = {
+                    ...target,
                     stats: {
-                        ...damagedCreature.stats,
+                        ...target.stats,
                         health: healthRemaining
                     }
                 };
                 dispatch(
                     {
                         type: ActionType.DAMAGE_CREATURE,
-                        payload: damagedCreature
+                        payload: target
                     });
             } else {
-                removeCreature(damagedCreature);
+                removeCreature(target);
             }
         }
 

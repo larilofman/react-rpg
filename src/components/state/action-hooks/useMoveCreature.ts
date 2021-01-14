@@ -1,14 +1,14 @@
-import { Position, Creature } from '../../../types';
+import { Position, ReducedCreature } from '../../../types';
 import { useStateValue, ActionType } from '../index';
 
 export default function useMoveCreature() {
     const [, dispatch] = useStateValue();
 
-    const moveCreature = (creature: Creature, oldPos: Position) => {
+    const moveCreature = (creature: ReducedCreature, newPos: Position, oldPos?: Position) => {
         dispatch(
             {
                 type: ActionType.MOVE_CREATURE,
-                payload: { creature, oldPos }
+                payload: { creature, newPos, oldPos }
             });
     };
 

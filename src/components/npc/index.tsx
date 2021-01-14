@@ -50,7 +50,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
                         ...creature,
                         pos: newPos.position
                     };
-                    moveCreature(newCreature, position);
+                    moveCreature(newCreature, newPos.position, position);
                     setCreature(newCreature);
                     walk(newPos);
                 }

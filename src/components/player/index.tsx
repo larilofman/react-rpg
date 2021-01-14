@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import GameObject from '../game-object';
 import useKeyPress from '../../hooks/use-key-press';
 import useWalk from '../../hooks/use-walk';
@@ -6,18 +6,16 @@ import useAnimation from '../../hooks/use-animation';
 import useSetPlayerPosition from '../state/action-hooks/useSetPlayerPosition';
 import useUseTurn from '../state/action-hooks/useUseTurn';
 import useCamera from '../../hooks/use-camera';
-import { Direction, Position, Creature, Attack, DamageType } from '../../types';
+import { Direction, Position, ReducedCreature, Attack, DamageType } from '../../types';
 import useCheckCollision from '../../hooks/use-check-collision';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
-import useMelee from '../../hooks/use-melee';
+import useContact from '../../hooks/use-contact';
 import { useStateValue } from '../state';
-import useAddCreatures from '../state/action-hooks/useAddCreatures';
-
 
 interface Props {
     skin: string
     startPos: Position
-    data: Creature
+    data: ReducedCreature
 }
 
 const Player: React.FC<Props> = ({ skin, startPos, data }) => {
@@ -28,15 +26,12 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     const { updateCamera } = useCamera();
     const { checkCollision } = useCheckCollision();
     const { moveCreature } = useMoveCreature();
-    const [creature, setCreature] = useState(data);
-    const { meleeAttack } = useMelee(data);
+    const { contact } = useContact();
     const [{ mapLoaded }] = useStateValue();
-    const { addCreatures } = useAddCreatures();
 
     useEffect(() => {
         if (mapLoaded) {
             moveCreature(data, position);
-            addCreatures([data], data.faction);
         }
     }, [mapLoaded]);
 
@@ -69,19 +64,10 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
 
             if (newPos) {
                 if (newPos.occupant) {
-                    const attack: Attack = {
-                        type: DamageType.Physical,
-                        damage: 5
-                    };
-                    meleeAttack(newPos.occupant, attack);
+                    contact(data, newPos.occupant);
                 } else {
                     if (newPos.passable) {
-                        const newCreature: Creature = {
-                            ...creature,
-                            pos: newPos.position
-                        };
-                        moveCreature(newCreature, position);
-                        setCreature(newCreature);
+                        moveCreature(data, newPos.position, position);
                         walk(newPos);
                     }
                 }
