@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import GameObject from '../game-object';
 import useKeyPress from '../../hooks/use-key-press';
+import useMouseClick from '../../hooks/use-mouse-click';
 import useWalk from '../../hooks/use-walk';
 import useAnimation from '../../hooks/use-animation';
 import useSetPlayerPosition from '../state/action-hooks/useSetPlayerPosition';
 import useUseTurn from '../state/action-hooks/useUseTurn';
 import useCamera from '../../hooks/use-camera';
-import { Direction, Position, ReducedCreature, Attack, DamageType } from '../../types';
+import { Direction, Position, ReducedCreature } from '../../types';
 import useCheckCollision from '../../hooks/use-check-collision';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
 import useContact from '../../hooks/use-contact';
@@ -28,6 +29,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     const { moveCreature } = useMoveCreature();
     const { contact } = useContact();
     const [{ mapLoaded }] = useStateValue();
+    const { tileClicked } = useMouseClick();
 
     useEffect(() => {
         if (mapLoaded) {
@@ -35,6 +37,9 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
         }
     }, [mapLoaded]);
 
+    useEffect(() => {
+        console.log(tileClicked);
+    }, [tileClicked]);
 
     useKeyPress((e: KeyboardEvent) => {
         let keyPressed;

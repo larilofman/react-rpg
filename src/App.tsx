@@ -4,19 +4,19 @@ import { useStateValue } from './components/state';
 import GameManager from './components/game-manager';
 
 const App = () => {
-  const [{ tileSize, displaySize }] = useStateValue();
+    const [{ tileSize, displaySize }] = useStateValue();
 
-  return (
-    <div
-      className="zone-container"
-      style={{
-        width: displaySize.w * tileSize.w,
-        height: displaySize.h * tileSize.h
-      }}>
-      <Map />
-      <GameManager />
-    </div>
-  );
+    return (
+        <div
+            id="zone-container"
+            style={{
+                width: displaySize.w * tileSize.w,
+                height: displaySize.h * tileSize.h
+            }}>
+            <Map />
+            <GameManager />
+        </div>
+    );
 };
 
 export default App;
