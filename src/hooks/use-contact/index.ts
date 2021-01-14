@@ -26,6 +26,7 @@ export default function useContact() {
             } else {
                 if (actor.faction === target.faction) {
                     // Npc bumped into friendly
+                    console.log('Enemy bumped into another enemy');
                 } else {
                     // TODO: Npc attack
                     console.log('Npc bumped into player');

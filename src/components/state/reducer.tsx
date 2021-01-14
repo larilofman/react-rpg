@@ -22,9 +22,10 @@ export const reducer = (state: State, action: Action): State => {
             } else {
                 switch (action.payload) {
                     case Faction.Player:
-                        turnOf = Faction.Hostile;
+                        turnOf = state.zoneData.creatures[Faction.Friendly].length ? Faction.Friendly : Faction.Hostile;
                         break;
                     case Faction.Friendly:
+                        turnOf = state.zoneData.creatures[Faction.Hostile].length ? Faction.Hostile : Faction.Player;
                         break;
                     case Faction.Hostile:
                         turnOf = Faction.Player;

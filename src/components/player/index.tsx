@@ -55,6 +55,9 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
             case "ArrowLeft":
                 keyPressed = Direction.left;
                 break;
+            case " ":
+                useTurn();
+                return;
             default:
                 break;
         }

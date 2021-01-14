@@ -8,6 +8,8 @@ import { Position, Creature } from '../../types';
 import useUseTurn from '../state/action-hooks/useUseTurn';
 import useCheckCollision from '../../hooks/use-check-collision';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
+import useContact from '../../hooks/use-contact';
+import calculateDistance from '../../utils/calculate-distance';
 
 interface Props {
     skin: string,
@@ -16,7 +18,7 @@ interface Props {
 }
 
 const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
-    const [{ mapLoaded }] = useStateValue();
+    const [{ mapLoaded, playerPosition }] = useStateValue();
     const { useTurn, canAct } = useUseTurn(data.faction);
     const { getRandomDirection } = useWander();
     const { checkCollision } = useCheckCollision();
@@ -24,6 +26,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
     const { dir, step, setAnimState } = useAnimation(3);
     const { moveCreature } = useMoveCreature();
     const [creature, setCreature] = useState(data);
+    const { contact } = useContact();
 
     useEffect(() => {
         if (mapLoaded) {
@@ -39,20 +42,23 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
 
     const wander = () => {
         const dir = getRandomDirection();
-        const newPos = checkCollision(position, dir);
+        const newTile = checkCollision(position, dir);
 
-        if (newPos) {
-            if (newPos.occupant) {
-                // meleeAttack(newPos.occupant);
+        const d = calculateDistance(playerPosition, position);
+        if (d <= 1) {
+            contact(data, 'player');
+        } else if (newTile) {
+            if (newTile.occupant) {
+                // meleeAttack(newTile.occupant);
             } else {
-                if (newPos.passable) {
+                if (newTile.passable) {
                     const newCreature: Creature = {
                         ...creature,
-                        pos: newPos.position
+                        pos: newTile.position
                     };
-                    moveCreature(newCreature, newPos.position, position);
+                    moveCreature(newCreature, newTile.position, position);
                     setCreature(newCreature);
-                    walk(newPos);
+                    walk(newTile);
                 }
             }
 

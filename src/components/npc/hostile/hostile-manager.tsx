@@ -35,7 +35,7 @@ const EnemyManager: React.FC = () => {
 
     const spawnEnemies = () => {
         const enemies = [];
-        for (let index = 0; index < 3; index++) {
+        for (let index = 0; index < 1; index++) {
             const enemy: Creature = {
                 faction: Faction.Hostile,
                 pos: findRandomFloorTile().position,
