@@ -2,7 +2,7 @@ import { Position, Tile, Direction, Creature } from '../../types';
 import { useStateValue } from '../../components/state';
 
 export default function useCheckCollision() {
-    const [{ zoneData }] = useStateValue();
+    const [{ zoneData, turnOf }] = useStateValue();
 
     const isInBounds = (pos: Position): boolean => {
         return (
@@ -23,19 +23,20 @@ export default function useCheckCollision() {
         // const creatures: Creature[] = [];
         let walkable = true;
         const creatures: Creature[] = [];
+        // console.log('---');
         for (const [key, value] of Object.entries(zoneData.creatures)) {
             // console.log(key + ':' + value);
             value.forEach(creature => {
-                // console.log(creature.id, creature.pos.x, creature.pos.y, "originPos: ", pos.x, pos.y);
+
                 if (creature.pos.x === pos.x && creature.pos.y === pos.y) {
-                    // console.log('collision');
                     walkable = false;
+                    // console.log(creature.id, creature.pos.x, creature.pos.y, "originPos: ", pos.x, pos.y);
                 }
                 creatures.push(creature);
             });
         }
-        // console.log('creatures: ', creatures);
         const tile = getTileAt(pos);
+        // console.log("turnOf ended: ", turnOf);
 
         if (!tile || !tile.passable) {
             walkable = false;

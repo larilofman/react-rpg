@@ -10,7 +10,6 @@ export default function usePathfinding() {
     const [path, setPath] = useState<Position[]>();
     const [pathExists, setPathExists] = useState(false);
     const [nextStep, setNextStep] = useState<Position>();
-    const [destination, setDestination] = useState<Position>();
     const [{ mapLoaded, zoneData }] = useStateValue();
     const { isWalkable } = useCheckCollision();
 
@@ -114,9 +113,13 @@ export default function usePathfinding() {
     const createPath = () => {
         if (grid && finder && desiredPath) {
             const path = finder.findPath(desiredPath.start.x, desiredPath.start.y, desiredPath.end.x, desiredPath.end.y, grid.clone()).slice(1);
-            const pathAsPos: Position[] = path.map(step => ({ x: step[0], y: step[1] }));
-            setPath(pathAsPos);
-            setPathExists(true);
+            if (path.length) {
+                const pathAsPos: Position[] = path.map(step => ({ x: step[0], y: step[1] }));
+                setPath(pathAsPos);
+                setPathExists(true);
+            } else {
+                setPathExists(false);
+            }
         }
     };
 

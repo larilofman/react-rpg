@@ -1,15 +1,15 @@
-import { Creature, Attack, ReducedCreature, Faction } from '../../types';
+import { Creature, Position, Faction } from '../../types';
 import useDamageCreature from '../../components/state/action-hooks/useDamageCreature';
 import useGetCreature from '../use-get-creature';
 import useMelee from '../use-melee';
 
 export default function useContact() {
     const { damageCreature } = useDamageCreature();
-    const { getCreatureById } = useGetCreature();
+    const { getCreatureByPos } = useGetCreature();
     const { meleeAttack } = useMelee();
 
-    function contact(actor: ReducedCreature, targetId: string) {
-        const target = getCreatureById(targetId);
+    function contact(actor: Creature, targetPos: Position) {
+        const target = getCreatureByPos(targetPos);
 
         if (target) {
             if (actor.faction === Faction.Player) {

@@ -7,7 +7,7 @@ import useAnimation from '../../hooks/use-animation';
 import useSetPlayerPosition from '../state/action-hooks/useSetPlayerPosition';
 import useUseTurn from '../state/action-hooks/useUseTurn';
 import useCamera from '../../hooks/use-camera';
-import { Direction, Position, ReducedCreature } from '../../types';
+import { Direction, Position, Creature } from '../../types';
 import useCheckCollision from '../../hooks/use-check-collision';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
 import useContact from '../../hooks/use-contact';
@@ -17,7 +17,7 @@ import usePathFinding from '../../hooks/use-pathfinding';
 interface Props {
     skin: string
     startPos: Position
-    data: ReducedCreature
+    data: Creature
 }
 
 const Player: React.FC<Props> = ({ skin, startPos, data }) => {
@@ -26,7 +26,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     const { walk, position } = useWalk(startPos);
     const { dir, step, setAnimState } = useAnimation(3);
     const { updateCamera } = useCamera();
-    const { checkCollision } = useCheckCollision();
+    const { checkCollision, isWalkable } = useCheckCollision();
     const { moveCreature } = useMoveCreature();
     const { contact } = useContact();
     const [{ mapLoaded }] = useStateValue();
@@ -47,10 +47,10 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     }, [posClicked]);
 
     useEffect(() => {
-        if (canAct) {
-            console.log(nextStep);
+        if (canAct && nextStep) {
+            // console.log(nextStep);
             if (nextStep) {
-                const newCreature = { ...data, position: nextStep };
+                const newCreature: Creature = { ...data, pos: nextStep };
                 moveCreature(newCreature);
                 walk(nextStep);
                 setAnimState(Direction.down);
@@ -59,7 +59,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
             }
 
         }
-    }, [canAct]);
+    }, [canAct, nextStep]);
 
     useKeyPress((e: KeyboardEvent) => {
         let keyPressed;
@@ -87,24 +87,25 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
                 break;
         }
 
-        // if (keyPressed !== undefined && canAct) {
-        //     const newTile = checkCollision(position, keyPressed);
+        if (keyPressed !== undefined && canAct) {
+            const newTile = checkCollision(position, keyPressed);
 
-        //     if (newTile) {
-        //         if (newTile.occupant) {
-        //             contact(data, newTile.occupant);
-        //         } else {
-        //             if (newTile.passable) {
-        //                 moveCreature(data, newTile.position, position);
-        //                 walk(newTile.position);
-        //             }
-        //         }
+            if (newTile) {
+                if (!isWalkable(newTile.position)) {
+                    contact(data, newTile.position);
+                } else {
+                    if (newTile.passable) {
+                        const newCreature: Creature = { ...data, pos: newTile.position };
+                        moveCreature(newCreature);
+                        walk(newTile.position);
+                    }
+                }
 
-        //     }
-        //     useTurn();
-        //     setAnimState(keyPressed);
+            }
+            useTurn();
+            setAnimState(keyPressed);
 
-        // }
+        }
         // e.preventDefault();
     });
 

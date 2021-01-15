@@ -73,12 +73,9 @@ export interface Stats {
     damage: number
 }
 
-export interface ReducedCreature {
+export interface Creature {
     id: string,
     faction: Faction
-}
-
-export interface Creature extends ReducedCreature {
     pos: Position,
     stats: Stats
 }

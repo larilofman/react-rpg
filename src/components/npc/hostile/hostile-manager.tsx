@@ -19,19 +19,26 @@ const EnemyManager: React.FC = () => {
 
     }, [mapLoaded]);
 
-    // useEffect(() => {
-    //     const occupied = [];
-    //     for (let y = 0; y < zoneData.tiles.length; y++) {
-    //         for (let x = 0; x < zoneData.tiles.length; x++) {
-    //             if (zoneData.tiles[y][x].occupant) {
-    //                 occupied.push({ creature: zoneData.tiles[y][x].occupant, pos: `${x}, ${y}` });
-    //             }
-    //         }
-    //     }
-    //     console.log(turnOf, occupied);
-    //     // console.log(zoneData.creatures);
-    //     // console.log(turnOf);
-    // }, [zoneData]);
+    useEffect(() => {
+        // const occupied = [];
+        // for (let y = 0; y < zoneData.tiles.length; y++) {
+        //     for (let x = 0; x < zoneData.tiles.length; x++) {
+        //         if (zoneData.tiles[y][x].occupant) {
+        //             occupied.push({ creature: zoneData.tiles[y][x].occupant, pos: `${x}, ${y}` });
+        //         }
+        //     }
+        // }
+        // console.log(turnOf, occupied);
+        // console.log(zoneData.creatures);
+        // console.log(turnOf);
+        const player = zoneData.creatures[Faction.Player][0];
+        const enemy = zoneData.creatures[Faction.Hostile][0];
+        if (player && enemy) {
+            if (player.pos.x === enemy.pos.x && player.pos.y === enemy.pos.y) {
+                console.log('they collided!');
+            }
+        }
+    }, [zoneData]);
 
     const spawnEnemies = () => {
         const enemies = [];
