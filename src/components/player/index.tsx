@@ -12,6 +12,7 @@ import useCheckCollision from '../../hooks/use-check-collision';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
 import useContact from '../../hooks/use-contact';
 import { useStateValue } from '../state';
+import usePathFinding from '../../hooks/use-pathfinding';
 
 interface Props {
     skin: string
@@ -29,7 +30,9 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     const { moveCreature } = useMoveCreature();
     const { contact } = useContact();
     const [{ mapLoaded }] = useStateValue();
-    const { tileClicked } = useMouseClick();
+    const { posClicked } = useMouseClick();
+    const { findPath } = usePathFinding();
+
 
     useEffect(() => {
         if (mapLoaded) {
@@ -38,8 +41,8 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     }, [mapLoaded]);
 
     useEffect(() => {
-        console.log(tileClicked);
-    }, [tileClicked]);
+        findPath({ x: 0, y: 0 }, { x: 4, y: 6 });
+    }, [posClicked]);
 
     useKeyPress((e: KeyboardEvent) => {
         let keyPressed;

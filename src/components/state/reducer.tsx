@@ -113,7 +113,7 @@ export const reducer = (state: State, action: Action): State => {
                     creatures: {
                         ...state.zoneData.creatures,
                         [action.payload.faction]: state.zoneData.creatures[action.payload.faction].filter(c => c.id !== action.payload.id)
-                    }, tiles //: (() => { return state.zoneData.tiles; })()
+                    }, tiles
                 }
             };
         }
