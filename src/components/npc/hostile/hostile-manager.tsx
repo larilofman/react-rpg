@@ -19,19 +19,19 @@ const EnemyManager: React.FC = () => {
 
     }, [mapLoaded]);
 
-    useEffect(() => {
-        const occupied = [];
-        for (let y = 0; y < zoneData.tiles.length; y++) {
-            for (let x = 0; x < zoneData.tiles.length; x++) {
-                if (zoneData.tiles[y][x].occupant) {
-                    occupied.push({ creature: zoneData.tiles[y][x].occupant, pos: `${x}, ${y}` });
-                }
-            }
-        }
-        console.log(turnOf, occupied);
-        // console.log(zoneData.creatures);
-        // console.log(turnOf);
-    }, [zoneData]);
+    // useEffect(() => {
+    //     const occupied = [];
+    //     for (let y = 0; y < zoneData.tiles.length; y++) {
+    //         for (let x = 0; x < zoneData.tiles.length; x++) {
+    //             if (zoneData.tiles[y][x].occupant) {
+    //                 occupied.push({ creature: zoneData.tiles[y][x].occupant, pos: `${x}, ${y}` });
+    //             }
+    //         }
+    //     }
+    //     console.log(turnOf, occupied);
+    //     // console.log(zoneData.creatures);
+    //     // console.log(turnOf);
+    // }, [zoneData]);
 
     const spawnEnemies = () => {
         const enemies = [];

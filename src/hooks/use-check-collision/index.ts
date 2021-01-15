@@ -21,16 +21,23 @@ export default function useCheckCollision() {
 
     const isWalkable = (pos: Position): boolean => {
         // const creatures: Creature[] = [];
+        let walkable = true;
         for (const [key, value] of Object.entries(zoneData.creatures)) {
             // console.log(key + ':' + value);
             value.forEach(creature => {
+                console.log(creature.id, creature.pos.x, creature.pos.y, "originPos: ", pos.x, pos.y);
                 if (creature.pos.x === pos.x && creature.pos.y === pos.y) {
-                    console.log('collided');
-                    return false;
+                    console.log('collision');
+                    walkable = false;
                 }
             });
         }
-        return true;
+        const tile = getTileAt(pos);
+
+        if (!tile || !tile.passable) {
+            walkable = false;
+        }
+        return walkable;
         // console.log(creatures);
         // return false;
     };

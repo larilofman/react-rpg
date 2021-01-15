@@ -20,8 +20,8 @@ interface Props {
 const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
     const [{ mapLoaded, playerPosition }] = useStateValue();
     const { useTurn, canAct } = useUseTurn(data.faction);
-    const { getRandomDirection } = useWander();
-    const { checkCollision } = useCheckCollision();
+    const { getRandomDirection, getRandomNearbyPos } = useWander();
+    const { checkCollision, isWalkable } = useCheckCollision();
     const { walk, position } = useWalk(startPosition);
     const { dir, step, setAnimState } = useAnimation(3);
     const { moveCreature } = useMoveCreature();
@@ -41,25 +41,40 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
     }, [canAct]);
 
     const wander = () => {
-        const dir = getRandomDirection();
-        const newTile = checkCollision(position, dir);
+        const newPos = getRandomNearbyPos(position);
+        // const newTile = checkCollision(position, dir);
 
-        if (newTile) {
-            if (newTile.occupant) {
-                // meleeAttack(newTile.occupant);
-            } else {
-                if (newTile.passable) {
-                    const newCreature: Creature = {
-                        ...creature,
-                        pos: newTile.position
-                    };
-                    moveCreature(newCreature, newTile.position, position);
-                    setCreature(newCreature);
-                    walk(newTile.position);
-                }
-            }
-
+        if (isWalkable(newPos)) {
+            const newCreature: Creature = {
+                ...creature,
+                pos: newPos
+            };
+            moveCreature(newCreature, newPos, position);
+            setCreature(newCreature);
+            walk(newPos);
         }
+
+
+
+        // const wander = () => {
+        //     const dir = getRandomDirection();
+        //     const newTile = checkCollision(position, dir);
+
+        //     if (newTile) {
+        //         if (newTile.occupant) {
+        //             // meleeAttack(newTile.occupant);
+        //         } else {
+        //             if (newTile.passable) {
+        //                 const newCreature: Creature = {
+        //                     ...creature,
+        //                     pos: newTile.position
+        //                 };
+        //                 moveCreature(newCreature, newTile.position, position);
+        //                 setCreature(newCreature);
+        //                 walk(newTile.position);
+        //             }
+        //         }
+        //     }
 
         // const d = calculateDistance(playerPosition, position);
         // if (d <= 1) {
