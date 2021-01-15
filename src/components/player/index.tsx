@@ -31,7 +31,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     const { contact } = useContact();
     const [{ mapLoaded }] = useStateValue();
     const { posClicked } = useMouseClick();
-    const { findPath } = usePathFinding();
+    const { findPath, nextStep, updateStep } = usePathFinding();
 
 
     useEffect(() => {
@@ -41,8 +41,20 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     }, [mapLoaded]);
 
     useEffect(() => {
-        findPath({ x: 0, y: 0 }, { x: 4, y: 6 });
+        if (posClicked) {
+            findPath(position, posClicked);
+        }
     }, [posClicked]);
+
+    useEffect(() => {
+        if (nextStep) {
+            moveCreature(data, nextStep, position);
+            walk(nextStep);
+            useTurn();
+            setAnimState(Direction.down);
+            updateStep();
+        }
+    }, [nextStep]);
 
     useKeyPress((e: KeyboardEvent) => {
         let keyPressed;
@@ -71,15 +83,15 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
         }
 
         if (keyPressed !== undefined && canAct) {
-            const newPos = checkCollision(position, keyPressed);
+            const newTile = checkCollision(position, keyPressed);
 
-            if (newPos) {
-                if (newPos.occupant) {
-                    contact(data, newPos.occupant);
+            if (newTile) {
+                if (newTile.occupant) {
+                    contact(data, newTile.occupant);
                 } else {
-                    if (newPos.passable) {
-                        moveCreature(data, newPos.position, position);
-                        walk(newPos);
+                    if (newTile.passable) {
+                        moveCreature(data, newTile.position, position);
+                        walk(newTile.position);
                     }
                 }
 

@@ -58,7 +58,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
                     };
                     moveCreature(newCreature, newTile.position, position);
                     setCreature(newCreature);
-                    walk(newTile);
+                    walk(newTile.position);
                 }
             }
 
