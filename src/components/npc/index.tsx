@@ -30,7 +30,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
 
     useEffect(() => {
         if (mapLoaded) {
-            moveCreature(data, position);
+            moveCreature(data);
         }
     }, [mapLoaded]);
 
@@ -49,7 +49,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
                 ...creature,
                 pos: newPos
             };
-            moveCreature(newCreature, newPos, position);
+            moveCreature(newCreature);
             setCreature(newCreature);
             walk(newPos);
         }

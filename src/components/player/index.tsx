@@ -36,7 +36,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
 
     useEffect(() => {
         if (mapLoaded) {
-            moveCreature(data, position);
+            moveCreature(data);
         }
     }, [mapLoaded]);
 
@@ -47,14 +47,19 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     }, [posClicked]);
 
     useEffect(() => {
-        if (nextStep && canAct) {
-            moveCreature(data, nextStep, position);
-            walk(nextStep);
-            setAnimState(Direction.down);
-            updateStep();
-            useTurn();
+        if (canAct) {
+            console.log(nextStep);
+            if (nextStep) {
+                const newCreature = { ...data, position: nextStep };
+                moveCreature(newCreature);
+                walk(nextStep);
+                setAnimState(Direction.down);
+                updateStep();
+                useTurn();
+            }
+
         }
-    }, [nextStep, canAct]);
+    }, [canAct]);
 
     useKeyPress((e: KeyboardEvent) => {
         let keyPressed;
@@ -82,24 +87,24 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
                 break;
         }
 
-        if (keyPressed !== undefined && canAct) {
-            const newTile = checkCollision(position, keyPressed);
+        // if (keyPressed !== undefined && canAct) {
+        //     const newTile = checkCollision(position, keyPressed);
 
-            if (newTile) {
-                if (newTile.occupant) {
-                    contact(data, newTile.occupant);
-                } else {
-                    if (newTile.passable) {
-                        moveCreature(data, newTile.position, position);
-                        walk(newTile.position);
-                    }
-                }
+        //     if (newTile) {
+        //         if (newTile.occupant) {
+        //             contact(data, newTile.occupant);
+        //         } else {
+        //             if (newTile.passable) {
+        //                 moveCreature(data, newTile.position, position);
+        //                 walk(newTile.position);
+        //             }
+        //         }
 
-            }
-            useTurn();
-            setAnimState(keyPressed);
+        //     }
+        //     useTurn();
+        //     setAnimState(keyPressed);
 
-        }
+        // }
         // e.preventDefault();
     });
 

@@ -8,6 +8,7 @@ export default function usePathfinding() {
     const [grid, setGrid] = useState<PF.Grid>();
     const [finder] = useState<PF.AStarFinder>(new PF.AStarFinder());
     const [path, setPath] = useState<Position[]>();
+    const [pathExists, setPathExists] = useState(false);
     const [nextStep, setNextStep] = useState<Position>();
     const [destination, setDestination] = useState<Position>();
     const [{ mapLoaded, zoneData }] = useStateValue();
@@ -71,12 +72,13 @@ export default function usePathfinding() {
     }, [grid]);
 
     useEffect(() => {
-        updateStep();
-    }, [path]);
+        if (pathExists) {
+            updateStep();
+        }
+    }, [pathExists]);
 
     const updateStep = () => {
         if (path && path[0]) {
-            // console.log(path[0]);
             if (isWalkable(path[0])) {
                 if (path.length > 1) {
                     const nextTile = path[0];
@@ -85,10 +87,11 @@ export default function usePathfinding() {
                     setNextStep(nextTile);
 
                 } else {
-                    // arrived at destination
+                    // only one step remaining
+                    setNextStep(path[0]);
                     setDesiredPath(undefined);
                     setPath(undefined);
-                    setNextStep(path[0]);
+                    setPathExists(false);
                 }
             } else {
                 // get current position from previous nextStep
@@ -113,6 +116,7 @@ export default function usePathfinding() {
             const path = finder.findPath(desiredPath.start.x, desiredPath.start.y, desiredPath.end.x, desiredPath.end.y, grid.clone()).slice(1);
             const pathAsPos: Position[] = path.map(step => ({ x: step[0], y: step[1] }));
             setPath(pathAsPos);
+            setPathExists(true);
         }
     };
 
@@ -121,7 +125,7 @@ export default function usePathfinding() {
         for (let y = 0; y < zoneData.tiles.length; y++) {
             const row = [];
             for (let x = 0; x < zoneData.tiles[y].length; x++) {
-                if (!zoneData.tiles[y][x].passable || zoneData.tiles[y][x].occupant) {
+                if (!isWalkable(zoneData.tiles[y][x].position)) {
                     row.push(1);
                 } else {
                     row.push(0);

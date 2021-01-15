@@ -4,11 +4,11 @@ import { useStateValue, ActionType } from '../index';
 export default function useMoveCreature() {
     const [, dispatch] = useStateValue();
 
-    const moveCreature = (creature: ReducedCreature, newPos: Position, oldPos?: Position) => {
+    const moveCreature = (creature: ReducedCreature) => {
         dispatch(
             {
                 type: ActionType.MOVE_CREATURE,
-                payload: { creature, newPos, oldPos }
+                payload: creature
             });
     };
 

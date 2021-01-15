@@ -46,33 +46,29 @@ export const reducer = (state: State, action: Action): State => {
                 cameraPosition: action.payload
             };
         case ActionType.MOVE_CREATURE: {
-            const occupiedX = action.payload.newPos.x;
-            const occupiedY = action.payload.newPos.y;
+            // const occupiedX = action.payload.newPos.x;
+            // const occupiedY = action.payload.newPos.y;
 
-            const tiles = state.zoneData.tiles;
+            // const tiles = state.zoneData.tiles;
 
-            if (action.payload.oldPos) {
-                const freedX = action.payload.oldPos.x;
-                const freedY = action.payload.oldPos.y;
-                tiles[freedY][freedX].occupant = undefined;
-            }
+            // if (action.payload.oldPos) {
+            //     const freedX = action.payload.oldPos.x;
+            //     const freedY = action.payload.oldPos.y;
+            //     tiles[freedY][freedX].occupant = undefined;
+            // }
 
-            tiles[occupiedY][occupiedX].occupant = action.payload.creature.id;
+            // tiles[occupiedY][occupiedX].occupant = action.payload.creature.id;
 
             return {
                 ...state,
                 zoneData: {
                     ...state.zoneData,
-                    tiles: tiles,
                     creatures: {
                         ...state.zoneData.creatures,
-                        [action.payload.creature.faction]: state.zoneData.creatures[action.payload.creature.faction].map(
-                            c => c.id !== action.payload.creature.id
+                        [action.payload.faction]: state.zoneData.creatures[action.payload.faction].map(
+                            c => c.id !== action.payload.id
                                 ? c
-                                : {
-                                    ...c,
-                                    pos: { x: occupiedX, y: occupiedY }
-                                }
+                                : action.payload
                         )
                     }
 
@@ -104,8 +100,6 @@ export const reducer = (state: State, action: Action): State => {
                 }
             };
         case ActionType.REMOVE_CREATURE: {
-            const tiles = state.zoneData.tiles;
-            tiles[action.payload.pos.y][action.payload.pos.x].occupant = undefined;
             return {
                 ...state,
                 zoneData: {
@@ -113,7 +107,7 @@ export const reducer = (state: State, action: Action): State => {
                     creatures: {
                         ...state.zoneData.creatures,
                         [action.payload.faction]: state.zoneData.creatures[action.payload.faction].filter(c => c.id !== action.payload.id)
-                    }, tiles
+                    }
                 }
             };
         }

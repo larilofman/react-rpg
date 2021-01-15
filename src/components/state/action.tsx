@@ -31,7 +31,7 @@ export type Action =
     }
     | {
         type: ActionType.MOVE_CREATURE;
-        payload: { creature: ReducedCreature, newPos: Position, oldPos?: Position };
+        payload: ReducedCreature;
     }
     | {
         type: ActionType.ADD_CREATURES;
