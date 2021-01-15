@@ -8,7 +8,7 @@ import { nanoid } from 'nanoid';
 
 
 const EnemyManager: React.FC = () => {
-    const [{ zoneData, mapLoaded }] = useStateValue();
+    const [{ zoneData, mapLoaded, turnOf }] = useStateValue();
     const { findRandomFloorTile } = useFindRandomFloorTile();
     const { addCreatures } = useAddCreatures();
 
@@ -24,11 +24,11 @@ const EnemyManager: React.FC = () => {
         for (let y = 0; y < zoneData.tiles.length; y++) {
             for (let x = 0; x < zoneData.tiles.length; x++) {
                 if (zoneData.tiles[y][x].occupant) {
-                    occupied.push(zoneData.tiles[y][x]);
+                    occupied.push({ creature: zoneData.tiles[y][x].occupant, pos: `${x}, ${y}` });
                 }
             }
         }
-        console.log(occupied);
+        console.log(turnOf, occupied);
         // console.log(zoneData.creatures);
         // console.log(turnOf);
     }, [zoneData]);

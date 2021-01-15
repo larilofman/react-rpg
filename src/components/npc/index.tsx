@@ -44,10 +44,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
         const dir = getRandomDirection();
         const newTile = checkCollision(position, dir);
 
-        const d = calculateDistance(playerPosition, position);
-        if (d <= 1) {
-            contact(data, 'player');
-        } else if (newTile) {
+        if (newTile) {
             if (newTile.occupant) {
                 // meleeAttack(newTile.occupant);
             } else {
@@ -63,6 +60,26 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
             }
 
         }
+
+        // const d = calculateDistance(playerPosition, position);
+        // if (d <= 1) {
+        //     contact(data, 'player');
+        // } else if (newTile) {
+        //     if (newTile.occupant) {
+        //         // meleeAttack(newTile.occupant);
+        //     } else {
+        //         if (newTile.passable) {
+        //             const newCreature: Creature = {
+        //                 ...creature,
+        //                 pos: newTile.position
+        //             };
+        //             moveCreature(newCreature, newTile.position, position);
+        //             setCreature(newCreature);
+        //             walk(newTile.position);
+        //         }
+        //     }
+
+        // }
 
         useTurn();
         setAnimState(dir);

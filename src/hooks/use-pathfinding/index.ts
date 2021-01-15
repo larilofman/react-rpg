@@ -2,47 +2,117 @@ import { useEffect, useState } from "react";
 import { Position, Tile } from '../../types';
 import { useStateValue } from '../../components/state';
 import PF, { Grid } from 'pathfinding';
+import useCheckCollision from '../use-check-collision';
 
 export default function usePathfinding() {
     const [grid, setGrid] = useState<PF.Grid>();
-    const [finder, setFinder] = useState<PF.AStarFinder>();
+    const [finder] = useState<PF.AStarFinder>(new PF.AStarFinder());
     const [path, setPath] = useState<Position[]>();
     const [nextStep, setNextStep] = useState<Position>();
+    const [destination, setDestination] = useState<Position>();
     const [{ mapLoaded, zoneData }] = useStateValue();
+    const { isWalkable } = useCheckCollision();
 
-    useEffect(() => {
-        if (mapLoaded) {
-            setFinder(new PF.AStarFinder());
-            createGrid();
-        }
-    }, [mapLoaded]);
+    const [desiredPath, setDesiredPath] = useState<{ start: Position, end: Position }>();
 
-    useEffect(() => {
-        if (mapLoaded) {
-            createGrid();
-        }
-
-    }, [zoneData]);
+    // useEffect(() => {
+    //     if (mapLoaded) {
+    //         setFinder();
+    //     }
+    // }, [mapLoaded]);
 
     const cancelPath = () => {
         // call from player to cancel walking
     };
 
+    // const updateStep = () => {
+    //     if (path) {
+
+    //         // if next step on the path is walkable remove first tile from it and return
+    //         // if tile still remains, return it
+    //         if (isWalkable(path[0])) {
+    //             if (path.length > 1) {
+    //                 const newPath = path.slice(1);
+    //                 setPath(newPath);
+    //                 setNextStep(newPath[0]);
+    //             } else {
+    //                 setNextStep(path[1]);
+    //                 setPath(undefined);
+    //             }
+
+    //         } else {
+    //             createGrid();
+    //         }           // if occupied or non passable get a new path from path[0] to destination
+    //     }
+    // };
+
+    // riittääkö jos ennen joka askelta pelaaja tarkistaa onko tile occupied ja jos on niin tehdään uusi grid ja haetaan uusi reitti currentPos -> clickPos ?
+
+    // const getNextStep = (start, end) => {
+    //     setRequestPath(start, end)
+    // }
+
+    // useEffect(() => {
+    //     if(requestStep){
+    //         const grid = createGrid();
+    //         const path = findPath();
+    //         setNextStep(path[0])
+    //     }
+    // },[requestStep])
+
+    useEffect(() => {
+        if (desiredPath) {
+            createGrid();
+        }
+    }, [desiredPath]);
+
+    useEffect(() => {
+        createPath();
+    }, [grid]);
+
+    useEffect(() => {
+        updateStep();
+    }, [path]);
+
     const updateStep = () => {
-        if (path) {
-            const newPath = path.slice(1);
-            setPath(newPath);
-            setNextStep(newPath[0]);
+        if (path && path[0]) {
+            // console.log(path[0]);
+            if (isWalkable(path[0])) {
+                if (path.length > 1) {
+                    const nextTile = path[0];
+                    const newPath = path.slice(1);
+                    setPath(newPath);
+                    setNextStep(nextTile);
+
+                } else {
+                    // arrived at destination
+                    setDesiredPath(undefined);
+                    setPath(undefined);
+                    setNextStep(path[0]);
+                }
+            } else {
+                // get current position from previous nextStep
+                console.log('not walkable, nextStep: ', nextStep);
+                if (nextStep && desiredPath) {
+                    setDesiredPath({ start: nextStep, end: desiredPath.end });
+                }
+
+            }
+        } else {
+            setNextStep(undefined);
         }
     };
 
+
     const findPath = (start: Position, end: Position) => {
-        if (grid && finder) {
-            const path = finder.findPath(start.x, start.y, end.x, end.y, grid.clone()).slice(1);
+        setDesiredPath({ start, end });
+    };
+
+    const createPath = () => {
+        if (grid && finder && desiredPath) {
+            const path = finder.findPath(desiredPath.start.x, desiredPath.start.y, desiredPath.end.x, desiredPath.end.y, grid.clone()).slice(1);
             const pathAsPos: Position[] = path.map(step => ({ x: step[0], y: step[1] }));
-            // console.log(pathAsPos);
             setPath(pathAsPos);
-            setNextStep(pathAsPos[0]);
         }
     };
 
@@ -61,7 +131,6 @@ export default function usePathfinding() {
         }
         const newGrid = new Grid(nodes);
         setGrid(newGrid);
-        return newGrid;
     };
     return { findPath, updateStep, nextStep };
 }

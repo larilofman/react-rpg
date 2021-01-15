@@ -47,14 +47,14 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     }, [posClicked]);
 
     useEffect(() => {
-        if (nextStep) {
+        if (nextStep && canAct) {
             moveCreature(data, nextStep, position);
             walk(nextStep);
-            useTurn();
             setAnimState(Direction.down);
             updateStep();
+            useTurn();
         }
-    }, [nextStep]);
+    }, [nextStep, canAct]);
 
     useKeyPress((e: KeyboardEvent) => {
         let keyPressed;

@@ -1,4 +1,4 @@
-import { Position, Tile, Direction } from '../../types';
+import { Position, Tile, Direction, Creature } from '../../types';
 import { useStateValue } from '../../components/state';
 
 export default function useCheckCollision() {
@@ -18,6 +18,33 @@ export default function useCheckCollision() {
             return zoneData.tiles[pos.y][pos.x];
         }
     };
+
+    const isWalkable = (pos: Position): boolean => {
+        // const creatures: Creature[] = [];
+        for (const [key, value] of Object.entries(zoneData.creatures)) {
+            // console.log(key + ':' + value);
+            value.forEach(creature => {
+                if (creature.pos.x === pos.x && creature.pos.y === pos.y) {
+                    console.log('collided');
+                    return false;
+                }
+            });
+        }
+        return true;
+        // console.log(creatures);
+        // return false;
+    };
+
+    // const isWalkable = (pos: Position): boolean => {
+    //     const tile = getTileAt(pos);
+    //     if (tile) {
+    //         if (!tile.occupant || !tile.passable) {
+    //             return true;
+    //         }
+    //         return false;
+    //     }
+    //     return false;
+    // };
 
     const checkCollision = (pos: Position, dir: Direction) => {
         let newPos = pos;
@@ -45,6 +72,6 @@ export default function useCheckCollision() {
     };
 
     return {
-        checkCollision
+        checkCollision, isWalkable
     };
 }

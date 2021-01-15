@@ -17,7 +17,9 @@ const GameManager: React.FC = () => {
         stats: { health: 100, damage: 5 }
     };
     useEffect(() => {
-        addCreatures([playerData], playerData.faction);
+        if (mapLoaded) {
+            addCreatures([playerData], playerData.faction);
+        }
     }, [mapLoaded]);
 
     return (
