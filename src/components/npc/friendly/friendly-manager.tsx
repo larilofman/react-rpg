@@ -24,7 +24,7 @@ const FriendlyManager: React.FC<Props> = ({ useTurn }) => {
 
     const spawnFriendlies = () => {
         const enemies = [];
-        for (let index = 0; index < 1; index++) {
+        for (let index = 0; index < 0; index++) {
             const enemy: Creature = {
                 faction: Faction.Friendly,
                 pos: findRandomFloorTile().position,

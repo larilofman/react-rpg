@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useStateValue, ActionType } from '../index';
-import { Faction, Creature } from '../../../types';
+import { Faction } from '../../../types';
 
 
 const resetTurns = () => {
@@ -33,10 +33,7 @@ export default function useUseTurn() {
     useEffect(() => {
         if (turnsUsed[currentFaction] === zoneData.creatures[currentFaction].length) {
             setTimeout(() => {
-                setTurnComplete(prev => {
-                    return (
-                        { faction: currentFaction, turnCount: turn.num });
-                });
+                setTurnComplete({ faction: currentFaction, turnCount: turn.num });
             }, getDelay());
 
         }
@@ -88,56 +85,4 @@ export default function useUseTurn() {
         useTurn
     };
 
-    // useEffect(() => {
-    //     if (useTurnQueued) {
-
-    //         setUseTurnQueued(false);
-    //     }
-    // }, [zoneData, useTurnQueued]);
-
-    // useEffect(() => {
-    //     if (turnOf === faction && !useTurnQueued) {
-    //         setCanAct(true);
-    //     }
-    // }, [turnOf]);
-
-    // const canAct = (turnOf === faction && !useTurnQueued);
-
-
 }
-
-// export default function useUseTurn(faction: Faction) {
-//     const [{ turnOf, zoneData }, dispatch] = useStateValue();
-//     const [useTurnQueued, setUseTurnQueued] = useState(false);
-//     const [canAct, setCanAct] = useState(false);
-
-//     const useTurn = () => {
-//         setCanAct(false);
-//         setTimeout(() => {
-//             setUseTurnQueued(true);
-//         }, 5);
-//     };
-
-//     useEffect(() => {
-//         if (useTurnQueued) {
-//             dispatch(
-//                 {
-//                     type: ActionType.USE_TURN,
-//                     payload: faction
-//                 });
-//             setUseTurnQueued(false);
-//         }
-//     }, [zoneData, useTurnQueued]);
-
-//     useEffect(() => {
-//         if (turnOf === faction && !useTurnQueued) {
-//             setCanAct(true);
-//         }
-//     }, [turnOf]);
-
-//     // const canAct = (turnOf === faction && !useTurnQueued);
-
-//     return {
-//         useTurn, canAct
-//     };
-// }

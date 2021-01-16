@@ -1,4 +1,4 @@
-import { Position, Tile, Direction, Creature, TileStatus } from '../../types';
+import { Position, Tile, Direction, TileStatus } from '../../types';
 import { useStateValue } from '../../components/state';
 
 export default function useGetTileInDirection() {

@@ -1,4 +1,3 @@
-import { Dir } from 'fs';
 import { useState } from 'react';
 import { Direction, Position } from '../../types';
 

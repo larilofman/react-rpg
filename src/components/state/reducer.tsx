@@ -1,4 +1,3 @@
-import { Faction } from '../../types';
 import { State, Action, ActionType } from '../state';
 
 export const reducer = (state: State, action: Action): State => {
@@ -29,18 +28,6 @@ export const reducer = (state: State, action: Action): State => {
                 cameraPosition: action.payload
             };
         case ActionType.MOVE_CREATURE: {
-            // const occupiedX = action.payload.newPos.x;
-            // const occupiedY = action.payload.newPos.y;
-
-            // const tiles = state.zoneData.tiles;
-
-            // if (action.payload.oldPos) {
-            //     const freedX = action.payload.oldPos.x;
-            //     const freedY = action.payload.oldPos.y;
-            //     tiles[freedY][freedX].occupant = undefined;
-            // }
-
-            // tiles[occupiedY][occupiedX].occupant = action.payload.creature.id;
             return {
                 ...state,
                 zoneData: {

@@ -1,5 +1,5 @@
 import { useStateValue, ActionType } from '../index';
-import { Creature, Attack } from '../../../types';
+import { Creature } from '../../../types';
 import useRemoveCreature from './useRemoveCreature';
 import useGetCreature from '../../../hooks/use-get-creature';
 

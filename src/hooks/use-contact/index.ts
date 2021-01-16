@@ -3,7 +3,7 @@ import useGetCreature from '../use-get-creature';
 import useMelee from '../use-melee';
 
 export default function useContact() {
-    const { getCreatureByPos, getContactingCreatures } = useGetCreature();
+    const { getCreatureByPos } = useGetCreature();
     const { meleeAttack } = useMelee();
 
     function contact(actor: BaseCreature, targetPos: Position) {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Position, TileStatus } from '../../types';
 import { useStateValue } from '../../components/state';
 import PF, { Grid } from 'pathfinding';

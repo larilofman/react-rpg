@@ -1,9 +1,7 @@
-import { Direction, Position, Tile } from '../../types';
+import { Direction, Position } from '../../types';
 import randomEnum from '../../utils/random-enum';
-import { useStateValue } from '../../components/state';
 
 export default function useWander() {
-    const [{ zoneData }] = useStateValue();
 
     const getRandomDirection = (): Direction => {
         return randomEnum(Direction);
