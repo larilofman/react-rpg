@@ -4,9 +4,9 @@ import useWalk from '../../hooks/use-walk';
 import useAnimation from '../../hooks/use-animation';
 import useWander from '../../hooks/use-wander';
 import { useStateValue } from '../state';
-import { Position, Creature } from '../../types';
+import { Position, Creature, TileStatus } from '../../types';
 import useUseTurn from '../state/action-hooks/useUseTurn';
-import useCheckCollision from '../../hooks/use-check-collision';
+import usegetTileInDirection from '../../hooks/use-check-collision';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
 import useContact from '../../hooks/use-contact';
 import calculateDistance from '../../utils/calculate-distance';
@@ -21,11 +21,10 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
     const [{ mapLoaded, playerPosition }] = useStateValue();
     const { useTurn, canAct } = useUseTurn(data.faction);
     const { getRandomDirection, getRandomNearbyPos } = useWander();
-    const { checkCollision, isWalkable } = useCheckCollision();
+    const { getTileInDirection, getTileStatus } = usegetTileInDirection();
     const { walk, position } = useWalk(startPosition);
     const { dir, step, setAnimState } = useAnimation(3);
     const { moveCreature } = useMoveCreature();
-    const [creature, setCreature] = useState(data);
     const { contact } = useContact();
 
     useEffect(() => {
@@ -42,23 +41,17 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
 
     const wander = () => {
         const newPos = getRandomNearbyPos(position);
-        // const newTile = checkCollision(position, dir);
 
-        if (isWalkable(newPos)) {
-            const newCreature: Creature = {
-                ...creature,
-                pos: newPos
-            };
-            moveCreature(newCreature);
-            setCreature(newCreature);
-            walk(newPos);
+        const tileStatus = getTileStatus(newPos);
+        if (tileStatus === TileStatus.Passable) {
+            walk(data, newPos);
         }
 
 
 
         // const wander = () => {
         //     const dir = getRandomDirection();
-        //     const newTile = checkCollision(position, dir);
+        //     const newTile = getTileInDirection(position, dir);
 
         //     if (newTile) {
         //         if (newTile.occupant) {

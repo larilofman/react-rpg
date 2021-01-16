@@ -1,7 +1,7 @@
-import { Position, Tile, Direction, Creature } from '../../types';
+import { Position, Tile, Direction, Creature, TileStatus } from '../../types';
 import { useStateValue } from '../../components/state';
 
-export default function useCheckCollision() {
+export default function usegetTileInDirection() {
     const [{ zoneData, turnOf }] = useStateValue();
 
     const isInBounds = (pos: Position): boolean => {
@@ -19,9 +19,9 @@ export default function useCheckCollision() {
         }
     };
 
-    const isWalkable = (pos: Position): boolean => {
+    const getTileStatus = (pos: Position): TileStatus => {
         // const creatures: Creature[] = [];
-        let walkable = true;
+        let walkable = TileStatus.Passable;
         const creatures: Creature[] = [];
         // console.log('---');
         for (const [key, value] of Object.entries(zoneData.creatures)) {
@@ -29,35 +29,21 @@ export default function useCheckCollision() {
             value.forEach(creature => {
 
                 if (creature.pos.x === pos.x && creature.pos.y === pos.y) {
-                    walkable = false;
+                    walkable = TileStatus.Occupied;
                     // console.log(creature.id, creature.pos.x, creature.pos.y, "originPos: ", pos.x, pos.y);
                 }
                 creatures.push(creature);
             });
         }
         const tile = getTileAt(pos);
-        // console.log("turnOf ended: ", turnOf);
 
         if (!tile || !tile.passable) {
-            walkable = false;
+            walkable = TileStatus.NonPassable;
         }
         return walkable;
-        // console.log(creatures);
-        // return false;
     };
 
-    // const isWalkable = (pos: Position): boolean => {
-    //     const tile = getTileAt(pos);
-    //     if (tile) {
-    //         if (!tile.occupant || !tile.passable) {
-    //             return true;
-    //         }
-    //         return false;
-    //     }
-    //     return false;
-    // };
-
-    const checkCollision = (pos: Position, dir: Direction) => {
+    const getTileInDirection = (pos: Position, dir: Direction): { status: TileStatus, pos: Position } => {
         let newPos = pos;
 
         switch (dir) {
@@ -77,12 +63,10 @@ export default function useCheckCollision() {
                 break;
         }
 
-        const tile = getTileAt(newPos);
-        // return !tile ? false : tile.passable;
-        return tile;
+        return { status: getTileStatus(newPos), pos: newPos };
     };
 
     return {
-        checkCollision, isWalkable, getTileAt
+        getTileInDirection, getTileStatus, getTileAt
     };
 }

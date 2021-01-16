@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Position } from '../../types';
 import { useStateValue } from '../../components/state';
-import useCheckCollision from '../../hooks/use-check-collision';
+import usegetTileInDirection from '../../hooks/use-check-collision';
 
 export default function useMouseClick() {
     const [posClicked, setPosClicked] = useState<Position | undefined>(undefined);
     const [zone, setZone] = useState<HTMLElement | null>(document.getElementById('zone-container'));
     const [{ tileSize, cameraPosition }] = useStateValue();
-    const { getTileAt } = useCheckCollision();
+    const { getTileAt } = usegetTileInDirection();
     useEffect(() => {
         if (!zone) {
             setZone(document.getElementById("zone-container"));

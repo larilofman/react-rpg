@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { Position, Tile } from '../../types';
+import { Position, TileStatus } from '../../types';
 import { useStateValue } from '../../components/state';
 import PF, { Grid } from 'pathfinding';
-import useCheckCollision from '../use-check-collision';
+import usegetTileInDirection from '../use-check-collision';
 
 export default function usePathfinding() {
     const [finder] = useState<PF.AStarFinder>(new PF.AStarFinder());
     const [{ zoneData }] = useStateValue();
-    const { isWalkable } = useCheckCollision();
+    const { getTileStatus } = usegetTileInDirection();
     const [onRoute, setOnRoute] = useState(false);
 
     const cancelPath = () => {
@@ -38,7 +38,8 @@ export default function usePathfinding() {
         for (let y = 0; y < zoneData.tiles.length; y++) {
             const row = [];
             for (let x = 0; x < zoneData.tiles[y].length; x++) {
-                if (!isWalkable(zoneData.tiles[y][x].position)) {
+                const tilePos = zoneData.tiles[y][x].position;
+                if (getTileStatus(tilePos) === TileStatus.NonPassable || getTileStatus(tilePos) === TileStatus.Occupied) {
                     row.push(1);
                 } else {
                     row.push(0);

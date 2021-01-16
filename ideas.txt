@@ -1,1 +1,3 @@
 usekeypress hookkiin kaikki keyboard jutut ja hakee nappi arrayt jostain conffista
+
+tuo takaisin typistetty creature jossa vain id ja faction ettei turhaan passailla esim playerille positionia ym.
