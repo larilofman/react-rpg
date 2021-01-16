@@ -83,6 +83,6 @@ export default function useCheckCollision() {
     };
 
     return {
-        checkCollision, isWalkable
+        checkCollision, isWalkable, getTileAt
     };
 }

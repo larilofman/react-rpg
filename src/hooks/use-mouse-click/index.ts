@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { Position } from '../../types';
 import { useStateValue } from '../../components/state';
+import useCheckCollision from '../../hooks/use-check-collision';
 
 export default function useMouseClick() {
     const [posClicked, setPosClicked] = useState<Position | undefined>(undefined);
     const [zone, setZone] = useState<HTMLElement | null>(document.getElementById('zone-container'));
     const [{ tileSize, cameraPosition }] = useStateValue();
+    const { getTileAt } = useCheckCollision();
     useEffect(() => {
         if (!zone) {
             setZone(document.getElementById("zone-container"));
@@ -24,7 +26,12 @@ export default function useMouseClick() {
             // Get click on viewport -> subtract display element's offset and the border -> divide by tileSize -> floor down -> add camera's position
             const clickX = Math.floor(((e.clientX - zone.offsetLeft - borderLeft) / tileSize.w)) + cameraPosition.x;
             const clickY = Math.floor(((e.clientY - zone.offsetTop - borderTop) / tileSize.h)) + cameraPosition.y;
-            setPosClicked({ x: clickX, y: clickY });
+
+            // If click happens on a tile
+            if (getTileAt({ x: clickX, y: clickY })) {
+                setPosClicked({ x: clickX, y: clickY });
+            }
+
         }
     };
 
