@@ -8,7 +8,7 @@ import useSetPlayerPosition from '../state/action-hooks/useSetPlayerPosition';
 import useUseTurn from '../state/action-hooks/useUseTurn';
 import useCamera from '../../hooks/use-camera';
 import { Direction, Position, Creature, TileStatus } from '../../types';
-import useCheckCollision from '../../hooks/use-check-collision';
+import useCheckCollision from '../../hooks/use-get-tile';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
 import useContact from '../../hooks/use-contact';
 import { useStateValue } from '../state';
@@ -58,8 +58,6 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     }, [canAct, onRoute]);
 
     const move = (newPos: Position) => {
-        // const newCreature: Creature = { ...data, pos: newPos };
-        // moveCreature(newCreature);
         walk(data, newPos);
         setAnimState(position, newPos);
         useTurn();

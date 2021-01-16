@@ -1,10 +1,8 @@
 import { Creature, Position, Faction } from '../../types';
-import useDamageCreature from '../../components/state/action-hooks/useDamageCreature';
 import useGetCreature from '../use-get-creature';
 import useMelee from '../use-melee';
 
 export default function useContact() {
-    const { damageCreature } = useDamageCreature();
     const { getCreatureByPos } = useGetCreature();
     const { meleeAttack } = useMelee();
 
@@ -26,33 +24,13 @@ export default function useContact() {
             } else {
                 if (actor.faction === target.faction) {
                     // Npc bumped into friendly
-                    console.log('Enemy bumped into another enemy');
+                    console.log('Npc bumped into one of its own');
                 } else {
                     // TODO: Npc attack
                     console.log('Npc bumped into player');
                 }
             }
         }
-
-
-        // if (newPos.occupant) {
-        //     const attack: Attack = {
-        //         type: DamageType.Physical,
-        //         damage: 5
-        //     };
-        //     meleeAttack(newPos.occupant, attack);
-        // } else {
-        //     if (newPos.passable) {
-        //         const newCreature: Creature = {
-        //             ...creature,
-        //             pos: newPos.position
-        //         };
-        //         moveCreature(newCreature, position);
-        //         setCreature(newCreature);
-        //         walk(newPos);
-        //     }
-        // }
-        // damageCreature(targetId, attack, attacker);
     }
 
     return {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Position, TileStatus } from '../../types';
 import { useStateValue } from '../../components/state';
 import PF, { Grid } from 'pathfinding';
-import usegetTileInDirection from '../use-check-collision';
+import usegetTileInDirection from '../use-get-tile';
 
 export default function usePathfinding() {
     const [finder] = useState<PF.AStarFinder>(new PF.AStarFinder());

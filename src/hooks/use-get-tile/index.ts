@@ -1,8 +1,8 @@
 import { Position, Tile, Direction, Creature, TileStatus } from '../../types';
 import { useStateValue } from '../../components/state';
 
-export default function usegetTileInDirection() {
-    const [{ zoneData, turnOf }] = useStateValue();
+export default function useGetTileInDirection() {
+    const [{ zoneData }] = useStateValue();
 
     const isInBounds = (pos: Position): boolean => {
         return (
@@ -20,21 +20,26 @@ export default function usegetTileInDirection() {
     };
 
     const getTileStatus = (pos: Position): TileStatus => {
-        // const creatures: Creature[] = [];
         let walkable = TileStatus.Passable;
-        const creatures: Creature[] = [];
-        // console.log('---');
-        for (const [key, value] of Object.entries(zoneData.creatures)) {
-            // console.log(key + ':' + value);
-            value.forEach(creature => {
+        for (const faction of Object.values(zoneData.creatures)) {
+            faction.forEach(creature => {
 
                 if (creature.pos.x === pos.x && creature.pos.y === pos.y) {
                     walkable = TileStatus.Occupied;
-                    // console.log(creature.id, creature.pos.x, creature.pos.y, "originPos: ", pos.x, pos.y);
                 }
-                creatures.push(creature);
             });
         }
+        // for (const [key, value] of Object.entries(zoneData.creatures)) {
+        //     // console.log(key + ':' + value);
+        //     value.forEach(creature => {
+
+        //         if (creature.pos.x === pos.x && creature.pos.y === pos.y) {
+        //             walkable = TileStatus.Occupied;
+        //             // console.log(creature.id, creature.pos.x, creature.pos.y, "originPos: ", pos.x, pos.y);
+        //         }
+        //         creatures.push(creature);
+        //     });
+        // }
         const tile = getTileAt(pos);
 
         if (!tile || !tile.passable) {

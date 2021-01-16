@@ -6,7 +6,7 @@ import useWander from '../../hooks/use-wander';
 import { useStateValue } from '../state';
 import { Position, Creature, TileStatus } from '../../types';
 import useUseTurn from '../state/action-hooks/useUseTurn';
-import usegetTileInDirection from '../../hooks/use-check-collision';
+import useGetTileInDirection from '../../hooks/use-get-tile';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
 import useContact from '../../hooks/use-contact';
 import calculateDistance from '../../utils/calculate-distance';
@@ -21,7 +21,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
     const [{ mapLoaded, playerPosition }] = useStateValue();
     const { useTurn, canAct } = useUseTurn(data.faction);
     const { getRandomDirection, getRandomNearbyPos } = useWander();
-    const { getTileInDirection, getTileStatus } = usegetTileInDirection();
+    const { getTileInDirection, getTileStatus } = useGetTileInDirection();
     const { walk, position } = useWalk(startPosition);
     const { dir, step, setAnimState } = useAnimation(3);
     const { moveCreature } = useMoveCreature();

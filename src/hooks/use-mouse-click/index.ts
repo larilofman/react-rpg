@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Position } from '../../types';
 import { useStateValue } from '../../components/state';
-import usegetTileInDirection from '../../hooks/use-check-collision';
+import usegetTileInDirection from '../use-get-tile';
 
 export default function useMouseClick() {
     const [posClicked, setPosClicked] = useState<Position | undefined>(undefined);
