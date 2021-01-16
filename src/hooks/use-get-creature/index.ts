@@ -15,6 +15,22 @@ export default function useGetCreature() {
         return creature;
     };
 
+    const getContactingCreatures = (attackerId: string, targetPos: Position): { attacker: Creature | undefined, target: Creature | undefined } => {
+        let attacker: Creature | undefined;
+        let target: Creature | undefined;
+        for (const faction of Object.values(zoneData.creatures)) {
+            const foundAttacker = faction.find(c => c.id === attackerId);
+            if (foundAttacker) {
+                attacker = foundAttacker;
+            }
+            const foundTarget = faction.find(c => (c.pos.x === targetPos.x && c.pos.y === targetPos.y));
+            if (foundTarget) {
+                target = foundTarget;
+            }
+        }
+        return { attacker, target };
+    };
+
     const getCreatureByPos = (pos: Position) => {
         let creature: Creature | undefined;
         for (const faction of Object.values(zoneData.creatures)) {
@@ -26,5 +42,5 @@ export default function useGetCreature() {
         return creature;
     };
 
-    return { getCreatureById, getCreatureByPos };
+    return { getCreatureById, getCreatureByPos, getContactingCreatures };
 }

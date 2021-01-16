@@ -23,7 +23,6 @@ export default function useGetTileInDirection() {
         let walkable = TileStatus.Passable;
         for (const faction of Object.values(zoneData.creatures)) {
             faction.forEach(creature => {
-
                 if (creature.pos.x === pos.x && creature.pos.y === pos.y) {
                     walkable = TileStatus.Occupied;
                 }
