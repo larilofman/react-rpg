@@ -4,7 +4,7 @@ import useWalk from '../../hooks/use-walk';
 import useAnimation from '../../hooks/use-animation';
 import useWander from '../../hooks/use-wander';
 import { useStateValue } from '../state';
-import { Position, BaseCreature, TileStatus } from '../../types';
+import { Position, BaseCreature, TileStatus, Faction } from '../../types';
 import useUseTurn from '../state/action-hooks/useUseTurn';
 import useGetTileInDirection from '../../hooks/use-get-tile';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
@@ -15,11 +15,11 @@ interface Props {
     skin: string,
     startPosition: Position
     data: BaseCreature
+    useTurn: (faction: Faction) => void
 }
 
-const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
-    const [{ mapLoaded, playerPosition }] = useStateValue();
-    const { useTurn, canAct } = useUseTurn(data.faction);
+const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn }) => {
+    const [{ mapLoaded, playerPosition, turn }] = useStateValue();
     const { getRandomDirection, getRandomNearbyPos } = useWander();
     const { getTileInDirection, getTileStatus } = useGetTileInDirection();
     const { walk, position } = useWalk(startPosition);
@@ -34,10 +34,10 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
     }, [mapLoaded]);
 
     useEffect(() => {
-        if (canAct) {
+        if (turn.faction === data.faction) {
             wander();
         }
-    }, [canAct]);
+    }, [turn]);
 
     const wander = () => {
         const newPos = getRandomNearbyPos(position);
@@ -89,7 +89,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
 
         // }
 
-        useTurn();
+        useTurn(data.faction);
         setAnimState(position, newPos);
     };
 

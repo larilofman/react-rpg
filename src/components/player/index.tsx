@@ -5,9 +5,8 @@ import useMouseClick from '../../hooks/use-mouse-click';
 import useWalk from '../../hooks/use-walk';
 import useAnimation from '../../hooks/use-animation';
 import useSetPlayerPosition from '../state/action-hooks/useSetPlayerPosition';
-import useUseTurn from '../state/action-hooks/useUseTurn';
 import useCamera from '../../hooks/use-camera';
-import { Direction, Position, TileStatus, BaseCreature } from '../../types';
+import { Direction, Position, TileStatus, BaseCreature, Faction } from '../../types';
 import useCheckCollision from '../../hooks/use-get-tile';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
 import useContact from '../../hooks/use-contact';
@@ -18,18 +17,18 @@ interface Props {
     skin: string
     startPos: Position
     data: BaseCreature
+    useTurn: (faction: Faction) => void
 }
 
-const Player: React.FC<Props> = ({ skin, startPos, data }) => {
+const Player: React.FC<Props> = ({ skin, startPos, data, useTurn }) => {
     const { setPlayerPosition } = useSetPlayerPosition();
-    const { useTurn, canAct } = useUseTurn(data.faction);
     const { walk, position } = useWalk(startPos);
     const { dir, step, setAnimState } = useAnimation(3);
     const { updateCamera } = useCamera();
     const { getTileInDirection, getTileStatus } = useCheckCollision();
     const { moveCreature } = useMoveCreature();
     const { contact } = useContact();
-    const [{ mapLoaded }] = useStateValue();
+    const [{ mapLoaded, turn }] = useStateValue();
     const { posClicked } = useMouseClick();
     const { findPath, onRoute, cancelPath } = usePathFinding();
 
@@ -48,19 +47,19 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     }, [posClicked]);
 
     useEffect(() => {
-        if (canAct && onRoute && posClicked) {
+        if (turn.faction === data.faction && onRoute && posClicked) {
             const nextPos = findPath(position, posClicked);
             if (nextPos) {
                 move(nextPos);
             }
 
         }
-    }, [canAct, onRoute]);
+    }, [turn, onRoute]);
 
     const move = (newPos: Position) => {
         walk(data, newPos);
         setAnimState(position, newPos);
-        useTurn();
+        useTurn(data.faction);
     };
 
     // Keyboard input
@@ -87,13 +86,13 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
                 cancelPath();
                 break;
             case " ":
-                useTurn();
+                useTurn(data.faction);
                 return;
             default:
                 break;
         }
 
-        if (keyPressed !== undefined && canAct) {
+        if (keyPressed !== undefined && turn.faction === data.faction) {
             const newTile = getTileInDirection(position, keyPressed);
 
             if (newTile) {
@@ -104,7 +103,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
                 }
                 setAnimState(position, newTile.pos);
             }
-            useTurn();
+            useTurn(data.faction);
         }
         // e.preventDefault();
     });
@@ -112,7 +111,6 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     useEffect(() => {
         setPlayerPosition(position);
         updateCamera(position);
-        // console.log(position);
     }, [position]);
 
     return <GameObject

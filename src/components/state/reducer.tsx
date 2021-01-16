@@ -37,7 +37,10 @@ export const reducer = (state: State, action: Action): State => {
             // turnOf = (!state.zoneData.creatures[Faction.Hostile] && !state.zoneData.creatures[Faction.Friendly]) ? Faction.Player : Faction.Hostile;
             return {
                 ...state,
-                turnOf
+                turn: {
+                    faction: turnOf,
+                    num: state.turn.num + 1
+                }
             };
         }
         case ActionType.SET_CAMERA_POSITION:

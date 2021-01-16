@@ -6,8 +6,11 @@ import { Creature, Faction } from '../../../types';
 import useAddCreatures from '../../state/action-hooks/useAddCreatures';
 import { nanoid } from 'nanoid';
 
+interface Props {
+    useTurn: (faction: Faction) => void
+}
 
-const FriendlyManager: React.FC = () => {
+const FriendlyManager: React.FC<Props> = ({ useTurn }) => {
     const [{ zoneData, mapLoaded }] = useStateValue();
     const { findRandomFloorTile } = useFindRandomFloorTile();
     const { addCreatures } = useAddCreatures();
@@ -21,7 +24,7 @@ const FriendlyManager: React.FC = () => {
 
     const spawnFriendlies = () => {
         const enemies = [];
-        for (let index = 0; index < 0; index++) {
+        for (let index = 0; index < 1; index++) {
             const enemy: Creature = {
                 faction: Faction.Friendly,
                 pos: findRandomFloorTile().position,
@@ -38,7 +41,7 @@ const FriendlyManager: React.FC = () => {
     return (
         <>
             {zoneData.creatures[Faction.Friendly].map(e => (
-                <Npc key={e.id} skin="m1" startPosition={e.pos} data={e} />
+                <Npc key={e.id} skin="m1" startPosition={e.pos} data={e} useTurn={useTurn} />
             ))}
         </>
     );
