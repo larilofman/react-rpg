@@ -26,9 +26,9 @@ const Map: React.FC = () => {
         const cam_y = cameraPosition.y;
         const cam_x = cameraPosition.x;
         const tiles: Tile[] = [];
-        // Get tiles visible on camera and one tile to each direction to avoid flickering
-        for (let y = cam_y - 1; y < cam_y + displaySize.h + 1; y++) {
-            for (let x = cam_x - 1; x < cam_x + displaySize.w + 1; x++) {
+        // Get tiles visible on camera and two tiles to each direction to avoid flickering
+        for (let y = cam_y - 2; y < cam_y + displaySize.h + 2; y++) {
+            for (let x = cam_x - 2; x < cam_x + displaySize.w + 2; x++) {
                 if (zoneData.tiles[y] && zoneData.tiles[y][x]) {
                     tiles.push(zoneData.tiles[y][x]);
                 }
