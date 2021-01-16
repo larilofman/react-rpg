@@ -31,7 +31,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     const { contact } = useContact();
     const [{ mapLoaded }] = useStateValue();
     const { posClicked } = useMouseClick();
-    const { findPath, nextStep, updateStep } = usePathFinding();
+    const { findPath, onRoute } = usePathFinding();
 
 
     useEffect(() => {
@@ -47,19 +47,19 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     }, [posClicked]);
 
     useEffect(() => {
-        if (canAct && nextStep) {
-            // console.log(nextStep);
-            if (nextStep) {
-                const newCreature: Creature = { ...data, pos: nextStep };
+        if (canAct && onRoute && posClicked) {
+            // console.log(canAct, onRoute, posClicked);
+            const nextPos = findPath(position, posClicked);
+            if (nextPos) {
+                const newCreature: Creature = { ...data, pos: nextPos };
                 moveCreature(newCreature);
-                walk(nextStep);
+                walk(nextPos);
                 setAnimState(Direction.down);
-                updateStep();
                 useTurn();
             }
 
         }
-    }, [canAct, nextStep]);
+    }, [canAct, onRoute]);
 
     useKeyPress((e: KeyboardEvent) => {
         let keyPressed;

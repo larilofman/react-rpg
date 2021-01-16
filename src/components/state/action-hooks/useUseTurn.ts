@@ -11,7 +11,7 @@ export default function useUseTurn(faction: Faction) {
         setCanAct(false);
         setTimeout(() => {
             setUseTurnQueued(true);
-        }, 10);
+        }, 5);
 
     };
 
