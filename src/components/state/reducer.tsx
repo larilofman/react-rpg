@@ -15,30 +15,10 @@ export const reducer = (state: State, action: Action): State => {
                 mapLoaded: true
             };
         case ActionType.USE_TURN: {
-            let turnOf = Faction.Player;
-
-            if (!state.zoneData.creatures[Faction.Hostile].length && !state.zoneData.creatures[Faction.Friendly].length) {
-                turnOf = Faction.Player;
-            } else {
-                switch (action.payload) {
-                    case Faction.Player:
-                        turnOf = state.zoneData.creatures[Faction.Friendly].length ? Faction.Friendly : Faction.Hostile;
-                        break;
-                    case Faction.Friendly:
-                        turnOf = state.zoneData.creatures[Faction.Hostile].length ? Faction.Hostile : Faction.Player;
-                        break;
-                    case Faction.Hostile:
-                        turnOf = Faction.Player;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            // turnOf = (!state.zoneData.creatures[Faction.Hostile] && !state.zoneData.creatures[Faction.Friendly]) ? Faction.Player : Faction.Hostile;
             return {
                 ...state,
                 turn: {
-                    faction: turnOf,
+                    faction: action.payload,
                     num: state.turn.num + 1
                 }
             };
@@ -78,7 +58,6 @@ export const reducer = (state: State, action: Action): State => {
             };
         }
         case ActionType.ADD_CREATURES:
-            console.log(action.payload);
             return {
                 ...state,
                 zoneData: {
