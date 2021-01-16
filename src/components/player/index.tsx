@@ -31,7 +31,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     const { contact } = useContact();
     const [{ mapLoaded }] = useStateValue();
     const { posClicked } = useMouseClick();
-    const { findPath, onRoute } = usePathFinding();
+    const { findPath, onRoute, cancelPath } = usePathFinding();
 
 
     useEffect(() => {
@@ -54,7 +54,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
                 const newCreature: Creature = { ...data, pos: nextPos };
                 moveCreature(newCreature);
                 walk(nextPos);
-                setAnimState(Direction.down);
+                setAnimState(position, nextPos);
                 useTurn();
             }
 
@@ -80,6 +80,9 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
             case "ArrowLeft":
                 keyPressed = Direction.left;
                 break;
+            case "p":
+                cancelPath();
+                break;
             case " ":
                 useTurn();
                 return;
@@ -100,11 +103,9 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
                         walk(newTile.position);
                     }
                 }
-
+                setAnimState(position, newTile.position);
             }
             useTurn();
-            setAnimState(keyPressed);
-
         }
         // e.preventDefault();
     });
@@ -112,6 +113,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
     useEffect(() => {
         setPlayerPosition(position);
         updateCamera(position);
+        // console.log(position);
     }, [position]);
 
     return <GameObject

@@ -10,9 +10,9 @@ export default function usePathfinding() {
     const { isWalkable } = useCheckCollision();
     const [onRoute, setOnRoute] = useState(false);
 
-    // const cancelPath = () => {
-    //     // call from player to cancel walking
-    // };
+    const cancelPath = () => {
+        setOnRoute(false);
+    };
 
     const findPath = (start: Position, end: Position) => {
         setOnRoute(true);
@@ -49,5 +49,5 @@ export default function usePathfinding() {
         const newGrid = new Grid(nodes);
         return newGrid;
     };
-    return { findPath, onRoute };
+    return { findPath, onRoute, cancelPath };
 }

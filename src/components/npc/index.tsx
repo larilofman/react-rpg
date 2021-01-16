@@ -97,7 +97,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
         // }
 
         useTurn();
-        setAnimState(dir);
+        setAnimState(position, newPos);
     };
 
     return <GameObject

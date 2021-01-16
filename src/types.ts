@@ -88,3 +88,9 @@ export interface Attack {
     type: DamageType,
     damage: number
 }
+
+export enum TileStatus {
+    Passable,
+    Occupied,
+    NonPassable
+}
