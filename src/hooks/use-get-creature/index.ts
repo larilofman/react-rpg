@@ -34,7 +34,7 @@ export default function useGetCreature() {
     const getCreatureByPos = (pos: Position) => {
         let creature: Creature | undefined;
         for (const faction of Object.values(zoneData.creatures)) {
-            const c = faction.find(c => c.pos === pos);
+            const c = faction.find(c => (c.pos.x === pos.x && c.pos.y === pos.y));
             if (c) {
                 creature = c;
             }

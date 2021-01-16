@@ -7,7 +7,7 @@ import useAnimation from '../../hooks/use-animation';
 import useSetPlayerPosition from '../state/action-hooks/useSetPlayerPosition';
 import useUseTurn from '../state/action-hooks/useUseTurn';
 import useCamera from '../../hooks/use-camera';
-import { Direction, Position, Creature, TileStatus } from '../../types';
+import { Direction, Position, TileStatus, BaseCreature } from '../../types';
 import useCheckCollision from '../../hooks/use-get-tile';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
 import useContact from '../../hooks/use-contact';
@@ -17,7 +17,7 @@ import usePathFinding from '../../hooks/use-pathfinding';
 interface Props {
     skin: string
     startPos: Position
-    data: Creature
+    data: BaseCreature
 }
 
 const Player: React.FC<Props> = ({ skin, startPos, data }) => {
@@ -36,7 +36,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data }) => {
 
     useEffect(() => {
         if (mapLoaded) {
-            moveCreature(data);
+            moveCreature(data, startPos);
         }
     }, [mapLoaded]);
 

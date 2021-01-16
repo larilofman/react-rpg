@@ -1,10 +1,10 @@
 import { useStateValue, ActionType } from '../index';
-import { Creature } from '../../../types';
+import { BaseCreature } from '../../../types';
 
 export default function useRemoveCreature() {
     const [, dispatch] = useStateValue();
 
-    const removeCreature = (creature: Creature) => {
+    const removeCreature = (creature: BaseCreature) => {
         dispatch(
             {
                 type: ActionType.REMOVE_CREATURE,

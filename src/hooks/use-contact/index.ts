@@ -1,4 +1,4 @@
-import { Creature, Position, Faction } from '../../types';
+import { BaseCreature, Position, Faction } from '../../types';
 import useGetCreature from '../use-get-creature';
 import useMelee from '../use-melee';
 
@@ -6,16 +6,13 @@ export default function useContact() {
     const { getCreatureByPos, getContactingCreatures } = useGetCreature();
     const { meleeAttack } = useMelee();
 
-    function contact(actor: Creature, targetPos: Position) {
-        // const target = getCreatureByPos(targetPos);
-        const { attacker, target } = getContactingCreatures(actor.id, targetPos);
-
-        if (attacker && target) {
-            if (attacker.faction === Faction.Player) {
+    function contact(actor: BaseCreature, targetPos: Position) {
+        const target = getCreatureByPos(targetPos);
+        if (target) {
+            if (actor.faction === Faction.Player) {
                 switch (target.faction) {
                     case Faction.Hostile:
-                        console.log('melee');
-                        meleeAttack(attacker.id, target);
+                        meleeAttack(actor.id, target);
                         break;
                     case Faction.Friendly:
                         console.log('Bumped into friendly');
@@ -24,7 +21,7 @@ export default function useContact() {
                         break;
                 }
             } else {
-                if (attacker.faction === target.faction) {
+                if (actor.faction === target.faction) {
                     // Npc bumped into friendly
                     console.log('Npc bumped into one of its own');
                 } else {

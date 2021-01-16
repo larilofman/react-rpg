@@ -20,6 +20,10 @@ const EnemyManager: React.FC = () => {
     }, [mapLoaded]);
 
     useEffect(() => {
+        // for (const faction of Object.values(zoneData.creatures)) {
+        //     console.log(faction);
+        // }
+
         // const occupied = [];
         // for (let y = 0; y < zoneData.tiles.length; y++) {
         //     for (let x = 0; x < zoneData.tiles.length; x++) {
@@ -59,7 +63,7 @@ const EnemyManager: React.FC = () => {
     return (
         <>
             {zoneData.creatures[Faction.Hostile].map(e => (
-                <Npc key={e.id} skin="e1" startPosition={e.pos} data={e} />
+                <Npc key={e.id} skin="e1" startPosition={e.pos} data={{ id: e.id, faction: e.faction }} />
             ))}
         </>
     );

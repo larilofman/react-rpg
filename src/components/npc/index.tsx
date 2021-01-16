@@ -4,7 +4,7 @@ import useWalk from '../../hooks/use-walk';
 import useAnimation from '../../hooks/use-animation';
 import useWander from '../../hooks/use-wander';
 import { useStateValue } from '../state';
-import { Position, Creature, TileStatus } from '../../types';
+import { Position, BaseCreature, TileStatus } from '../../types';
 import useUseTurn from '../state/action-hooks/useUseTurn';
 import useGetTileInDirection from '../../hooks/use-get-tile';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
@@ -13,8 +13,8 @@ import calculateDistance from '../../utils/calculate-distance';
 
 interface Props {
     skin: string,
-    startPosition?: Position
-    data: Creature
+    startPosition: Position
+    data: BaseCreature
 }
 
 const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
@@ -29,7 +29,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data }) => {
 
     useEffect(() => {
         if (mapLoaded) {
-            moveCreature(data);
+            moveCreature(data, startPosition);
         }
     }, [mapLoaded]);
 

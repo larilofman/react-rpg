@@ -73,9 +73,12 @@ export interface Stats {
     damage: number
 }
 
-export interface Creature {
+export interface BaseCreature {
     id: string,
     faction: Faction
+}
+
+export interface Creature extends BaseCreature {
     pos: Position,
     stats: Stats
 }

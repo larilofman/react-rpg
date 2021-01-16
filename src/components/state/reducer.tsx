@@ -58,17 +58,16 @@ export const reducer = (state: State, action: Action): State => {
             // }
 
             // tiles[occupiedY][occupiedX].occupant = action.payload.creature.id;
-
             return {
                 ...state,
                 zoneData: {
                     ...state.zoneData,
                     creatures: {
                         ...state.zoneData.creatures,
-                        [action.payload.faction]: state.zoneData.creatures[action.payload.faction].map(
-                            c => c.id !== action.payload.id
+                        [action.payload.creature.faction]: state.zoneData.creatures[action.payload.creature.faction].map(
+                            c => c.id !== action.payload.creature.id
                                 ? c
-                                : action.payload
+                                : { ...c, pos: action.payload.pos }
                         )
                     }
 
@@ -76,6 +75,7 @@ export const reducer = (state: State, action: Action): State => {
             };
         }
         case ActionType.ADD_CREATURES:
+            console.log(action.payload);
             return {
                 ...state,
                 zoneData: {
