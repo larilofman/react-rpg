@@ -9,6 +9,7 @@ import useGetTiles from '../../hooks/use-get-tiles';
 import useContact from '../../hooks/use-contact';
 import calculateDistance from '../../utils/calculate-distance';
 import usePathFinding from '../../hooks/use-pathfinding';
+import useMoveCreature from '../state/action-hooks/useMoveCreature';
 
 interface Props {
     skin: string,
@@ -27,12 +28,13 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
     const { contact } = useContact();
     const [AIState, setAIState] = useState<NPCAIState>(NPCAIState.Wander);
     const { findPath } = usePathFinding();
+    const { moveCreature } = useMoveCreature();
 
     const canAct = () => turn.faction === data.faction;
 
     useEffect(() => {
         if (mapLoaded) {
-            move(startPosition);
+            moveCreature(data, startPosition);
         }
     }, [mapLoaded]);
 
