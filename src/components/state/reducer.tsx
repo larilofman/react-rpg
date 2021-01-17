@@ -1,3 +1,4 @@
+import { Faction } from '../../types';
 import { State, Action, ActionType } from '../state';
 
 export const reducer = (state: State, action: Action): State => {
@@ -77,7 +78,7 @@ export const reducer = (state: State, action: Action): State => {
                         ...state.zoneData.creatures,
                         [action.payload.faction]: state.zoneData.creatures[action.payload.faction].filter(c => c.id !== action.payload.id)
                     }
-                }
+                }, gameOver: action.payload.faction === Faction.Player
             };
         }
         default:

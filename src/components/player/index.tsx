@@ -102,7 +102,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data, useTurn }) => {
                 break;
         }
 
-        if (keyPressed !== undefined && turn.faction === data.faction) {
+        if (keyPressed !== undefined && turn.faction === data.faction && !onRoute) {
             const newTile = getTileInDirection(position, keyPressed);
 
             if (newTile) {

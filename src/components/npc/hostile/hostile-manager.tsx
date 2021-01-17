@@ -11,7 +11,7 @@ interface Props {
 }
 
 const EnemyManager: React.FC<Props> = ({ useTurn }) => {
-    const [{ zoneData, mapLoaded }] = useStateValue();
+    const [{ zoneData, mapLoaded, turn }] = useStateValue();
     const { findRandomFloorTile } = useFindRandomFloorTile();
     const { addCreatures } = useAddCreatures();
 

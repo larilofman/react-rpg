@@ -7,6 +7,7 @@ export default function useContact() {
     const { meleeAttack } = useMelee();
 
     function contact(actor: BaseCreature, targetPos: Position) {
+
         const target = getCreatureByPos(targetPos);
         if (target) {
             if (actor.faction === Faction.Player) {
@@ -26,7 +27,8 @@ export default function useContact() {
                     console.log('Npc bumped into one of its own');
                 } else {
                     // TODO: Npc attack
-                    console.log('Npc bumped into player');
+                    console.log('Npc bumped into player ', target);
+                    meleeAttack(actor.id, target);
                 }
             }
         }

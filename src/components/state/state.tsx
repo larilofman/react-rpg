@@ -10,6 +10,7 @@ export type State = {
     turn: { faction: Faction, num: number },
     cameraPosition: Position,
     displaySize: Dimensions,
+    gameOver: boolean
 };
 
 const initialState: State = {
@@ -19,7 +20,8 @@ const initialState: State = {
     mapLoaded: false,
     turn: { faction: Faction.Player, num: 0 },
     cameraPosition: { x: 0, y: 0 },
-    displaySize: { w: 19, h: 15 }
+    displaySize: { w: 19, h: 15 },
+    gameOver: false
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([

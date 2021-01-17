@@ -8,7 +8,7 @@ import useAddCreatures from '../state/action-hooks/useAddCreatures';
 import useUseTurn from '../state/action-hooks/useUseTurn';
 
 const GameManager: React.FC = () => {
-    const [{ playerPosition, mapLoaded }] = useStateValue();
+    const [{ playerPosition, mapLoaded, gameOver }] = useStateValue();
     const { addCreatures } = useAddCreatures();
     const { useTurn } = useUseTurn();
 
@@ -26,7 +26,7 @@ const GameManager: React.FC = () => {
 
     return (
         <>
-            <Player skin="f1" startPos={playerPosition} data={{ id: playerData.id, faction: playerData.faction }} useTurn={useTurn} />
+            {!gameOver && <Player skin="f1" startPos={playerPosition} data={{ id: playerData.id, faction: playerData.faction }} useTurn={useTurn} />}
             <HostileManager useTurn={useTurn} />
             <FriendlyManager useTurn={useTurn} />
         </>
