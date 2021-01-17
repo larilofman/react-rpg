@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Position } from '../../types';
 import { useStateValue } from '../../components/state';
-import usegetTileInDirection from '../use-get-tile';
+import useGetTiles from '../use-get-tiles';
 
 export default function useMouseClick() {
     const [posClicked, setPosClicked] = useState<Position | undefined>(undefined);
     const [zone, setZone] = useState<HTMLElement | null>(document.getElementById('zone-container'));
     const [{ tileSize, cameraPosition }] = useStateValue();
-    const { getTileAt } = usegetTileInDirection();
+    const { getTileAt } = useGetTiles();
     useEffect(() => {
         if (!zone) {
             setZone(document.getElementById("zone-container"));

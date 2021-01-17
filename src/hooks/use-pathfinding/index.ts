@@ -2,13 +2,13 @@ import { useState } from "react";
 import { Position, TileStatus } from '../../types';
 import { useStateValue } from '../../components/state';
 import PF, { Grid } from 'pathfinding';
-import usegetTileInDirection from '../use-get-tile';
-import Tile from "../../components/tile";
+import useGetTiles from '../use-get-tiles';
+import calculateDistance from '../../utils/calculate-distance';
 
 export default function usePathfinding() {
     const [finder] = useState<PF.AStarFinder>(new PF.AStarFinder());
     const [{ zoneData }] = useStateValue();
-    const { getTileStatus } = usegetTileInDirection();
+    const { getTileStatus, getRandomNearbyFloorTile } = useGetTiles();
     const [onRoute, setOnRoute] = useState(false);
 
     const cancelPath = () => {
@@ -18,7 +18,13 @@ export default function usePathfinding() {
     const findPath = (start: Position, end: Position, gridArg?: PF.Grid): Position | null => {
         setOnRoute(true);
         const grid = gridArg ? gridArg : createGrid();
-        const path = createPath(start, end, grid);
+        if (!grid.isWalkableAt(end.x, end.y)) {
+            if (calculateDistance(start, end) > 1.2) {
+                grid.setWalkableAt(end.x, end.y, true);
+            }
+        }
+        const path = createPath(start, end, grid.clone());
+
         if (path && path.length) {
             if (getTileStatus(path[0]) === TileStatus.Occupied) {
                 const clone = grid.clone();

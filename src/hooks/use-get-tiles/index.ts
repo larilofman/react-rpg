@@ -1,7 +1,7 @@
 import { Position, Tile, Direction, TileStatus } from '../../types';
 import { useStateValue } from '../../components/state';
 
-export default function useGetTileInDirection() {
+export default function useGetTiles() {
     const [{ zoneData }] = useStateValue();
 
     const isInBounds = (pos: Position): boolean => {
@@ -28,17 +28,6 @@ export default function useGetTileInDirection() {
                 }
             });
         }
-        // for (const [key, value] of Object.entries(zoneData.creatures)) {
-        //     // console.log(key + ':' + value);
-        //     value.forEach(creature => {
-
-        //         if (creature.pos.x === pos.x && creature.pos.y === pos.y) {
-        //             walkable = TileStatus.Occupied;
-        //             // console.log(creature.id, creature.pos.x, creature.pos.y, "originPos: ", pos.x, pos.y);
-        //         }
-        //         creatures.push(creature);
-        //     });
-        // }
         const tile = getTileAt(pos);
 
         if (!tile || !tile.passable) {
@@ -70,7 +59,21 @@ export default function useGetTileInDirection() {
         return { status: getTileStatus(newPos), pos: newPos };
     };
 
+    const getRandomNearbyFloorTile = (pos: Position, closestTo?: Position) => {
+        const nearbyFloors = [];
+        for (let y = pos.y - 1; y < pos.y + 2; y++) {
+            for (let x = pos.x - 1; x < pos.x + 2; x++) {
+                const tile = getTileAt({ x, y });
+                if (tile && tile.passable && !(tile.position.x === pos.x && tile.position.y === pos.y)) {
+                    nearbyFloors.push(tile);
+                }
+            }
+        }
+        const randomTile = nearbyFloors[Math.floor(Math.random() * nearbyFloors.length)];
+        return randomTile;
+    };
+
     return {
-        getTileInDirection, getTileStatus, getTileAt
+        getTileInDirection, getTileStatus, getTileAt, getRandomNearbyFloorTile
     };
 }
