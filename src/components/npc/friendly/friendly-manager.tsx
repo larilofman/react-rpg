@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { useStateValue } from '../../state';
 import useFindRandomFloorTile from '../../../hooks/use-find-random-floor-tile';
 import Npc from '..';
-import { Creature, Faction } from '../../../types';
+import { BaseCreature, Creature, Faction } from '../../../types';
 import useAddCreatures from '../../state/action-hooks/useAddCreatures';
 import { nanoid } from 'nanoid';
 
 interface Props {
-    useTurn: (faction: Faction) => void
+    useTurn: (creature: BaseCreature) => void
 }
 
 const FriendlyManager: React.FC<Props> = ({ useTurn }) => {

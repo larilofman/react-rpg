@@ -18,7 +18,7 @@ interface Props {
     skin: string
     startPos: Position
     data: BaseCreature
-    useTurn: (faction: Faction) => void
+    useTurn: (creature: BaseCreature) => void
 }
 
 const Player: React.FC<Props> = ({ skin, startPos, data, useTurn }) => {
@@ -64,12 +64,12 @@ const Player: React.FC<Props> = ({ skin, startPos, data, useTurn }) => {
     const move = (newPos: Position) => {
         walk(data, newPos);
         setAnimState(position, newPos);
-        useTurn(data.faction);
+        useTurn(data);
     };
 
     const contactCreature = (contactPos: Position) => {
         contact(data, contactPos);
-        useTurn(data.faction);
+        useTurn(data);
         setAnimState(position, contactPos);
     };
 
@@ -97,7 +97,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data, useTurn }) => {
                 cancelPath();
                 break;
             case " ":
-                useTurn(data.faction);
+                useTurn(data);
                 return;
             default:
                 break;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useStateValue, ActionType } from '../index';
-import { Faction } from '../../../types';
+import { BaseCreature, Faction } from '../../../types';
+import useGetCreature from '../../../hooks/use-get-creature';
 
 
 const resetTurns = () => {
@@ -12,20 +13,21 @@ export default function useUseTurn() {
     const [turnComplete, setTurnComplete] = useState<{ faction: Faction, turnCount: number }>();
     // const [currentFaction, setCurrentFaction] = useState<Faction>(turn.faction);
     const [turnsUsed, setTurnsUsed] = useState(resetTurns());
+    const { getCreatureById } = useGetCreature();
     const turnDelay = 50;
 
-    const useTurn = (faction: Faction) => {
+    const useTurn = (creature: BaseCreature) => {
         // When a character from next faction calls the function, change current faction
 
         // On every player turn, reset the tracker keeping counts of creatures of each faction that have acted
-        if (faction === Faction.Player) {
+        if (creature.faction === Faction.Player) {
             setTurnsUsed(resetTurns());
         }
         // Update the faction turns used tracker by adding the calling creature
         setTurnsUsed(prev => {
             return {
                 ...prev,
-                [faction]: (prev[faction] + 1)
+                [creature.faction]: (prev[creature.faction] + 1)
             };
         });
     };

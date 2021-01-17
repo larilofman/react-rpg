@@ -15,7 +15,7 @@ interface Props {
     skin: string,
     startPosition: Position
     data: BaseCreature
-    useTurn: (faction: Faction) => void
+    useTurn: (creature: BaseCreature) => void
     aggroDistance?: number
     stationary?: boolean
 }
@@ -71,7 +71,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
                     contactCreature(playerPosition);
                     break;
                 case NPCAIState.Idle:
-                    useTurn(data.faction);
+                    useTurn(data);
                     break;
                 default:
                     break;
@@ -82,12 +82,12 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
     const move = (newPos: Position) => {
         walk(data, newPos);
         setAnimState(position, newPos);
-        useTurn(data.faction);
+        useTurn(data);
     };
 
     const contactCreature = (contactPos: Position) => {
         contact(data, contactPos);
-        useTurn(data.faction);
+        useTurn(data);
         setAnimState(position, contactPos);
     };
 
@@ -99,7 +99,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
             walk(data, newPos);
         }
 
-        useTurn(data.faction);
+        useTurn(data);
         setAnimState(position, newPos);
     };
 

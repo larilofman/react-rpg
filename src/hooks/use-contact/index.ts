@@ -27,7 +27,7 @@ export default function useContact() {
                     console.log('Npc bumped into one of its own');
                 } else {
                     // TODO: Npc attack
-                    console.log('Npc bumped into player ', target);
+                    // console.log('Npc bumped into player ', target);
                     meleeAttack(actor.id, target);
                 }
             }
