@@ -102,19 +102,24 @@ const Player: React.FC<Props> = ({ skin, startPos, data, useTurn }) => {
                 break;
         }
 
-        if (keyPressed !== undefined && turn.faction === data.faction && !onRoute) {
-            const newTile = getTileInDirection(position, keyPressed);
+        if (keyPressed !== undefined && turn.faction === data.faction) {
+            if (onRoute) {
+                cancelPath();
+            } else {
+                const newTile = getTileInDirection(position, keyPressed);
 
-            if (newTile) {
-                if (getTileStatus(newTile.pos) === TileStatus.Occupied) {
-                    contactCreature(newTile.pos);
-                } else if (getTileStatus(newTile.pos) === TileStatus.Passable) {
-                    move(newTile.pos);
-                    setAnimState(position, newTile.pos);
-                } else {
-                    setAnimState(position, newTile.pos, false);
+                if (newTile) {
+                    if (getTileStatus(newTile.pos) === TileStatus.Occupied) {
+                        contactCreature(newTile.pos);
+                    } else if (getTileStatus(newTile.pos) === TileStatus.Passable) {
+                        move(newTile.pos);
+                        setAnimState(position, newTile.pos);
+                    } else {
+                        setAnimState(position, newTile.pos, false);
+                    }
                 }
             }
+
         }
         // e.preventDefault();
     });

@@ -8,7 +8,7 @@ import calculateDistance from '../../utils/calculate-distance';
 export default function usePathfinding() {
     const [finder] = useState<PF.AStarFinder>(new PF.AStarFinder());
     const [{ zoneData }] = useStateValue();
-    const { getTileStatus, getRandomNearbyFloorTile } = useGetTiles();
+    const { getTileStatus } = useGetTiles();
     const [onRoute, setOnRoute] = useState(false);
 
     const cancelPath = () => {

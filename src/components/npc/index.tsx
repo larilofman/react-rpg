@@ -8,6 +8,7 @@ import { Position, BaseCreature, TileStatus, Faction, NPCAIState } from '../../t
 import useGetTiles from '../../hooks/use-get-tiles';
 import useContact from '../../hooks/use-contact';
 import calculateDistance from '../../utils/calculate-distance';
+import usePathFinding from '../../hooks/use-pathfinding';
 
 interface Props {
     skin: string,
@@ -25,6 +26,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
     const { dir, step, setAnimState } = useAnimation(3);
     const { contact } = useContact();
     const [AIState, setAIState] = useState<NPCAIState>(NPCAIState.Wander);
+    const { findPath } = usePathFinding();
 
     const canAct = () => turn.faction === data.faction;
 
@@ -53,9 +55,13 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
                 case NPCAIState.Wander:
                     wander();
                     break;
-                case NPCAIState.Chase:
-                    wander();
+                case NPCAIState.Chase: {
+                    const nextPos = findPath(position, playerPosition);
+                    if (nextPos) {
+                        move(nextPos);
+                    }
                     break;
+                }
                 case NPCAIState.Melee:
                     contactCreature(playerPosition);
                     break;
