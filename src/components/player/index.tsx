@@ -12,6 +12,7 @@ import useMoveCreature from '../state/action-hooks/useMoveCreature';
 import useContact from '../../hooks/use-contact';
 import { useStateValue } from '../state';
 import usePathFinding from '../../hooks/use-pathfinding';
+import calculateDistance from '../../utils/calculate-distance';
 
 interface Props {
     skin: string
@@ -42,6 +43,9 @@ const Player: React.FC<Props> = ({ skin, startPos, data, useTurn }) => {
     // Mouse stuff - click to move - pathfinding
     useEffect(() => {
         if (posClicked) {
+            if (getTileStatus(posClicked) === TileStatus.Occupied && calculateDistance(position, posClicked) < 1.2) {
+                contactCreature(posClicked);
+            }
             findPath(position, posClicked);
         }
     }, [posClicked]);
@@ -60,6 +64,12 @@ const Player: React.FC<Props> = ({ skin, startPos, data, useTurn }) => {
         walk(data, newPos);
         setAnimState(position, newPos);
         useTurn(data.faction);
+    };
+
+    const contactCreature = (contactPos: Position) => {
+        contact(data, contactPos);
+        useTurn(data.faction);
+        setAnimState(position, contactPos);
     };
 
     // Keyboard input
@@ -97,13 +107,14 @@ const Player: React.FC<Props> = ({ skin, startPos, data, useTurn }) => {
 
             if (newTile) {
                 if (getTileStatus(newTile.pos) === TileStatus.Occupied) {
-                    contact(data, newTile.pos);
+                    contactCreature(newTile.pos);
                 } else if (getTileStatus(newTile.pos) === TileStatus.Passable) {
-                    walk(data, newTile.pos);
+                    move(newTile.pos);
+                    setAnimState(position, newTile.pos);
+                } else {
+                    setAnimState(position, newTile.pos, false);
                 }
-                setAnimState(position, newTile.pos);
             }
-            useTurn(data.faction);
         }
         // e.preventDefault();
     });

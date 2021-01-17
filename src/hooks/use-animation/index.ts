@@ -6,7 +6,7 @@ export default function useAnimation(animSteps = 3) {
     const [dir, setDir] = useState<Direction>(0);
     const [step, setStep] = useState(0);
 
-    const setAnimState = (oldPos: Position, newPos: Position) => {
+    const setAnimState = (oldPos: Position, newPos: Position, updateStep = true) => {
         const xDir = newPos.x - oldPos.x;
         const yDir = newPos.y - oldPos.y;
         let dir = Direction.down;
@@ -18,7 +18,10 @@ export default function useAnimation(animSteps = 3) {
             dir = Direction.up;
         }
         setDir(dir);
-        setStep(prev => prev < animSteps - 1 ? prev + 1 : 0);
+        if (updateStep) {
+            setStep(prev => prev < animSteps - 1 ? prev + 1 : 0);
+        }
+
     };
 
     return {

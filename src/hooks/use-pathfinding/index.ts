@@ -17,7 +17,9 @@ export default function usePathfinding() {
 
     const findPath = (start: Position, end: Position, gridArg?: PF.Grid): Position | null => {
         setOnRoute(true);
+        // Unless gridArg is passed recursively, create a new one
         const grid = gridArg ? gridArg : createGrid();
+        // If not next to the end, set it as walkable so path can be found next to it
         if (!grid.isWalkableAt(end.x, end.y)) {
             if (calculateDistance(start, end) > 1.2) {
                 grid.setWalkableAt(end.x, end.y, true);
@@ -27,6 +29,7 @@ export default function usePathfinding() {
 
         if (path && path.length) {
             if (getTileStatus(path[0]) === TileStatus.Occupied) {
+                // If next step is occupied by a creature, set it not walkable and call the function recursively with the updated grid
                 const clone = grid.clone();
                 clone.setWalkableAt(path[0].x, path[0].y, false);
                 return findPath(start, end, clone);
