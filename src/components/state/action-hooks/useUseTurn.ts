@@ -12,25 +12,29 @@ export default function useUseTurn() {
     const [turnComplete, setTurnComplete] = useState<{ faction: Faction, turnCount: number }>();
     const [currentFaction, setCurrentFaction] = useState<Faction>(turn.faction);
     const [turnsUsed, setTurnsUsed] = useState(resetTurns());
+    const turnDelay = 50;
 
     const useTurn = (faction: Faction) => {
+        // When a character from next faction calls the function, change current faction
         if (faction !== currentFaction) {
             setCurrentFaction(faction);
         }
+        // On every player turn, reset the tracker keeping counts of creatures of each faction that have acted
         if (faction === Faction.Player) {
             setTurnsUsed(resetTurns());
         }
+        // Update the faction turns used tracker by adding the calling creature
         setTurnsUsed(prev => {
             return {
                 ...prev,
                 [faction]: (prev[faction] + 1)
             };
         });
-
-        // }
     };
 
+
     useEffect(() => {
+        // Whenever tracker gets updated, check if all creatures of the faction have used their turn and if so, set the faction's turn complete
         if (turnsUsed[currentFaction] === zoneData.creatures[currentFaction].length) {
             setTimeout(() => {
                 setTurnComplete({ faction: currentFaction, turnCount: turn.num });
@@ -40,6 +44,7 @@ export default function useUseTurn() {
     }, [turnsUsed]);
 
     useEffect(() => {
+        // When a faction has finished their turn, find out the next faction based on current active factions on the map
         let nextTurn = Faction.Player;
 
         if (!zoneData.creatures[Faction.Hostile].length && !zoneData.creatures[Faction.Friendly].length) {
@@ -69,6 +74,7 @@ export default function useUseTurn() {
 
     }, [turnComplete]);
 
+    // Calculate the delay for a full turn of all active factions on the map
     const getDelay = () => {
         let factionsActive = 0;
         for (const faction of Object.values(zoneData.creatures)) {
@@ -77,7 +83,7 @@ export default function useUseTurn() {
             }
         }
 
-        const delay = 50 / factionsActive;
+        const delay = turnDelay / factionsActive;
         return delay;
     };
 
