@@ -59,17 +59,29 @@ export default function useGetTiles() {
         return { status: getTileStatus(newPos), pos: newPos };
     };
 
-    const getRandomNearbyFloorTile = (pos: Position, closestTo?: Position) => {
+    const getRandomNearbyFloorTile = (pos: Position, diagonal = false, canBeOccupied = true) => {
         const nearbyFloors = [];
         for (let y = pos.y - 1; y < pos.y + 2; y++) {
             for (let x = pos.x - 1; x < pos.x + 2; x++) {
-                const tile = getTileAt({ x, y });
-                if (tile && tile.passable && !(tile.position.x === pos.x && tile.position.y === pos.y)) {
-                    nearbyFloors.push(tile);
+                if (diagonal) {
+                    const tile = getTileAt({ x, y });
+                    if (tile && tile.passable && !(tile.position.x === pos.x && tile.position.y === pos.y)) {
+                        nearbyFloors.push(tile);
+                    }
+                } else {
+                    const tile = getTileAt({ x, y });
+                    if (tile && tile.passable &&
+                        (tile.position.x === pos.x || tile.position.y === pos.y) &&
+                        !(tile.position.x === pos.x && tile.position.y === pos.y)) {
+                        nearbyFloors.push(tile);
+                    }
                 }
+
             }
         }
+
         const randomTile = nearbyFloors[Math.floor(Math.random() * nearbyFloors.length)];
+        console.log(randomTile);
         return randomTile;
     };
 

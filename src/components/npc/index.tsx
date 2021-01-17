@@ -17,16 +17,17 @@ interface Props {
     data: BaseCreature
     useTurn: (faction: Faction) => void
     aggroDistance?: number
+    stationary?: boolean
 }
 
-const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistance = 5 }) => {
+const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistance = 5, stationary = false }) => {
     const [{ mapLoaded, turn, playerPosition }] = useStateValue();
     const { getRandomNearbyPos } = useWander();
-    const { getTileStatus } = useGetTiles();
+    const { getTileStatus, getRandomNearbyFloorTile } = useGetTiles();
     const { walk, position } = useWalk(startPosition);
     const { dir, step, setAnimState } = useAnimation(3);
     const { contact } = useContact();
-    const [AIState, setAIState] = useState<NPCAIState>(NPCAIState.Wander);
+    const [AIState, setAIState] = useState<NPCAIState>(NPCAIState.Idle);
     const { findPath } = usePathFinding();
     const { moveCreature } = useMoveCreature();
 
@@ -40,7 +41,9 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
 
     useEffect(() => {
         if (canAct()) {
-            if (calculateDistance(position, playerPosition) < 1.2) {
+            if (stationary) {
+                setAIState(NPCAIState.Idle);
+            } else if (calculateDistance(position, playerPosition) < 1.2) {
                 setAIState(NPCAIState.Melee);
             } else if (calculateDistance(position, playerPosition) < aggroDistance) {
                 setAIState(NPCAIState.Chase);
@@ -51,7 +54,6 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
     }, [turn]);
 
     useEffect(() => {
-        console.log(NPCAIState[AIState]);
         if (canAct()) {
             switch (AIState) {
                 case NPCAIState.Wander:
@@ -59,6 +61,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
                     break;
                 case NPCAIState.Chase: {
                     const nextPos = findPath(position, playerPosition);
+                    // const nextPos = findPath(position, getRandomNearbyFloorTile(playerPosition, false).position );
                     if (nextPos) {
                         move(nextPos);
                     }
@@ -66,6 +69,9 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
                 }
                 case NPCAIState.Melee:
                     contactCreature(playerPosition);
+                    break;
+                case NPCAIState.Idle:
+                    useTurn(data.faction);
                     break;
                 default:
                     break;

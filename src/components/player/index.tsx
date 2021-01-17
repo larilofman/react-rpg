@@ -26,7 +26,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data, useTurn }) => {
     const { walk, position } = useWalk(startPos);
     const { dir, step, setAnimState } = useAnimation(3);
     const { updateCamera } = useCamera();
-    const { getTileInDirection, getTileStatus } = useCheckCollision();
+    const { getTileInDirection, getTileStatus, getRandomNearbyFloorTile } = useCheckCollision();
     const { moveCreature } = useMoveCreature();
     const { contact } = useContact();
     const [{ mapLoaded, turn }] = useStateValue();
@@ -47,6 +47,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data, useTurn }) => {
                 contactCreature(posClicked);
             }
             findPath(position, posClicked);
+            // getRandomNearbyFloorTile(posClicked, true);
         }
     }, [posClicked]);
 

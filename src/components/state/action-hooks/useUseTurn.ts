@@ -10,15 +10,13 @@ const resetTurns = () => {
 export default function useUseTurn() {
     const [{ zoneData, turn }, dispatch] = useStateValue();
     const [turnComplete, setTurnComplete] = useState<{ faction: Faction, turnCount: number }>();
-    const [currentFaction, setCurrentFaction] = useState<Faction>(turn.faction);
+    // const [currentFaction, setCurrentFaction] = useState<Faction>(turn.faction);
     const [turnsUsed, setTurnsUsed] = useState(resetTurns());
     const turnDelay = 50;
 
     const useTurn = (faction: Faction) => {
         // When a character from next faction calls the function, change current faction
-        if (faction !== currentFaction) {
-            setCurrentFaction(faction);
-        }
+
         // On every player turn, reset the tracker keeping counts of creatures of each faction that have acted
         if (faction === Faction.Player) {
             setTurnsUsed(resetTurns());
@@ -35,9 +33,9 @@ export default function useUseTurn() {
 
     useEffect(() => {
         // Whenever tracker gets updated, check if all creatures of the faction have used their turn and if so, set the faction's turn complete
-        if (turnsUsed[currentFaction] === zoneData.creatures[currentFaction].length) {
+        if (turnsUsed[turn.faction] === zoneData.creatures[turn.faction].length) {
             setTimeout(() => {
-                setTurnComplete({ faction: currentFaction, turnCount: turn.num });
+                setTurnComplete({ faction: turn.faction, turnCount: turn.num });
             }, getDelay());
 
         }

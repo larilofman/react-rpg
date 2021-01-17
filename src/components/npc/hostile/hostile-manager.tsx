@@ -49,7 +49,7 @@ const EnemyManager: React.FC<Props> = ({ useTurn }) => {
 
     const spawnEnemies = () => {
         const enemies = [];
-        for (let index = 0; index < 5; index++) {
+        for (let index = 0; index < 1; index++) {
             const enemy: Creature = {
                 faction: Faction.Hostile,
                 pos: findRandomFloorTile().position,
