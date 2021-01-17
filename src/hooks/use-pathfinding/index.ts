@@ -3,6 +3,7 @@ import { Position, TileStatus } from '../../types';
 import { useStateValue } from '../../components/state';
 import PF, { Grid } from 'pathfinding';
 import usegetTileInDirection from '../use-get-tile';
+import Tile from "../../components/tile";
 
 export default function usePathfinding() {
     const [finder] = useState<PF.AStarFinder>(new PF.AStarFinder());
@@ -14,14 +15,20 @@ export default function usePathfinding() {
         setOnRoute(false);
     };
 
-    const findPath = (start: Position, end: Position) => {
+    const findPath = (start: Position, end: Position, gridArg?: PF.Grid): Position | null => {
         setOnRoute(true);
-        const grid = createGrid();
+        const grid = gridArg ? gridArg : createGrid();
         const path = createPath(start, end, grid);
         if (path && path.length) {
+            if (getTileStatus(path[0]) === TileStatus.Occupied) {
+                const clone = grid.clone();
+                clone.setWalkableAt(path[0].x, path[0].y, false);
+                return findPath(start, end, clone);
+            }
             return path[0];
         } else {
             setOnRoute(false);
+            return null;
         }
     };
 
@@ -39,7 +46,7 @@ export default function usePathfinding() {
             const row = [];
             for (let x = 0; x < zoneData.tiles[y].length; x++) {
                 const tilePos = zoneData.tiles[y][x].position;
-                if (getTileStatus(tilePos) === TileStatus.NonPassable || getTileStatus(tilePos) === TileStatus.Occupied) {
+                if (getTileStatus(tilePos) === TileStatus.NonPassable) {
                     row.push(1);
                 } else {
                     row.push(0);
