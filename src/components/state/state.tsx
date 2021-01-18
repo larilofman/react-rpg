@@ -7,7 +7,7 @@ export type State = {
     tileSize: Dimensions
     zoneData: ZoneData,
     mapLoaded: boolean,
-    turn: { faction: Faction, num: number },
+    turn: { faction: Faction, count: number, creature: string },
     cameraPosition: Position,
     displaySize: Dimensions,
     gameOver: boolean
@@ -18,7 +18,7 @@ const initialState: State = {
     tileSize: { w: 32, h: 32 },
     zoneData: { size: { w: 22, h: 22 }, tiles: [], creatures: { 0: [], 1: [], 2: [] } },
     mapLoaded: false,
-    turn: { faction: Faction.Player, num: 0 },
+    turn: { faction: Faction.Player, count: 0, creature: 'player' },
     cameraPosition: { x: 0, y: 0 },
     displaySize: { w: 19, h: 15 },
     gameOver: false

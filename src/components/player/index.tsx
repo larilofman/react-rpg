@@ -33,7 +33,6 @@ const Player: React.FC<Props> = ({ skin, startPos, data, useTurn }) => {
     const { posClicked } = useMouseClick();
     const { findPath, onRoute, cancelPath } = usePathFinding();
 
-
     useEffect(() => {
         if (mapLoaded) {
             moveCreature(data, startPos);
@@ -47,17 +46,15 @@ const Player: React.FC<Props> = ({ skin, startPos, data, useTurn }) => {
                 contactCreature(posClicked);
             }
             findPath(position, posClicked);
-            // getRandomNearbyFloorTile(posClicked, true);
         }
     }, [posClicked]);
 
     useEffect(() => {
-        if (turn.faction === data.faction && onRoute && posClicked) {
+        if (turn.creature === data.id && onRoute && posClicked) {
             const nextPos = findPath(position, posClicked);
             if (nextPos) {
                 move(nextPos);
             }
-
         }
     }, [turn, onRoute]);
 
@@ -103,7 +100,7 @@ const Player: React.FC<Props> = ({ skin, startPos, data, useTurn }) => {
                 break;
         }
 
-        if (keyPressed !== undefined && turn.faction === data.faction) {
+        if (keyPressed !== undefined && turn.creature === data.id) {
             if (onRoute) {
                 cancelPath();
             } else {

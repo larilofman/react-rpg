@@ -31,8 +31,6 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
     const { findPath } = usePathFinding();
     const { moveCreature } = useMoveCreature();
 
-    const canAct = () => turn.faction === data.faction;
-
     useEffect(() => {
         if (mapLoaded) {
             moveCreature(data, startPosition);
@@ -40,7 +38,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
     }, [mapLoaded]);
 
     useEffect(() => {
-        if (canAct()) {
+        if (turn.creature === data.id) {
             if (stationary) {
                 setAIState(NPCAIState.Idle);
             } else if (calculateDistance(position, playerPosition) < 1.2) {
@@ -51,10 +49,10 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
                 setAIState(NPCAIState.Wander);
             }
         }
-    }, [turn]);
+    }, [turn.creature]);
 
     useEffect(() => {
-        if (canAct()) {
+        if (turn.creature === data.id) {
             switch (AIState) {
                 case NPCAIState.Wander:
                     wander();
@@ -74,10 +72,11 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
                     useTurn(data);
                     break;
                 default:
+                    console.log('default');
                     break;
             }
         }
-    }, [AIState, turn]);
+    }, [AIState, turn.creature]);
 
     const move = (newPos: Position) => {
         walk(data, newPos);

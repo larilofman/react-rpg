@@ -1,3 +1,4 @@
+import { createTrue } from 'typescript';
 import { Faction } from '../../types';
 import { State, Action, ActionType } from '../state';
 
@@ -14,15 +15,23 @@ export const reducer = (state: State, action: Action): State => {
                 zoneData: action.payload,
                 mapLoaded: true
             };
-        case ActionType.USE_TURN: {
+        case ActionType.SET_FACTION_TURN:
             return {
                 ...state,
                 turn: {
-                    faction: action.payload,
-                    num: state.turn.num + 1
+                    ...state.turn,
+                    count: state.turn.count + 1,
+                    faction: action.payload
                 }
             };
-        }
+        case ActionType.SET_CREATURE_TURN:
+            return {
+                ...state,
+                turn: {
+                    ...state.turn,
+                    creature: action.payload
+                }
+            };
         case ActionType.SET_CAMERA_POSITION:
             return {
                 ...state,
