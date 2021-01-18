@@ -16,7 +16,23 @@ export default function usePathfinding() {
     };
 
     const findPath = (start: Position, end: Position, gridArg?: PF.Grid): Position | null => {
-        setOnRoute(true);
+        if (!onRoute) {
+            setOnRoute(true);
+        }
+
+
+
+
+        // dirty delay hack
+
+        // const date = Date.now();
+        // let currentDate = null;
+        // do {
+        //     currentDate = Date.now();
+        // } while (currentDate - date < 50);
+
+
+
         // Unless gridArg is passed recursively, create a new one
         const grid = gridArg ? gridArg : createGrid();
         // If not next to the end, set it as walkable so path can be found next to it

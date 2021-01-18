@@ -1,3 +1,9 @@
 usekeypress hookkiin kaikki keyboard jutut ja hakee nappi arrayt jostain conffista
 
-tuo takaisin typistetty creature jossa vain id ja faction ettei turhaan passailla esim playerille positionia ym.
+
+peli alkaa, turn faction on pelaaja. resetoidaan
+haetaan zonedatasta kaikki factionin creaturet, joiden määrä pidetään tallessa statessa indexinä
+
+annetaan vuoro faction creaturejen [i]:lle, joka on 0. asetetaan se turn.creatureksi
+
+kun creature kutsuu useTurnia, lisätään ++i kunhan i < creatures.length, muutoin kutsutaan factionin vaihtoa

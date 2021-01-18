@@ -10,7 +10,7 @@ interface Props {
     useTurn: (creature: BaseCreature) => void
 }
 
-const EnemyManager: React.FC<Props> = ({ useTurn }) => {
+const HostileManager: React.FC<Props> = ({ useTurn }) => {
     const [{ zoneData, mapLoaded, turn }] = useStateValue();
     const { findRandomFloorTile } = useFindRandomFloorTile();
     const { addCreatures } = useAddCreatures();
@@ -74,4 +74,4 @@ const EnemyManager: React.FC<Props> = ({ useTurn }) => {
 
 };
 
-export default EnemyManager;
+export default HostileManager;

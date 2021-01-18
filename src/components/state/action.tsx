@@ -3,7 +3,8 @@ import { Position, ZoneData, Creature, Faction, BaseCreature } from '../../types
 export enum ActionType {
     "SET_PLAYER_POSITION",
     "SET_MAP",
-    "USE_TURN",
+    "SET_FACTION_TURN",
+    "SET_CREATURE_TURN",
     "SET_CAMERA_POSITION",
     "MOVE_CREATURE",
     "ADD_CREATURES",
@@ -22,8 +23,12 @@ export type Action =
         payload: ZoneData;
     }
     | {
-        type: ActionType.USE_TURN;
+        type: ActionType.SET_FACTION_TURN;
         payload: Faction
+    }
+    | {
+        type: ActionType.SET_CREATURE_TURN;
+        payload: string
     }
     | {
         type: ActionType.SET_CAMERA_POSITION;

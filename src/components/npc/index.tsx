@@ -31,53 +31,43 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
     const { findPath } = usePathFinding();
     const { moveCreature } = useMoveCreature();
 
-    const canAct = () => turn.faction === data.faction;
-
     useEffect(() => {
         if (mapLoaded) {
             moveCreature(data, startPosition);
         }
     }, [mapLoaded]);
 
+    // useEffect(() => {
+    //     if (turn.creature === data.id && turn.faction === data.faction) {
+    //         if (stationary) {
+    //             setAIState(NPCAIState.Idle);
+    //         } else if (calculateDistance(position, playerPosition) < 1.2) {
+    //             setAIState(NPCAIState.Melee);
+    //         } else if (calculateDistance(position, playerPosition) < aggroDistance) {
+    //             setAIState(NPCAIState.Chase);
+    //         } else {
+    //             setAIState(NPCAIState.Wander);
+    //         }
+    //     }
+    // }, [turn.creature]);
+
     useEffect(() => {
-        if (canAct()) {
+        if (turn.creature === data.id && turn.faction === data.faction) {
             if (stationary) {
-                setAIState(NPCAIState.Idle);
+                useTurn(data);
             } else if (calculateDistance(position, playerPosition) < 1.2) {
-                setAIState(NPCAIState.Melee);
+                contactCreature(playerPosition);
             } else if (calculateDistance(position, playerPosition) < aggroDistance) {
-                setAIState(NPCAIState.Chase);
+                const nextPos = findPath(position, playerPosition);
+                // const nextPos = findPath(position, getRandomNearbyFloorTile(playerPosition, false).position );
+                if (nextPos) {
+                    move(nextPos);
+                }
             } else {
-                setAIState(NPCAIState.Wander);
+                wander();
             }
         }
     }, [turn]);
-
-    useEffect(() => {
-        if (canAct()) {
-            switch (AIState) {
-                case NPCAIState.Wander:
-                    wander();
-                    break;
-                case NPCAIState.Chase: {
-                    const nextPos = findPath(position, playerPosition);
-                    // const nextPos = findPath(position, getRandomNearbyFloorTile(playerPosition, false).position );
-                    if (nextPos) {
-                        move(nextPos);
-                    }
-                    break;
-                }
-                case NPCAIState.Melee:
-                    contactCreature(playerPosition);
-                    break;
-                case NPCAIState.Idle:
-                    useTurn(data);
-                    break;
-                default:
-                    break;
-            }
-        }
-    }, [AIState, turn]);
 
     const move = (newPos: Position) => {
         walk(data, newPos);
