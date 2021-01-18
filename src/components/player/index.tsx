@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import GameObject from '../game-object';
 import useKeyPress from '../../hooks/use-key-press';
 import useMouseClick from '../../hooks/use-mouse-click';
@@ -6,7 +6,7 @@ import useWalk from '../../hooks/use-walk';
 import useAnimation from '../../hooks/use-animation';
 import useSetPlayerPosition from '../state/action-hooks/useSetPlayerPosition';
 import useCamera from '../../hooks/use-camera';
-import { Direction, Position, TileStatus, BaseCreature } from '../../types';
+import { Direction, Position, TileStatus, BaseCreature, Faction } from '../../types';
 import useCheckCollision from '../../hooks/use-get-tiles';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
 import useContact from '../../hooks/use-contact';
@@ -32,11 +32,15 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     const { posClicked } = useMouseClick();
     const { findPath, onRoute, cancelPath } = usePathFinding();
     const { keyPressed } = useKeyPress();
+    const [canAct, setCanAct] = useState(true);
 
     useEffect(() => {
         if (mapLoaded) {
             moveCreature(data, playerPosition);
         }
+        setInterval(() => {
+            setCanAct(prev => (!prev));
+        }, 100);
     }, [mapLoaded]);
 
     // Mouse stuff - click to move - pathfinding
@@ -52,15 +56,10 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     }, [posClicked]);
 
     useEffect(() => {
-        if (turn.faction === data.faction && turn.creature === data.id) {
+        // console.log(Faction[turn.faction], turn.creature);
+
+        if (canAct && turn.faction === data.faction && turn.creature === data.id) {
             if (keyPressed) {
-
-                // const date = Date.now();
-                // let currentDate = null;
-                // do {
-                //     currentDate = Date.now();
-                // } while (currentDate - date < 50);
-
                 if (onRoute) {
                     cancelPath();
                 }
@@ -109,7 +108,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
                 }
             }
         }
-    }, [turn, onRoute, keyPressed]);
+    }, [canAct]);
 
     const move = (newPos: Position) => {
         walk(data, newPos);

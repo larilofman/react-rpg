@@ -21,7 +21,8 @@ export const reducer = (state: State, action: Action): State => {
                 turn: {
                     ...state.turn,
                     count: state.turn.count + 1,
-                    faction: action.payload
+                    faction: action.payload.faction,
+                    creature: action.payload.creature
                 }
             };
         case ActionType.SET_CREATURE_TURN:

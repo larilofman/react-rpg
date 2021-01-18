@@ -16,13 +16,13 @@ export default function useUseTurn() {
     useEffect(() => {
         if (mapLoaded) {
             // If index is at max(faction about to change), add a little delay
-            if (factionIndex >= zoneData.creatures[turn.faction].length) {
-                const date = Date.now();
-                let currentDate = null;
-                do {
-                    currentDate = Date.now();
-                } while (currentDate - date < getDelay());
-            }
+            // if (factionIndex === zoneData.creatures[turn.faction].length) {
+            //     const date = Date.now();
+            //     let currentDate = null;
+            //     do {
+            //         currentDate = Date.now();
+            //     } while (currentDate - date < getDelay());
+            // }
             // More creatures on the faction left, so set next one's turn
             if (factionIndex < zoneData.creatures[turn.faction].length) {
                 dispatch(
@@ -34,10 +34,11 @@ export default function useUseTurn() {
             } else {
                 // Give turn to next faction and reset the index
                 setFactionIndex(0);
+                const nextFaction = getNextFaction();
                 dispatch(
                     {
                         type: ActionType.SET_FACTION_TURN,
-                        payload: getNextFaction()
+                        payload: { faction: nextFaction, creature: zoneData.creatures[nextFaction][0].id }
                     }
                 );
             }
@@ -45,17 +46,17 @@ export default function useUseTurn() {
     }, [factionIndex]);
 
     // When faction changes, give turn to the first one(as faction index was reset to 0 before faction change was called)
-    useEffect(() => {
-        if (zoneData.creatures && zoneData.creatures[turn.faction].length) {
-            dispatch(
-                {
-                    type: ActionType.SET_CREATURE_TURN,
-                    payload: zoneData.creatures[turn.faction][factionIndex].id
-                }
-            );
-        }
+    // useEffect(() => {
+    //     if (zoneData.creatures && zoneData.creatures[turn.faction].length) {
+    //         dispatch(
+    //             {
+    //                 type: ActionType.SET_CREATURE_TURN,
+    //                 payload: zoneData.creatures[turn.faction][factionIndex].id
+    //             }
+    //         );
+    //     }
 
-    }, [turn.faction]);
+    // }, [turn.faction]);
 
 
     // If other factions are empty, give turn to player. Otherwise give the turn to the next faction if it has creatures

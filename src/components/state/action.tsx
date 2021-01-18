@@ -24,7 +24,7 @@ export type Action =
     }
     | {
         type: ActionType.SET_FACTION_TURN;
-        payload: Faction
+        payload: { faction: Faction, creature: string }
     }
     | {
         type: ActionType.SET_CREATURE_TURN;
