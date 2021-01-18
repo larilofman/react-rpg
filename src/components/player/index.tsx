@@ -55,6 +55,12 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
         if (turn.faction === data.faction && turn.creature === data.id) {
             if (keyPressed) {
 
+                // const date = Date.now();
+                // let currentDate = null;
+                // do {
+                //     currentDate = Date.now();
+                // } while (currentDate - date < 50);
+
                 if (onRoute) {
                     cancelPath();
                 }
