@@ -26,7 +26,7 @@ const GameManager: React.FC = () => {
 
     return (
         <>
-            {!gameOver && <Player skin="f1" startPos={playerPosition} data={{ id: playerData.id, faction: playerData.faction }} useTurn={useTurn} />}
+            {!gameOver && <Player skin="f1" data={{ id: playerData.id, faction: playerData.faction }} useTurn={useTurn} />}
             <HostileManager useTurn={useTurn} />
             <FriendlyManager useTurn={useTurn} />
         </>

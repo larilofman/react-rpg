@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import GameObject from '../game-object';
 import useKeyPress from '../../hooks/use-key-press';
 import useMouseClick from '../../hooks/use-mouse-click';
@@ -16,26 +16,26 @@ import calculateDistance from '../../utils/calculate-distance';
 
 interface Props {
     skin: string
-    startPos: Position
     data: BaseCreature
     useTurn: (creature: BaseCreature) => void
 }
 
-const Player: React.FC<Props> = ({ skin, startPos, data, useTurn }) => {
+const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
+    const [{ mapLoaded, turn, playerPosition }] = useStateValue();
     const { setPlayerPosition } = useSetPlayerPosition();
-    const { walk, position } = useWalk(startPos);
+    const { walk, position } = useWalk(playerPosition);
     const { dir, step, setAnimState } = useAnimation(3);
     const { updateCamera } = useCamera();
     const { getTileInDirection, getTileStatus, getRandomNearbyFloorTile } = useCheckCollision();
     const { moveCreature } = useMoveCreature();
     const { contact } = useContact();
-    const [{ mapLoaded, turn }] = useStateValue();
     const { posClicked } = useMouseClick();
     const { findPath, onRoute, cancelPath } = usePathFinding();
+    const [lastTurn, setLastTurn] = useState(0);
 
     useEffect(() => {
         if (mapLoaded) {
-            moveCreature(data, startPos);
+            moveCreature(data, playerPosition);
         }
     }, [mapLoaded]);
 

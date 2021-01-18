@@ -5,7 +5,7 @@ import useGetCreature from '../../../hooks/use-get-creature';
 
 
 export default function useUseTurn() {
-    const [{ zoneData, turn }, dispatch] = useStateValue();
+    const [{ zoneData, turn, mapLoaded }, dispatch] = useStateValue();
     const [factionIndex, setFactionIndex] = useState(0);
     const turnDelay = 50;
 
@@ -22,29 +22,38 @@ export default function useUseTurn() {
     }, [turn.faction]);
 
     useEffect(() => {
-        if (factionIndex < zoneData.creatures[turn.faction].length) {
-            dispatch(
-                {
-                    type: ActionType.SET_CREATURE_TURN,
-                    payload: zoneData.creatures[turn.faction][factionIndex].id
-                }
-            );
-        } else {
-            setFactionIndex(0);
-            dispatch(
-                {
-                    type: ActionType.SET_FACTION_TURN,
-                    payload: getNextFaction()
-                }
-            );
+        if (mapLoaded) {
+            if (factionIndex >= zoneData.creatures[turn.faction].length) {
+                const date = Date.now();
+                let currentDate = null;
+                do {
+                    currentDate = Date.now();
+                } while (currentDate - date < getDelay());
+            }
+            if (factionIndex < zoneData.creatures[turn.faction].length) {
+                dispatch(
+                    {
+                        type: ActionType.SET_CREATURE_TURN,
+                        payload: zoneData.creatures[turn.faction][factionIndex].id
+                    }
+                );
+            } else {
+                setFactionIndex(0);
+                dispatch(
+                    {
+                        type: ActionType.SET_FACTION_TURN,
+                        payload: getNextFaction()
+                    }
+                );
+            }
         }
     }, [factionIndex]);
 
     const useTurn = (creature: BaseCreature) => {
-        setTimeout(() => {
-            setFactionIndex(prev => prev + 1);
-            // console.log(creature.id);
-        }, getDelay());
+        // setTimeout(() => {
+        setFactionIndex(prev => prev + 1);
+        // console.log(creature.id);
+        // }, getDelay());
 
     };
 
@@ -75,7 +84,7 @@ export default function useUseTurn() {
             }
         }
 
-        const delay = turnDelay / factionsActive / zoneData.creatures[turn.faction].length;
+        const delay = turnDelay / factionsActive;
         return delay;
     };
 
