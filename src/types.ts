@@ -97,10 +97,3 @@ export enum TileStatus {
     Occupied,
     NonPassable
 }
-
-export enum NPCAIState {
-    Idle,
-    Wander,
-    Chase,
-    Melee
-}

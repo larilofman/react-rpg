@@ -1,4 +1,3 @@
-import { createTrue } from 'typescript';
 import { Faction } from '../../types';
 import { State, Action, ActionType } from '../state';
 

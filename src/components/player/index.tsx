@@ -6,7 +6,7 @@ import useWalk from '../../hooks/use-walk';
 import useAnimation from '../../hooks/use-animation';
 import useSetPlayerPosition from '../state/action-hooks/useSetPlayerPosition';
 import useCamera from '../../hooks/use-camera';
-import { Direction, Position, TileStatus, BaseCreature, Faction } from '../../types';
+import { Direction, Position, TileStatus, BaseCreature } from '../../types';
 import useCheckCollision from '../../hooks/use-get-tiles';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
 import useContact from '../../hooks/use-contact';

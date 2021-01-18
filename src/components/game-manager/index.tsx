@@ -8,7 +8,7 @@ import useAddCreatures from '../state/action-hooks/useAddCreatures';
 import useUseTurn from '../state/action-hooks/useUseTurn';
 
 const GameManager: React.FC = () => {
-    const [{ playerPosition, mapLoaded, gameOver }] = useStateValue();
+    const [{ mapLoaded, gameOver }] = useStateValue();
     const { addCreatures } = useAddCreatures();
     const { useTurn } = useUseTurn();
 

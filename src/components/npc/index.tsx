@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Sprite from '../sprite';
 import useWalk from '../../hooks/use-walk';
 import useAnimation from '../../hooks/use-animation';
 import useWander from '../../hooks/use-wander';
 import { useStateValue } from '../state';
-import { Position, BaseCreature, TileStatus, Faction, NPCAIState } from '../../types';
+import { Position, BaseCreature, TileStatus } from '../../types';
 import useGetTiles from '../../hooks/use-get-tiles';
 import useContact from '../../hooks/use-contact';
 import calculateDistance from '../../utils/calculate-distance';
@@ -23,11 +23,10 @@ interface Props {
 const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistance = 5, stationary = false }) => {
     const [{ mapLoaded, turn, playerPosition }] = useStateValue();
     const { getRandomNearbyPos } = useWander();
-    const { getTileStatus, getRandomNearbyFloorTile } = useGetTiles();
+    const { getTileStatus } = useGetTiles();
     const { walk, position } = useWalk(startPosition);
     const { dir, step, setAnimState } = useAnimation(3);
     const { contact } = useContact();
-    const [AIState, setAIState] = useState<NPCAIState>(NPCAIState.Idle);
     const { findPath } = usePathFinding();
     const { moveCreature } = useMoveCreature();
 
@@ -37,34 +36,19 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
         }
     }, [mapLoaded]);
 
-    // useEffect(() => {
-    //     if (turn.creature === data.id && turn.faction === data.faction) {
-    //         if (stationary) {
-    //             setAIState(NPCAIState.Idle);
-    //         } else if (calculateDistance(position, playerPosition) < 1.2) {
-    //             setAIState(NPCAIState.Melee);
-    //         } else if (calculateDistance(position, playerPosition) < aggroDistance) {
-    //             setAIState(NPCAIState.Chase);
-    //         } else {
-    //             setAIState(NPCAIState.Wander);
-    //         }
-    //     }
-    // }, [turn.creature]);
-
     useEffect(() => {
         if (turn.creature === data.id && turn.faction === data.faction) {
-            if (stationary) {
+            if (stationary) { // Idle
                 useTurn(data);
-            } else if (calculateDistance(position, playerPosition) < 1.2) {
+            } else if (calculateDistance(position, playerPosition) < 1.2) { // Melee
                 contactCreature(playerPosition);
-            } else if (calculateDistance(position, playerPosition) < aggroDistance) {
+            } else if (calculateDistance(position, playerPosition) < aggroDistance) { // Chase
                 const nextPos = findPath(position, playerPosition);
-                // const nextPos = findPath(position, getRandomNearbyFloorTile(playerPosition, false).position );
                 if (nextPos) {
                     move(nextPos);
                 }
             } else {
-                wander();
+                wander(); // Wander
             }
         }
     }, [turn]);
