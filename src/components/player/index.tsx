@@ -40,7 +40,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
         }
         setInterval(() => {
             setCanAct(prev => (!prev));
-        }, 100);
+        }, 90);
     }, [mapLoaded]);
 
     // Mouse stuff - click to move - pathfinding
