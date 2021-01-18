@@ -19,7 +19,7 @@ export const reducer = (state: State, action: Action): State => {
                 ...state,
                 turn: {
                     ...state.turn,
-                    count: state.turn.count + 1,
+                    count: action.payload === Faction.Player ? state.turn.count + 1 : state.turn.count,
                     faction: action.payload
                 }
             };
