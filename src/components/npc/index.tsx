@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import GameObject from '../game-object';
+import Sprite from '../sprite';
 import useWalk from '../../hooks/use-walk';
 import useAnimation from '../../hooks/use-animation';
 import useWander from '../../hooks/use-wander';
@@ -93,8 +93,8 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
         setAnimState(position, newPos);
     };
 
-    return <GameObject
-        spriteData={{
+    return <Sprite
+        data={{
             offset_x: step,
             offset_y: dir,
             image: `/sprites/skins/${skin}.png`,

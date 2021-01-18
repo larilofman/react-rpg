@@ -1,5 +1,5 @@
 import React from 'react';
-import GameObject from '../game-object';
+import Sprite from '../sprite';
 import { Position, SpriteData } from '../../types';
 
 interface Props {
@@ -9,8 +9,8 @@ interface Props {
 
 const Tile: React.FC<Props> = ({ position = { x: 0, y: 0 }, spriteData }) => {
 
-    return <GameObject
-        spriteData={spriteData}
+    return <Sprite
+        data={spriteData}
         position={position}
     />;
 

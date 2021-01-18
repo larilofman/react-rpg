@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import GameObject from '../game-object';
+import Sprite from '../sprite';
 import useKeyPress from '../../hooks/use-key-press';
 import useMouseClick from '../../hooks/use-mouse-click';
 import useWalk from '../../hooks/use-walk';
@@ -38,12 +38,13 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
         if (mapLoaded) {
             moveCreature(data, playerPosition);
         }
+        // Toggles on and off so that player can only act every 50ms
         setInterval(() => {
             setCanAct(prev => (!prev));
-        }, 90);
+        }, 50);
     }, [mapLoaded]);
 
-    // Mouse stuff - click to move - pathfinding
+    // If a tile is clicked on and standing next to an occupied tile, contact with the creature on the tile, otherwise find a path to the tile
     useEffect(() => {
         if (posClicked) {
             if (getTileStatus(posClicked) === TileStatus.Occupied && calculateDistance(position, posClicked) < 1.2) {
@@ -56,14 +57,15 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     }, [posClicked]);
 
     useEffect(() => {
-        // console.log(Faction[turn.faction], turn.creature);
-
+        // canAct is toggled on by the interval and it's player's turn
         if (canAct && turn.faction === data.faction && turn.creature === data.id) {
             if (keyPressed) {
+                // cancel path on any key press
                 if (onRoute) {
                     cancelPath();
                 }
 
+                // find a direction of the key press or act other ways
                 let dir;
                 switch (keyPressed) {
                     case "s":
@@ -102,6 +104,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
                     }
                 }
             } else if (onRoute && posClicked) {
+                // if no key was pressed and finding a path, continue that
                 const nextPos = findPath(position, posClicked);
                 if (nextPos) {
                     move(nextPos);
@@ -127,8 +130,8 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
         updateCamera(position);
     }, [position]);
 
-    return <GameObject
-        spriteData={{
+    return <Sprite
+        data={{
             offset_x: step,
             offset_y: dir,
             image: `/sprites/skins/${skin}.png`,
