@@ -16,7 +16,10 @@ export default function usePathfinding() {
     };
 
     const findPath = (start: Position, end: Position, gridArg?: PF.Grid): Position | null => {
-        setOnRoute(true);
+        if (!onRoute) {
+            setOnRoute(true);
+        }
+
 
 
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import GameObject from '../game-object';
 import useKeyPress from '../../hooks/use-key-press';
 import useMouseClick from '../../hooks/use-mouse-click';
@@ -6,7 +6,7 @@ import useWalk from '../../hooks/use-walk';
 import useAnimation from '../../hooks/use-animation';
 import useSetPlayerPosition from '../state/action-hooks/useSetPlayerPosition';
 import useCamera from '../../hooks/use-camera';
-import { Direction, Position, TileStatus, BaseCreature, Faction } from '../../types';
+import { Direction, Position, TileStatus, BaseCreature } from '../../types';
 import useCheckCollision from '../../hooks/use-get-tiles';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
 import useContact from '../../hooks/use-contact';
@@ -26,12 +26,12 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     const { walk, position } = useWalk(playerPosition);
     const { dir, step, setAnimState } = useAnimation(3);
     const { updateCamera } = useCamera();
-    const { getTileInDirection, getTileStatus, getRandomNearbyFloorTile } = useCheckCollision();
+    const { getTileInDirection, getTileStatus } = useCheckCollision();
     const { moveCreature } = useMoveCreature();
     const { contact } = useContact();
     const { posClicked } = useMouseClick();
     const { findPath, onRoute, cancelPath } = usePathFinding();
-    const [lastTurn, setLastTurn] = useState(0);
+    const { keyPressed } = useKeyPress();
 
     useEffect(() => {
         if (mapLoaded) {
@@ -44,19 +44,66 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
         if (posClicked) {
             if (getTileStatus(posClicked) === TileStatus.Occupied && calculateDistance(position, posClicked) < 1.2) {
                 contactCreature(posClicked);
+            } else {
+                findPath(position, posClicked);
             }
-            findPath(position, posClicked);
+
         }
     }, [posClicked]);
 
     useEffect(() => {
-        if (turn.creature === data.id && onRoute && posClicked) {
-            const nextPos = findPath(position, posClicked);
-            if (nextPos) {
-                move(nextPos);
+        if (turn.faction === data.faction && turn.creature === data.id) {
+            if (keyPressed) {
+
+                if (onRoute) {
+                    cancelPath();
+                }
+
+                let dir;
+                switch (keyPressed) {
+                    case "s":
+                    case "ArrowDown":
+                        dir = Direction.down;
+                        break;
+                    case "d":
+                    case "ArrowRight":
+                        dir = Direction.right;
+                        break;
+                    case "w":
+                    case "ArrowUp":
+                        dir = Direction.up;
+                        break;
+                    case "a":
+                    case "ArrowLeft":
+                        dir = Direction.left;
+                        break;
+                    case " ":
+                        useTurn(data);
+                        return;
+                    default:
+                        break;
+                }
+                if (dir !== undefined) {
+                    const newTile = getTileInDirection(position, dir);
+                    if (newTile) {
+                        if (getTileStatus(newTile.pos) === TileStatus.Occupied) {
+                            contactCreature(newTile.pos);
+                        } else if (getTileStatus(newTile.pos) === TileStatus.Passable) {
+                            move(newTile.pos);
+                            setAnimState(position, newTile.pos);
+                        } else {
+                            setAnimState(position, newTile.pos, false);
+                        }
+                    }
+                }
+            } else if (onRoute && posClicked) {
+                const nextPos = findPath(position, posClicked);
+                if (nextPos) {
+                    move(nextPos);
+                }
             }
         }
-    }, [turn, onRoute]);
+    }, [turn, onRoute, keyPressed]);
 
     const move = (newPos: Position) => {
         walk(data, newPos);
@@ -69,58 +116,6 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
         useTurn(data);
         setAnimState(position, contactPos);
     };
-
-    // Keyboard input
-    useKeyPress((e: KeyboardEvent) => {
-        let keyPressed;
-        switch (e.key) {
-            case "s":
-            case "ArrowDown":
-                keyPressed = Direction.down;
-                break;
-            case "d":
-            case "ArrowRight":
-                keyPressed = Direction.right;
-                break;
-            case "w":
-            case "ArrowUp":
-                keyPressed = Direction.up;
-                break;
-            case "a":
-            case "ArrowLeft":
-                keyPressed = Direction.left;
-                break;
-            case "p":
-                cancelPath();
-                break;
-            case " ":
-                useTurn(data);
-                return;
-            default:
-                break;
-        }
-
-        if (keyPressed !== undefined && turn.creature === data.id) {
-            if (onRoute) {
-                cancelPath();
-            } else {
-                const newTile = getTileInDirection(position, keyPressed);
-
-                if (newTile) {
-                    if (getTileStatus(newTile.pos) === TileStatus.Occupied) {
-                        contactCreature(newTile.pos);
-                    } else if (getTileStatus(newTile.pos) === TileStatus.Passable) {
-                        move(newTile.pos);
-                        setAnimState(position, newTile.pos);
-                    } else {
-                        setAnimState(position, newTile.pos, false);
-                    }
-                }
-            }
-
-        }
-        // e.preventDefault();
-    });
 
     useEffect(() => {
         setPlayerPosition(position);

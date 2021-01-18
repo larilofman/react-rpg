@@ -7,7 +7,7 @@ import useGetCreature from '../../../hooks/use-get-creature';
 export default function useUseTurn() {
     const [{ zoneData, turn, mapLoaded }, dispatch] = useStateValue();
     const [factionIndex, setFactionIndex] = useState(0);
-    const turnDelay = 50;
+    const turnDelay = 75;
 
     useEffect(() => {
         if (zoneData.creatures && zoneData.creatures[turn.faction].length) {
@@ -49,12 +49,8 @@ export default function useUseTurn() {
         }
     }, [factionIndex]);
 
-    const useTurn = (creature: BaseCreature) => {
-        // setTimeout(() => {
+    const useTurn = () => {
         setFactionIndex(prev => prev + 1);
-        // console.log(creature.id);
-        // }, getDelay());
-
     };
 
     const getNextFaction = () => {
