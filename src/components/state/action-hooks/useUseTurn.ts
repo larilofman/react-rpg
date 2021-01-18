@@ -15,14 +15,6 @@ export default function useUseTurn() {
 
     useEffect(() => {
         if (mapLoaded) {
-            // If index is at max(faction about to change), add a little delay
-            if (factionIndex >= zoneData.creatures[turn.faction].length) {
-                const date = Date.now();
-                let currentDate = null;
-                do {
-                    currentDate = Date.now();
-                } while (currentDate - date < getDelay());
-            }
             // More creatures on the faction left, so set next one's turn
             if (factionIndex < zoneData.creatures[turn.faction].length) {
                 dispatch(
