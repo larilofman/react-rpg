@@ -13,6 +13,7 @@ import useContact from '../../hooks/use-contact';
 import { useStateValue } from '../state';
 import usePathFinding from '../../hooks/use-pathfinding';
 import { isInMeleeRange } from '../../utils/calculate-distance';
+import settings from '../../data/settings.json';
 
 interface Props {
     skin: string
@@ -66,30 +67,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
                 }
 
                 // find a direction of the key press or act other ways
-                let dir;
-                switch (keyPressed) {
-                    case "s":
-                    case "ArrowDown":
-                        dir = Direction.down;
-                        break;
-                    case "d":
-                    case "ArrowRight":
-                        dir = Direction.right;
-                        break;
-                    case "w":
-                    case "ArrowUp":
-                        dir = Direction.up;
-                        break;
-                    case "a":
-                    case "ArrowLeft":
-                        dir = Direction.left;
-                        break;
-                    case " ":
-                        useTurn(data);
-                        return;
-                    default:
-                        break;
-                }
+                const dir = getDirectionFromKey(keyPressed);
                 if (dir !== undefined) {
                     const newTile = getTileInDirection(position, dir);
                     if (newTile) {
@@ -112,6 +90,52 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
             }
         }
     }, [canAct]);
+
+    const getDirectionFromKey = (key: string) => {
+        let dir;
+        switch (key) {
+            case "KeyS":
+            case "ArrowDown":
+            case "Numpad2":
+                dir = Direction.down;
+                break;
+            case "KeyD":
+            case "ArrowRight":
+            case "Numpad6":
+                dir = Direction.right;
+                break;
+            case "KeyW":
+            case "ArrowUp":
+            case "Numpad8":
+                dir = Direction.up;
+                break;
+            case "KeyA":
+            case "ArrowLeft":
+            case "Numpad4":
+                dir = Direction.left;
+                break;
+            case "Numpad7":
+                dir = settings.diagonalMovement ? Direction.upLeft : undefined;
+                break;
+            case "Numpad9":
+                dir = settings.diagonalMovement ? Direction.upRight : undefined;
+                break;
+            case "Numpad3":
+                dir = settings.diagonalMovement ? Direction.downRight : undefined;
+                break;
+            case "Numpad1":
+                dir = settings.diagonalMovement ? Direction.downLeft : undefined;
+                break;
+            case "Space":
+            case "Numpad5":
+                useTurn(data);
+                return;
+            default:
+                break;
+        }
+
+        return dir;
+    };
 
     const move = (newPos: Position) => {
         walk(data, newPos);

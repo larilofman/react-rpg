@@ -10,13 +10,23 @@ export default function useAnimation(animSteps = 3) {
         const xDir = newPos.x - oldPos.x;
         const yDir = newPos.y - oldPos.y;
         let dir = Direction.down;
-        if (xDir === 1) {
-            dir = Direction.right;
+
+        if (yDir === -1) {
+            dir = Direction.up;
+        } else if (yDir === 1) {
+            dir = Direction.down;
         } else if (xDir === -1) {
             dir = Direction.left;
-        } else if (yDir === -1) {
-            dir = Direction.up;
+        } else if (xDir === 1) {
+            dir = Direction.right;
         }
+        // if (xDir === 1) {
+        //     dir = Direction.right;
+        // } else if (xDir === -1) {
+        //     dir = Direction.left;
+        // } else if (yDir === -1) {
+        //     dir = Direction.up;
+        // }
         setDir(dir);
         if (updateStep) {
             setStep(prev => prev < animSteps - 1 ? prev + 1 : 0);

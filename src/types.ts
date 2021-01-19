@@ -17,7 +17,12 @@ export enum Direction {
     down = 0,
     left = 1,
     right = 2,
-    up = 3
+    up = 3,
+    upRight = 4,
+    downRight = 5,
+    downLeft = 6,
+    upLeft = 7
+
 }
 
 export interface SpriteData {

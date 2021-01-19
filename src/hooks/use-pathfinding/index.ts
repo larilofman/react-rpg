@@ -4,9 +4,13 @@ import { useStateValue } from '../../components/state';
 import PF, { Grid } from 'pathfinding';
 import useGetTiles from '../use-get-tiles';
 import { isInMeleeRange } from '../../utils/calculate-distance';
+import settings from '../../data/settings.json';
 
 export default function usePathfinding() {
-    const [finder] = useState<PF.AStarFinder>(new PF.AStarFinder());
+    const [finder] = useState<PF.AStarFinder>(new PF.AStarFinder(
+        {
+            diagonalMovement: settings.diagonalMovement ? PF.DiagonalMovement.Always : PF.DiagonalMovement.Never
+        }));
     const [{ zoneData }] = useStateValue();
     const { getTileStatus } = useGetTiles();
     const [onRoute, setOnRoute] = useState(false);

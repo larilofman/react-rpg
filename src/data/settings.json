@@ -7,5 +7,5 @@
         "w": 19,
         "h": 15
     },
-    "diagonalMovement": false
+    "diagonalMovement": true
 }

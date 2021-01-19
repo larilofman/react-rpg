@@ -52,6 +52,18 @@ export default function useGetTiles() {
             case Direction.right:
                 newPos = { x: pos.x + 1, y: pos.y };
                 break;
+            case Direction.upRight:
+                newPos = { x: pos.x + 1, y: pos.y - 1 };
+                break;
+            case Direction.downRight:
+                newPos = { x: pos.x + 1, y: pos.y + 1 };
+                break;
+            case Direction.downLeft:
+                newPos = { x: pos.x - 1, y: pos.y + 1 };
+                break;
+            case Direction.upLeft:
+                newPos = { x: pos.x - 1, y: pos.y - 1 };
+                break;
             default:
                 break;
         }

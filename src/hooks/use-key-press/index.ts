@@ -7,7 +7,7 @@ export default function useKeyPress() {
         if (e.type === "keyup") {
             setKeyPressed(undefined);
         } else {
-            setKeyPressed(e.key);
+            setKeyPressed(e.code);
         }
 
 
