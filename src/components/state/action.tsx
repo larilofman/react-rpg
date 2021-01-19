@@ -9,7 +9,8 @@ export enum ActionType {
     "MOVE_CREATURE",
     "ADD_CREATURES",
     "DAMAGE_CREATURE",
-    "REMOVE_CREATURE"
+    "REMOVE_CREATURE",
+    "ADD_COMBAT_LOG_ENTRY"
 }
 
 export type Action =
@@ -49,4 +50,8 @@ export type Action =
     | {
         type: ActionType.REMOVE_CREATURE;
         payload: BaseCreature
+    }
+    | {
+        type: ActionType.ADD_COMBAT_LOG_ENTRY;
+        payload: string
     };

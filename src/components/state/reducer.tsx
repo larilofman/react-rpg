@@ -89,6 +89,13 @@ export const reducer = (state: State, action: Action): State => {
                 }, gameOver: action.payload.faction === Faction.Player
             };
         }
+        case ActionType.ADD_COMBAT_LOG_ENTRY: {
+            console.log(state.combatLog);
+            return {
+                ...state,
+                combatLog: state.combatLog.concat(`Turn ${state.turn.count}: ${action.payload}`)
+            };
+        }
         default:
             return state;
     }

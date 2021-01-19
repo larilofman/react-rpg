@@ -12,6 +12,7 @@ export type State = {
     cameraPosition: Position,
     displaySize: Dimensions,
     gameOver: boolean
+    combatLog: string[]
 };
 
 const initialState: State = {
@@ -22,7 +23,8 @@ const initialState: State = {
     turn: { faction: Faction.Player, count: 0, creature: 'player' },
     cameraPosition: { x: 0, y: 0 },
     displaySize: settings.displaySize,
-    gameOver: false
+    gameOver: false,
+    combatLog: []
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([
