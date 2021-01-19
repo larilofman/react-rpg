@@ -14,6 +14,7 @@ import { useStateValue } from '../state';
 import usePathFinding from '../../hooks/use-pathfinding';
 import { isInMeleeRange } from '../../utils/calculate-distance';
 import settings from '../../data/settings.json';
+import useGetCreature from '../../hooks/use-get-creature';
 
 interface Props {
     skin: string
@@ -30,10 +31,11 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     const { getTileInDirection, getTileStatus } = useCheckCollision();
     const { moveCreature } = useMoveCreature();
     const { contact } = useContact();
-    const { posClicked } = useMouseClick();
+    const { creatureClicked, posClicked } = useMouseClick();
     const { findPath, onRoute, cancelPath } = usePathFinding();
     const { keyPressed } = useKeyPress();
     const [canAct, setCanAct] = useState(true);
+    const { getCreatureById } = useGetCreature();
 
     useEffect(() => {
         if (mapLoaded) {
@@ -82,7 +84,17 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
                     }
                 }
             } else if (onRoute && posClicked) {
-                // if no key was pressed and finding a path, continue that
+                // if no key was pressed and finding a path
+                // if latest click was on a creature, see if in melee range of it and contact if so
+                if (creatureClicked) {
+                    const creatureChased = getCreatureById(creatureClicked);
+                    if (creatureChased && isInMeleeRange(position, creatureChased.pos)) {
+                        cancelPath();
+                        contactCreature(creatureChased.pos);
+                        return;
+                    }
+                }
+                // otherwise continue on the path
                 const nextPos = findPath(position, posClicked);
                 if (nextPos) {
                     move(nextPos);

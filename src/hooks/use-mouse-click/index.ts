@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { Position } from '../../types';
 import { useStateValue } from '../../components/state';
 import useGetTiles from '../use-get-tiles';
+import useGetCreature from '../use-get-creature';
 
 export default function useMouseClick() {
+    const [creatureClicked, setCreatureClicked] = useState<string>();
     const [posClicked, setPosClicked] = useState<Position | undefined>(undefined);
     const [zone, setZone] = useState<HTMLElement | null>(document.getElementById('zone-container'));
     const [{ tileSize, cameraPosition }] = useStateValue();
     const { getTileAt } = useGetTiles();
+    const { getCreatureByPos } = useGetCreature();
     useEffect(() => {
         if (!zone) {
             setZone(document.getElementById("zone-container"));
@@ -30,10 +33,17 @@ export default function useMouseClick() {
             // If click happens on a tile
             if (getTileAt({ x: clickX, y: clickY })) {
                 setPosClicked({ x: clickX, y: clickY });
+
+                const creature = getCreatureByPos({ x: clickX, y: clickY });
+                if (creature) {
+                    setCreatureClicked(creature.id);
+                } else {
+                    setCreatureClicked(undefined);
+                }
             }
 
         }
     };
 
-    return { posClicked };
+    return { creatureClicked, posClicked };
 }
