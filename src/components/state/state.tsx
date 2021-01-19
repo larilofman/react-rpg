@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer } from 'react';
 import { Position, Dimensions, ZoneData, Faction } from '../../types';
 import { Action } from './action';
+import settings from '../../data/settings.json';
 
 export type State = {
     playerPosition: Position,
@@ -15,12 +16,12 @@ export type State = {
 
 const initialState: State = {
     playerPosition: { x: 0, y: 0 },
-    tileSize: { w: 32, h: 32 },
+    tileSize: settings.tileSize,
     zoneData: { size: { w: 22, h: 22 }, tiles: [], creatures: { 0: [], 1: [], 2: [] } },
     mapLoaded: false,
     turn: { faction: Faction.Player, count: 0, creature: 'player' },
     cameraPosition: { x: 0, y: 0 },
-    displaySize: { w: 19, h: 15 },
+    displaySize: settings.displaySize,
     gameOver: false
 };
 

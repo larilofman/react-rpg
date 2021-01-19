@@ -12,7 +12,7 @@ import useMoveCreature from '../state/action-hooks/useMoveCreature';
 import useContact from '../../hooks/use-contact';
 import { useStateValue } from '../state';
 import usePathFinding from '../../hooks/use-pathfinding';
-import calculateDistance from '../../utils/calculate-distance';
+import { isInMeleeRange } from '../../utils/calculate-distance';
 
 interface Props {
     skin: string
@@ -47,7 +47,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     // If a tile is clicked on and standing next to an occupied tile, contact with the creature on the tile, otherwise find a path to the tile
     useEffect(() => {
         if (posClicked) {
-            if (getTileStatus(posClicked) === TileStatus.Occupied && calculateDistance(position, posClicked) < 1.2) {
+            if (getTileStatus(posClicked) === TileStatus.Occupied && isInMeleeRange(position, posClicked)) {
                 contactCreature(posClicked);
             } else {
                 findPath(position, posClicked);

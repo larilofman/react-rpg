@@ -3,7 +3,7 @@ import { Position, TileStatus } from '../../types';
 import { useStateValue } from '../../components/state';
 import PF, { Grid } from 'pathfinding';
 import useGetTiles from '../use-get-tiles';
-import calculateDistance from '../../utils/calculate-distance';
+import { isInMeleeRange } from '../../utils/calculate-distance';
 
 export default function usePathfinding() {
     const [finder] = useState<PF.AStarFinder>(new PF.AStarFinder());
@@ -19,25 +19,11 @@ export default function usePathfinding() {
         if (!onRoute) {
             setOnRoute(true);
         }
-
-
-
-
-        // dirty delay hack
-
-        // const date = Date.now();
-        // let currentDate = null;
-        // do {
-        //     currentDate = Date.now();
-        // } while (currentDate - date < 50);
-
-
-
         // Unless gridArg is passed recursively, create a new one
         const grid = gridArg ? gridArg : createGrid();
         // If not next to the end, set it as walkable so path can be found next to it
         if (!grid.isWalkableAt(end.x, end.y)) {
-            if (calculateDistance(start, end) > 1.2) {
+            if (!isInMeleeRange(start, end)) {
                 grid.setWalkableAt(end.x, end.y, true);
             }
         }

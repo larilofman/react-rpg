@@ -1,0 +1,11 @@
+{
+    "tileSize": {
+        "w": 32,
+        "h": 32
+    },
+    "displaySize": {
+        "w": 19,
+        "h": 15
+    },
+    "diagonalMovement": false
+}

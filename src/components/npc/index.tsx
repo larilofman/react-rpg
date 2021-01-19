@@ -7,7 +7,7 @@ import { useStateValue } from '../state';
 import { Position, BaseCreature, TileStatus } from '../../types';
 import useGetTiles from '../../hooks/use-get-tiles';
 import useContact from '../../hooks/use-contact';
-import calculateDistance from '../../utils/calculate-distance';
+import { isInMeleeRange, isInRange } from '../../utils/calculate-distance';
 import usePathFinding from '../../hooks/use-pathfinding';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
 
@@ -40,9 +40,9 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
         if (turn.creature === data.id && turn.faction === data.faction) {
             if (stationary) { // Idle
                 useTurn(data);
-            } else if (calculateDistance(position, playerPosition) < 1.2) { // Melee
+            } else if (isInMeleeRange(position, playerPosition)) { // Melee
                 contactCreature(playerPosition);
-            } else if (calculateDistance(position, playerPosition) < aggroDistance) { // Chase
+            } else if (isInRange(position, playerPosition, aggroDistance)) { // Chase
                 const nextPos = findPath(position, playerPosition);
                 if (nextPos) {
                     move(nextPos);
