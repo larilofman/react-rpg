@@ -90,7 +90,6 @@ export const reducer = (state: State, action: Action): State => {
             };
         }
         case ActionType.ADD_COMBAT_LOG_ENTRY: {
-            console.log(state.combatLog);
             return {
                 ...state,
                 combatLog: state.combatLog.concat(`Turn ${state.turn.count}: ${action.payload}`)

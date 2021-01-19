@@ -14,8 +14,11 @@ export default function useDamageCreature() {
         const attacker = getCreatureById(attackerId);
 
         if (target && attacker) {
-            let entry;
             const healthRemaining = target.stats.health - attacker.stats.damage;
+
+            const entryDamaged = { type: CombatLogEntryType.Damaged, data: { attacker, target, damage: attacker.stats.damage } } as CombatLogEntryDamaged;
+            AddEntry(entryDamaged);
+
             if (healthRemaining > 0) {
                 target = {
                     ...target,
@@ -29,16 +32,12 @@ export default function useDamageCreature() {
                         type: ActionType.DAMAGE_CREATURE,
                         payload: target
                     });
-                entry = { type: CombatLogEntryType.Damaged, data: { attacker, target, damage: attacker.stats.damage } } as CombatLogEntryDamaged;
-
             } else {
                 removeCreature(target);
-                entry = { type: CombatLogEntryType.Died, data: { creature: target } } as CombatLogEntryDied;
+                const entryDied = { type: CombatLogEntryType.Died, data: { creature: target } } as CombatLogEntryDied;
+                AddEntry(entryDied);
             }
-            AddEntry(entry);
         }
-
-
     };
     return {
         damageCreature

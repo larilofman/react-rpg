@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  padding: 0;
+  /* font-family: Arial, Helvetica, sans-serif; */
+}
+
+body {
+  font-family: "AirbnbCerealBook", sans-serif;
+  font-size: 16px;
+  background-color: #000000;
+  color: white;
+  opacity: 0.8;
+}
+
+#game-container {
+  display: flex;
+  flex-direction: column;
+  width: 60vw;
+  margin : 1rem auto
+}
+
+#zone-container {
+  box-sizing: content-box;
+  border: 4px solid white;
+  margin: 0 auto 1rem auto;
+  font-size: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+#ui-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
