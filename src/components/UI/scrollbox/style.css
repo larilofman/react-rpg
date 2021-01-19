@@ -1,4 +1,13 @@
 .scroll-box {
     overflow-y: auto;
     font-size: 12px;
+    background-color: var(--almond);
+    color: var(--rich-black-fogra-39);
+}
+
+.scroll-box > div {
+    box-sizing: border-box;
+    border: 2px solid var(--almond);
+    border-left-width: 4px;
+    border-right-width: 4px;
 }

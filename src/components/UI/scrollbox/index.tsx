@@ -23,11 +23,13 @@ const Scrollbox: React.FC<Props> = ({ size, contents, id, autoScroll = false }) 
 
     return (
         <div id={id} className="scroll-box" style={{ height: size.h, width: size.w }} ref={autoScroll ? contentsEndRef : null}>
-            {Array.isArray(contents) ?
-                contents.map((line, index) => (<p key={index}>{line}</p>))
-                :
-                <p>{contents}</p>
-            }
+            <div>
+                {Array.isArray(contents) ?
+                    contents.map((line, index) => (<p key={index}>{line}</p>))
+                    :
+                    <p>{contents}</p>
+                }
+            </div>
         </div>
     );
 };
