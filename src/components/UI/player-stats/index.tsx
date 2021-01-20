@@ -4,6 +4,7 @@ import HealthBar from '../health-bar';
 import { useStateValue } from '../../state';
 import { Faction } from '../../../types';
 import Text from '../text';
+import Container from '../container';
 
 const PlayerStats: React.FC = () => {
     const [{ zoneData }] = useStateValue();
@@ -15,10 +16,10 @@ const PlayerStats: React.FC = () => {
     const player = zoneData.creatures[Faction.Player][0];
 
     return (
-        <div id="player-stats">
+        <Container p4 b4 height="200px">
             <Text size="x-large" bold >{player.name}</Text>
             <HealthBar player={player} />
-        </div>
+        </Container>
     );
 };
 

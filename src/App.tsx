@@ -20,7 +20,7 @@ const App = () => {
                 <GameManager />
             </div>
             <UiContainer size={{
-                w: displaySize.w * tileSize.w,
+                w: displaySize.w * tileSize.w + 8,
                 h: 400
             }} />
         </div>

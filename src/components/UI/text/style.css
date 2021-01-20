@@ -1,13 +1,14 @@
 
+.text-x-small {
+    font-size: 10px;
+}
 
 .text-small {
-    font-size: 10px;
-    
+    font-size: 12px;
 }
 
 .text-medium {
     font-size: 14px;
-    
 }
 
 .text-large {
@@ -22,6 +23,14 @@
 
 .text-bold {
     font-weight: bold;
+}
+
+.text-light {
+    color: var(--almond);
+}
+
+.text-dark {
+    color: var(--rich-black-fogra-39);
 }
 
 .text-outline {

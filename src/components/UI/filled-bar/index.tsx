@@ -35,7 +35,7 @@ const FilledBar: React.FC<Props> = ({ size, label, data, colors }) => {
         <div className="filled-bar-container">
             <h4 className="filled-bar-label">{label}</h4>
             <div className="filled-bar" style={barStyle}>
-                <Text size="large" outline bold style={{ color: colors.text }}>{`${data.current} / ${data.max}`}</Text>
+                <Text size="large" outline bold>{`${data.current} / ${data.max}`}</Text>
             </div>
         </div>
 

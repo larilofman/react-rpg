@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Dimensions } from '../../../types';
+import Text from '../text';
 import './style.css';
 
 interface Props {
@@ -24,9 +25,10 @@ const Scrollbox: React.FC<Props> = ({ size, contents, autoScroll = false }) => {
         <div className="scroll-box" style={{ height: size.height, width: size.width }} ref={autoScroll ? contentsEndRef : null}>
             <div>
                 {Array.isArray(contents) ?
-                    contents.map((line, index) => (<p key={index}>{line}</p>))
+                    contents.map((line, index) => (
+                        <Text color="dark" size="small" key={index}>{line}</Text>))
                     :
-                    <p>{contents}</p>
+                    <Text color="dark" size="small">{contents}</Text>
                 }
             </div>
         </div>
