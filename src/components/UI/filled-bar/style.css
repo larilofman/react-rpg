@@ -3,10 +3,12 @@
 }
 
 .filled-bar-label {
-    display: inline
+    display: inline;
+    font-size: 18px;
 }
 
 .filled-bar {
     display: inline;
-    flex-grow: 1
+    flex-grow: 1;
+    text-align: center;
 }

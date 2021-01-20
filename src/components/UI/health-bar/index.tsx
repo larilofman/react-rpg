@@ -9,21 +9,23 @@ interface Props {
 
 const HealthDisplay: React.FC<Props> = ({ player }) => {
 
-    const healthFraction = player.stats.health / 100;
+    const healthFraction = player.stats.health / player.stats.maxHealth;
 
+    // Find a color between green and red based on the health missing. Darker shades for the background, or the empty portition of the bar.
     const fullFill = "#00ff00"; // bright green
     const emptyFill = "#ff0000"; // bright red
-    const fullEmpty = "#003300"; // dark green
-    const emptyEmpty = "#330000"; // dark red
+    const fullBg = "#003300"; // dark green
+    const emptyBg = "#330000"; // dark red
+    const text = "#eae0d5"; // almond;
     const lerpedFill = LerpColor(emptyFill, fullFill, healthFraction);
-    const lerpedEmpty = LerpColor(emptyEmpty, fullEmpty, healthFraction);
+    const lerpedEmpty = LerpColor(emptyBg, fullBg, healthFraction);
 
     return (
         <FilledBar
-            label="Health: "
-            data={{ min: 0, max: 100, current: player.stats.health }}
+            label="Health"
+            data={{ min: 0, max: player.stats.maxHealth, current: player.stats.health }}
             size={{ width: "100%", height: 50 }}
-            colors={{ filled: lerpedFill, empty: lerpedEmpty }}
+            colors={{ filled: lerpedFill, background: lerpedEmpty, text: text }}
         />
     );
 

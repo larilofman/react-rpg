@@ -1,0 +1,30 @@
+
+
+.text-small {
+    font-size: 10px;
+    
+}
+
+.text-medium {
+    font-size: 14px;
+    
+}
+
+.text-large {
+    font-size: 16px;
+    
+}
+
+.text-x-large {
+    font-size: 20px;
+    
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.text-outline {
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    
+}

@@ -3,6 +3,7 @@ import './style.css';
 import HealthBar from '../health-bar';
 import { useStateValue } from '../../state';
 import { Faction } from '../../../types';
+import Text from '../text';
 
 const PlayerStats: React.FC = () => {
     const [{ zoneData }] = useStateValue();
@@ -15,7 +16,7 @@ const PlayerStats: React.FC = () => {
 
     return (
         <div id="player-stats">
-            <h3>{player.name}</h3>
+            <Text size="x-large" bold >{player.name}</Text>
             <HealthBar player={player} />
         </div>
     );

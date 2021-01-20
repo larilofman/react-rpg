@@ -54,7 +54,7 @@ const HostileManager: React.FC<Props> = ({ useTurn }) => {
                 faction: Faction.Hostile,
                 pos: findRandomFloorTile().position,
                 id: nanoid(),
-                stats: { health: 10, damage: 5 },
+                stats: { health: 10, maxHealth: 10, damage: 5 },
                 name: 'Ghost'
             };
             enemies.push(enemy);

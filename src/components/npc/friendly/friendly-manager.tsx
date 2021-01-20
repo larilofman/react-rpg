@@ -29,7 +29,7 @@ const FriendlyManager: React.FC<Props> = ({ useTurn }) => {
                 faction: Faction.Friendly,
                 pos: findRandomFloorTile().position,
                 id: nanoid(),
-                stats: { health: 10, damage: 5 },
+                stats: { health: 10, maxHealth: 10, damage: 5 },
                 name: 'Friendly'
             };
             enemies.push(friendly);

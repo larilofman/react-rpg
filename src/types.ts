@@ -75,6 +75,7 @@ export interface ZoneData {
 
 export interface Stats {
     health: number,
+    maxHealth: number,
     damage: number
 }
 
