@@ -16,7 +16,7 @@ const GameManager: React.FC = () => {
         id: 'player',
         faction: Faction.Player,
         pos: { x: 0, y: 0 },
-        stats: { health: 1000, damage: 5 },
+        stats: { health: 100, damage: 5 },
         name: 'Player'
     };
     useEffect(() => {

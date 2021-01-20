@@ -7,11 +7,10 @@ const CombatLog: React.FC = () => {
     const [{ combatLog }] = useStateValue();
 
     return (
-        <div>
+        <div id="combat-log">
             <h4 id="combat-log-label">Combat Log</h4>
             <Scrollbox
-                id="combat-log"
-                size={{ w: 340, h: 132 }}
+                size={{ width: "100%", height: 132 }}
                 contents={combatLog}
                 autoScroll={true}
             />

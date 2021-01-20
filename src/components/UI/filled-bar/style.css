@@ -1,0 +1,12 @@
+.filled-bar-container {
+    display: flex
+}
+
+.filled-bar-label {
+    display: inline
+}
+
+.filled-bar {
+    display: inline;
+    flex-grow: 1
+}

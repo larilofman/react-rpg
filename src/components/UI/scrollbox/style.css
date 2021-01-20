@@ -3,6 +3,7 @@
     font-size: 12px;
     background-color: var(--almond);
     color: var(--rich-black-fogra-39);
+    flex-grow: 1;
 }
 
 .scroll-box > div {

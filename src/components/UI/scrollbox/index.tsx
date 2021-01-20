@@ -3,13 +3,12 @@ import { Dimensions } from '../../../types';
 import './style.css';
 
 interface Props {
-    size: Dimensions
+    size: { width: number | string, height: number | string }
     contents: string | string[]
-    id: string
     autoScroll?: boolean
 }
 
-const Scrollbox: React.FC<Props> = ({ size, contents, id, autoScroll = false }) => {
+const Scrollbox: React.FC<Props> = ({ size, contents, autoScroll = false }) => {
     const contentsEndRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
@@ -22,7 +21,7 @@ const Scrollbox: React.FC<Props> = ({ size, contents, id, autoScroll = false }) 
     useEffect(scrollToBottom, [contents]);
 
     return (
-        <div id={id} className="scroll-box" style={{ height: size.h, width: size.w }} ref={autoScroll ? contentsEndRef : null}>
+        <div className="scroll-box" style={{ height: size.height, width: size.width }} ref={autoScroll ? contentsEndRef : null}>
             <div>
                 {Array.isArray(contents) ?
                     contents.map((line, index) => (<p key={index}>{line}</p>))
