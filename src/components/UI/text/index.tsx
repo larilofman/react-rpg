@@ -9,10 +9,11 @@ interface Props {
     className?: string
     style?: CSSProperties | undefined
     color?: "light" | "dark"
+    center?: boolean
 
 }
 
-const Text: React.FC<Props> = ({ size, outline, bold, children, className, style, color }) => {
+const Text: React.FC<Props> = ({ size, outline, bold, children, className, style, color, center }) => {
 
     const classes = classList('text',
         size === 'x-small' && 'text-x-small',
@@ -25,6 +26,7 @@ const Text: React.FC<Props> = ({ size, outline, bold, children, className, style
         bold && 'text-bold',
         color === ('light' || undefined) && 'text-light',
         color === 'dark' && 'text-dark',
+        center && 'text-centered',
         className
     );
     return (
