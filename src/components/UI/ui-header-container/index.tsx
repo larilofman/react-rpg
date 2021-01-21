@@ -10,8 +10,8 @@ interface Props {
 
 const UIHeaderContainer: React.FC<Props> = ({ size, style, center, children }) => {
     return (
-        <Container color="gunmetal" p4 bnt4 vcenter height="32px">
-            <Text center={center} style={style} size={size || "xx-large"} bold outline>{children}</Text>
+        <Container style={style} color="gunmetal" p4 bnt4 vcenter height="32px">
+            <Text center={center} size={size || "xx-large"} bold outline>{children}</Text>
         </Container>
     );
 };
