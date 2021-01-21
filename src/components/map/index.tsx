@@ -5,16 +5,38 @@ import { TileType, Tile } from '../../types';
 import { useStateValue } from '../state';
 import useSetMap from '../state/action-hooks/useSetMap';
 import useGenerateMap from '../../hooks/use-generate-map';
+import zones from '../../data/zones/zones.json';
+
+type ZoneType = keyof typeof zones;
 
 const Map: React.FC = () => {
     const [{ zoneData, mapLoaded, cameraPosition, displaySize }] = useStateValue();
     const { setMap } = useSetMap();
-    const { generateMap } = useGenerateMap();
+    const { buildMap, generateMap } = useGenerateMap();
 
     useEffect(() => {
         if (!mapLoaded) {
-            const map = generateMap(zoneData.size);
-            setMap(map);
+            const zoneToLoad = zones[zoneData.name as ZoneType];
+            // console.log(zoneToLoad);
+            if (zoneToLoad) {
+                if (zoneToLoad.tiles) {
+                    const tiles = buildMap(zoneToLoad.tiles);
+                    const zone = {
+                        ...zoneData,
+                        size: zoneToLoad.size,
+                        tiles
+                    };
+                    setMap(zone);
+                } else {
+                    const tiles = generateMap(zoneToLoad.size);
+                    const zone = {
+                        ...zoneData,
+                        size: zoneToLoad.size,
+                        tiles
+                    };
+                    setMap(zone);
+                }
+            }
         }
     }, [mapLoaded]);
 

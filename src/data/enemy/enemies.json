@@ -1,0 +1,22 @@
+{
+    "Ghost":
+    {
+        "name": "Ghost",
+        "stats": {
+            "health": 15,
+            "maxHealth": 15,
+            "damage": 3
+        },
+        "sprite": "e1"
+    },
+    "Ninja":
+    {
+        "name": "Ninja",
+        "stats": {
+            "health": 25,
+            "maxHealth": 25,
+            "damage": 10
+        },
+        "sprite": "e1"
+    }
+}

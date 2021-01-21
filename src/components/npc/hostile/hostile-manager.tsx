@@ -2,9 +2,12 @@ import React, { useEffect } from 'react';
 import { useStateValue } from '../../state';
 import useFindRandomFloorTile from '../../../hooks/use-find-random-floor-tile';
 import Npc from '..';
-import { Creature, Faction, BaseCreature } from '../../../types';
+import { Creature, Faction, BaseCreature, CreatureType } from '../../../types';
 import useAddCreatures from '../../state/action-hooks/useAddCreatures';
 import { nanoid } from 'nanoid';
+import enemies from '../../../data/enemy/enemies.json';
+
+type EnemyType = keyof typeof enemies;
 
 interface Props {
     useTurn: (creature: BaseCreature) => void
@@ -18,9 +21,15 @@ const HostileManager: React.FC<Props> = ({ useTurn }) => {
     useEffect(() => {
         if (mapLoaded) {
             spawnEnemies();
+            getEnemyType("Ghost");
         }
 
     }, [mapLoaded]);
+
+    const getEnemyType = (name: EnemyType) => {
+        const enemy = enemies[name];
+        // console.log(enemy);
+    };
 
     // useEffect(() => {
     //     // for (const faction of Object.values(zoneData.creatures)) {

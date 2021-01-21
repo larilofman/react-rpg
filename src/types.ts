@@ -64,6 +64,7 @@ export enum Faction {
 }
 
 export interface ZoneData {
+    name: string,
     size: Dimensions,
     tiles: Tile[][],
     creatures: {
@@ -104,3 +105,11 @@ export enum TileStatus {
     Occupied,
     NonPassable
 }
+
+export interface CreatureType {
+    name: string,
+    stats: Stats,
+    pos?: Position,
+    sprite: string
+}
+

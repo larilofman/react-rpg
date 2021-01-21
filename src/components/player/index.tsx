@@ -40,6 +40,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     useEffect(() => {
         if (mapLoaded) {
             moveCreature(data, playerPosition);
+            updateCamera(playerPosition);
         }
         // Toggles on and off so that player can only act every 50ms
         setInterval(() => {
