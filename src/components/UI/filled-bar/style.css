@@ -1,14 +1,5 @@
-.filled-bar-container {
-    display: flex
-}
-
-.filled-bar-label {
-    display: inline;
-    font-size: 18px;
-}
 
 .filled-bar {
-    display: inline;
     flex-grow: 1;
     text-align: center;
 }

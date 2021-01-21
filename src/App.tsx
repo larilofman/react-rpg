@@ -21,7 +21,7 @@ const App = () => {
             </div>
             <UiContainer size={{
                 w: displaySize.w * tileSize.w + 8,
-                h: 400
+                h: 256
             }} />
         </div>
     );

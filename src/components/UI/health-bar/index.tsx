@@ -1,5 +1,5 @@
 import React from 'react';
-import { Creature, Faction } from '../../../types';
+import { Creature } from '../../../types';
 import FilledBar from '../filled-bar';
 import { LerpColor } from '../../../utils/lerp-color';
 
@@ -24,8 +24,10 @@ const HealthDisplay: React.FC<Props> = ({ player }) => {
         <FilledBar
             label="Health"
             data={{ min: 0, max: player.stats.maxHealth, current: player.stats.health }}
-            size={{ width: "100%", height: 50 }}
+            width="100%"
+            height="24px"
             colors={{ filled: lerpedFill, background: lerpedEmpty, text: text }}
+            gap="4px"
         />
     );
 

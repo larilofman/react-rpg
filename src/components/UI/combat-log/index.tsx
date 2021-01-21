@@ -1,22 +1,24 @@
 import React from 'react';
 import Scrollbox from '../scrollbox';
 import { useStateValue } from '../../state';
-import Text from '../text';
 import Container from '../container';
 import './style.css';
+import UIHeaderContainer from '../ui-header-container';
 
 const CombatLog: React.FC = () => {
     const [{ combatLog }] = useStateValue();
 
     return (
-        <Container height="200px">
-            <Text size="large" bold className={"combat-log-label"}>Combat Log</Text>
-            <Scrollbox
-                size={{ width: "100%", height: 132 }}
-                contents={combatLog}
-                autoScroll={true}
-            />
+        <Container height="100%">
+            <UIHeaderContainer>Combat Log</UIHeaderContainer>
+            <Container bnt4 color="dark" height="100%" style={{ minHeight: "32px" }}> {/* for some reason setting small minHeight fixed the vertically expanding scrollbox*/}
+                <Scrollbox
+                    contents={combatLog}
+                    autoScroll={true}
+                />
+            </Container>
         </Container>
+
 
     );
 };

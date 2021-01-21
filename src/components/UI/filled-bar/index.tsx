@@ -1,12 +1,11 @@
 import React from 'react';
 import './style.css';
 import Text from '../text';
+import Container from '../container';
 
 interface Props {
-    size: {
-        width: number | string,
-        height: number | string
-    },
+    width: number | string,
+    height: number | string,
     label: string,
     data: {
         min:
@@ -18,10 +17,11 @@ interface Props {
         filled: string,
         background: string,
         text: string
-    }
+    },
+    gap: string
 }
 
-const FilledBar: React.FC<Props> = ({ size, label, data, colors }) => {
+const FilledBar: React.FC<Props> = ({ width, height, label, data, colors, gap }) => {
 
     const fillPercent = data.current / data.max * 100;
 
@@ -31,13 +31,14 @@ const FilledBar: React.FC<Props> = ({ size, label, data, colors }) => {
         :
         { background: `linear-gradient(to left, ${colors.background} ${100 - fillPercent}%, ${colors.filled} ${fillPercent}%)` }
         ;
+    const paddingRight = gap ? gap : '';
     return (
-        <div className="filled-bar-container">
-            <h4 className="filled-bar-label">{label}</h4>
-            <div className="filled-bar" style={barStyle}>
+        <Container row vcenter className="filled-bar-container" style={{ width, height }}>
+            <Text size="x-large" bold style={{ paddingRight }}>{label}</Text>
+            <Container height="100%" vcenter className="filled-bar" style={barStyle}>
                 <Text size="large" outline bold>{`${data.current} / ${data.max}`}</Text>
-            </div>
-        </div>
+            </Container>
+        </Container>
 
     );
 

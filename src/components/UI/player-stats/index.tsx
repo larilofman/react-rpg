@@ -3,8 +3,8 @@ import './style.css';
 import HealthBar from '../health-bar';
 import { useStateValue } from '../../state';
 import { Faction } from '../../../types';
-import Text from '../text';
 import Container from '../container';
+import UIHeaderContainer from '../ui-header-container';
 
 const PlayerStats: React.FC = () => {
     const [{ zoneData }] = useStateValue();
@@ -16,9 +16,11 @@ const PlayerStats: React.FC = () => {
     const player = zoneData.creatures[Faction.Player][0];
 
     return (
-        <Container p4 b4 height="200px">
-            <Text size="x-large" bold >{player.name}</Text>
-            <HealthBar player={player} />
+        <Container height="100%">
+            <UIHeaderContainer>{player.name}</UIHeaderContainer>
+            <Container p4 bnt4 height="100%">
+                <HealthBar player={player} />
+            </Container>
         </Container>
     );
 };
