@@ -30,6 +30,7 @@ const FriendlyManager: React.FC<Props> = ({ useTurn }) => {
                 pos: findRandomFloorTile().position,
                 id: nanoid(),
                 stats: { health: 10, maxHealth: 10, damage: 5 },
+                sprite: "m1",
                 name: 'Friendly'
             };
             enemies.push(friendly);
@@ -42,7 +43,7 @@ const FriendlyManager: React.FC<Props> = ({ useTurn }) => {
     return (
         <>
             {zoneData.creatures[Faction.Friendly].map(e => (
-                <Npc key={e.id} skin="m1" startPosition={e.pos} data={e} useTurn={useTurn} stationary={true} />
+                <Npc key={e.id} skin={e.sprite} startPosition={e.pos} data={e} useTurn={useTurn} stationary={true} />
             ))}
         </>
     );

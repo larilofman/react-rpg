@@ -88,7 +88,8 @@ export interface BaseCreature {
 export interface Creature extends BaseCreature {
     pos: Position,
     stats: Stats,
-    name: string
+    name: string,
+    sprite: string
 }
 
 export enum DamageType {

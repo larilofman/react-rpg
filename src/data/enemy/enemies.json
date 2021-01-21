@@ -3,8 +3,8 @@
     {
         "name": "Ghost",
         "stats": {
-            "health": 15,
-            "maxHealth": 15,
+            "health": 10,
+            "maxHealth": 10,
             "damage": 3
         },
         "sprite": "e1"
@@ -13,10 +13,10 @@
     {
         "name": "Ninja",
         "stats": {
-            "health": 25,
-            "maxHealth": 25,
-            "damage": 10
+            "health": 20,
+            "maxHealth": 20,
+            "damage": 8
         },
-        "sprite": "e1"
+        "sprite": "m2"
     }
 }

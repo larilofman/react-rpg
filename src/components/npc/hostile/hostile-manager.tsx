@@ -6,6 +6,7 @@ import { Creature, Faction, BaseCreature, CreatureType } from '../../../types';
 import useAddCreatures from '../../state/action-hooks/useAddCreatures';
 import { nanoid } from 'nanoid';
 import enemies from '../../../data/enemy/enemies.json';
+import { loadZoneData, ZoneType } from '../../../utils/load-zone-data';
 
 type EnemyType = keyof typeof enemies;
 
@@ -20,55 +21,38 @@ const HostileManager: React.FC<Props> = ({ useTurn }) => {
 
     useEffect(() => {
         if (mapLoaded) {
-            spawnEnemies();
-            getEnemyType("Ghost");
+            const enemiesToSpawn = getEnemiesToSpawn();
+            spawnEnemies(enemiesToSpawn);
         }
-
     }, [mapLoaded]);
 
-    const getEnemyType = (name: EnemyType) => {
-        const enemy = enemies[name];
-        // console.log(enemy);
+    const getEnemiesToSpawn = () => {
+        const enemyData = loadZoneData(zoneData.name as ZoneType).creatures;
+        const enemiesToSpawn: { creature: CreatureType, amount: number }[] = [];
+        Object.values(enemyData).forEach(e => {
+            enemiesToSpawn.push({ creature: enemies[e.name as EnemyType] as CreatureType, amount: e.amount });
+        });
+
+        return enemiesToSpawn;
     };
 
-    // useEffect(() => {
-    //     // for (const faction of Object.values(zoneData.creatures)) {
-    //     //     console.log(faction);
-    //     // }
+    const spawnEnemies = (enemiesToSpawn: { creature: CreatureType, amount: number }[]) => {
+        const allEnemies: Creature[] = [];
+        enemiesToSpawn.forEach(({ creature, amount }) => {
+            for (let i = 0; i < amount; i++) {
+                const enemy: Creature = {
+                    faction: Faction.Hostile,
+                    pos: findRandomFloorTile().position,
+                    id: nanoid(),
+                    stats: creature.stats,
+                    name: creature.name,
+                    sprite: creature.sprite
+                };
+                allEnemies.push(enemy);
+            }
 
-    //     // const occupied = [];
-    //     // for (let y = 0; y < zoneData.tiles.length; y++) {
-    //     //     for (let x = 0; x < zoneData.tiles.length; x++) {
-    //     //         if (zoneData.tiles[y][x].occupant) {
-    //     //             occupied.push({ creature: zoneData.tiles[y][x].occupant, pos: `${x}, ${y}` });
-    //     //         }
-    //     //     }
-    //     // }
-    //     // console.log(turnOf, occupied);
-    //     // console.log(zoneData.creatures);
-    //     // console.log(turnOf);
-    //     const player = zoneData.creatures[Faction.Player][0];
-    //     const enemy = zoneData.creatures[Faction.Hostile][0];
-    //     if (player && enemy) {
-    //         if (player.pos.x === enemy.pos.x && player.pos.y === enemy.pos.y) {
-    //             console.log('they collided!');
-    //         }
-    //     }
-    // }, [zoneData]);
-
-    const spawnEnemies = () => {
-        const enemies = [];
-        for (let index = 0; index < 5; index++) {
-            const enemy: Creature = {
-                faction: Faction.Hostile,
-                pos: findRandomFloorTile().position,
-                id: nanoid(),
-                stats: { health: 10, maxHealth: 10, damage: 5 },
-                name: 'Ghost'
-            };
-            enemies.push(enemy);
-        }
-        addCreatures(enemies, Faction.Hostile);
+        });
+        addCreatures(allEnemies, Faction.Hostile);
     };
 
     if (!mapLoaded || !zoneData.creatures[Faction.Hostile]) return null;
@@ -76,7 +60,7 @@ const HostileManager: React.FC<Props> = ({ useTurn }) => {
     return (
         <>
             {zoneData.creatures[Faction.Hostile].map(e => (
-                <Npc key={e.id} skin="e1" startPosition={e.pos} data={{ id: e.id, faction: e.faction }} useTurn={useTurn} />
+                <Npc key={e.id} skin={e.sprite} startPosition={e.pos} data={{ id: e.id, faction: e.faction }} useTurn={useTurn} />
             ))}
         </>
     );

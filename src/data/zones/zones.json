@@ -15,7 +15,7 @@
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       ],
     "creatures": [
-      {"name": "Ghost", "amount": 3},
+      {"name": "Ghost", "amount": 1},
       {"name": "Ninja", "amount": 1}
     ]
     },

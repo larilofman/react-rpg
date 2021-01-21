@@ -17,7 +17,8 @@ const GameManager: React.FC = () => {
         faction: Faction.Player,
         pos: { x: 0, y: 0 },
         stats: { health: 100, maxHealth: 100, damage: 5 },
-        name: 'Player'
+        name: 'Player',
+        sprite: 'f1'
     };
     useEffect(() => {
         if (mapLoaded) {
@@ -27,7 +28,7 @@ const GameManager: React.FC = () => {
 
     return (
         <>
-            {!gameOver && <Player skin="f1" data={{ id: playerData.id, faction: playerData.faction }} useTurn={useTurn} />}
+            {!gameOver && <Player skin={playerData.sprite} data={{ id: playerData.id, faction: playerData.faction }} useTurn={useTurn} />}
             <HostileManager useTurn={useTurn} />
             <FriendlyManager useTurn={useTurn} />
         </>
