@@ -8,7 +8,7 @@ import useDraggable from '../../../hooks/use-draggable';
 
 const DevTools: React.FC = () => {
     const [{ zoneData }] = useStateValue();
-    const { position, handleMouseDown, handleMouseOver } = useDraggable('dev-tools-header', { x: 50, y: 50 });
+    const { position, handleMouseDown } = useDraggable('dev-tools-header', { x: 16, y: 16 });
 
     // if (!zoneData.creatures[Faction.Player].length) {
     //     return null;
@@ -17,17 +17,16 @@ const DevTools: React.FC = () => {
     // const player = zoneData.creatures[Faction.Player][0];
     // console.log(position);
     return (
-        <div
+        <Container
             id="dev-tools"
-            // width="200px"
-            // height="100px"
-            onMouseDown={handleMouseDown}
+            width="200px"
+            height="400px"
             style={{ position: "absolute", top: position.y, left: position.x, zIndex: 10 }}
         >
-            <UIHeaderContainer id={'dev-tools-header'} b4 size="xx-large">Dev Tools</UIHeaderContainer>
-            <Container p4 bnt4 height="100%">
+            <UIHeaderContainer onMouseDown={handleMouseDown} id={'dev-tools-header'} b4 size="xx-large">Dev Tools</UIHeaderContainer>
+            <Container color="dark-brown" p4 bnt4 height="100%">
             </Container>
-        </div>
+        </Container>
     );
 };
 

@@ -6,29 +6,17 @@ export default function useDraggable(id: string, startPos: Position = { x: 0, y:
     const [dragInfo, setDragInfo] = useState<{ isDragging: boolean, offset: Position, translation: Position }>({
         isDragging: false,
         offset: { x: 0, y: 0 },
-        translation: { x: 0, y: 0 }
+        translation: startPos
     });
 
     useEffect(() => {
         const elem = document.getElementById(id);
         if (elem) {
-            // elem.addEventListener("mousedown", handleMouseDown);
             setElement(elem);
-            console.log(elem.clientLeft);
-            // console.log('??');
-            elem.addEventListener("mouseenter", handleMouseEnter);
-            elem.addEventListener("mouseleave", handleMouseLeave);
+            elem.style.cursor = "move";
         }
 
     }, []);
-
-    const handleMouseEnter = (e: MouseEvent) => {
-        console.log('mouse entered');
-    };
-
-    const handleMouseLeave = (e: MouseEvent) => {
-        console.log('mouse left');
-    };
 
     useEffect(() => {
         if (element) {
@@ -38,10 +26,6 @@ export default function useDraggable(id: string, startPos: Position = { x: 0, y:
             } else {
                 element.removeEventListener('mousemove', handleMouseMove);
                 element.removeEventListener('mouseup', handleMouseUp);
-
-                // console.log(console.log(dragInfo));
-
-                // setDragInfo(prev => ({ ...prev, translation: { x: 0, y: 0 } }));
             }
         }
 
@@ -53,7 +37,7 @@ export default function useDraggable(id: string, startPos: Position = { x: 0, y:
         });
     }, [dragInfo.isDragging]);
 
-    function handleMouseUp(e: MouseEvent) {
+    function handleMouseUp() {
         if (element) {
             setDragInfo(prev => (
                 {
@@ -65,12 +49,9 @@ export default function useDraggable(id: string, startPos: Position = { x: 0, y:
 
     function handleMouseDown(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
         if (element) {
-            // e.preventDefault();
-            // element.style.pointerEvents = "none";
             const elemRect = element.getBoundingClientRect();
             const offsetX = e.clientX - elemRect.x;
             const offsetY = e.clientY - elemRect.y;
-            console.log(offsetX, offsetY);
 
             setDragInfo(prev => (
                 {
@@ -84,7 +65,6 @@ export default function useDraggable(id: string, startPos: Position = { x: 0, y:
 
     function handleMouseMove(e: MouseEvent) {
         const translation = { x: e.clientX - dragInfo.offset.x, y: e.clientY - dragInfo.offset.y };
-        // console.log(translation);
         setDragInfo(prev => (
             {
                 ...prev,
@@ -92,12 +72,5 @@ export default function useDraggable(id: string, startPos: Position = { x: 0, y:
             }));
     }
 
-    const handleMouseOver = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        if (element) {
-            element.style.cursor = "crosshair";
-        }
-
-    };
-
-    return { position: dragInfo.translation, handleMouseDown, handleMouseOver };
+    return { position: dragInfo.translation, handleMouseDown };
 }
