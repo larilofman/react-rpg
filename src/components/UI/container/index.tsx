@@ -6,8 +6,6 @@ interface Props extends React.HTMLAttributes<HTMLElement> {
     width?: string | number
     height?: string | number
     color?: 'light' | 'dark' | 'gunmetal' | 'light-brown' | 'dark-brown'
-    className?: string
-    style?: CSSProperties | undefined
     m4?: boolean
     p4?: boolean
     b4?: boolean

@@ -4,7 +4,6 @@ import Container from '../container';
 
 interface Props extends React.HTMLAttributes<HTMLElement> {
     size?: "large" | "x-large" | "xx-large"
-    style?: CSSProperties | undefined
     center?: boolean
     b4?: boolean
     bnt4?: boolean
