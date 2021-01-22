@@ -57,7 +57,7 @@ const CreatureManager: React.FC<Props> = ({ useTurn }) => {
         addCreatures(allFriendlies, Faction.Friendly);
     };
 
-    if (!mapLoaded || !zoneData.creatures[Faction.Hostile]) return null;
+    if (!mapLoaded || (!zoneData.creatures[Faction.Hostile] && !zoneData.creatures[Faction.Friendly])) return null;
 
     return (
         <>
