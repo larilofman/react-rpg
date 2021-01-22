@@ -15,9 +15,10 @@ interface Props {
     bnt4?: boolean
     vcenter?: boolean
     row?: boolean
+    id?: string
 }
 
-const Container: React.FC<Props> = ({ width, height, m4, p4, b4, bb4, bnt4, color, vcenter, className, row, style, children }) => {
+const Container: React.FC<Props> = ({ width, height, m4, p4, b4, bb4, bnt4, color, vcenter, className, row, style, id, children }) => {
     const classes = classList(
         'container',
         color === ('dark' || undefined) && 'container-dark',
@@ -34,7 +35,7 @@ const Container: React.FC<Props> = ({ width, height, m4, p4, b4, bb4, bnt4, colo
     );
 
     return (
-        <div className={classes} style={{ width, height, ...style }}>
+        <div className={classes} id={id} style={{ width, height, ...style }}>
             {children}
         </div>
 

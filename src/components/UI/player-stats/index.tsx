@@ -17,7 +17,7 @@ const PlayerStats: React.FC = () => {
 
     return (
         <Container height="100%">
-            <UIHeaderContainer>{player.name}</UIHeaderContainer>
+            <UIHeaderContainer bnt4>{player.name}</UIHeaderContainer>
             <Container p4 bnt4 height="100%">
                 <HealthBar player={player} />
             </Container>

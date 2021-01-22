@@ -3,12 +3,14 @@ import "./app.css";
 import { useStateValue } from './components/state';
 import GameManager from './components/game-manager';
 import UiContainer from './components/UI/ui-container';
+import DevTools from './components/UI/dev-tools';
 
 const App = () => {
     const [{ tileSize, displaySize }] = useStateValue();
 
     return (
         <div id="game-container">
+            <DevTools />
             <div
                 id="zone-container"
                 style={{
