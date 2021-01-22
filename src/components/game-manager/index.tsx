@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useStateValue } from '../state';
-import HostileManager from '../npc/hostile/hostile-manager';
-import FriendlyManager from '../npc/friendly/friendly-manager';
+import CreatureManager from '../npc/creature-manager';
 import Player from '../player';
 import { Creature, Faction } from '../../types';
 import useAddCreatures from '../state/action-hooks/useAddCreatures';
@@ -29,8 +28,7 @@ const GameManager: React.FC = () => {
     return (
         <>
             {!gameOver && <Player skin={playerData.sprite} data={{ id: playerData.id, faction: playerData.faction }} useTurn={useTurn} />}
-            <HostileManager useTurn={useTurn} />
-            <FriendlyManager useTurn={useTurn} />
+            <CreatureManager useTurn={useTurn} />
         </>
     );
 };

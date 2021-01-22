@@ -18,5 +18,15 @@
             "damage": 8
         },
         "sprite": "m2"
+    },
+    "Distressed Man":
+    {
+        "name": "Distressed Man",
+        "stats": {
+            "health": 20,
+            "maxHealth": 30,
+            "damage": 10
+        },
+        "sprite": "m1"
     }
 }

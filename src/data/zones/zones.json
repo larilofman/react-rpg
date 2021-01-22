@@ -15,8 +15,8 @@
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       ],
     "creatures": [
-      {"name": "Ghost", "amount": 1},
-      {"name": "Ninja", "amount": 1}
+      {"name": "Ghost", "amount": 1, "faction": "Hostile"},
+      {"name": "Ninja", "amount": 1, "faction": "Hostile"}
     ]
     },
     "zone1":{
@@ -24,8 +24,9 @@
       "size": {"w": 24, "h": 24},
       "tiles": null,
       "creatures": [
-        {"name": "Ghost", "amount": 3},
-        {"name": "Ninja", "amount": 1}
+        {"name": "Ghost", "amount": 3, "faction": "Hostile"},
+        {"name": "Ninja", "amount": 1, "faction": "Hostile"},
+        {"name": "Distressed Man", "amount": 1, "faction": "Friendly"}
       ]
     }
 }

@@ -17,10 +17,11 @@ interface Props {
     data: BaseCreature
     useTurn: (creature: BaseCreature) => void
     aggroDistance?: number
-    stationary?: boolean
+    stationary?: boolean,
+    hostile?: boolean
 }
 
-const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistance = 5, stationary = false }) => {
+const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistance = 5, stationary = false, hostile = true }) => {
     const [{ mapLoaded, turn, playerPosition }] = useStateValue();
     const { getRandomNearbyPos } = useWander();
     const { getTileStatus } = useGetTiles();
@@ -40,9 +41,9 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
         if (turn.creature === data.id && turn.faction === data.faction) {
             if (stationary) { // Idle
                 useTurn(data);
-            } else if (isInMeleeRange(position, playerPosition)) { // Melee
+            } else if (hostile && isInMeleeRange(position, playerPosition)) { // Melee
                 contactCreature(playerPosition);
-            } else if (isInRange(position, playerPosition, aggroDistance)) { // Chase
+            } else if (hostile && isInRange(position, playerPosition, aggroDistance)) { // Chase
                 const nextPos = findPath(position, playerPosition);
                 if (nextPos) {
                     move(nextPos);
