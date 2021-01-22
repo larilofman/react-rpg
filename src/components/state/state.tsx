@@ -18,7 +18,7 @@ export type State = {
 const initialState: State = {
     playerPosition: { x: 0, y: 0 },
     tileSize: settings.tileSize,
-    zoneData: { name: "zone0", size: { w: 0, h: 0 }, tiles: [], creatures: { 0: [], 1: [], 2: [] } },
+    zoneData: { name: "zone1", size: { w: 0, h: 0 }, tiles: [], creatures: { 0: [], 1: [], 2: [] } },
     mapLoaded: false,
     turn: { faction: Faction.Player, count: 0, creature: 'player' },
     cameraPosition: { x: 0, y: 0 },
