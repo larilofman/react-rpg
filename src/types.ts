@@ -114,3 +114,17 @@ export interface CreatureType {
     sprite: string
 }
 
+export interface ZoneType {
+    name: string;
+    size: {
+        w: number;
+        h: number;
+    };
+    tiles: number[][] | null;
+    creatures: {
+        name: string;
+        amount: number;
+        faction: string;
+    }[];
+}
+

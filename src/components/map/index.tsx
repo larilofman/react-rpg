@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import Floor from '../tile/floor';
 import Wall from '../tile/wall';
-import { TileType, Tile } from '../../types';
+import { TileType, Tile, ZoneType } from '../../types';
 import { useStateValue } from '../state';
 import useSetMap from '../state/action-hooks/useSetMap';
 import useGenerateMap from '../../hooks/use-generate-map';
-import { loadZoneData, ZoneType } from '../../utils/load-zone-data';
+import { loadZoneData, ZoneName } from '../../utils/load-zone-data';
 
 
 const Map: React.FC = () => {
@@ -15,28 +15,38 @@ const Map: React.FC = () => {
 
     useEffect(() => {
         if (!mapLoaded) {
-            const zoneToLoad = loadZoneData(zoneData.name as ZoneType);
+            const zoneToLoad: ZoneType = loadZoneData(zoneData.name as ZoneName);
             if (zoneToLoad) {
                 if (zoneToLoad.tiles) {
-                    const tiles = buildMap(zoneToLoad.tiles);
-                    const zone = {
-                        ...zoneData,
-                        size: zoneToLoad.size,
-                        tiles
-                    };
-                    setMap(zone);
+                    buildMapFromData(zoneToLoad); // static maps
                 } else {
-                    const tiles = generateMap(zoneToLoad.size);
-                    const zone = {
-                        ...zoneData,
-                        size: zoneToLoad.size,
-                        tiles
-                    };
-                    setMap(zone);
+                    generateMapFromSize(zoneToLoad); // randomly generated maps
                 }
             }
         }
     }, [mapLoaded]);
+
+    const buildMapFromData = (zoneToLoad: ZoneType) => {
+        if (zoneToLoad.tiles) {
+            const tiles = buildMap(zoneToLoad.tiles);
+            const zone = {
+                ...zoneData,
+                size: zoneToLoad.size,
+                tiles
+            };
+            setMap(zone);
+        }
+    };
+
+    const generateMapFromSize = (zoneToLoad: ZoneType) => {
+        const tiles = generateMap(zoneToLoad.size);
+        const zone = {
+            ...zoneData,
+            size: zoneToLoad.size,
+            tiles
+        };
+        setMap(zone);
+    };
 
     // useEffect(() => {
     //     console.log('zoneDataChanged', mapLoaded);

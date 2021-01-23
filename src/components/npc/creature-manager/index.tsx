@@ -6,7 +6,7 @@ import { Creature, Faction, BaseCreature, CreatureType } from '../../../types';
 import useAddCreatures from '../../state/action-hooks/useAddCreatures';
 import { nanoid } from 'nanoid';
 import creatures from '../../../data/creature/creatures.json';
-import { loadZoneData, ZoneType } from '../../../utils/load-zone-data';
+import { loadZoneData, ZoneName } from '../../../utils/load-zone-data';
 
 type CreatureData = keyof typeof creatures;
 
@@ -27,7 +27,7 @@ const CreatureManager: React.FC<Props> = ({ useTurn }) => {
     }, [mapLoaded]);
 
     const getEnemiesToSpawn = () => {
-        const enemyData = loadZoneData(zoneData.name as ZoneType).creatures;
+        const enemyData = loadZoneData(zoneData.name as ZoneName).creatures;
         const enemiesToSpawn: { creature: CreatureType, amount: number, faction: Faction }[] = [];
         Object.values(enemyData).forEach(e => {
             enemiesToSpawn.push({ creature: creatures[e.name as CreatureData] as CreatureType, amount: e.amount, faction: e.faction as unknown as Faction });
