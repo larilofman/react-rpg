@@ -6,6 +6,10 @@
     border: 4px solid var(--almond);
 }
 
+.button:hover{
+    cursor:pointer
+}
+
 .button:focus{
     outline:none;
 }
@@ -85,5 +89,43 @@
     background-color: var(--umber);
     color: var(--almond);
     border-color: var(--khaki-web);
+}
+
+
+.button-gunmetal{
+    background-color: var(--gunmetal);
+    color: var(--khaki-web);
+    border-color: var(--umber);
+}
+
+.button-gunmetal:hover{
+    background-color: var(--gunmetal);
+    color: var(--almond);
+    border-color: var(--khaki-web);
+}
+
+.button-gunmetal:active{
+    background-color: var(--umber);
+    color: var(--almond);
+    border-color: var(--khaki-web);
+}
+
+
+.button-dark{
+    background-color: var(--rich-black-fogra-39);
+    color: var(--khaki-web);
+    border-color: var(--gunmetal);
+}
+
+.button-dark:hover{
+    background-color: var(--gunmetal);
+    color: var(--almond);
+    border-color: var(--rich-black-fogra-39);
+}
+
+.button-dark:active{
+    background-color: var(--rich-black-fogra-39);
+    color: var(--almond);
+    border-color: var(--gunmetal);
 }
 
