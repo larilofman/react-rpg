@@ -3,8 +3,12 @@
     flex-direction: column;
 }
 
-.container-vcenter {
+.container-justify {
     justify-content: center;
+}
+
+.container-align {
+    align-items: center;
 }
 
 .container-dark{

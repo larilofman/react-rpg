@@ -33,9 +33,9 @@ const FilledBar: React.FC<Props> = ({ width, height, label, data, colors, gap })
         ;
     const paddingRight = gap ? gap : '';
     return (
-        <Container row vcenter className="filled-bar-container" style={{ width, height }}>
+        <Container row justify className="filled-bar-container" style={{ width, height }}>
             <Text size="x-large" bold style={{ paddingRight }}>{label}</Text>
-            <Container height="100%" vcenter className="filled-bar" style={barStyle}>
+            <Container height="100%" justify className="filled-bar" style={barStyle}>
                 <Text size="large" outline bold>{`${data.current} / ${data.max}`}</Text>
             </Container>
         </Container>

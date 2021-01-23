@@ -1,0 +1,89 @@
+.button {
+    display: flex;
+    flex-direction: column;
+    border-radius: 2px;
+    font-weight: bold;
+    border: 4px solid var(--almond);
+}
+
+.button:focus{
+    outline:none;
+}
+
+.button-align {
+    align-items: center;
+}
+
+.button:active {
+    font-weight: 500;
+}
+
+.button-m4{
+    margin: 4px
+}
+
+.button-p4{
+    padding: 4px
+}
+
+.button-b4l{
+    border: 4px solid var(--almond)
+}
+
+.button-b4d{
+    border: 4px solid var(--rich-black-fogra-39)
+}
+
+
+.button-light{
+    background-color: var(--almond);
+    color: var(--gunmetal);
+    border-color: var(--khaki-web);
+}
+
+.button-light:hover{
+    background-color: var(--khaki-web);
+    border-color: var(--almond);
+}
+
+.button-light:active{
+    background-color: var(--almond);
+    border-color: var(--khaki-web);
+}
+
+
+.button-light-brown{
+    background-color: var(--khaki-web);
+    color: var(--rich-black-fogra-39);
+    border-color: var(--almond);
+}
+
+.button-light-brown:hover{
+    background-color: var(--almond);
+    border-color: var(--khaki-web);
+}
+
+.button-light-brown:active{
+    background-color: var(--khaki-web);
+    border-color: var(--almond);
+}
+
+
+.button-dark-brown{
+    background-color: var(--umber);
+    color: var(--almond);
+    border-color: var(--khaki-web);
+}
+
+.button-dark-brown:hover{
+    background-color: var(--khaki-web);
+    color: var(--umber);
+    border-color: var(--umber);
+}
+
+.button-dark-brown:active{
+    background-color: var(--umber);
+    color: var(--almond);
+    border-color: var(--khaki-web);
+}
+
