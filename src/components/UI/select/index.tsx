@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Text from '../text';
 import Container from '../container';
 import './style.css';
-import { setConstantValue } from 'typescript';
 
 interface Props {
     width?: string

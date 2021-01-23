@@ -1,34 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import Container from '../container';
 import UIHeaderContainer from '../ui-header-container';
-import { useStateValue } from '../../state';
-import { Faction, Position } from '../../../types';
 import useDraggable from '../../../hooks/use-draggable';
 import Button from '../button';
 import Select from '../select';
-import { getAllZoneNames } from '../../../utils/load-zone-data';
+import { getAllZoneNames, ZoneName } from '../../../utils/load-zone-data';
+import useLoadZone from '../../state/action-hooks/useLoadZone';
+import { useStateValue } from '../../state';
+import './style.css';
 
 
 const DevTools: React.FC = () => {
     const [{ zoneData }] = useStateValue();
     const { position, handleMouseDown } = useDraggable('dev-tools-header', { x: 16, y: 16 });
-    const [zoneToLoad, setZoneToLoad] = useState<string | number>("");
-    const [zoneNames, setZoneNames] = useState<string[]>(getAllZoneNames());
+    const [selectedZone, setSelectedZone] = useState<string>(zoneData.name as ZoneName);
+    const [zoneNames] = useState<string[]>(getAllZoneNames());
+    const { loadZone } = useLoadZone();
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        loadZone(selectedZone as ZoneName);
+    };
 
-    useEffect(() => {
-        console.log(getAllZoneNames());
-    }, [zoneToLoad]);
-
-    // const handleMapSelection = (map: string) => {
-    //     console.log(map);
-    // };
-    // if (!zoneData.creatures[Faction.Player].length) {
-    //     return null;
-    // }
-
-    // const player = zoneData.creatures[Faction.Player][0];
-    // console.log(position);
     return (
         <Container
             id="dev-tools"
@@ -38,10 +31,13 @@ const DevTools: React.FC = () => {
         >
             <UIHeaderContainer onMouseDown={handleMouseDown} id={'dev-tools-header'} b4 size="xx-large">Dev Tools</UIHeaderContainer>
             <Container color="dark-brown" p4 bnt4 height="100%" align>
-                <Select onChange={(zone) => setZoneToLoad(zone)} width="80%" label="Load map" initialOption={zoneNames[0]} options={zoneNames} />
-                <Button color="light" p4 m4 align width="60%">
-                    Load zone
+                <form onSubmit={handleSubmit} id="dev-tools-map-form">
+                    <Select onChange={(zone) => setSelectedZone(zone as ZoneName)} width="80%" label="Load zone" initialOption={selectedZone} options={zoneNames} />
+                    <Button color="light" p4 m4 align width="60%" type="submit">
+                        Load zone
                 </Button>
+                </form>
+
             </Container>
         </Container>
     );

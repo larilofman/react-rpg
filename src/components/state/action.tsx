@@ -1,4 +1,5 @@
 import { Position, ZoneData, Creature, Faction, BaseCreature } from '../../types';
+import { ZoneName } from '../../utils/load-zone-data';
 
 export enum ActionType {
     "SET_PLAYER_POSITION",
@@ -10,7 +11,8 @@ export enum ActionType {
     "ADD_CREATURES",
     "DAMAGE_CREATURE",
     "REMOVE_CREATURE",
-    "ADD_COMBAT_LOG_ENTRY"
+    "ADD_COMBAT_LOG_ENTRY",
+    "LOAD_FRESH_ZONE"
 }
 
 export type Action =
@@ -54,4 +56,8 @@ export type Action =
     | {
         type: ActionType.ADD_COMBAT_LOG_ENTRY;
         payload: string
+    }
+    | {
+        type: ActionType.LOAD_FRESH_ZONE;
+        payload: ZoneName
     };

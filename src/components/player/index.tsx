@@ -43,9 +43,10 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
             updateCamera(playerPosition);
         }
         // Toggles on and off so that player can only act every 50ms
-        setInterval(() => {
+        const delayTicker = setInterval(() => {
             setCanAct(prev => (!prev));
         }, 50);
+        return () => clearInterval(delayTicker);
     }, [mapLoaded]);
 
     // If a tile is clicked on and standing next to an occupied tile, contact with the creature on the tile, otherwise find a path to the tile

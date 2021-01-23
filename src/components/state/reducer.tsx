@@ -95,6 +95,17 @@ export const reducer = (state: State, action: Action): State => {
                 combatLog: state.combatLog.concat(`Turn ${state.turn.count}: ${action.payload}`)
             };
         }
+        case ActionType.LOAD_FRESH_ZONE:
+            return {
+                ...state,
+                mapLoaded: false,
+                playerPosition: { x: 0, y: 0 },
+                zoneData: {
+                    ...state.zoneData,
+                    name: action.payload,
+                    creatures: { 0: [], 1: [], 2: [] }
+                }
+            };
         default:
             return state;
     }

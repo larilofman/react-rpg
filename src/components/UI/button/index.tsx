@@ -3,7 +3,7 @@ import './style.css';
 import Text from '../text';
 import classList from '../../../utils/class-list';
 
-interface Props extends React.HTMLAttributes<HTMLElement> {
+interface Props extends React.HTMLProps<HTMLButtonElement> {
     width?: string | number
     height?: string | number
     color?: 'light' | 'dark' | 'gunmetal' | 'light-brown' | 'dark-brown'

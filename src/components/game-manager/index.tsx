@@ -8,14 +8,14 @@ import useAddCreatures from '../state/action-hooks/useAddCreatures';
 import useUseTurn from '../state/action-hooks/useUseTurn';
 
 const GameManager: React.FC = () => {
-    const [{ mapLoaded, gameOver }] = useStateValue();
+    const [{ mapLoaded, gameOver, playerPosition }] = useStateValue();
     const { addCreatures } = useAddCreatures();
     const { useTurn } = useUseTurn();
 
     const playerData: Creature = {
         id: 'player',
         faction: Faction.Player,
-        pos: { x: 0, y: 0 },
+        pos: playerPosition,
         stats: { health: 100, maxHealth: 100, damage: 5 },
         name: 'Player',
         sprite: 'f1'
@@ -29,7 +29,7 @@ const GameManager: React.FC = () => {
     return (
         <>
             <Map />
-            {!gameOver && <Player skin={playerData.sprite} data={{ id: playerData.id, faction: playerData.faction }} useTurn={useTurn} />}
+            {!gameOver && mapLoaded && <Player skin={playerData.sprite} data={{ id: playerData.id, faction: playerData.faction }} useTurn={useTurn} />}
             <CreatureManager useTurn={useTurn} />
         </>
     );
