@@ -1,5 +1,6 @@
 import { Faction } from '../../types';
 import { State, Action, ActionType } from '../state';
+import { ZoneName } from '../../utils/load-zone-data';
 
 export const reducer = (state: State, action: Action): State => {
     switch (action.type) {
@@ -100,12 +101,31 @@ export const reducer = (state: State, action: Action): State => {
                 ...state,
                 mapLoaded: false,
                 playerPosition: { x: 0, y: 0 },
+                visitedZones: state.visitedZones.filter(z => z.name !== action.payload),
                 zoneData: {
                     ...state.zoneData,
                     name: action.payload,
                     creatures: { 0: [], 1: [], 2: [] }
                 }
             };
+        case ActionType.LOAD_VISITED_ZONE: {
+            const visitedZone = state.visitedZones.find(z => z.name === action.payload);
+            if (visitedZone) {
+                return {
+                    ...state,
+                    mapLoaded: false,
+                    playerPosition: visitedZone.creatures[Faction.Player][0].pos,
+                    zoneData: {
+                        ...state.zoneData,
+                        name: action.payload,
+                        creatures: visitedZone.creatures
+                    }
+                };
+            }
+
+            return state;
+
+        }
         case ActionType.SAVE_VISITED_ZONE: {
             const prevZones = state.visitedZones;
 

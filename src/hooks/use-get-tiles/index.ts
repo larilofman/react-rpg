@@ -93,7 +93,6 @@ export default function useGetTiles() {
         }
 
         const randomTile = nearbyFloors[Math.floor(Math.random() * nearbyFloors.length)];
-        console.log(randomTile);
         return randomTile;
     };
 

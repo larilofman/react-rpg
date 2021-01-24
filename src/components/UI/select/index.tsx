@@ -28,6 +28,12 @@ const Select: React.FC<Props> = ({ width, height, label, options, initialOption,
         onChange(value);
     }, [value]);
 
+    useEffect(() => {
+        if (options.length && !value) {
+            setValue(options[0]);
+        }
+    }, [options]);
+
     return (
         <Container className="select-container" style={{ width: width, height: height }}>
             <Text bold size="x-large" className="select-label-text">

@@ -18,9 +18,9 @@ export default function useZoneDataHandler() {
         saveVisitedZone(savedZoneData);
     };
 
-    const loadVisitedZone = (name: ZoneName) => {
-        const zoneToLoad = visitedZones.find(z => z.name === name);
-    };
+    // const loadVisitedZone = (name: ZoneName) => {
+    //     const zoneToLoad = visitedZones.find(z => z.name === name);
+    // };
 
     return {
         saveZoneData

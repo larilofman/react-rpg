@@ -9,12 +9,18 @@ import { loadZoneData, ZoneName } from '../../utils/load-zone-data';
 
 
 const Map: React.FC = () => {
-    const [{ zoneData, mapLoaded, cameraPosition, displaySize }] = useStateValue();
+    const [{ zoneData, mapLoaded, cameraPosition, displaySize, visitedZones }] = useStateValue();
     const { setMap } = useSetMap();
     const { buildMap, generateMap } = useGenerateMap();
 
     useEffect(() => {
         if (!mapLoaded) {
+            const visitedZone = visitedZones.find(z => z.name === zoneData.name);
+            if (visitedZone) {
+                setMap(visitedZone);
+                return;
+            }
+            // console.log(visitedZones);
             const zoneToLoad: ZoneType = loadZoneData(zoneData.name as ZoneName);
             if (zoneToLoad) {
                 if (zoneToLoad.tiles) {

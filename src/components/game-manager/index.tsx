@@ -8,7 +8,7 @@ import useAddCreatures from '../state/action-hooks/useAddCreatures';
 import useUseTurn from '../state/action-hooks/useUseTurn';
 
 const GameManager: React.FC = () => {
-    const [{ mapLoaded, gameOver, playerPosition }] = useStateValue();
+    const [{ mapLoaded, gameOver, playerPosition, visitedZones, zoneData }] = useStateValue();
     const { addCreatures } = useAddCreatures();
     const { useTurn } = useUseTurn();
 
@@ -21,7 +21,7 @@ const GameManager: React.FC = () => {
         sprite: 'f1'
     };
     useEffect(() => {
-        if (mapLoaded) {
+        if (mapLoaded && !visitedZones.map(z => z.name).includes(zoneData.name)) {
             addCreatures([playerData], playerData.faction);
         }
     }, [mapLoaded]);

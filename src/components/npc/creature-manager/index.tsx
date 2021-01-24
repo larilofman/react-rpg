@@ -15,31 +15,31 @@ interface Props {
 }
 
 const CreatureManager: React.FC<Props> = ({ useTurn }) => {
-    const [{ zoneData, mapLoaded }] = useStateValue();
+    const [{ zoneData, visitedZones, mapLoaded }] = useStateValue();
     const { findRandomFloorTile } = useFindRandomFloorTile();
     const { addCreatures } = useAddCreatures();
 
     useEffect(() => {
-        if (mapLoaded) {
-            const enemiesToSpawn = getEnemiesToSpawn();
-            spawnEnemies(enemiesToSpawn);
+        if (mapLoaded && !visitedZones.map(z => z.name).includes(zoneData.name)) {
+            const creaturesToSpawn = getCreaturesToSpawn();
+            spawnCreatures(creaturesToSpawn);
         }
     }, [mapLoaded]);
 
-    const getEnemiesToSpawn = () => {
-        const enemyData = loadZoneData(zoneData.name as ZoneName).creatures;
-        const enemiesToSpawn: { creature: CreatureType, amount: number, faction: Faction }[] = [];
-        Object.values(enemyData).forEach(e => {
-            enemiesToSpawn.push({ creature: creatures[e.name as CreatureData] as CreatureType, amount: e.amount, faction: e.faction as unknown as Faction });
+    const getCreaturesToSpawn = () => {
+        const creatureData = loadZoneData(zoneData.name as ZoneName).creatures;
+        const creaturesToSpawn: { creature: CreatureType, amount: number, faction: Faction }[] = [];
+        Object.values(creatureData).forEach(c => {
+            creaturesToSpawn.push({ creature: creatures[c.name as CreatureData] as CreatureType, amount: c.amount, faction: c.faction as unknown as Faction });
         });
 
-        return enemiesToSpawn;
+        return creaturesToSpawn;
     };
 
-    const spawnEnemies = (enemiesToSpawn: { creature: CreatureType, amount: number, faction: Faction }[]) => {
+    const spawnCreatures = (creaturesToSpawn: { creature: CreatureType, amount: number, faction: Faction }[]) => {
         const allEnemies: Creature[] = [];
         const allFriendlies: Creature[] = [];
-        enemiesToSpawn.forEach(({ creature, amount, faction }) => {
+        creaturesToSpawn.forEach(({ creature, amount, faction }) => {
             for (let i = 0; i < amount; i++) {
                 const creatureToAdd: Creature = {
                     faction: Faction[faction] as unknown as Faction,

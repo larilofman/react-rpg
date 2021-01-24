@@ -13,8 +13,16 @@ export default function useLoadZone() {
             });
     };
 
+    const loadVisitedZone = (mapName: ZoneName) => {
+        dispatch(
+            {
+                type: ActionType.LOAD_VISITED_ZONE,
+                payload: mapName
+            });
+    };
+
     return {
-        loadFreshZone
+        loadFreshZone, loadVisitedZone
     };
 }
 
