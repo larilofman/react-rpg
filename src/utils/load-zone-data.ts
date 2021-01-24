@@ -1,9 +1,11 @@
 import zones from '../data/zones/zones.json';
+import { ZoneType } from '../types';
 
 export type ZoneName = keyof typeof zones;
 
 export const loadZoneData = (name: ZoneName) => {
-    return zones[name];
+    const zone = zones[name] as ZoneType;
+    return zone;
 };
 
 export const getAllZoneNames = () => {

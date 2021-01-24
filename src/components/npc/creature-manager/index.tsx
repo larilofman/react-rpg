@@ -8,29 +8,30 @@ import { nanoid } from 'nanoid';
 import creatures from '../../../data/creature/creatures.json';
 import { loadZoneData, ZoneName } from '../../../utils/load-zone-data';
 
-type CreatureData = keyof typeof creatures;
+type CreatureName = keyof typeof creatures;
 
 interface Props {
     useTurn: (creature: BaseCreature) => void
+    freshZone: () => boolean
 }
 
-const CreatureManager: React.FC<Props> = ({ useTurn }) => {
+const CreatureManager: React.FC<Props> = ({ useTurn, freshZone }) => {
     const [{ zoneData, visitedZones, mapLoaded }] = useStateValue();
     const { findRandomFloorTile } = useFindRandomFloorTile();
     const { addCreatures } = useAddCreatures();
 
     useEffect(() => {
-        if (mapLoaded && !visitedZones.map(z => z.name).includes(zoneData.name)) {
+        if (mapLoaded && freshZone()) {
             const creaturesToSpawn = getCreaturesToSpawn();
             spawnCreatures(creaturesToSpawn);
         }
     }, [mapLoaded]);
 
     const getCreaturesToSpawn = () => {
-        const creatureData = loadZoneData(zoneData.name as ZoneName).creatures;
+        const creatureData = loadZoneData(zoneData.name as ZoneName).creatures; // load list of enemies from data
         const creaturesToSpawn: { creature: CreatureType, amount: number, faction: Faction }[] = [];
-        Object.values(creatureData).forEach(c => {
-            creaturesToSpawn.push({ creature: creatures[c.name as CreatureData] as CreatureType, amount: c.amount, faction: c.faction as unknown as Faction });
+        Object.values(creatureData).forEach(c => { // find the creature's data by its name
+            creaturesToSpawn.push({ creature: creatures[c.name as CreatureName] as CreatureType, amount: c.amount, faction: c.faction as unknown as Faction });
         });
 
         return creaturesToSpawn;

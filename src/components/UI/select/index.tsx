@@ -29,8 +29,13 @@ const Select: React.FC<Props> = ({ width, height, label, options, initialOption,
     }, [value]);
 
     useEffect(() => {
-        if (options.length && !value) {
-            setValue(options[0]);
+        // if (options.length && !value) {
+        //     setValue(options[0]);
+        // } else {
+        //     setValue(options[options.length - 1]);
+        // }
+        if (options.length) {
+            setValue(options[options.length - 1]);
         }
     }, [options]);
 
@@ -39,7 +44,7 @@ const Select: React.FC<Props> = ({ width, height, label, options, initialOption,
             <Text bold size="x-large" className="select-label-text">
                 {label}
             </Text>
-            <select defaultValue={value} className="select" onChange={handleChange}>
+            <select value={value} className="select" onChange={handleChange}>
                 {(options as Array<string | number>).map(
                     (option: string | number) =>
                         <option

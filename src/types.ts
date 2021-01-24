@@ -117,7 +117,7 @@ export interface CreatureType {
 }
 
 export interface ZoneType {
-    name: string;
+    name: ZoneName;
     size: {
         w: number;
         h: number;
@@ -128,5 +128,12 @@ export interface ZoneType {
         amount: number;
         faction: string;
     }[];
+    zoneRoutes: ZoneRoute[];
+}
+
+export interface ZoneRoute {
+    id: string
+    linkedRoute: { zone: ZoneName, id: string }
+    position: Position
 }
 

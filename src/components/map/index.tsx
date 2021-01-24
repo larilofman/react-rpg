@@ -7,30 +7,43 @@ import useSetMap from '../state/action-hooks/useSetMap';
 import useGenerateMap from '../../hooks/use-generate-map';
 import { loadZoneData, ZoneName } from '../../utils/load-zone-data';
 
+interface Props {
+    currentZone: ZoneType | undefined
+    setCurrentZone: React.Dispatch<React.SetStateAction<ZoneType | undefined>>
+}
 
-const Map: React.FC = () => {
+const Map: React.FC<Props> = ({ currentZone, setCurrentZone }) => {
     const [{ zoneData, mapLoaded, cameraPosition, displaySize, visitedZones }] = useStateValue();
     const { setMap } = useSetMap();
     const { buildMap, generateMap } = useGenerateMap();
 
     useEffect(() => {
-        if (!mapLoaded) {
-            const visitedZone = visitedZones.find(z => z.name === zoneData.name);
-            if (visitedZone) {
-                setMap(visitedZone);
-                return;
+        // if (!mapLoaded) {
+        //     const visitedZone = visitedZones.find(z => z.name === zoneData.name);
+        //     if (visitedZone) {
+        //         setMap(visitedZone);
+        //         return;
+        //     }
+        //     console.log(visitedZones);
+        //     const zoneToLoad: ZoneType = loadZoneData(zoneData.name as ZoneName);
+        //     if (zoneToLoad) {
+        //         if (zoneToLoad.tiles) {
+        //             buildMapFromData(zoneToLoad); // static maps
+        //         } else {
+        //             generateMapFromSize(zoneToLoad); // randomly generated maps
+        //         }
+        //     }
+        // }
+        if (currentZone) {
+            if (currentZone.tiles) {
+                buildMapFromData(currentZone); // static maps
+            } else {
+                generateMapFromSize(currentZone); // randomly generated maps
             }
-            // console.log(visitedZones);
-            const zoneToLoad: ZoneType = loadZoneData(zoneData.name as ZoneName);
-            if (zoneToLoad) {
-                if (zoneToLoad.tiles) {
-                    buildMapFromData(zoneToLoad); // static maps
-                } else {
-                    generateMapFromSize(zoneToLoad); // randomly generated maps
-                }
-            }
+            setCurrentZone(undefined);
         }
-    }, [mapLoaded]);
+
+    }, [currentZone]);
 
     const buildMapFromData = (zoneToLoad: ZoneType) => {
         if (zoneToLoad.tiles) {

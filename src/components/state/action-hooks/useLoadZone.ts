@@ -1,9 +1,9 @@
-import { ZoneData } from '../../../types';
+import { ZoneData, ZoneRoute } from '../../../types';
 import { useStateValue, ActionType } from '../index';
 import { ZoneName } from '../../../utils/load-zone-data';
 
 export default function useLoadZone() {
-    const [, dispatch] = useStateValue();
+    const [{ visitedZones }, dispatch] = useStateValue();
 
     const loadFreshZone = (mapName: ZoneName) => {
         dispatch(
@@ -19,6 +19,10 @@ export default function useLoadZone() {
                 type: ActionType.LOAD_VISITED_ZONE,
                 payload: mapName
             });
+    };
+
+    const loadZone = (zoneRoute: ZoneRoute) => {
+        console.log(zoneRoute);
     };
 
     return {

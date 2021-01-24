@@ -134,6 +134,7 @@ export const reducer = (state: State, action: Action): State => {
                 if (prevZones[i].name === action.payload.name) {
                     prevZones[i] = action.payload;
                     zoneFound = true;
+                    break;
                 }
             }
 
