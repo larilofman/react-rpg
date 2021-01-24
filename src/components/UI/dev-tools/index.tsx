@@ -1,26 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from '../container';
 import UIHeaderContainer from '../ui-header-container';
 import useDraggable from '../../../hooks/use-draggable';
 import Button from '../button';
 import Select from '../select';
 import { getAllZoneNames, ZoneName } from '../../../utils/load-zone-data';
-import useLoadZone from '../../state/action-hooks/useLoadZone';
+import useLoadZone from '../../state/action-hooks/useLoadFreshZone';
 import { useStateValue } from '../../state';
 import './style.css';
+import useZoneDataHandler from '../../../hooks/use-zonedata-handler';
 
 
 const DevTools: React.FC = () => {
-    const [{ zoneData }] = useStateValue();
+    const [{ zoneData, visitedZones }] = useStateValue();
     const { position, handleMouseDown } = useDraggable('dev-tools-header', { x: 16, y: 16 });
     const [selectedZone, setSelectedZone] = useState<string>(zoneData.name as ZoneName);
     const [zoneNames] = useState<string[]>(getAllZoneNames());
-    const { loadZone } = useLoadZone();
+    const { loadFreshZone } = useLoadZone();
+    const { saveZoneData } = useZoneDataHandler();
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleZoneChangeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        loadZone(selectedZone as ZoneName);
+        loadFreshZone(selectedZone as ZoneName);
     };
+
+    useEffect(() => {
+        console.log(visitedZones);
+    }, [JSON.stringify(visitedZones)]);
 
     return (
         <Container
@@ -30,13 +36,18 @@ const DevTools: React.FC = () => {
             style={{ position: "absolute", top: position.y, left: position.x, zIndex: 10 }}
         >
             <UIHeaderContainer onMouseDown={handleMouseDown} id={'dev-tools-header'} b4 size="xx-large">Dev Tools</UIHeaderContainer>
-            <Container color="dark-brown" p4 bnt4 height="100%" align>
-                <form onSubmit={handleSubmit} id="dev-tools-map-form">
+            <Container color="dark-brown" p4 bnt4 height="100%" style={{ justifyContent: "space-between" }}>
+                <form onSubmit={handleZoneChangeSubmit} id="dev-tools-map-form">
                     <Select onChange={(zone) => setSelectedZone(zone as ZoneName)} width="80%" label="Load zone" initialOption={selectedZone} options={zoneNames} />
                     <Button color="light" p4 m4 align width="60%" type="submit">
                         Load zone
                 </Button>
                 </form>
+                <Container align>
+                    <Button p4 m4 align width="80%" color="light-brown" onClick={saveZoneData}>
+                        Save ZoneData
+                </Button>
+                </Container>
 
             </Container>
         </Container>

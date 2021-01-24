@@ -1,3 +1,5 @@
+import { ZoneName } from './utils/load-zone-data';
+
 export interface Position {
     x: number,
     y: number
@@ -64,7 +66,7 @@ export enum Faction {
 }
 
 export interface ZoneData {
-    name: string,
+    name: ZoneName,
     size: Dimensions,
     tiles: Tile[][],
     creatures: {

@@ -18,6 +18,14 @@ export default function useWander() {
                 return { x: currentPos.x + 1, y: currentPos.y };
             case Direction.left:
                 return { x: currentPos.x - 1, y: currentPos.y };
+            case Direction.upLeft:
+                return { x: currentPos.x - 1, y: currentPos.y - 1 };
+            case Direction.upRight:
+                return { x: currentPos.x + 1, y: currentPos.y - 1 };
+            case Direction.downRight:
+                return { x: currentPos.x + 1, y: currentPos.y + 1 };
+            case Direction.downLeft:
+                return { x: currentPos.x - 1, y: currentPos.y + 1 };
             default:
                 return currentPos;
         }

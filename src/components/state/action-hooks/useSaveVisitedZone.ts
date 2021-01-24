@@ -2,19 +2,19 @@ import { ZoneData } from '../../../types';
 import { useStateValue, ActionType } from '../index';
 import { ZoneName } from '../../../utils/load-zone-data';
 
-export default function useLoadZone() {
+export default function useSaveVisitedZone() {
     const [, dispatch] = useStateValue();
 
-    const loadZone = (mapName: ZoneName) => {
+    const saveVisitedZone = (zone: ZoneData) => {
         dispatch(
             {
-                type: ActionType.LOAD_FRESH_ZONE,
-                payload: mapName
+                type: ActionType.SAVE_VISITED_ZONE,
+                payload: zone
             });
     };
 
     return {
-        loadZone
+        saveVisitedZone
     };
 }
 

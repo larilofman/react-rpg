@@ -106,7 +106,28 @@ export const reducer = (state: State, action: Action): State => {
                     creatures: { 0: [], 1: [], 2: [] }
                 }
             };
+        case ActionType.SAVE_VISITED_ZONE: {
+            const prevZones = state.visitedZones;
+
+            let zoneFound = false;
+            for (let i = 0; i < prevZones.length; i++) {
+                if (prevZones[i].name === action.payload.name) {
+                    prevZones[i] = action.payload;
+                    zoneFound = true;
+                }
+            }
+
+            if (!zoneFound) {
+                prevZones.push(action.payload);
+            }
+
+            return {
+                ...state,
+                visitedZones: prevZones
+            };
+        }
         default:
             return state;
+
     }
 };

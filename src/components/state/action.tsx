@@ -12,7 +12,9 @@ export enum ActionType {
     "DAMAGE_CREATURE",
     "REMOVE_CREATURE",
     "ADD_COMBAT_LOG_ENTRY",
-    "LOAD_FRESH_ZONE"
+    "LOAD_FRESH_ZONE",
+    "LOAD_VISITED_ZONE",
+    "SAVE_VISITED_ZONE"
 }
 
 export type Action =
@@ -60,4 +62,12 @@ export type Action =
     | {
         type: ActionType.LOAD_FRESH_ZONE;
         payload: ZoneName
+    }
+    | {
+        type: ActionType.LOAD_VISITED_ZONE;
+        payload: ZoneName
+    }
+    | {
+        type: ActionType.SAVE_VISITED_ZONE;
+        payload: ZoneData
     };

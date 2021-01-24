@@ -16,6 +16,9 @@ export default function useCamera() {
         if (zoneData.size.h > displaySize.h && zoneData.size.w > displaySize.w) {
             x = clamp(0, zoneData.size.w - displaySize.w, x);
             y = clamp(0, zoneData.size.h - displaySize.h, y);
+        } else {
+            x = Math.floor(zoneData.size.w / 2) - Math.floor(displaySize.w / 2);
+            y = Math.floor(zoneData.size.h / 2) - Math.floor(displaySize.h / 2);
         }
 
 
