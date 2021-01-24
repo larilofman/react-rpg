@@ -16,7 +16,7 @@ interface Props {
 }
 
 const CreatureManager: React.FC<Props> = ({ useTurn, freshZone }) => {
-    const [{ zoneData, visitedZones, mapLoaded }] = useStateValue();
+    const [{ zoneData, mapLoaded }] = useStateValue();
     const { findRandomFloorTile } = useFindRandomFloorTile();
     const { addCreatures } = useAddCreatures();
 

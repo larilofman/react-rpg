@@ -5,71 +5,32 @@ import { TileType, Tile, ZoneType } from '../../types';
 import { useStateValue } from '../state';
 import useSetMap from '../state/action-hooks/useSetMap';
 import useGenerateMap from '../../hooks/use-generate-map';
-import { loadZoneData, ZoneName } from '../../utils/load-zone-data';
 
 interface Props {
-    currentZone: ZoneType | undefined
-    setCurrentZone: React.Dispatch<React.SetStateAction<ZoneType | undefined>>
+    loadedZone: ZoneType | undefined
+    setLoadedZone: React.Dispatch<React.SetStateAction<ZoneType | undefined>>
 }
 
-const Map: React.FC<Props> = ({ currentZone, setCurrentZone }) => {
-    const [{ zoneData, mapLoaded, cameraPosition, displaySize, visitedZones }] = useStateValue();
+const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
+    const [{ zoneData, cameraPosition, displaySize }] = useStateValue();
     const { setMap } = useSetMap();
     const { buildMap, generateMap } = useGenerateMap();
 
     useEffect(() => {
-        // if (!mapLoaded) {
-        //     const visitedZone = visitedZones.find(z => z.name === zoneData.name);
-        //     if (visitedZone) {
-        //         setMap(visitedZone);
-        //         return;
-        //     }
-        //     console.log(visitedZones);
-        //     const zoneToLoad: ZoneType = loadZoneData(zoneData.name as ZoneName);
-        //     if (zoneToLoad) {
-        //         if (zoneToLoad.tiles) {
-        //             buildMapFromData(zoneToLoad); // static maps
-        //         } else {
-        //             generateMapFromSize(zoneToLoad); // randomly generated maps
-        //         }
-        //     }
-        // }
-        if (currentZone) {
-            if (currentZone.tiles) {
-                buildMapFromData(currentZone); // static maps
-            } else {
-                generateMapFromSize(currentZone); // randomly generated maps
-            }
-            setCurrentZone(undefined);
-        }
-
-    }, [currentZone]);
-
-    const buildMapFromData = (zoneToLoad: ZoneType) => {
-        if (zoneToLoad.tiles) {
-            const tiles = buildMap(zoneToLoad.tiles);
+        if (loadedZone) {
+            const tiles = loadedZone.tiles
+                ? buildMap(loadedZone.tiles)
+                : generateMap(loadedZone.size);
             const zone = {
                 ...zoneData,
-                size: zoneToLoad.size,
+                size: loadedZone.size,
                 tiles
             };
             setMap(zone);
+            setLoadedZone(undefined);
         }
-    };
 
-    const generateMapFromSize = (zoneToLoad: ZoneType) => {
-        const tiles = generateMap(zoneToLoad.size);
-        const zone = {
-            ...zoneData,
-            size: zoneToLoad.size,
-            tiles
-        };
-        setMap(zone);
-    };
-
-    // useEffect(() => {
-    //     console.log('zoneDataChanged', mapLoaded);
-    // }, [zoneData]);
+    }, [loadedZone]);
 
     const tilesOnCamera = () => {
         const cam_y = cameraPosition.y;
