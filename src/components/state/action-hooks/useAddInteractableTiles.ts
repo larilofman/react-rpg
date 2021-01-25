@@ -1,4 +1,4 @@
-import { BaseCreature, InteractableTile, Position } from '../../../types';
+import {  InteractableTile } from '../../../types';
 import { useStateValue, ActionType } from '../index';
 
 export default function useAddInteractableTiles() {

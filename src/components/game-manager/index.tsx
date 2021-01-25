@@ -3,7 +3,7 @@ import { useStateValue } from '../state';
 import CreatureManager from '../npc/creature-manager';
 import Map from '../map';
 import Player from '../player';
-import { Creature, Faction, ZoneData, ZoneType } from '../../types';
+import { Creature, Faction, ZoneType } from '../../types';
 import useAddCreatures from '../state/action-hooks/useAddCreatures';
 import useUseTurn from '../state/action-hooks/useUseTurn';
 import useSetMap from '../state/action-hooks/useSetMap';
@@ -28,18 +28,16 @@ const GameManager: React.FC = () => {
     useEffect(() => {
 
         if (!mapLoaded) {
-            const visitedZone = visitedZones.find(z => z.name === zoneData.name);
-            if (visitedZone) {
-                setMap(visitedZone);
-                // tarvii hakea playerin entry position jotenkin
+            if (zoneData.tiles.length) { // A visited zone is loaded
+                setMap(zoneData);
                 return;
-            } else {
+            } else { // A fresh zone is loaded
                 const zoneToLoad: ZoneType = loadZoneData(zoneData.name as ZoneName);
                 setLoadedZone(zoneToLoad);
             }
         }
 
-        if (mapLoaded && freshZone()) {
+        if (mapLoaded && !zoneData.creatures[0].length) {
             addCreatures([playerData], playerData.faction);
         }
 

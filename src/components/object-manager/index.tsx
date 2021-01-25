@@ -1,15 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import Sprite from '../sprite';
-import useWalk from '../../hooks/use-walk';
-import useAnimation from '../../hooks/use-animation';
-import useWander from '../../hooks/use-wander';
+import React, { useEffect } from 'react';
 import { useStateValue } from '../state';
-import { InteractableTileType, Position, ZoneRouteType } from '../../types';
-import useGetTiles from '../../hooks/use-get-tiles';
-import useContact from '../../hooks/use-contact';
-import { isInMeleeRange, isInRange } from '../../utils/calculate-distance';
-import usePathFinding from '../../hooks/use-pathfinding';
-import useMoveCreature from '../state/action-hooks/useMoveCreature';
+import { InteractableTileType } from '../../types';
 import { loadZoneData, ZoneName } from '../../utils/load-zone-data';
 import ZoneRoute from '../object/zoneRoute';
 import useAddInteractableTiles from '../state/action-hooks/useAddInteractableTiles';

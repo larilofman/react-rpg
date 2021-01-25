@@ -1,6 +1,5 @@
 import React from 'react';
-import Sprite from '../sprite';
-import { Position, SpriteData, ZoneRouteType } from '../../types';
+import { ZoneRouteType } from '../../types';
 import StaticObject from '../object';
 
 interface Props {

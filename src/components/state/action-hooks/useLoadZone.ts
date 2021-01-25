@@ -1,4 +1,4 @@
-import { Position, ZoneData, ZoneRouteType } from '../../../types';
+import { Position, ZoneRouteType } from '../../../types';
 import { useStateValue, ActionType } from '../index';
 import { ZoneName, loadZoneData } from '../../../utils/load-zone-data';
 import useAddVisitedZone from '../action-hooks/useAddVisitedZone';

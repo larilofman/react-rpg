@@ -1,4 +1,3 @@
-import { ZoneData } from '../../../types';
 import { useStateValue, ActionType } from '../index';
 
 export default function useAddVisitedZone() {

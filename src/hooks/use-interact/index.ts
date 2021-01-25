@@ -1,6 +1,4 @@
-import { BaseCreature, Position, Faction, InteractableTileType } from '../../types';
-import useGetCreature from '../use-get-creature';
-import useMelee from '../use-melee';
+import { Position, InteractableTileType } from '../../types';
 import { useStateValue } from '../../components/state';
 import useLoadZone from '../../components/state/action-hooks/useLoadZone';
 
@@ -14,11 +12,9 @@ export default function useContact() {
             case InteractableTileType.ZoneRoute:
                 changeZone(interactedTile);
                 break;
-
             default:
                 break;
         }
-
     }
 
     return {

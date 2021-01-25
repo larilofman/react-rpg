@@ -1,6 +1,5 @@
 import { Faction } from '../../types';
 import { State, Action, ActionType } from '../state';
-import { ZoneName } from '../../utils/load-zone-data';
 
 export const reducer = (state: State, action: Action): State => {
     switch (action.type) {
@@ -105,8 +104,10 @@ export const reducer = (state: State, action: Action): State => {
                 zoneData: {
                     ...state.zoneData,
                     name: action.payload.zoneName,
-                    creatures: { 0: [], 1: [], 2: [] },
-                    interactableTiles: []
+                    creatures: { [Faction.Player]: state.zoneData.creatures[Faction.Player], [Faction.Friendly]: [], [Faction.Hostile]: [] },
+                    interactableTiles: [],
+                    tiles: [],
+                    size: { w: 0, h: 0 }
                 }
             };
         case ActionType.LOAD_VISITED_ZONE: {
@@ -119,12 +120,14 @@ export const reducer = (state: State, action: Action): State => {
                     zoneData: {
                         ...state.zoneData,
                         name: action.payload.zoneName,
-                        creatures: visitedZone.creatures,
-                        interactableTiles: visitedZone.interactableTiles
+                        creatures: { ...visitedZone.creatures, [Faction.Player]: state.zoneData.creatures[Faction.Player] },
+                        interactableTiles: visitedZone.interactableTiles,
+                        tiles: visitedZone.tiles,
+                        size: visitedZone.size
                     }
                 };
             }
-
+            console.error(`visited zone ${action.payload.zoneName} failed to load`);
             return state;
 
         }

@@ -30,7 +30,7 @@ export default function UseCombatLog() {
 
         switch (entry.type) {
             case CombatLogEntryType.Damaged:
-                message = `${entry.data.attacker.name} hit ${entry.data.target.name} for ${entry.data.damage} damage.`;
+                message = `${entry.data.attacker.name} hits ${entry.data.target.name} for ${entry.data.damage} damage.`;
                 break;
             case CombatLogEntryType.Died:
                 message = `${entry.data.creature.name} dies.`;

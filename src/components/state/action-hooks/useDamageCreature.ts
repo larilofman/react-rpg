@@ -2,7 +2,7 @@ import { useStateValue, ActionType } from '../index';
 import { Creature } from '../../../types';
 import useRemoveCreature from './useRemoveCreature';
 import useGetCreature from '../../../hooks/use-get-creature';
-import UseCombatLog, { CombatLogEntryType, CombatLogEntryDamaged, CombatLogEntryDied } from './combatLog';
+import UseCombatLog, { CombatLogEntryType, CombatLogEntryDamaged, CombatLogEntryDied } from './useCombatLog';
 
 export default function useDamageCreature() {
     const [, dispatch] = useStateValue();
