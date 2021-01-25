@@ -1,32 +1,41 @@
-import { ZoneData, ZoneRoute } from '../../../types';
+import { Position, ZoneData, ZoneRouteType } from '../../../types';
 import { useStateValue, ActionType } from '../index';
-import { ZoneName } from '../../../utils/load-zone-data';
+import { ZoneName, loadZoneData } from '../../../utils/load-zone-data';
+import useAddVisitedZone from '../action-hooks/useAddVisitedZone';
 
 export default function useLoadZone() {
     const [{ visitedZones }, dispatch] = useStateValue();
+    const { addVisitedZone } = useAddVisitedZone();
 
-    const loadFreshZone = (mapName: ZoneName) => {
+    const loadFreshZone = (zoneName: ZoneName, playerPosition?: Position) => {
         dispatch(
             {
                 type: ActionType.LOAD_FRESH_ZONE,
-                payload: mapName
+                payload: { zoneName, playerPosition }
             });
     };
 
-    const loadVisitedZone = (mapName: ZoneName) => {
+    const loadVisitedZone = (zoneName: ZoneName, playerPosition?: Position) => {
         dispatch(
             {
                 type: ActionType.LOAD_VISITED_ZONE,
-                payload: mapName
+                payload: { zoneName, playerPosition }
             });
     };
 
-    const loadZone = (zoneRoute: ZoneRoute) => {
-        console.log(zoneRoute);
+    const changeZone = (zoneRoute: ZoneRouteType) => {
+        addVisitedZone();
+        const zoneToLoad = visitedZones.find(z => z.name === zoneRoute.linkedRoute.zone);
+        const linkedRoute = loadZoneData(zoneRoute.linkedRoute.zone).zoneRoutes.find(route => route.id === zoneRoute.linkedRoute.id);
+        if (zoneToLoad) {
+            loadVisitedZone(zoneRoute.linkedRoute.zone, linkedRoute?.position);
+        } else {
+            loadFreshZone(zoneRoute.linkedRoute.zone, linkedRoute?.position);
+        }
     };
 
     return {
-        loadFreshZone, loadVisitedZone
+        loadFreshZone, loadVisitedZone, changeZone
     };
 }
 

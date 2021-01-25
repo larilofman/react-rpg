@@ -83,7 +83,7 @@ const Npc: React.FC<Props> = ({ skin, startPosition, data, useTurn, aggroDistanc
             offset_x: step,
             offset_y: dir,
             image: `/sprites/skins/${skin}.png`,
-            layer: 1
+            layer: 3
         }}
         position={position}
     />;

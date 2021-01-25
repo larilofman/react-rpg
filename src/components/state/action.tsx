@@ -1,4 +1,4 @@
-import { Position, ZoneData, Creature, Faction, BaseCreature } from '../../types';
+import { Position, ZoneData, Creature, Faction, BaseCreature, InteractableTile, ZoneRouteType } from '../../types';
 import { ZoneName } from '../../utils/load-zone-data';
 
 export enum ActionType {
@@ -12,9 +12,11 @@ export enum ActionType {
     "DAMAGE_CREATURE",
     "REMOVE_CREATURE",
     "ADD_COMBAT_LOG_ENTRY",
+    "LOAD_ZONE",
     "LOAD_FRESH_ZONE",
     "LOAD_VISITED_ZONE",
-    "SAVE_VISITED_ZONE"
+    "SAVE_VISITED_ZONE",
+    "ADD_INTERACTABLE_TILES"
 }
 
 export type Action =
@@ -61,13 +63,21 @@ export type Action =
     }
     | {
         type: ActionType.LOAD_FRESH_ZONE;
-        payload: ZoneName
+        payload: { zoneName: ZoneName, playerPosition?: Position }
     }
     | {
         type: ActionType.LOAD_VISITED_ZONE;
-        payload: ZoneName
+        payload: { zoneName: ZoneName, playerPosition?: Position }
+    }
+    | {
+        type: ActionType.LOAD_ZONE;
+        payload: ZoneRouteType
     }
     | {
         type: ActionType.SAVE_VISITED_ZONE;
         payload: ZoneData
+    }
+    | {
+        type: ActionType.ADD_INTERACTABLE_TILES;
+        payload: InteractableTile[]
     };

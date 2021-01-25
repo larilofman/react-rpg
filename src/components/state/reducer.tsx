@@ -100,25 +100,27 @@ export const reducer = (state: State, action: Action): State => {
             return {
                 ...state,
                 mapLoaded: false,
-                playerPosition: { x: 0, y: 0 },
-                visitedZones: state.visitedZones.filter(z => z.name !== action.payload),
+                playerPosition: action.payload.playerPosition || { x: 0, y: 0 },
+                visitedZones: state.visitedZones.filter(z => z.name !== action.payload.zoneName),
                 zoneData: {
                     ...state.zoneData,
-                    name: action.payload,
-                    creatures: { 0: [], 1: [], 2: [] }
+                    name: action.payload.zoneName,
+                    creatures: { 0: [], 1: [], 2: [] },
+                    interactableTiles: []
                 }
             };
         case ActionType.LOAD_VISITED_ZONE: {
-            const visitedZone = state.visitedZones.find(z => z.name === action.payload);
+            const visitedZone = state.visitedZones.find(z => z.name === action.payload.zoneName);
             if (visitedZone) {
                 return {
                     ...state,
                     mapLoaded: false,
-                    playerPosition: visitedZone.creatures[Faction.Player][0].pos,
+                    playerPosition: action.payload.playerPosition || visitedZone.creatures[Faction.Player][0].pos,
                     zoneData: {
                         ...state.zoneData,
-                        name: action.payload,
-                        creatures: visitedZone.creatures
+                        name: action.payload.zoneName,
+                        creatures: visitedZone.creatures,
+                        interactableTiles: visitedZone.interactableTiles
                     }
                 };
             }
@@ -147,6 +149,20 @@ export const reducer = (state: State, action: Action): State => {
                 visitedZones: prevZones
             };
         }
+        case ActionType.LOAD_ZONE: {
+            console.log(action.payload);
+            return {
+                ...state
+            };
+        }
+        case ActionType.ADD_INTERACTABLE_TILES:
+            return {
+                ...state,
+                zoneData: {
+                    ...state.zoneData,
+                    interactableTiles: state.zoneData.interactableTiles.concat(action.payload)
+                }
+            };
         default:
             return state;
 

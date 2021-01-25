@@ -8,6 +8,7 @@ import useAddCreatures from '../state/action-hooks/useAddCreatures';
 import useUseTurn from '../state/action-hooks/useUseTurn';
 import useSetMap from '../state/action-hooks/useSetMap';
 import { loadZoneData, ZoneName } from '../../utils/load-zone-data';
+import ObjectManager from '../object-manager';
 
 const GameManager: React.FC = () => {
     const [{ mapLoaded, gameOver, playerPosition, visitedZones, zoneData }] = useStateValue();
@@ -57,6 +58,7 @@ const GameManager: React.FC = () => {
             <Map loadedZone={loadedZone} setLoadedZone={setLoadedZone} />
             {!gameOver && mapLoaded && <Player skin={playerData.sprite} data={{ id: playerData.id, faction: playerData.faction }} useTurn={useTurn} />}
             <CreatureManager useTurn={useTurn} freshZone={freshZone} />
+            <ObjectManager freshZone={freshZone} />
         </>
     );
 };

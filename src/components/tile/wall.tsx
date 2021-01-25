@@ -13,7 +13,7 @@ const Wall: React.FC<Props> = ({ position = { x: 0, y: 0 }, spriteIndex = 0 }) =
         spriteData={{
             offset_x: 0,
             offset_y: 0,
-            image: `/sprites/skins/tiles/wall/vines/wall_vines_${spriteIndex}.png`,
+            image: `/sprites/tiles/wall/vines/wall_vines_${spriteIndex}.png`,
             layer: 0
         }}
         position={position}

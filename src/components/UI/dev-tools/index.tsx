@@ -8,7 +8,7 @@ import { getAllZoneNames, ZoneName } from '../../../utils/load-zone-data';
 import useLoadZone from '../../state/action-hooks/useLoadZone';
 import { useStateValue } from '../../state';
 import './style.css';
-import useZoneDataHandler from '../../../hooks/use-zonedata-handler';
+import useAddVisitedZone from '../../state/action-hooks/useAddVisitedZone';
 
 
 const DevTools: React.FC = () => {
@@ -19,7 +19,7 @@ const DevTools: React.FC = () => {
     const [selectedSave, setSelectedSave] = useState<string>();
     const [zoneNames] = useState<string[]>(getAllZoneNames());
     const { loadFreshZone, loadVisitedZone } = useLoadZone();
-    const { saveZoneData } = useZoneDataHandler();
+    const { addVisitedZone } = useAddVisitedZone();
 
     const handleZoneChangeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -57,7 +57,7 @@ const DevTools: React.FC = () => {
                 </Button>
                 </form>
                 <Container align>
-                    <Button p4 m4 align width="80%" color="light-brown" onClick={saveZoneData}>
+                    <Button p4 m4 align width="80%" color="light-brown" onClick={addVisitedZone}>
                         Save ZoneData
                 </Button>
                 </Container>

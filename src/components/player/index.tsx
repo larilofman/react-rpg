@@ -15,6 +15,7 @@ import usePathFinding from '../../hooks/use-pathfinding';
 import { isInMeleeRange } from '../../utils/calculate-distance';
 import settings from '../../data/settings.json';
 import useGetCreature from '../../hooks/use-get-creature';
+import useInteract from '../../hooks/use-interact';
 
 interface Props {
     skin: string
@@ -36,6 +37,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     const { keyPressed } = useKeyPress();
     const [canAct, setCanAct] = useState(true);
     const { getCreatureById } = useGetCreature();
+    const { interact } = useInteract();
 
     useEffect(() => {
         if (mapLoaded) {
@@ -144,6 +146,9 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
             case "Numpad5":
                 useTurn(data);
                 return;
+            case "KeyE":
+                interact(position);
+                break;
             default:
                 break;
         }
@@ -173,7 +178,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
             offset_x: step,
             offset_y: dir,
             image: `/sprites/skins/${skin}.png`,
-            layer: 1
+            layer: 3
         }}
         position={position}
     />;
