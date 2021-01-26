@@ -60,6 +60,11 @@
     border-top: 0;
 }
 
+.container-bnb4l{
+    border: 4px solid var(--almond);
+    border-bottom: 0;
+}
+
 .container-bnt4d{
     border: 4px solid var(--rich-black-fogra-39);
     border-top: 0;

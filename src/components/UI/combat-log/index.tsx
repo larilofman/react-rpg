@@ -10,7 +10,7 @@ const CombatLog: React.FC = () => {
 
     return (
         <Container height="100%">
-            <UIHeaderContainer bnt4 center size="large">Combat Log</UIHeaderContainer>
+            <UIHeaderContainer bnb4 center size="large">Combat Log</UIHeaderContainer>
             <Container bnt4 color="dark" height="100%" style={{ minHeight: "32px" }}> {/* for some reason setting small minHeight fixed the vertically expanding scrollbox*/}
                 <Scrollbox
                     contents={combatLog}

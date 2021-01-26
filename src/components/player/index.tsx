@@ -39,6 +39,8 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     const { getCreatureById } = useGetCreature();
     const { interact } = useInteract();
 
+    // console.log('player acted');
+
     useEffect(() => {
         if (mapLoaded) {
             moveCreature(data, playerPosition);
@@ -47,7 +49,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
         // Toggles on and off so that player can only act every 50ms
         const delayTicker = setInterval(() => {
             setCanAct(prev => (!prev));
-        }, 50);
+        }, 20);
         return () => clearInterval(delayTicker);
     }, [mapLoaded]);
 

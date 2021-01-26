@@ -16,7 +16,7 @@ const PlayerStats: React.FC = () => {
     const player = zoneData.creatures[Faction.Player][0];
     return (
         <Container height="100%">
-            <UIHeaderContainer bnt4>{player.name}</UIHeaderContainer>
+            <UIHeaderContainer bnb4>{player.name}</UIHeaderContainer>
             <Container p4 bnt4 height="100%">
                 <HealthBar player={player} />
             </Container>

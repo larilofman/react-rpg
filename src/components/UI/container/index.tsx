@@ -11,13 +11,14 @@ interface Props extends React.HTMLAttributes<HTMLElement> {
     b4?: boolean // border 4px
     bb4?: boolean // border bottom 4px
     bnt4?: boolean // border of 4px on other sides but top
+    bnb4?: boolean // border on other sides but bottom
     justify?: boolean // justify content
     align?: boolean // align content
     row?: boolean
     id?: string
 }
 
-const Container: React.FC<Props> = ({ width, height, m4, p4, b4, bb4, bnt4, color, justify, align, className, row, style, id, children, onMouseDown }) => {
+const Container: React.FC<Props> = ({ width, height, m4, p4, b4, bb4, bnt4, bnb4, color, justify, align, className, row, style, id, children, onMouseDown }) => {
     const classes = classList(
         'container',
         color === ('dark' || undefined) && 'container-dark',
@@ -30,6 +31,7 @@ const Container: React.FC<Props> = ({ width, height, m4, p4, b4, bb4, bnt4, colo
         b4 && (color === 'light' || color === 'light-brown' ? 'container-b4d' : 'container-b4l'),
         bb4 && (color === 'light' || color === 'light-brown' ? 'container-bb4d' : 'container-bb4l'),
         bnt4 && (color === 'light' || color === 'light-brown' ? 'container-bnt4d' : 'container-bnt4l'),
+        bnb4 && (color === 'light' || color === 'light-brown' ? 'container-bnb4d' : 'container-bnb4l'),
         justify && 'container-justify',
         align && 'container-align',
         row && 'container-row',
