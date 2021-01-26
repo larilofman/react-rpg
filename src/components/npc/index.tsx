@@ -4,13 +4,12 @@ import useWalk from '../../hooks/use-walk';
 import useAnimation from '../../hooks/use-animation';
 import useWander from '../../hooks/use-wander';
 import { useStateValue } from '../state';
-import { Position, BaseCreature, TileStatus, Faction, Direction } from '../../types';
+import { Position, BaseCreature, TileStatus, Faction } from '../../types';
 import useGetTiles from '../../hooks/use-get-tiles';
 import useContact from '../../hooks/use-contact';
 import { isInMeleeRange, isInRange } from '../../utils/calculate-distance';
 import usePathFinding from '../../hooks/use-pathfinding';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
-import { Grid } from 'pathfinding';
 
 interface Props {
     skin: string,
@@ -20,6 +19,7 @@ interface Props {
     aggroDistance?: number
     stationary?: boolean,
     hostile?: boolean
+    isVisible: boolean
 }
 
 const Npc: React.FC<Props> = (props) => {
@@ -28,17 +28,21 @@ const Npc: React.FC<Props> = (props) => {
     const { moveCreature } = useMoveCreature();
     const { dir, step, setAnimState } = useAnimation(3);
 
-
-    // if (props.skin === "m2") {
-    //     console.log('outer ninja acted');
-    // }
-
     useEffect(() => {
         if (mapLoaded) {
             moveCreature(props.data, props.startPosition);
         }
     }, [mapLoaded]);
 
+    // if (turn.creature === props.data.id && !props.isVisible) {
+    //     props.useTurn(props.data);
+    //     return null;
+    // }
+
+    // console.log(props.isVisible);
+
+    // On creature's turn render the sprite and inner component, setting it idle if not visible on the camera
+    // If not creature's turn and it's visible, just render the sprite
     return (
         <>
             {turn.creature === props.data.id && <InnerNPC
@@ -47,11 +51,10 @@ const Npc: React.FC<Props> = (props) => {
                 playerPosition={playerPosition}
                 walk={walk}
                 position={position}
-                dir={dir}
-                step={step}
                 setAnimState={setAnimState}
+                stationary={!props.isVisible}
             />}
-            <Sprite
+            {props.isVisible && <Sprite
                 data={{
                     offset_x: step,
                     offset_y: dir,
@@ -59,36 +62,12 @@ const Npc: React.FC<Props> = (props) => {
                     layer: 3
                 }}
                 position={position}
-            />
+            />}
         </>
     );
-
-    // if (turn.creature === props.data.id) {
-    //     return <InnerNPC
-    //         {...props}
-    //         turn={turn}
-    //         playerPosition={playerPosition}
-    //         walk={walk}
-    //         position={position}
-    //         dir={dir}
-    //         step={step}
-    //         setAnimState={setAnimState}
-    //     />;
-    // } else {
-    //     return <Sprite
-    //         data={{
-    //             offset_x: step,
-    //             offset_y: dir,
-    //             image: `/sprites/skins/${props.skin}.png`,
-    //             layer: 3
-    //         }}
-    //         position={position}
-    //     />;
-    // }
 };
 
 interface InnerProps {
-    skin: string,
     data: BaseCreature
     useTurn: (creature: BaseCreature) => void
     aggroDistance?: number
@@ -98,22 +77,15 @@ interface InnerProps {
     playerPosition: Position
     walk: (creature: BaseCreature, pos: Position) => void
     position: Position
-    dir: Direction
-    step: number
     setAnimState: (oldPos: Position, newPos: Position, updateStep?: boolean) => void
 }
 
 const InnerNPC: React.FC<InnerProps> = (
-    { skin, data, useTurn, aggroDistance = 5, stationary = false, hostile = true, turn, playerPosition, walk, position, dir, step, setAnimState }) => {
+    { data, useTurn, aggroDistance = 5, stationary = false, hostile = true, turn, playerPosition, walk, position, setAnimState }) => {
     const { contact } = useContact();
     const { findPath } = usePathFinding();
     const { getRandomNearbyPos } = useWander();
     const { getTileStatus } = useGetTiles();
-
-
-    // if (skin === "m2") {
-    //     console.log('inner ninja acted');
-    // }
 
     useEffect(() => {
         if (turn.creature === data.id && turn.faction === data.faction) {
@@ -157,16 +129,6 @@ const InnerNPC: React.FC<InnerProps> = (
     };
 
     return null;
-
-    // return <Sprite
-    //     data={{
-    //         offset_x: step,
-    //         offset_y: dir,
-    //         image: `/sprites/skins/${skin}.png`,
-    //         layer: 3
-    //     }}
-    //     position={position}
-    // />;
 };
 
 export default Npc;

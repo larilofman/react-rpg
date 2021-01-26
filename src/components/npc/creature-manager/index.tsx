@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useStateValue } from '../../state';
 import useFindRandomFloorTile from '../../../hooks/use-find-random-floor-tile';
 import Npc from '..';
-import { Creature, Faction, BaseCreature, CreatureType } from '../../../types';
+import { Creature, Faction, BaseCreature, CreatureType, Position } from '../../../types';
 import useAddCreatures from '../../state/action-hooks/useAddCreatures';
 import { nanoid } from 'nanoid';
 import creatures from '../../../data/creature/creatures.json';
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const CreatureManager: React.FC<Props> = ({ useTurn, freshZone }) => {
-    const [{ zoneData, mapLoaded }] = useStateValue();
+    const [{ zoneData, mapLoaded, cameraPosition, displaySize }] = useStateValue();
     const { findRandomFloorTile } = useFindRandomFloorTile();
     const { addCreatures } = useAddCreatures();
 
@@ -58,15 +58,38 @@ const CreatureManager: React.FC<Props> = ({ useTurn, freshZone }) => {
         addCreatures(allFriendlies, Faction.Friendly);
     };
 
+    const isVisible = (pos: Position) => {
+        if (pos.x >= cameraPosition.x &&
+            pos.x < cameraPosition.x + displaySize.w &&
+            pos.y >= cameraPosition.y &&
+            pos.y < cameraPosition.y + displaySize.h) {
+            return true;
+        }
+        return false;
+    };
+
     if (!mapLoaded || (!zoneData.creatures[Faction.Hostile] && !zoneData.creatures[Faction.Friendly])) return null;
 
     return (
         <>
             {zoneData.creatures[Faction.Hostile].map(e => (
-                <Npc key={e.id} skin={e.sprite} startPosition={e.pos} data={{ id: e.id, faction: e.faction }} useTurn={useTurn} />
+                <Npc
+                    key={e.id}
+                    skin={e.sprite}
+                    startPosition={e.pos}
+                    data={{ id: e.id, faction: e.faction }}
+                    useTurn={useTurn}
+                    isVisible={isVisible(e.pos)} />
             ))}
             {zoneData.creatures[Faction.Friendly].map(e => (
-                <Npc key={e.id} skin={e.sprite} startPosition={e.pos} data={{ id: e.id, faction: e.faction }} useTurn={useTurn} hostile={false} />
+                <Npc
+                    key={e.id}
+                    skin={e.sprite}
+                    startPosition={e.pos}
+                    data={{ id: e.id, faction: e.faction }}
+                    useTurn={useTurn}
+                    isVisible={isVisible(e.pos)}
+                    hostile={false} />
             ))}
         </>
     );
