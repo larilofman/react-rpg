@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Floor from '../tile/floor';
 import Wall from '../tile/wall';
 import { TileType, Tile, ZoneType } from '../../types';
@@ -12,9 +12,10 @@ interface Props {
 }
 
 const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
-    const [{ zoneData, cameraPosition, displaySize }] = useStateValue();
+    const [{ zoneData, cameraPosition, displaySize, mapLoaded }] = useStateValue();
     const { setMap } = useSetMap();
     const { buildMap, generateMap } = useGenerateMap();
+    const [tilesOnCamera, setTilesOnCamera] = useState<Tile[]>();
 
     useEffect(() => {
         if (loadedZone) {
@@ -32,7 +33,8 @@ const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
 
     }, [loadedZone]);
 
-    const tilesOnCamera = () => {
+    useEffect(() => {
+
         const cam_y = cameraPosition.y;
         const cam_x = cameraPosition.x;
         const tiles: Tile[] = [];
@@ -44,8 +46,10 @@ const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
                 }
             }
         }
-        return tiles;
-    };
+        setTilesOnCamera(tiles);
+
+    }, [cameraPosition.x, cameraPosition.y, displaySize, mapLoaded]);
+
 
     const tileToRender = (tile: Tile) => {
         switch (tile.type) {
@@ -58,10 +62,11 @@ const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
         }
     };
 
-    if (!zoneData.tiles) return null;
+    if (!tilesOnCamera?.length) return null;
+
     return (
         <>
-            {tilesOnCamera().map(t => {
+            {tilesOnCamera.map(t => {
                 return tileToRender(t);
             })}
         </>

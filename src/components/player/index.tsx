@@ -39,8 +39,6 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     const { getCreatureById } = useGetCreature();
     const { interact } = useInteract();
 
-    // console.log('player acted');
-
     useEffect(() => {
         if (mapLoaded) {
             moveCreature(data, playerPosition);

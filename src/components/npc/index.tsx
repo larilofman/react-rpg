@@ -34,13 +34,6 @@ const Npc: React.FC<Props> = (props) => {
         }
     }, [mapLoaded]);
 
-    // if (turn.creature === props.data.id && !props.isVisible) {
-    //     props.useTurn(props.data);
-    //     return null;
-    // }
-
-    // console.log(props.isVisible);
-
     // On creature's turn render the sprite and inner component, setting it idle if not visible on the camera
     // If not creature's turn and it's visible, just render the sprite
     return (

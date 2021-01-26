@@ -47,10 +47,6 @@ const GameManager: React.FC = () => {
         return !visitedZones.map(z => z.name).includes(zoneData.name);
     };
 
-    useEffect(() => {
-        console.log('zone changed: ', zoneData.name);
-    }, [zoneData.name]);
-
     return (
         <>
             <Map loadedZone={loadedZone} setLoadedZone={setLoadedZone} />
