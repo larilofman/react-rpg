@@ -80,6 +80,8 @@ const InnerNPC: React.FC<InnerProps> = (
     const { getRandomNearbyPos } = useWander();
     const { getTileStatus } = useGetTiles();
 
+    console.log('inner npc renders');
+
     useEffect(() => {
         if (turn.creature === data.id && turn.faction === data.faction) {
             if (stationary) { // Idle

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Floor from '../tile/floor';
 import Wall from '../tile/wall';
-import { TileType, Tile, ZoneType } from '../../types';
+import { TileType, Tile, ZoneType, ZoneData, Dimensions, Position } from '../../types';
 import { useStateValue } from '../state';
 import useSetMap from '../state/action-hooks/useSetMap';
 import useGenerateMap from '../../hooks/use-generate-map';
@@ -16,6 +16,29 @@ const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
     const [{ zoneData, cameraPosition, mapLoaded }] = useStateValue();
     const { setMap } = useSetMap();
     const { buildMap, generateMap } = useGenerateMap();
+
+    return <MemoizedInnerMap
+        loadedZone={loadedZone}
+        setLoadedZone={setLoadedZone}
+        zoneData={zoneData}
+        setMap={setMap}
+        buildMap={buildMap}
+        generateMap={generateMap}
+        mapLoaded={mapLoaded}
+        cameraPosition={cameraPosition}
+    />;
+};
+
+interface InnerProps extends Props {
+    zoneData: ZoneData
+    setMap: (map: ZoneData) => void
+    buildMap: (map: number[][]) => Tile[][]
+    generateMap: (size: Dimensions) => Tile[][]
+    mapLoaded: boolean
+    cameraPosition: Position
+}
+
+const InnerMap: React.FC<InnerProps> = ({ loadedZone, setLoadedZone, zoneData, setMap, buildMap, generateMap, mapLoaded, cameraPosition }) => {
 
     useEffect(() => {
         if (loadedZone) {
@@ -45,7 +68,7 @@ const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
                 }
             }
         }
-        console.log('getting tiles');
+        // console.log('getting tiles');
         return tiles;
     }, [cameraPosition.x, cameraPosition.y, mapLoaded]
     );
@@ -71,22 +94,20 @@ const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
             })}
         </>
     );
-    // return (
-    //     <>
-    //         {zoneData.tiles.map((row, index) => (
-    //             <div key={index}>
-    //                 {row.map((tile) => {
-    //                     return tileToRender(tile);
-    //                 })}
-    //             </div>
-    //         ))}
-    //     </>
-    // );
+
 };
 
-const areEqual = (prevProps: Readonly<React.PropsWithChildren<Props>>, nextProps: Readonly<React.PropsWithChildren<Props>>) => {
-    return false;
+const areEqual = (prevProps: Readonly<React.PropsWithChildren<InnerProps>>, nextProps: Readonly<React.PropsWithChildren<InnerProps>>) => {
+    if (prevProps.cameraPosition.x !== nextProps.cameraPosition.x) return false;
+    if (prevProps.cameraPosition.y !== nextProps.cameraPosition.y) return false;
+    if (prevProps.loadedZone?.name !== nextProps.loadedZone?.name) return false;
+    if (prevProps.mapLoaded !== nextProps.mapLoaded) return false;
+    // console.log('nothing changed on map');
+    return true;
 };
 
-export default React.memo(Map, areEqual);
+const MemoizedInnerMap = React.memo(InnerMap, areEqual);
+
+
+export default Map;
 
