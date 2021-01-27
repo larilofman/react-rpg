@@ -5,20 +5,17 @@ import settings from '../../data/settings.json';
 
 export type State = {
     playerPosition: Position
-    tileSize: Dimensions
     zoneData: ZoneData
     visitedZones: ZoneData[]
     mapLoaded: boolean
     turn: { faction: Faction, count: number, creature: string }
     cameraPosition: Position
-    displaySize: Dimensions
     gameOver: boolean
     combatLog: string[]
 };
 
 const initialState: State = {
     playerPosition: { x: 0, y: 0 },
-    tileSize: settings.tileSize,
     zoneData: {
         name: "zone1",
         size: { w: 0, h: 0 },
@@ -30,7 +27,6 @@ const initialState: State = {
     mapLoaded: false,
     turn: { faction: Faction.Player, count: 0, creature: 'player' },
     cameraPosition: { x: 0, y: 0 },
-    displaySize: settings.displaySize,
     gameOver: false,
     combatLog: []
 };

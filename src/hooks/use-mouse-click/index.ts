@@ -3,12 +3,13 @@ import { Position } from '../../types';
 import { useStateValue } from '../../components/state';
 import useGetTiles from '../use-get-tiles';
 import useGetCreature from '../use-get-creature';
+import settings from '../../data/settings.json';
 
 export default function useMouseClick() {
     const [creatureClicked, setCreatureClicked] = useState<string>();
     const [posClicked, setPosClicked] = useState<Position | undefined>(undefined);
     const [zone, setZone] = useState<HTMLElement | null>(document.getElementById('zone-container'));
-    const [{ tileSize, cameraPosition }] = useStateValue();
+    const [{ cameraPosition }] = useStateValue();
     const { getTileAt } = useGetTiles();
     const { getCreatureByPos } = useGetCreature();
     useEffect(() => {
@@ -27,8 +28,8 @@ export default function useMouseClick() {
             const borderTop = getComputedStyle(zone, null).getPropertyValue('border-top-width').replace(/\D/g, "") as unknown as number;
 
             // Get click on viewport -> subtract display element's offset and the border -> divide by tileSize -> floor down -> add camera's position
-            const clickX = Math.floor(((e.clientX - zone.offsetLeft - borderLeft) / tileSize.w)) + cameraPosition.x;
-            const clickY = Math.floor(((e.clientY - zone.offsetTop - borderTop) / tileSize.h)) + cameraPosition.y;
+            const clickX = Math.floor(((e.clientX - zone.offsetLeft - borderLeft) / settings.tileSize.w)) + cameraPosition.x;
+            const clickY = Math.floor(((e.clientY - zone.offsetTop - borderTop) / settings.tileSize.h)) + cameraPosition.y;
 
             // If click happens on a tile
             if (getTileAt({ x: clickX, y: clickY })) {

@@ -2,10 +2,13 @@ import { Position } from '../../types';
 import { useStateValue } from '../../components/state';
 import useSetCameraPosition from '../../components/state/action-hooks/useSetCameraPosition';
 import clamp from '../../utils/clamp';
+import settings from '../../data/settings.json';
 
 export default function useCamera() {
-    const [{ zoneData, displaySize }] = useStateValue();
+    const [{ zoneData }] = useStateValue();
     const { setCameraPosition } = useSetCameraPosition();
+
+    const displaySize = settings.displaySize;
 
     const updateCamera = (pos: Position) => {
         const x_adjust = displaySize.w % 2 !== 0 ? 0.5 : 0;

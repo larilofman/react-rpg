@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Floor from '../tile/floor';
 import Wall from '../tile/wall';
 import { TileType, Tile, ZoneType } from '../../types';
 import { useStateValue } from '../state';
 import useSetMap from '../state/action-hooks/useSetMap';
 import useGenerateMap from '../../hooks/use-generate-map';
+import settings from '../../data/settings.json';
 
 interface Props {
     loadedZone: ZoneType | undefined
@@ -12,10 +13,9 @@ interface Props {
 }
 
 const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
-    const [{ zoneData, cameraPosition, displaySize, mapLoaded }] = useStateValue();
+    const [{ zoneData, cameraPosition, mapLoaded }] = useStateValue();
     const { setMap } = useSetMap();
     const { buildMap, generateMap } = useGenerateMap();
-    const [tilesOnCamera, setTilesOnCamera] = useState<Tile[]>();
 
     useEffect(() => {
         if (loadedZone) {
@@ -33,22 +33,22 @@ const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
 
     }, [loadedZone]);
 
-    useEffect(() => {
-
+    const tilesOnCamera = React.useMemo(() => {
         const cam_y = cameraPosition.y;
         const cam_x = cameraPosition.x;
         const tiles: Tile[] = [];
         // Get tiles visible on camera and two tiles to each direction to avoid flickering
-        for (let y = cam_y - 2; y < cam_y + displaySize.h + 2; y++) {
-            for (let x = cam_x - 2; x < cam_x + displaySize.w + 2; x++) {
+        for (let y = cam_y - 2; y < cam_y + settings.displaySize.h + 2; y++) {
+            for (let x = cam_x - 2; x < cam_x + settings.displaySize.w + 2; x++) {
                 if (zoneData.tiles[y] && zoneData.tiles[y][x]) {
                     tiles.push(zoneData.tiles[y][x]);
                 }
             }
         }
-        setTilesOnCamera(tiles);
-
-    }, [cameraPosition.x, cameraPosition.y, displaySize, mapLoaded]);
+        console.log('getting tiles');
+        return tiles;
+    }, [cameraPosition.x, cameraPosition.y, mapLoaded]
+    );
 
 
     const tileToRender = (tile: Tile) => {
@@ -62,7 +62,7 @@ const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
         }
     };
 
-    if (!tilesOnCamera?.length) return null;
+    if (!zoneData.tiles.length) return null;
 
     return (
         <>
@@ -84,5 +84,9 @@ const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
     // );
 };
 
-export default Map;
+const areEqual = (prevProps: Readonly<React.PropsWithChildren<Props>>, nextProps: Readonly<React.PropsWithChildren<Props>>) => {
+    return false;
+};
+
+export default React.memo(Map, areEqual);
 

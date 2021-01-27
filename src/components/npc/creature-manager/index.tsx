@@ -7,6 +7,7 @@ import useAddCreatures from '../../state/action-hooks/useAddCreatures';
 import { nanoid } from 'nanoid';
 import creatures from '../../../data/creature/creatures.json';
 import { loadZoneData, ZoneName } from '../../../utils/load-zone-data';
+import settings from '../../../data/settings.json';
 
 type CreatureName = keyof typeof creatures;
 
@@ -16,7 +17,7 @@ interface Props {
 }
 
 const CreatureManager: React.FC<Props> = ({ useTurn, freshZone }) => {
-    const [{ zoneData, mapLoaded, cameraPosition, displaySize }] = useStateValue();
+    const [{ zoneData, mapLoaded, cameraPosition }] = useStateValue();
     const { findRandomFloorTile } = useFindRandomFloorTile();
     const { addCreatures } = useAddCreatures();
 
@@ -60,9 +61,9 @@ const CreatureManager: React.FC<Props> = ({ useTurn, freshZone }) => {
 
     const isVisible = (pos: Position) => {
         if (pos.x >= cameraPosition.x &&
-            pos.x < cameraPosition.x + displaySize.w &&
+            pos.x < cameraPosition.x + settings.displaySize.w &&
             pos.y >= cameraPosition.y &&
-            pos.y < cameraPosition.y + displaySize.h) {
+            pos.y < cameraPosition.y + settings.displaySize.h) {
             return true;
         }
         return false;

@@ -1,12 +1,11 @@
 import React from 'react';
 import "./app.css";
-import { useStateValue } from './components/state';
 import GameManager from './components/game-manager';
 import UiContainer from './components/UI/ui-container';
 import DevTools from './components/UI/dev-tools';
+import settings from './data/settings.json';
 
 const App = () => {
-    const [{ tileSize, displaySize }] = useStateValue();
 
     return (
         <div id="game-container">
@@ -14,13 +13,13 @@ const App = () => {
             <div
                 id="zone-container"
                 style={{
-                    width: displaySize.w * tileSize.w,
-                    height: displaySize.h * tileSize.h
+                    width: settings.displaySize.w * settings.tileSize.w,
+                    height: settings.displaySize.h * settings.tileSize.h
                 }}>
                 <GameManager />
             </div>
             <UiContainer size={{
-                w: displaySize.w * tileSize.w + 68,
+                w: settings.displaySize.w * settings.tileSize.w + 68,
                 h: 256
             }} />
         </div>

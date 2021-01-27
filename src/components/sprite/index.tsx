@@ -1,6 +1,7 @@
 import React from 'react';
 import { useStateValue } from '../state';
 import { Position, SpriteData } from '../../types';
+import settings from '../../data/settings.json';
 
 interface Props {
     data: SpriteData,
@@ -8,8 +9,10 @@ interface Props {
 }
 
 const Sprite: React.FC<Props> = ({ data, position }) => {
-    const [{ tileSize, cameraPosition }] = useStateValue();
+    const [{ cameraPosition }] = useStateValue();
     const { offset_x, offset_y } = data;
+
+    const tileSize = settings.tileSize;
 
     return (
         <div
@@ -28,7 +31,18 @@ const Sprite: React.FC<Props> = ({ data, position }) => {
     );
 };
 
-export default Sprite;
+const areEqual = (prevProps: Readonly<React.PropsWithChildren<Props>>, nextProps: Readonly<React.PropsWithChildren<Props>>) => {
+    if (prevProps.position.x !== nextProps.position.x) return false;
+    if (prevProps.position.y !== prevProps.position.y) return false;
+    if (prevProps.data.image !== nextProps.data.image) return false;
+    if (prevProps.data.offset_x !== nextProps.data.offset_x) return false;
+    if (prevProps.data.offset_y !== nextProps.data.offset_y) return false;
+    if (prevProps.data.layer !== nextProps.data.layer) return false;
+    return true;
+};
+
+
+export default React.memo(Sprite, areEqual);
 
 
 
