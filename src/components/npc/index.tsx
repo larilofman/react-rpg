@@ -38,7 +38,7 @@ const Npc: React.FC<Props> = (props) => {
     // If not creature's turn and it's visible, just render the sprite
     return (
         <>
-            {turn.creature === props.data.id && <InnerNPC
+            {turn.creature === props.data.id && <MemoizedInnerNPC
                 {...props}
                 turn={turn}
                 playerPosition={playerPosition}
@@ -80,7 +80,7 @@ const InnerNPC: React.FC<InnerProps> = (
     const { getRandomNearbyPos } = useWander();
     const { getTileStatus } = useGetTiles();
 
-    console.log('inner npc renders');
+    // console.log('inner npc renders');
 
     useEffect(() => {
         if (turn.creature === data.id && turn.faction === data.faction) {
@@ -125,5 +125,14 @@ const InnerNPC: React.FC<InnerProps> = (
 
     return null;
 };
+
+// const areEqual = (prevProps: Readonly<React.PropsWithChildren<InnerProps>>, nextProps: Readonly<React.PropsWithChildren<InnerProps>>) => {
+//     // if (prevProps.playerPosition.x !== nextProps.playerPosition.x) return false;
+//     // if (prevProps.playerPosition.y !== nextProps.playerPosition.y) return false;
+//     // console.log('nothing changed on npc', prevProps.data.id);
+//     return true;
+// };
+
+const MemoizedInnerNPC = React.memo(InnerNPC);
 
 export default Npc;
