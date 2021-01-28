@@ -11,7 +11,6 @@ export enum ActionType {
     "ADD_CREATURES",
     "DAMAGE_CREATURE",
     "REMOVE_CREATURE",
-    "ADD_COMBAT_LOG_ENTRY",
     "LOAD_ZONE",
     "LOAD_FRESH_ZONE",
     "LOAD_VISITED_ZONE",
@@ -56,10 +55,6 @@ export type Action =
     | {
         type: ActionType.REMOVE_CREATURE;
         payload: BaseCreature
-    }
-    | {
-        type: ActionType.ADD_COMBAT_LOG_ENTRY;
-        payload: string
     }
     | {
         type: ActionType.LOAD_FRESH_ZONE;

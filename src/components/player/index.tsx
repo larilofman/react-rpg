@@ -17,6 +17,10 @@ import settings from '../../data/settings.json';
 import useGetCreature from '../../hooks/use-get-creature';
 import useInteract from '../../hooks/use-interact';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { SetPlayerPosition } from '../redux-state/reducers/player-position/actions';
+import { RootState } from '../redux-state/store';
+
 interface Props {
     skin: string
     data: BaseCreature
@@ -24,8 +28,9 @@ interface Props {
 }
 
 const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
-    const [{ mapLoaded, turn, playerPosition }] = useStateValue();
+    const [{ mapLoaded, turn }] = useStateValue();
     const { setPlayerPosition } = useSetPlayerPosition();
+    const playerPosition = useSelector((state: RootState) => state.playerPosition);
     const { walk, position } = useWalk(playerPosition);
     const { dir, step, setAnimState } = useAnimation(3);
     const { updateCamera } = useCamera();
@@ -38,6 +43,8 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     const [canAct, setCanAct] = useState(true);
     const { getCreatureById } = useGetCreature();
     const { interact } = useInteract();
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (mapLoaded) {
@@ -170,6 +177,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
 
     useEffect(() => {
         setPlayerPosition(position);
+        dispatch(SetPlayerPosition(position));
         updateCamera(position);
     }, [position]);
 

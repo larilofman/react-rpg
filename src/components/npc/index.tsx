@@ -11,6 +11,10 @@ import { isInMeleeRange, isInRange } from '../../utils/calculate-distance';
 import usePathFinding from '../../hooks/use-pathfinding';
 import useMoveCreature from '../state/action-hooks/useMoveCreature';
 
+
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux-state/store/';
+
 interface Props {
     skin: string,
     startPosition: Position
@@ -23,10 +27,12 @@ interface Props {
 }
 
 const Npc: React.FC<Props> = (props) => {
-    const [{ mapLoaded, turn, playerPosition }] = useStateValue();
+    const [{ mapLoaded, turn }] = useStateValue();
     const { walk, position } = useWalk(props.startPosition);
     const { moveCreature } = useMoveCreature();
     const { dir, step, setAnimState } = useAnimation(3);
+
+    const playerPosition = useSelector((state: RootState) => state.playerPosition);
 
     useEffect(() => {
         if (mapLoaded) {

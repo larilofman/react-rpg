@@ -10,12 +10,17 @@ import useSetMap from '../state/action-hooks/useSetMap';
 import { loadZoneData, ZoneName } from '../../utils/load-zone-data';
 import ObjectManager from '../object-manager';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux-state/store/index';
+
 const GameManager: React.FC = () => {
-    const [{ mapLoaded, gameOver, playerPosition, visitedZones, zoneData }] = useStateValue();
+    const [{ mapLoaded, gameOver, visitedZones, zoneData }] = useStateValue();
     const { addCreatures } = useAddCreatures();
     const { useTurn } = useUseTurn();
     const { setMap } = useSetMap();
     const [loadedZone, setLoadedZone] = useState<ZoneType | undefined>();
+
+    const playerPosition = useSelector((state: RootState) => state.playerPosition);
 
     const playerData: Creature = {
         id: 'player',

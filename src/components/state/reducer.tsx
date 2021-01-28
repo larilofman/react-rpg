@@ -3,11 +3,6 @@ import { State, Action, ActionType } from '../state';
 
 export const reducer = (state: State, action: Action): State => {
     switch (action.type) {
-        case ActionType.SET_PLAYER_POSITION:
-            return {
-                ...state,
-                playerPosition: action.payload
-            };
         case ActionType.SET_MAP:
             return {
                 ...state,
@@ -89,17 +84,11 @@ export const reducer = (state: State, action: Action): State => {
                 }, gameOver: action.payload.faction === Faction.Player
             };
         }
-        case ActionType.ADD_COMBAT_LOG_ENTRY: {
-            return {
-                ...state,
-                combatLog: state.combatLog.concat(`Turn ${state.turn.count}: ${action.payload}`)
-            };
-        }
         case ActionType.LOAD_FRESH_ZONE:
             return {
                 ...state,
                 mapLoaded: false,
-                playerPosition: action.payload.playerPosition || { x: 0, y: 0 },
+                // playerPosition: action.payload.playerPosition || { x: 0, y: 0 },
                 visitedZones: state.visitedZones.filter(z => z.name !== action.payload.zoneName),
                 zoneData: {
                     ...state.zoneData,
@@ -116,7 +105,7 @@ export const reducer = (state: State, action: Action): State => {
                 return {
                     ...state,
                     mapLoaded: false,
-                    playerPosition: action.payload.playerPosition || visitedZone.creatures[Faction.Player][0].pos,
+                    // playerPosition: action.payload.playerPosition || visitedZone.creatures[Faction.Player][0].pos,
                     zoneData: {
                         ...state.zoneData,
                         name: action.payload.zoneName,
