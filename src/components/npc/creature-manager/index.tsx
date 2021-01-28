@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
-import { useStateValue } from '../../state';
 import useFindRandomFloorTile from '../../../hooks/use-find-random-floor-tile';
 import Npc from '..';
 import { Creature, Faction, BaseCreature, CreatureType, Position } from '../../../types';
-import useAddCreatures from '../../state/action-hooks/useAddCreatures';
 import { nanoid } from 'nanoid';
 import creatures from '../../../data/creature/creatures.json';
 import { loadZoneData, ZoneName } from '../../../utils/load-zone-data';
 import settings from '../../../data/settings.json';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux-state/store';
+import { AddCreatures } from '../../redux-state/reducers/zone/actions';
 
 type CreatureName = keyof typeof creatures;
 
@@ -20,10 +19,15 @@ interface Props {
 }
 
 const CreatureManager: React.FC<Props> = ({ useTurn, freshZone }) => {
-    const cameraPosition = useSelector((state: RootState) => state.cameraPosition);
-    const [{ zoneData, mapLoaded }] = useStateValue();
+    const { cameraPosition, zoneData, mapLoaded } = useSelector((state: RootState) => (
+        {
+            cameraPosition: state.cameraPosition,
+            zoneData: state.zone.zoneData,
+            mapLoaded: state.zone.mapLoaded
+        }
+    ));
+    const dispatch = useDispatch();
     const { findRandomFloorTile } = useFindRandomFloorTile();
-    const { addCreatures } = useAddCreatures();
 
     useEffect(() => {
         if (mapLoaded && freshZone()) {
@@ -59,8 +63,8 @@ const CreatureManager: React.FC<Props> = ({ useTurn, freshZone }) => {
                 // addCreatures([creatureToAdd], creatureToAdd.faction);
             }
         });
-        addCreatures(allEnemies, Faction.Hostile);
-        addCreatures(allFriendlies, Faction.Friendly);
+        dispatch(AddCreatures(allEnemies, Faction.Hostile));
+        dispatch(AddCreatures(allFriendlies, Faction.Friendly));
     };
 
     const isVisible = (pos: Position) => {

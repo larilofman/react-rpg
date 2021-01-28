@@ -1,25 +1,16 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { ZoneData, Faction } from '../../types';
 import { Action } from './action';
 
 export type State = {
-    zoneData: ZoneData
-    visitedZones: ZoneData[]
-    mapLoaded: boolean
-    gameOver: boolean
+    // visitedZones: ZoneData[]
+    // mapLoaded: boolean
+    // gameOver: boolean
 };
 
 const initialState: State = {
-    zoneData: {
-        name: "zone1",
-        size: { w: 0, h: 0 },
-        tiles: [],
-        creatures: { [Faction.Player]: [], [Faction.Friendly]: [], [Faction.Hostile]: [] },
-        interactableTiles: []
-    },
-    visitedZones: [],
-    mapLoaded: false,
-    gameOver: false
+    // visitedZones: [],
+    // mapLoaded: false,
+    // gameOver: false
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([

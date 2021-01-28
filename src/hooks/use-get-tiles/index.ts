@@ -1,13 +1,20 @@
 import { Position, Tile, Direction, TileStatus } from '../../types';
-import { useStateValue } from '../../components/state';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../components/redux-state/store';
 
 export default function useGetTiles() {
-    const [{ zoneData }] = useStateValue();
+    const { creatures, tiles, size } = useSelector((state: RootState) => (
+        {
+            creatures: state.zone.zoneData.creatures,
+            tiles: state.zone.zoneData.tiles
+            , size: state.zone.zoneData.size
+        }
+    ));
 
     const isInBounds = (pos: Position): boolean => {
         return (
-            zoneData.size.h > pos.y &&
-            zoneData.size.w > pos.x &&
+            size.h > pos.y &&
+            size.w > pos.x &&
             pos.y >= 0 &&
             pos.x >= 0
         );
@@ -15,13 +22,13 @@ export default function useGetTiles() {
 
     const getTileAt = (pos: Position): Tile | undefined => {
         if (isInBounds(pos)) {
-            return zoneData.tiles[pos.y][pos.x];
+            return tiles[pos.y][pos.x];
         }
     };
 
     const getTileStatus = (pos: Position): TileStatus => {
         let walkable = TileStatus.Passable;
-        for (const faction of Object.values(zoneData.creatures)) {
+        for (const faction of Object.values(creatures)) {
             faction.forEach(creature => {
                 if (creature.pos.x === pos.x && creature.pos.y === pos.y) {
                     walkable = TileStatus.Occupied;

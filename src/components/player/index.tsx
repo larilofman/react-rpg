@@ -7,9 +7,7 @@ import useAnimation from '../../hooks/use-animation';
 import useCamera from '../../hooks/use-camera';
 import { Direction, Position, TileStatus, BaseCreature } from '../../types';
 import useCheckCollision from '../../hooks/use-get-tiles';
-import useMoveCreature from '../state/action-hooks/useMoveCreature';
 import useContact from '../../hooks/use-contact';
-import { useStateValue } from '../state';
 import usePathFinding from '../../hooks/use-pathfinding';
 import { isInMeleeRange } from '../../utils/calculate-distance';
 import settings from '../../data/settings.json';
@@ -27,13 +25,16 @@ interface Props {
 }
 
 const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
-    const [{ mapLoaded }] = useStateValue();
-    const { playerPosition, turn } = useSelector((state: RootState) => ({ playerPosition: state.playerPosition, turn: state.turn }));
+    const { playerPosition, turn, mapLoaded } = useSelector((state: RootState) => (
+        {
+            playerPosition: state.playerPosition,
+            turn: state.turn,
+            mapLoaded: state.zone.mapLoaded
+        }));
     const { walk, position } = useWalk(playerPosition);
     const { dir, step, setAnimState } = useAnimation(3);
     const { updateCamera } = useCamera();
     const { getTileInDirection, getTileStatus } = useCheckCollision();
-    const { moveCreature } = useMoveCreature();
     const { contact } = useContact();
     const { creatureClicked, posClicked } = useMouseClick();
     const { findPath, onRoute, cancelPath } = usePathFinding();
@@ -46,7 +47,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
 
     useEffect(() => {
         if (mapLoaded) {
-            moveCreature(data, playerPosition);
+            walk(data, playerPosition);
             updateCamera(playerPosition);
         }
         // Toggles on and off so that player can only act every 50ms

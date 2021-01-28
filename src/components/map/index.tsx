@@ -7,8 +7,9 @@ import useSetMap from '../state/action-hooks/useSetMap';
 import useGenerateMap from '../../hooks/use-generate-map';
 import settings from '../../data/settings.json';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux-state/store/index';
+import { SetMap } from '../redux-state/reducers/zone/actions';
 
 interface Props {
     loadedZone: ZoneType | undefined
@@ -16,16 +17,19 @@ interface Props {
 }
 
 const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
-    const cameraPosition = useSelector((state: RootState) => state.cameraPosition);
-    const [{ zoneData, mapLoaded }] = useStateValue();
-    const { setMap } = useSetMap();
+    const { cameraPosition, zoneData, mapLoaded } = useSelector((state: RootState) => (
+        {
+            cameraPosition: state.cameraPosition,
+            zoneData: state.zone.zoneData,
+            mapLoaded: state.zone.mapLoaded
+        }
+    ));
     const { buildMap, generateMap } = useGenerateMap();
 
     return <MemoizedInnerMap
         loadedZone={loadedZone}
         setLoadedZone={setLoadedZone}
         zoneData={zoneData}
-        setMap={setMap}
         buildMap={buildMap}
         generateMap={generateMap}
         mapLoaded={mapLoaded}
@@ -35,15 +39,14 @@ const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
 
 interface InnerProps extends Props {
     zoneData: ZoneData
-    setMap: (map: ZoneData) => void
     buildMap: (map: number[][]) => Tile[][]
     generateMap: (size: Dimensions) => Tile[][]
     mapLoaded: boolean
     cameraPosition: Position
 }
 
-const InnerMap: React.FC<InnerProps> = ({ loadedZone, setLoadedZone, zoneData, setMap, buildMap, generateMap, mapLoaded, cameraPosition }) => {
-
+const InnerMap: React.FC<InnerProps> = ({ loadedZone, setLoadedZone, zoneData, buildMap, generateMap, mapLoaded, cameraPosition }) => {
+    const dispatch = useDispatch();
     useEffect(() => {
         if (loadedZone) {
             const tiles = loadedZone.tiles
@@ -54,7 +57,8 @@ const InnerMap: React.FC<InnerProps> = ({ loadedZone, setLoadedZone, zoneData, s
                 size: loadedZone.size,
                 tiles
             };
-            setMap(zone);
+            dispatch(SetMap(zone));
+            // setMap(zone);
             setLoadedZone(undefined);
         }
 

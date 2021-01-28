@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { useStateValue } from '../state';
 import CreatureManager from '../npc/creature-manager';
 import Map from '../map';
 import Player from '../player';
 import { Creature, Faction, ZoneType } from '../../types';
-import useAddCreatures from '../state/action-hooks/useAddCreatures';
-import useUseTurn from '../state/action-hooks/useUseTurn';
-import useSetMap from '../state/action-hooks/useSetMap';
+import useUseTurn from '../../hooks/use-use-turn';
 import { loadZoneData, ZoneName } from '../../utils/load-zone-data';
 import ObjectManager from '../object-manager';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux-state/store/index';
+import { AddCreatures, SetMap } from '../redux-state/reducers/zone/actions';
 
 const GameManager: React.FC = () => {
-    const [{ mapLoaded, gameOver, visitedZones, zoneData }] = useStateValue();
-    const { addCreatures } = useAddCreatures();
     const { useTurn } = useUseTurn();
-    const { setMap } = useSetMap();
     const [loadedZone, setLoadedZone] = useState<ZoneType | undefined>();
-
-    const playerPosition = useSelector((state: RootState) => state.playerPosition);
+    const dispatch = useDispatch();
+    const { playerPosition, mapLoaded, gameOver, visitedZones, zoneData } = useSelector((state: RootState) => (
+        {
+            playerPosition: state.playerPosition,
+            mapLoaded: state.zone.mapLoaded,
+            gameOver: state.zone.gameOver,
+            visitedZones: state.zone.visitedZones,
+            zoneData: state.zone.zoneData
+        }
+    ));
 
     const playerData: Creature = {
         id: 'player',
@@ -34,7 +37,7 @@ const GameManager: React.FC = () => {
 
         if (!mapLoaded) {
             if (zoneData.tiles.length) { // A visited zone is loaded
-                setMap(zoneData);
+                dispatch(SetMap(zoneData));
                 return;
             } else { // A fresh zone is loaded
                 const zoneToLoad: ZoneType = loadZoneData(zoneData.name as ZoneName);
@@ -43,7 +46,7 @@ const GameManager: React.FC = () => {
         }
 
         if (mapLoaded && !zoneData.creatures[0].length) {
-            addCreatures([playerData], playerData.faction);
+            dispatch(AddCreatures([playerData], playerData.faction));
         }
 
     }, [mapLoaded]);

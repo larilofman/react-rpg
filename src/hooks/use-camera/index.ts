@@ -1,12 +1,14 @@
 import { Position } from '../../types';
-import { useStateValue } from '../../components/state';
 import clamp from '../../utils/clamp';
 import settings from '../../data/settings.json';
 import { useDispatch } from 'react-redux';
 import { SetCameraPosition } from '../../components/redux-state/reducers/camera-position/actions';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../../components/redux-state/store';
+
 export default function useCamera() {
-    const [{ zoneData }] = useStateValue();
+    const zoneSize = useSelector((state: RootState) => state.zone.zoneData.size);
     const dispatch = useDispatch();
 
     const displaySize = settings.displaySize;
@@ -17,14 +19,13 @@ export default function useCamera() {
 
         let x = pos.x - (displaySize.w / 2) + x_adjust;
         let y = pos.y - (displaySize.h / 2) + y_adjust;
-        if (zoneData.size.h > displaySize.h && zoneData.size.w > displaySize.w) {
-            x = clamp(0, zoneData.size.w - displaySize.w, x);
-            y = clamp(0, zoneData.size.h - displaySize.h, y);
+        if (zoneSize.h > displaySize.h && zoneSize.w > displaySize.w) {
+            x = clamp(0, zoneSize.w - displaySize.w, x);
+            y = clamp(0, zoneSize.h - displaySize.h, y);
         } else {
-            x = Math.floor(zoneData.size.w / 2) - Math.floor(displaySize.w / 2);
-            y = Math.floor(zoneData.size.h / 2) - Math.floor(displaySize.h / 2);
+            x = Math.floor(zoneSize.w / 2) - Math.floor(displaySize.w / 2);
+            y = Math.floor(zoneSize.h / 2) - Math.floor(displaySize.h / 2);
         }
-        console.log(x, y);
 
         dispatch(SetCameraPosition({ x, y }));
     };

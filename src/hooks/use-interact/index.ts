@@ -1,13 +1,14 @@
 import { Position, InteractableTileType } from '../../types';
-import { useStateValue } from '../../components/state';
-import useLoadZone from '../../components/state/action-hooks/useLoadZone';
+import useLoadZone from '../use-load-zone';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../components/redux-state/store';
 
 export default function useContact() {
-    const [{ zoneData }] = useStateValue();
+    const interactableTiles = useSelector((state: RootState) => state.zone.zoneData.interactableTiles);
     const { changeZone } = useLoadZone();
 
     function interact(pos: Position) {
-        const interactedTile = zoneData.interactableTiles.find(t => t.position.x === pos.x && t.position.y === pos.y);
+        const interactedTile = interactableTiles.find(t => t.position.x === pos.x && t.position.y === pos.y);
         switch (interactedTile?.type) {
             case InteractableTileType.ZoneRoute:
                 changeZone(interactedTile);

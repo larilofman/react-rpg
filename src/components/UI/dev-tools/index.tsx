@@ -5,14 +5,16 @@ import useDraggable from '../../../hooks/use-draggable';
 import Button from '../button';
 import Select from '../select';
 import { getAllZoneNames, ZoneName } from '../../../utils/load-zone-data';
-import useLoadZone from '../../state/action-hooks/useLoadZone';
-import { useStateValue } from '../../state';
+import useLoadZone from '../../../hooks/use-load-zone';
 import './style.css';
-import useAddVisitedZone from '../../state/action-hooks/useAddVisitedZone';
+import useAddVisitedZone from '../../../hooks/use-add-visited-zone';
+
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux-state/store';
 
 
 const DevTools: React.FC = () => {
-    const [{ zoneData, visitedZones }] = useStateValue();
+    const { zoneData, visitedZones } = useSelector((state: RootState) => ({ zoneData: state.zone.zoneData, visitedZones: state.zone.visitedZones }));
     const { position, handleMouseDown } = useDraggable('dev-tools-header', { x: 16, y: 16 });
     const [selectedZone, setSelectedZone] = useState<string>(zoneData.name as ZoneName);
     const [savedZones, setSavedZones] = useState<string[]>([]);

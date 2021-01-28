@@ -3,14 +3,11 @@ import Sprite from '../sprite';
 import useWalk from '../../hooks/use-walk';
 import useAnimation from '../../hooks/use-animation';
 import useWander from '../../hooks/use-wander';
-import { useStateValue } from '../state';
 import { Position, BaseCreature, TileStatus, Faction } from '../../types';
 import useGetTiles from '../../hooks/use-get-tiles';
 import useContact from '../../hooks/use-contact';
 import { isInMeleeRange, isInRange } from '../../utils/calculate-distance';
 import usePathFinding from '../../hooks/use-pathfinding';
-import useMoveCreature from '../state/action-hooks/useMoveCreature';
-
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux-state/store/';
@@ -27,16 +24,20 @@ interface Props {
 }
 
 const Npc: React.FC<Props> = (props) => {
-    const [{ mapLoaded }] = useStateValue();
     const { walk, position } = useWalk(props.startPosition);
-    const { moveCreature } = useMoveCreature();
     const { dir, step, setAnimState } = useAnimation(3);
 
-    const { playerPosition, turn } = useSelector((state: RootState) => ({ playerPosition: state.playerPosition, turn: state.turn }));
+    const { playerPosition, turn, mapLoaded } = useSelector((state: RootState) => (
+        {
+            playerPosition: state.playerPosition,
+            turn: state.turn,
+            mapLoaded: state.zone.mapLoaded
+        }
+    ));
 
     useEffect(() => {
         if (mapLoaded) {
-            moveCreature(props.data, props.startPosition);
+            walk(props.data, props.startPosition);
         }
     }, [mapLoaded]);
 

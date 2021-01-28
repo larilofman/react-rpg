@@ -1,6 +1,6 @@
 import { PlayerPositionActions, PlayerPositionState, SET_PLAYER_POSITION } from './types';
 
-const initialState: PlayerPositionState = { x: 3, y: 3 };
+const initialState: PlayerPositionState = { x: 0, y: 0 };
 
 const reducer = (state = initialState, action: PlayerPositionActions) => {
     switch (action.type) {

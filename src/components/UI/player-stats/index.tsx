@@ -1,19 +1,20 @@
 import React from 'react';
 import './style.css';
 import HealthBar from '../health-bar';
-import { useStateValue } from '../../state';
 import { Faction } from '../../../types';
 import Container from '../container';
 import UIHeaderContainer from '../ui-header-container';
 
-const PlayerStats: React.FC = () => {
-    const [{ zoneData }] = useStateValue();
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux-state/store';
 
-    if (!zoneData.creatures[Faction.Player].length) {
+const PlayerStats: React.FC = () => {
+    const player = useSelector((state: RootState) => state.zone.zoneData.creatures[Faction.Player][0]);
+
+    if (!player) {
         return null;
     }
 
-    const player = zoneData.creatures[Faction.Player][0];
     return (
         <Container height="100%">
             <UIHeaderContainer bnb4>{player.name}</UIHeaderContainer>

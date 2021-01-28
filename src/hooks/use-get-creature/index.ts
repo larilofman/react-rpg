@@ -1,12 +1,13 @@
-import { useStateValue } from '../../components/state';
 import { Position, Creature } from '../../types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../components/redux-state/store';
 
 export default function useGetCreature() {
-    const [{ zoneData }] = useStateValue();
+    const creatures = useSelector((state: RootState) => state.zone.zoneData.creatures);
 
     const getCreatureById = (id: string) => {
         let creature: Creature | undefined;
-        for (const faction of Object.values(zoneData.creatures)) {
+        for (const faction of Object.values(creatures)) {
             const c = faction.find(c => c.id === id);
             if (c) {
                 creature = c;
@@ -18,7 +19,7 @@ export default function useGetCreature() {
     const getContactingCreatures = (attackerId: string, targetPos: Position): { attacker: Creature | undefined, target: Creature | undefined } => {
         let attacker: Creature | undefined;
         let target: Creature | undefined;
-        for (const faction of Object.values(zoneData.creatures)) {
+        for (const faction of Object.values(creatures)) {
             const foundAttacker = faction.find(c => c.id === attackerId);
             if (foundAttacker) {
                 attacker = foundAttacker;
@@ -33,10 +34,11 @@ export default function useGetCreature() {
 
     const getCreatureByPos = (pos: Position) => {
         let creature: Creature | undefined;
-        for (const faction of Object.values(zoneData.creatures)) {
+        for (const faction of Object.values(creatures)) {
             const c = faction.find(c => (c.pos.x === pos.x && c.pos.y === pos.y));
             if (c) {
                 creature = c;
+                break;
             }
         }
         return creature;

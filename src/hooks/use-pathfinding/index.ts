@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { Position, TileStatus } from '../../types';
-import { useStateValue } from '../../components/state';
 import PF, { Grid } from 'pathfinding';
 import useGetTiles from '../use-get-tiles';
 import { isInMeleeRange } from '../../utils/calculate-distance';
 import settings from '../../data/settings.json';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../components/redux-state/store';
 
 export default function usePathfinding() {
     const [finder] = useState<PF.AStarFinder>(new PF.AStarFinder(
         {
             diagonalMovement: settings.diagonalMovement ? PF.DiagonalMovement.Always : PF.DiagonalMovement.Never
         }));
-    const [{ zoneData }] = useStateValue();
+    const tiles = useSelector((state: RootState) => state.zone.zoneData.tiles);
     const { getTileStatus } = useGetTiles();
     const [onRoute, setOnRoute] = useState(false);
 
@@ -57,10 +58,10 @@ export default function usePathfinding() {
 
     const createGrid = () => {
         const nodes = [];
-        for (let y = 0; y < zoneData.tiles.length; y++) {
+        for (let y = 0; y < tiles.length; y++) {
             const row = [];
-            for (let x = 0; x < zoneData.tiles[y].length; x++) {
-                const tilePos = zoneData.tiles[y][x].position;
+            for (let x = 0; x < tiles[y].length; x++) {
+                const tilePos = tiles[y][x].position;
                 if (getTileStatus(tilePos) === TileStatus.NonPassable) {
                     row.push(1);
                 } else {

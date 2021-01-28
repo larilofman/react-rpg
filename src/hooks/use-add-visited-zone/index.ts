@@ -1,7 +1,10 @@
-import { useStateValue, ActionType } from '../index';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../components/redux-state/store';
+import { SaveVisitedZone } from '../../components/redux-state/reducers/zone/actions';
 
 export default function useAddVisitedZone() {
-    const [{ zoneData }, dispatch] = useStateValue();
+    const zoneData = useSelector((state: RootState) => state.zone.zoneData);
+    const dispatch = useDispatch();
 
     const addVisitedZone = () => {
         const savedZoneData = {
@@ -12,11 +15,7 @@ export default function useAddVisitedZone() {
             interactableTiles: zoneData.interactableTiles
 
         };
-        dispatch(
-            {
-                type: ActionType.SAVE_VISITED_ZONE,
-                payload: savedZoneData
-            });
+        dispatch(SaveVisitedZone(savedZoneData));
     };
 
     return {

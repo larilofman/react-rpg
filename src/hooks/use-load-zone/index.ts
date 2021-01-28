@@ -1,26 +1,22 @@
-import { Position, ZoneRouteType } from '../../../types';
-import { useStateValue, ActionType } from '../index';
-import { ZoneName, loadZoneData } from '../../../utils/load-zone-data';
-import useAddVisitedZone from '../action-hooks/useAddVisitedZone';
+import { Position, ZoneRouteType } from '../../types';
+import { ZoneName, loadZoneData } from '../../utils/load-zone-data';
+import useAddVisitedZone from '../use-add-visited-zone';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../components/redux-state/store';
+import { LoadFreshZone, LoadVisitedZone } from '../../components/redux-state/reducers/zone/actions';
+
 
 export default function useLoadZone() {
-    const [{ visitedZones }, dispatch] = useStateValue();
     const { addVisitedZone } = useAddVisitedZone();
+    const visitedZones = useSelector((state: RootState) => state.zone.visitedZones);
+    const dispatch = useDispatch();
 
     const loadFreshZone = (zoneName: ZoneName, playerPosition?: Position) => {
-        dispatch(
-            {
-                type: ActionType.LOAD_FRESH_ZONE,
-                payload: { zoneName, playerPosition }
-            });
+        dispatch(LoadFreshZone(zoneName, playerPosition));
     };
 
     const loadVisitedZone = (zoneName: ZoneName, playerPosition?: Position) => {
-        dispatch(
-            {
-                type: ActionType.LOAD_VISITED_ZONE,
-                payload: { zoneName, playerPosition }
-            });
+        dispatch(LoadVisitedZone(zoneName, playerPosition));
     };
 
     const changeZone = (zoneRoute: ZoneRouteType) => {
