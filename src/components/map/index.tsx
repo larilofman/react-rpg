@@ -7,13 +7,17 @@ import useSetMap from '../state/action-hooks/useSetMap';
 import useGenerateMap from '../../hooks/use-generate-map';
 import settings from '../../data/settings.json';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux-state/store/index';
+
 interface Props {
     loadedZone: ZoneType | undefined
     setLoadedZone: React.Dispatch<React.SetStateAction<ZoneType | undefined>>
 }
 
 const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
-    const [{ zoneData, cameraPosition, mapLoaded }] = useStateValue();
+    const cameraPosition = useSelector((state: RootState) => state.cameraPosition);
+    const [{ zoneData, mapLoaded }] = useStateValue();
     const { setMap } = useSetMap();
     const { buildMap, generateMap } = useGenerateMap();
 

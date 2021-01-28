@@ -6,7 +6,6 @@ export enum ActionType {
     "SET_MAP",
     "SET_FACTION_TURN",
     "SET_CREATURE_TURN",
-    "SET_CAMERA_POSITION",
     "MOVE_CREATURE",
     "ADD_CREATURES",
     "DAMAGE_CREATURE",
@@ -35,10 +34,6 @@ export type Action =
     | {
         type: ActionType.SET_CREATURE_TURN;
         payload: string
-    }
-    | {
-        type: ActionType.SET_CAMERA_POSITION;
-        payload: Position;
     }
     | {
         type: ActionType.MOVE_CREATURE;

@@ -4,7 +4,6 @@ import useKeyPress from '../../hooks/use-key-press';
 import useMouseClick from '../../hooks/use-mouse-click';
 import useWalk from '../../hooks/use-walk';
 import useAnimation from '../../hooks/use-animation';
-import useSetPlayerPosition from '../state/action-hooks/useSetPlayerPosition';
 import useCamera from '../../hooks/use-camera';
 import { Direction, Position, TileStatus, BaseCreature } from '../../types';
 import useCheckCollision from '../../hooks/use-get-tiles';
@@ -29,7 +28,6 @@ interface Props {
 
 const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     const [{ mapLoaded, turn }] = useStateValue();
-    const { setPlayerPosition } = useSetPlayerPosition();
     const playerPosition = useSelector((state: RootState) => state.playerPosition);
     const { walk, position } = useWalk(playerPosition);
     const { dir, step, setAnimState } = useAnimation(3);
@@ -176,7 +174,6 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     };
 
     useEffect(() => {
-        setPlayerPosition(position);
         dispatch(SetPlayerPosition(position));
         updateCamera(position);
     }, [position]);

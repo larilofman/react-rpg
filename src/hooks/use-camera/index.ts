@@ -1,12 +1,13 @@
 import { Position } from '../../types';
 import { useStateValue } from '../../components/state';
-import useSetCameraPosition from '../../components/state/action-hooks/useSetCameraPosition';
 import clamp from '../../utils/clamp';
 import settings from '../../data/settings.json';
+import { useDispatch } from 'react-redux';
+import { SetCameraPosition } from '../../components/redux-state/reducers/camera-position/actions';
 
 export default function useCamera() {
     const [{ zoneData }] = useStateValue();
-    const { setCameraPosition } = useSetCameraPosition();
+    const dispatch = useDispatch();
 
     const displaySize = settings.displaySize;
 
@@ -23,9 +24,9 @@ export default function useCamera() {
             x = Math.floor(zoneData.size.w / 2) - Math.floor(displaySize.w / 2);
             y = Math.floor(zoneData.size.h / 2) - Math.floor(displaySize.h / 2);
         }
+        console.log(x, y);
 
-
-        setCameraPosition({ x, y });
+        dispatch(SetCameraPosition({ x, y }));
     };
 
     return {

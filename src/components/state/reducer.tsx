@@ -26,11 +26,6 @@ export const reducer = (state: State, action: Action): State => {
                     creature: action.payload
                 }
             };
-        case ActionType.SET_CAMERA_POSITION:
-            return {
-                ...state,
-                cameraPosition: action.payload
-            };
         case ActionType.MOVE_CREATURE: {
             return {
                 ...state,

@@ -9,6 +9,9 @@ import creatures from '../../../data/creature/creatures.json';
 import { loadZoneData, ZoneName } from '../../../utils/load-zone-data';
 import settings from '../../../data/settings.json';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux-state/store';
+
 type CreatureName = keyof typeof creatures;
 
 interface Props {
@@ -17,7 +20,8 @@ interface Props {
 }
 
 const CreatureManager: React.FC<Props> = ({ useTurn, freshZone }) => {
-    const [{ zoneData, mapLoaded, cameraPosition }] = useStateValue();
+    const cameraPosition = useSelector((state: RootState) => state.cameraPosition);
+    const [{ zoneData, mapLoaded }] = useStateValue();
     const { findRandomFloorTile } = useFindRandomFloorTile();
     const { addCreatures } = useAddCreatures();
 

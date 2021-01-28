@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { Position } from '../../types';
-import { useStateValue } from '../../components/state';
 import useGetTiles from '../use-get-tiles';
 import useGetCreature from '../use-get-creature';
 import settings from '../../data/settings.json';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../components/redux-state/store';
+
 
 export default function useMouseClick() {
+    const cameraPosition = useSelector((state: RootState) => state.cameraPosition);
     const [creatureClicked, setCreatureClicked] = useState<string>();
     const [posClicked, setPosClicked] = useState<Position | undefined>(undefined);
     const [zone, setZone] = useState<HTMLElement | null>(document.getElementById('zone-container'));
-    const [{ cameraPosition }] = useStateValue();
     const { getTileAt } = useGetTiles();
     const { getCreatureByPos } = useGetCreature();
     useEffect(() => {

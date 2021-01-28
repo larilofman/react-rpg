@@ -1,7 +1,8 @@
 import React from 'react';
-import { useStateValue } from '../state';
 import { Position, SpriteData } from '../../types';
 import settings from '../../data/settings.json';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux-state/store';
 
 interface Props {
     data: SpriteData,
@@ -9,7 +10,7 @@ interface Props {
 }
 
 const Sprite: React.FC<Props> = ({ data, position }) => {
-    const [{ cameraPosition }] = useStateValue();
+    const cameraPosition = useSelector((state: RootState) => state.cameraPosition);
     const { offset_x, offset_y } = data;
 
     const tileSize = settings.tileSize;

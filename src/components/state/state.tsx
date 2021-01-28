@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { Position, ZoneData, Faction } from '../../types';
+import { ZoneData, Faction } from '../../types';
 import { Action } from './action';
 
 export type State = {
@@ -7,7 +7,6 @@ export type State = {
     visitedZones: ZoneData[]
     mapLoaded: boolean
     turn: { faction: Faction, count: number, creature: string }
-    cameraPosition: Position
     gameOver: boolean
 };
 
@@ -22,7 +21,6 @@ const initialState: State = {
     visitedZones: [],
     mapLoaded: false,
     turn: { faction: Faction.Player, count: 0, creature: 'player' },
-    cameraPosition: { x: 0, y: 0 },
     gameOver: false
 };
 
