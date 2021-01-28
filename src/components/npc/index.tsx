@@ -27,12 +27,12 @@ interface Props {
 }
 
 const Npc: React.FC<Props> = (props) => {
-    const [{ mapLoaded, turn }] = useStateValue();
+    const [{ mapLoaded }] = useStateValue();
     const { walk, position } = useWalk(props.startPosition);
     const { moveCreature } = useMoveCreature();
     const { dir, step, setAnimState } = useAnimation(3);
 
-    const playerPosition = useSelector((state: RootState) => state.playerPosition);
+    const { playerPosition, turn } = useSelector((state: RootState) => ({ playerPosition: state.playerPosition, turn: state.turn }));
 
     useEffect(() => {
         if (mapLoaded) {

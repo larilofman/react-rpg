@@ -9,23 +9,23 @@ export const reducer = (state: State, action: Action): State => {
                 zoneData: action.payload,
                 mapLoaded: true
             };
-        case ActionType.SET_FACTION_TURN:
-            return {
-                ...state,
-                turn: {
-                    ...state.turn,
-                    count: action.payload === Faction.Player ? state.turn.count + 1 : state.turn.count,
-                    faction: action.payload
-                }
-            };
-        case ActionType.SET_CREATURE_TURN:
-            return {
-                ...state,
-                turn: {
-                    ...state.turn,
-                    creature: action.payload
-                }
-            };
+        // case ActionType.SET_FACTION_TURN:
+        //     return {
+        //         ...state,
+        //         turn: {
+        //             ...state.turn,
+        //             count: action.payload === Faction.Player ? state.turn.count + 1 : state.turn.count,
+        //             faction: action.payload
+        //         }
+        //     };
+        // case ActionType.SET_CREATURE_TURN:
+        //     return {
+        //         ...state,
+        //         turn: {
+        //             ...state.turn,
+        //             creature: action.payload
+        //         }
+        //     };
         case ActionType.MOVE_CREATURE: {
             return {
                 ...state,

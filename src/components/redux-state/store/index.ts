@@ -3,12 +3,14 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import combatLogReducer from '../reducers/combat-log';
 import playerPositionReducer from '../reducers/player-position';
 import cameraPositionReducer from '../reducers/camera-position';
+import turnReducer from '../reducers/turn';
 
 const rootReducer = combineReducers(
     {
         combatLog: combatLogReducer,
         playerPosition: playerPositionReducer,
-        cameraPosition: cameraPositionReducer
+        cameraPosition: cameraPositionReducer,
+        turn: turnReducer
     });
 
 const store = createStore(rootReducer, composeWithDevTools());

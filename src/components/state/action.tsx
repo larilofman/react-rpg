@@ -4,8 +4,6 @@ import { ZoneName } from '../../utils/load-zone-data';
 export enum ActionType {
     "SET_PLAYER_POSITION",
     "SET_MAP",
-    "SET_FACTION_TURN",
-    "SET_CREATURE_TURN",
     "MOVE_CREATURE",
     "ADD_CREATURES",
     "DAMAGE_CREATURE",
@@ -27,15 +25,8 @@ export type Action =
         type: ActionType.SET_MAP;
         payload: ZoneData;
     }
-    | {
-        type: ActionType.SET_FACTION_TURN;
-        payload: Faction
-    }
-    | {
-        type: ActionType.SET_CREATURE_TURN;
-        payload: string
-    }
-    | {
+    |
+    {
         type: ActionType.MOVE_CREATURE;
         payload: { creature: BaseCreature, pos: Position }
     }

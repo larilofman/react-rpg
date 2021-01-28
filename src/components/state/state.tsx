@@ -6,7 +6,6 @@ export type State = {
     zoneData: ZoneData
     visitedZones: ZoneData[]
     mapLoaded: boolean
-    turn: { faction: Faction, count: number, creature: string }
     gameOver: boolean
 };
 
@@ -20,7 +19,6 @@ const initialState: State = {
     },
     visitedZones: [],
     mapLoaded: false,
-    turn: { faction: Faction.Player, count: 0, creature: 'player' },
     gameOver: false
 };
 

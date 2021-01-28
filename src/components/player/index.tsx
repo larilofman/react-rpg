@@ -27,8 +27,8 @@ interface Props {
 }
 
 const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
-    const [{ mapLoaded, turn }] = useStateValue();
-    const playerPosition = useSelector((state: RootState) => state.playerPosition);
+    const [{ mapLoaded }] = useStateValue();
+    const { playerPosition, turn } = useSelector((state: RootState) => ({ playerPosition: state.playerPosition, turn: state.turn }));
     const { walk, position } = useWalk(playerPosition);
     const { dir, step, setAnimState } = useAnimation(3);
     const { updateCamera } = useCamera();
