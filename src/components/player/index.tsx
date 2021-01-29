@@ -14,7 +14,7 @@ import settings from '../../data/settings.json';
 import useGetCreature from '../../hooks/use-get-creature';
 import useInteract from '../../hooks/use-interact';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../redux-state/store';
 
 interface Props {
@@ -41,8 +41,6 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     const [canAct, setCanAct] = useState(true);
     const { getCreatureById } = useGetCreature();
     const { interact } = useInteract();
-
-    const dispatch = useDispatch();
 
     useEffect(() => {
         if (mapLoaded) {

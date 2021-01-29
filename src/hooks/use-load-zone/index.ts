@@ -1,5 +1,5 @@
-import { Faction, Position, ZoneData, ZoneRouteType } from '../../types';
-import { ZoneName, loadZoneData } from '../../utils/load-zone-data';
+import { Faction, ZoneData, ZoneRouteType } from '../../types';
+import { loadZoneData } from '../../utils/load-zone-data';
 import useAddVisitedZone from '../use-add-visited-zone';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';

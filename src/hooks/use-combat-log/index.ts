@@ -1,5 +1,6 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AddCombatLogEntry } from '../../components/redux-state/reducers/combat-log/actions';
+import { RootState } from '../../components/redux-state/store';
 import { Creature } from '../../types';
 
 interface BaseCombatLogEntry {
@@ -25,6 +26,7 @@ export type CombatLogEntry = CombatLogEntryDamaged | CombatLogEntryDied
 
 
 export default function UseCombatLog() {
+    const turnCount = useSelector((state: RootState) => state.turn.count);
     const dispatch = useDispatch();
 
     const AddEntry = (entry: CombatLogEntry) => {
@@ -43,7 +45,7 @@ export default function UseCombatLog() {
                 break;
         }
 
-        dispatch(AddCombatLogEntry(message));
+        dispatch(AddCombatLogEntry(`Turn ${turnCount}: ${message}`));
     };
 
     return { AddEntry };
