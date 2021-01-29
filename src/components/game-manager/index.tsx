@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CreatureManager from '../npc/creature-manager';
-import Map from '../map';
+import Map from '../map/manager';
 import Player from '../player';
 import { Creature, Faction, ZoneType } from '../../types';
 import useUseTurn from '../../hooks/use-use-turn';
