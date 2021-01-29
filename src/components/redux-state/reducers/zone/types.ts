@@ -1,4 +1,5 @@
 import { BaseCreature, Creature, Faction, InteractableTile, Position, ZoneData } from '../../../../types';
+import { ZoneName } from '../../../../utils/load-zone-data';
 export const SET_MAP = 'SET_MAP';
 export const MOVE_CREATURE = 'MOVE_CREATURE';
 export const ADD_CREATURES = 'ADD_CREATURES';
@@ -6,6 +7,7 @@ export const DAMAGE_CREATURE = 'DAMAGE_CREATURE';
 export const REMOVE_CREATURE = 'REMOVE_CREATURE';
 export const LOAD_ZONE = 'LOAD_ZONE';
 export const SAVE_VISITED_ZONE = 'SAVE_VISITED_ZONE';
+export const REMOVE_VISITED_ZONE = 'REMOVE_VISITED_ZONE';
 export const ADD_INTERACTABLE_TILES = 'ADD_INTERACTABLE_TILES';
 
 interface SetMap {
@@ -43,6 +45,11 @@ interface SaveVisitedZone {
     payload: ZoneData
 }
 
+interface RemoveVisitedZone {
+    type: typeof REMOVE_VISITED_ZONE,
+    payload: ZoneName
+}
+
 interface AddInteractableTiles {
     type: typeof ADD_INTERACTABLE_TILES,
     payload: InteractableTile[]
@@ -56,6 +63,7 @@ export type ZoneActions =
     RemoveCreature |
     LoadZone |
     SaveVisitedZone |
+    RemoveVisitedZone |
     AddInteractableTiles
 
 export type ZoneState = {

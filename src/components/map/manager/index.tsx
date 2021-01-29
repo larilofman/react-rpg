@@ -29,6 +29,7 @@ const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
             <MapRenderer
                 zoneTiles={zoneData.tiles}
                 cameraPosition={cameraPosition}
+                mapLoaded={mapLoaded}
             />
         </>
     );

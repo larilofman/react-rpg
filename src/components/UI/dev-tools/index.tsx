@@ -14,23 +14,23 @@ import { RootState } from '../../redux-state/store';
 
 
 const DevTools: React.FC = () => {
-    const { zoneData, visitedZones } = useSelector((state: RootState) => ({ zoneData: state.zone.zoneData, visitedZones: state.zone.visitedZones }));
+    const { zoneName, visitedZones } = useSelector((state: RootState) => ({ zoneName: state.zone.zoneData.name, visitedZones: state.zone.visitedZones }));
     const { position, handleMouseDown } = useDraggable('dev-tools-header', { x: 16, y: 16 });
-    const [selectedZone, setSelectedZone] = useState<string>(zoneData.name as ZoneName);
+    const [selectedZone, setSelectedZone] = useState<string>(zoneName as ZoneName);
     const [savedZones, setSavedZones] = useState<string[]>([]);
     const [selectedSave, setSelectedSave] = useState<string>();
     const [zoneNames] = useState<string[]>(getAllZoneNames());
-    // const { loadFreshZone, loadVisitedZone } = useLoadZone();
+    const { loadZone, } = useLoadZone();
     const { addVisitedZone } = useAddVisitedZone();
 
     const handleZoneChangeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // loadFreshZone(selectedZone as ZoneName);
+        loadZone(selectedZone as ZoneName);
     };
 
     const handleSavedZoneChangeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // loadVisitedZone(selectedSave as ZoneName);
+        loadZone(selectedSave as ZoneName, false);
     };
 
     useEffect(() => {

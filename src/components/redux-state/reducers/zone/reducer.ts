@@ -5,7 +5,8 @@ import {
     DAMAGE_CREATURE, REMOVE_CREATURE,
     LOAD_ZONE,
     SAVE_VISITED_ZONE, ADD_INTERACTABLE_TILES,
-    ZoneState
+    ZoneState,
+    REMOVE_VISITED_ZONE
 } from './types';
 
 const initialState: ZoneState = {
@@ -135,6 +136,12 @@ const reducer = (state = initialState, action: ZoneActions) => {
             return {
                 ...state,
                 visitedZones: prevZones
+            };
+        }
+        case REMOVE_VISITED_ZONE: {
+            return {
+                ...state,
+                visitedZones: state.visitedZones.filter(z => z.name !== action.payload)
             };
         }
         case ADD_INTERACTABLE_TILES:

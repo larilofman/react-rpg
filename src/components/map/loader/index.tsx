@@ -14,7 +14,6 @@ const MapLoader: React.FC<Props> = ({ loadedZone, setLoadedZone, zoneData }) => 
     const dispatch = useDispatch();
     const { buildMap, generateMap } = useGenerateMap();
 
-    console.log('maploader renders');
     useEffect(() => {
         if (loadedZone) {
             const tiles = loadedZone.tiles

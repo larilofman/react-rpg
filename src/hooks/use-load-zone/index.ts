@@ -1,9 +1,9 @@
 import { Faction, ZoneData, ZoneRouteType } from '../../types';
-import { loadZoneData } from '../../utils/load-zone-data';
+import { loadZoneData, ZoneName } from '../../utils/load-zone-data';
 import useAddVisitedZone from '../use-add-visited-zone';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
-import { LoadZone } from '../../components/redux-state/reducers/zone/actions';
+import { LoadZone, RemoveVisitedZone } from '../../components/redux-state/reducers/zone/actions';
 
 
 export default function useLoadZone() {
@@ -50,8 +50,37 @@ export default function useLoadZone() {
         }
     };
 
+    // Mostly for dev purposes
+    const loadZone = (zoneName: ZoneName, fresh = true, savePrevious = false) => {
+        if (zoneName !== zoneData.name && savePrevious) {
+            addVisitedZone();
+        }
+        if (fresh) {
+            dispatch(RemoveVisitedZone(zoneName));
+            const zone = loadZoneData(zoneName);
+            const zoneToLoad: ZoneData = {
+                name: zone.name,
+                creatures: {
+                    [Faction.Player]: zoneData.creatures[Faction.Player].map(
+                        c => c.id === 'player' ? { ...c, pos: { x: 0, y: 0 } } : c),
+                    [Faction.Friendly]: [],
+                    [Faction.Hostile]: []
+                },
+                interactableTiles: [],
+                tiles: [],
+                size: { w: 0, h: 0 }
+            };
+            dispatch(LoadZone(zoneToLoad));
+        } else {
+            const zoneToLoad = visitedZones.find(z => z.name === zoneName);
+            if (zoneToLoad) {
+                dispatch(LoadZone(zoneToLoad));
+            }
+        }
+    };
+
     return {
-        changeZone
+        changeZone, loadZone
     };
 }
 

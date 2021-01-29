@@ -7,9 +7,10 @@ import settings from '../../../data/settings.json';
 interface Props {
     cameraPosition: Position
     zoneTiles: Tile[][]
+    mapLoaded: boolean
 }
 
-const MapRenderer: React.FC<Props> = ({ zoneTiles, cameraPosition }) => {
+const MapRenderer: React.FC<Props> = ({ zoneTiles, cameraPosition, mapLoaded }) => {
 
     const tilesOnCamera = React.useMemo(() => {
         const cam_y = cameraPosition.y;
@@ -24,9 +25,7 @@ const MapRenderer: React.FC<Props> = ({ zoneTiles, cameraPosition }) => {
             }
         }
         return tilesOnCam;
-    }, [cameraPosition.x, cameraPosition.y]
-    );
-
+    }, [cameraPosition.x, cameraPosition.y, mapLoaded]);
 
     const tileToRender = (tile: Tile) => {
         switch (tile.type) {
@@ -54,6 +53,7 @@ const MapRenderer: React.FC<Props> = ({ zoneTiles, cameraPosition }) => {
 const areEqual = (prevProps: Readonly<React.PropsWithChildren<Props>>, nextProps: Readonly<React.PropsWithChildren<Props>>) => {
     if (prevProps.cameraPosition.x !== nextProps.cameraPosition.x) return false;
     if (prevProps.cameraPosition.y !== nextProps.cameraPosition.y) return false;
+    if (prevProps.mapLoaded !== nextProps.mapLoaded) return false;
     return true;
 };
 

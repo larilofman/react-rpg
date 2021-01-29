@@ -1,6 +1,17 @@
 import { BaseCreature, Creature, Faction, InteractableTile, Position, ZoneData } from '../../../../types';
 import { ZoneName } from '../../../../utils/load-zone-data';
-import { ADD_CREATURES, ADD_INTERACTABLE_TILES, DAMAGE_CREATURE, LOAD_ZONE, MOVE_CREATURE, REMOVE_CREATURE, SAVE_VISITED_ZONE, SET_MAP, ZoneActions } from './types';
+import {
+    ADD_CREATURES,
+    ADD_INTERACTABLE_TILES,
+    DAMAGE_CREATURE,
+    LOAD_ZONE,
+    MOVE_CREATURE,
+    REMOVE_CREATURE,
+    SAVE_VISITED_ZONE,
+    REMOVE_VISITED_ZONE,
+    SET_MAP,
+    ZoneActions
+} from './types';
 
 export function SetMap(zoneData: ZoneData): ZoneActions {
     return {
@@ -55,6 +66,13 @@ export const SaveVisitedZone = (zoneData: ZoneData): ZoneActions => {
     return {
         type: SAVE_VISITED_ZONE,
         payload: zoneData
+    };
+};
+
+export const RemoveVisitedZone = (zoneName: ZoneName): ZoneActions => {
+    return {
+        type: REMOVE_VISITED_ZONE,
+        payload: zoneName
     };
 };
 
