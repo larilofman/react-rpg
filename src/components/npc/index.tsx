@@ -99,6 +99,8 @@ const InnerNPC: React.FC<InnerProps> = (
                 const nextPos = findPath(position, playerPosition);
                 if (nextPos) {
                     move(nextPos);
+                } else {
+                    useTurn(data);
                 }
             } else {
                 wander(); // Wander
