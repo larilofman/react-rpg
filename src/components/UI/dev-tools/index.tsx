@@ -20,17 +20,17 @@ const DevTools: React.FC = () => {
     const [savedZones, setSavedZones] = useState<string[]>([]);
     const [selectedSave, setSelectedSave] = useState<string>();
     const [zoneNames] = useState<string[]>(getAllZoneNames());
-    const { loadFreshZone, loadVisitedZone } = useLoadZone();
+    // const { loadFreshZone, loadVisitedZone } = useLoadZone();
     const { addVisitedZone } = useAddVisitedZone();
 
     const handleZoneChangeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        loadFreshZone(selectedZone as ZoneName);
+        // loadFreshZone(selectedZone as ZoneName);
     };
 
     const handleSavedZoneChangeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        loadVisitedZone(selectedSave as ZoneName);
+        // loadVisitedZone(selectedSave as ZoneName);
     };
 
     useEffect(() => {

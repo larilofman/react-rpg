@@ -5,7 +5,7 @@ import useMouseClick from '../../hooks/use-mouse-click';
 import useWalk from '../../hooks/use-walk';
 import useAnimation from '../../hooks/use-animation';
 import useCamera from '../../hooks/use-camera';
-import { Direction, Position, TileStatus, BaseCreature } from '../../types';
+import { Direction, Position, TileStatus, BaseCreature, Faction } from '../../types';
 import useCheckCollision from '../../hooks/use-get-tiles';
 import useContact from '../../hooks/use-contact';
 import usePathFinding from '../../hooks/use-pathfinding';
@@ -25,11 +25,12 @@ interface Props {
 }
 
 const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
-    const { playerPosition, turn, mapLoaded } = useSelector((state: RootState) => (
+    const { playerPosition, turn, mapLoaded, player } = useSelector((state: RootState) => (
         {
             playerPosition: state.playerPosition,
             turn: state.turn,
-            mapLoaded: state.zone.mapLoaded
+            mapLoaded: state.zone.mapLoaded,
+            player: state.zone.zoneData.creatures[Faction.Player][0]
         }));
     const { walk, position } = useWalk(playerPosition);
     const { dir, step, setAnimState } = useAnimation(3);
@@ -47,7 +48,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
 
     useEffect(() => {
         if (mapLoaded) {
-            walk(data, playerPosition);
+            walk(data, player.pos);
             updateCamera(playerPosition);
         }
         // Toggles on and off so that player can only act every 50ms

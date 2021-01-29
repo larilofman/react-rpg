@@ -3,7 +3,7 @@ import useLoadZone from '../use-load-zone';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 
-export default function useContact() {
+export default function useInteract() {
     const interactableTiles = useSelector((state: RootState) => state.zone.zoneData.interactableTiles);
     const { changeZone } = useLoadZone();
 

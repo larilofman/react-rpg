@@ -3,7 +3,7 @@ import {
     SET_MAP, MOVE_CREATURE,
     ADD_CREATURES, ZoneActions,
     DAMAGE_CREATURE, REMOVE_CREATURE,
-    LOAD_FRESH_ZONE, LOAD_VISITED_ZONE,
+    LOAD_ZONE,
     SAVE_VISITED_ZONE, ADD_INTERACTABLE_TILES,
     ZoneState
 } from './types';
@@ -83,41 +83,39 @@ const reducer = (state = initialState, action: ZoneActions) => {
                 }, gameOver: action.payload.faction === Faction.Player
             };
         }
-        case LOAD_FRESH_ZONE:
+        case LOAD_ZONE:
             return {
                 ...state,
                 mapLoaded: false,
-                visitedZones: state.visitedZones.filter(z => z.name !== action.payload.zoneName),
-                zoneData: {
-                    ...state.zoneData,
-                    name: action.payload.zoneName,
-                    creatures: { [Faction.Player]: state.zoneData.creatures[Faction.Player], [Faction.Friendly]: [], [Faction.Hostile]: [] },
-                    interactableTiles: [],
-                    tiles: [],
-                    size: { w: 0, h: 0 }
-                }
+                // visitedZones: state.visitedZones.filter(z => z.name !== action.payload.zoneName),
+                zoneData: action.payload
             };
-        case LOAD_VISITED_ZONE: {
-            const visitedZone = state.visitedZones.find(z => z.name === action.payload.zoneName);
-            if (visitedZone) {
-                return {
-                    ...state,
-                    mapLoaded: false,
-                    playerPosition: action.payload.playerPosition || visitedZone.creatures[Faction.Player][0].pos,
-                    zoneData: {
-                        ...state.zoneData,
-                        name: action.payload.zoneName,
-                        creatures: { ...visitedZone.creatures, [Faction.Player]: state.zoneData.creatures[Faction.Player] },
-                        interactableTiles: visitedZone.interactableTiles,
-                        tiles: visitedZone.tiles,
-                        size: visitedZone.size
-                    }
-                };
-            }
-            console.error(`visited zone ${action.payload.zoneName} failed to load`);
-            return state;
+        // case LOAD_VISITED_ZONE: {
+        //     return {
+        //         ...state,
+        //         mapLoaded: false,
+        //         zoneData: action
+        //     };
+        //     // const visitedZone = state.visitedZones.find(z => z.name === action.payload.zoneName);
+        //     // if (visitedZone) {
+        //     //     return {
+        //     //         ...state,
+        //     //         mapLoaded: false,
+        //     //         playerPosition: action.payload.playerPosition || visitedZone.creatures[Faction.Player][0].pos,
+        //     //         zoneData: {
+        //     //             ...state.zoneData,
+        //     //             name: action.payload.zoneName,
+        //     //             creatures: { ...visitedZone.creatures, [Faction.Player]: state.zoneData.creatures[Faction.Player] },
+        //     //             interactableTiles: visitedZone.interactableTiles,
+        //     //             tiles: visitedZone.tiles,
+        //     //             size: visitedZone.size
+        //     //         }
+        //     //     };
+        //     // }
+        //     // console.error(`visited zone ${action.payload.zoneName} failed to load`);
+        //     // return state;
 
-        }
+        // }
         case SAVE_VISITED_ZONE: {
             const prevZones = state.visitedZones;
 

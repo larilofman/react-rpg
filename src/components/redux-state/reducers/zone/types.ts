@@ -5,8 +5,8 @@ export const MOVE_CREATURE = 'MOVE_CREATURE';
 export const ADD_CREATURES = 'ADD_CREATURES';
 export const DAMAGE_CREATURE = 'DAMAGE_CREATURE';
 export const REMOVE_CREATURE = 'REMOVE_CREATURE';
-export const LOAD_FRESH_ZONE = 'LOAD_FRESH_ZONE';
-export const LOAD_VISITED_ZONE = 'LOAD_VISITED_ZONE';
+export const LOAD_ZONE = 'LOAD_ZONE';
+// export const LOAD_VISITED_ZONE = 'LOAD_VISITED_ZONE';
 export const SAVE_VISITED_ZONE = 'SAVE_VISITED_ZONE';
 export const ADD_INTERACTABLE_TILES = 'ADD_INTERACTABLE_TILES';
 
@@ -35,15 +35,15 @@ interface RemoveCreature {
     payload: BaseCreature
 }
 
-interface LoadFreshZone {
-    type: typeof LOAD_FRESH_ZONE,
-    payload: { zoneName: ZoneName, playerPosition?: Position }
+interface LoadZone {
+    type: typeof LOAD_ZONE,
+    payload: ZoneData
 }
 
-interface LoadVisitedZone {
-    type: typeof LOAD_VISITED_ZONE,
-    payload: { zoneName: ZoneName, playerPosition?: Position }
-}
+// interface LoadVisitedZone {
+//     type: typeof LOAD_VISITED_ZONE,
+//     payload: ZoneData
+// }
 
 interface SaveVisitedZone {
     type: typeof SAVE_VISITED_ZONE,
@@ -61,8 +61,8 @@ export type ZoneActions =
     AddCreatures |
     DamageCreature |
     RemoveCreature |
-    LoadFreshZone |
-    LoadVisitedZone |
+    LoadZone |
+    // LoadVisitedZone |
     SaveVisitedZone |
     AddInteractableTiles
 

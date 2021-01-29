@@ -45,6 +45,7 @@ const GameManager: React.FC = () => {
             }
         }
 
+        // the very start of the game when there is no player, later it will get passed on by useLoadZone hook
         if (mapLoaded && !zoneData.creatures[0].length) {
             dispatch(AddCreatures([playerData], playerData.faction));
         }
@@ -58,7 +59,10 @@ const GameManager: React.FC = () => {
     return (
         <>
             <Map loadedZone={loadedZone} setLoadedZone={setLoadedZone} />
-            {!gameOver && mapLoaded && <Player skin={playerData.sprite} data={{ id: playerData.id, faction: playerData.faction }} useTurn={useTurn} />}
+            {
+                mapLoaded && zoneData.creatures[Faction.Player].length && !gameOver &&
+                <Player skin={playerData.sprite} data={{ id: playerData.id, faction: playerData.faction }} useTurn={useTurn} />
+            }
             <CreatureManager useTurn={useTurn} freshZone={freshZone} />
             <ObjectManager freshZone={freshZone} />
         </>

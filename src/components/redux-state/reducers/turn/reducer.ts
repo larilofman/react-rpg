@@ -19,24 +19,6 @@ const reducer = (state = initialState, action: TurnActions) => {
         default:
             return state;
     }
-
-    // case ActionType.SET_FACTION_TURN:
-    //         return {
-    //             ...state,
-    //             turn: {
-    //                 ...state.turn,
-    //                 count: action.payload === Faction.Player ? state.turn.count + 1 : state.turn.count,
-    //                 faction: action.payload
-    //             }
-    //         };
-    //     case ActionType.SET_CREATURE_TURN:
-    //         return {
-    //             ...state,
-    //             turn: {
-    //                 ...state.turn,
-    //                 creature: action.payload
-    //             }
-    //         };
 };
 
 export default reducer;

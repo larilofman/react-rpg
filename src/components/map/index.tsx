@@ -2,11 +2,8 @@ import React, { useEffect } from 'react';
 import Floor from '../tile/floor';
 import Wall from '../tile/wall';
 import { TileType, Tile, ZoneType, ZoneData, Dimensions, Position } from '../../types';
-import { useStateValue } from '../state';
-import useSetMap from '../state/action-hooks/useSetMap';
 import useGenerateMap from '../../hooks/use-generate-map';
 import settings from '../../data/settings.json';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux-state/store/index';
 import { SetMap } from '../redux-state/reducers/zone/actions';
@@ -76,7 +73,6 @@ const InnerMap: React.FC<InnerProps> = ({ loadedZone, setLoadedZone, zoneData, b
                 }
             }
         }
-        // console.log('getting tiles');
         return tiles;
     }, [cameraPosition.x, cameraPosition.y, mapLoaded]
     );
