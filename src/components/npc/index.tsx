@@ -29,7 +29,7 @@ const Npc: React.FC<Props> = (props) => {
 
     const { playerPosition, turn, mapLoaded } = useSelector((state: RootState) => (
         {
-            playerPosition: state.playerPosition,
+            playerPosition: state.zone.zoneData.creatures[Faction.Player][0].pos,
             turn: state.turn,
             mapLoaded: state.zone.mapLoaded
         }

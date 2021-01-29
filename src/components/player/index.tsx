@@ -15,7 +15,6 @@ import useGetCreature from '../../hooks/use-get-creature';
 import useInteract from '../../hooks/use-interact';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { SetPlayerPosition } from '../redux-state/reducers/player-position/actions';
 import { RootState } from '../redux-state/store';
 
 interface Props {
@@ -25,14 +24,13 @@ interface Props {
 }
 
 const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
-    const { playerPosition, turn, mapLoaded, player } = useSelector((state: RootState) => (
+    const { turn, mapLoaded, player } = useSelector((state: RootState) => (
         {
-            playerPosition: state.playerPosition,
             turn: state.turn,
             mapLoaded: state.zone.mapLoaded,
             player: state.zone.zoneData.creatures[Faction.Player][0]
         }));
-    const { walk, position } = useWalk(playerPosition);
+    const { walk, position } = useWalk(player.pos);
     const { dir, step, setAnimState } = useAnimation(3);
     const { updateCamera } = useCamera();
     const { getTileInDirection, getTileStatus } = useCheckCollision();
@@ -49,7 +47,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     useEffect(() => {
         if (mapLoaded) {
             walk(data, player.pos);
-            updateCamera(playerPosition);
+            updateCamera(player.pos);
         }
         // Toggles on and off so that player can only act every 50ms
         const delayTicker = setInterval(() => {
@@ -176,7 +174,6 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     };
 
     useEffect(() => {
-        dispatch(SetPlayerPosition(position));
         updateCamera(position);
     }, [position]);
 

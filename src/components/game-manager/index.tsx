@@ -15,9 +15,9 @@ const GameManager: React.FC = () => {
     const { useTurn } = useUseTurn();
     const [loadedZone, setLoadedZone] = useState<ZoneType | undefined>();
     const dispatch = useDispatch();
-    const { playerPosition, mapLoaded, gameOver, visitedZones, zoneData } = useSelector((state: RootState) => (
+    const { player, mapLoaded, gameOver, visitedZones, zoneData } = useSelector((state: RootState) => (
         {
-            playerPosition: state.playerPosition,
+            player: state.zone.zoneData.creatures[Faction.Player][0],
             mapLoaded: state.zone.mapLoaded,
             gameOver: state.zone.gameOver,
             visitedZones: state.zone.visitedZones,
@@ -25,14 +25,6 @@ const GameManager: React.FC = () => {
         }
     ));
 
-    const playerData: Creature = {
-        id: 'player',
-        faction: Faction.Player,
-        pos: playerPosition,
-        stats: { health: 1000, maxHealth: 1000, damage: 5 },
-        name: 'Player',
-        sprite: 'f1'
-    };
     useEffect(() => {
 
         if (!mapLoaded) {
@@ -47,6 +39,14 @@ const GameManager: React.FC = () => {
 
         // the very start of the game when there is no player, later it will get passed on by useLoadZone hook
         if (mapLoaded && !zoneData.creatures[0].length) {
+            const playerData: Creature = {
+                id: 'player',
+                faction: Faction.Player,
+                pos: { x: 0, y: 0 },
+                stats: { health: 1000, maxHealth: 1000, damage: 5 },
+                name: 'Player',
+                sprite: 'f1'
+            };
             dispatch(AddCreatures([playerData], playerData.faction));
         }
 
@@ -60,8 +60,8 @@ const GameManager: React.FC = () => {
         <>
             <Map loadedZone={loadedZone} setLoadedZone={setLoadedZone} />
             {
-                mapLoaded && zoneData.creatures[Faction.Player].length && !gameOver &&
-                <Player skin={playerData.sprite} data={{ id: playerData.id, faction: playerData.faction }} useTurn={useTurn} />
+                mapLoaded && player && !gameOver &&
+                <Player skin={player.sprite} data={{ id: player.id, faction: player.faction }} useTurn={useTurn} />
             }
             <CreatureManager useTurn={useTurn} freshZone={freshZone} />
             <ObjectManager freshZone={freshZone} />

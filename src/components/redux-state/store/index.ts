@@ -1,7 +1,6 @@
 import { createStore, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import combatLogReducer from '../reducers/combat-log/reducer';
-import playerPositionReducer from '../reducers/player-position/reducer';
 import cameraPositionReducer from '../reducers/camera-position/reducer';
 import zoneReducer from '../reducers/zone/reducer';
 import turnReducer from '../reducers/turn/reducer';
@@ -9,7 +8,6 @@ import turnReducer from '../reducers/turn/reducer';
 const rootReducer = combineReducers(
     {
         combatLog: combatLogReducer,
-        playerPosition: playerPositionReducer,
         cameraPosition: cameraPositionReducer,
         turn: turnReducer,
         zone: zoneReducer
