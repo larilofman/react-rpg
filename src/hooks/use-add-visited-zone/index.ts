@@ -3,7 +3,7 @@ import { RootState } from '../../components/redux-state/store';
 import { SaveVisitedZone } from '../../components/redux-state/reducers/zone/actions';
 
 export default function useAddVisitedZone() {
-    const zoneStatus = useSelector((state: RootState) => state.zone.zoneStatus);
+    const zoneStatus = useSelector((state: RootState) => state.zone.status);
     const dispatch = useDispatch();
 
     const addVisitedZone = () => {

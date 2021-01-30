@@ -14,9 +14,9 @@ const CreatureManager: React.FC<Props> = ({ freshZone }) => {
     const { useTurn } = useUseTurn();
     const { player, zoneName, mapLoaded } = useSelector((state: RootState) => (
         {
-            zoneName: state.zone.zoneStatus.name,
+            zoneName: state.zone.status.name,
             mapLoaded: state.zone.mapLoaded,
-            player: state.zone.zoneStatus.creatures[Faction.Player][0]
+            player: state.zone.status.creatures[Faction.Player][0]
         }
     ));
 

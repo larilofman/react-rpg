@@ -14,7 +14,7 @@ const MapManager: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
     const { cameraPosition, zoneStatus, mapLoaded } = useSelector((state: RootState) => (
         {
             cameraPosition: state.cameraPosition,
-            zoneStatus: state.zone.zoneStatus,
+            zoneStatus: state.zone.status,
             mapLoaded: state.zone.mapLoaded
         }
     ));

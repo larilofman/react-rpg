@@ -5,7 +5,7 @@ import { RootState } from '../../components/redux-state/store';
 import { SetCreatureTurn, SetFactionTurn } from '../../components/redux-state/reducers/turn/actions';
 
 export default function useUseTurn() {
-    const { turn, creatures, mapLoaded } = useSelector((state: RootState) => ({ turn: state.turn, creatures: state.zone.zoneStatus.creatures, mapLoaded: state.zone.mapLoaded }));
+    const { turn, creatures, mapLoaded } = useSelector((state: RootState) => ({ turn: state.turn, creatures: state.zone.status.creatures, mapLoaded: state.zone.mapLoaded }));
     const dispatch = useDispatch();
     const [factionIndex, setFactionIndex] = useState(0);
 
@@ -29,12 +29,12 @@ export default function useUseTurn() {
 
     // When faction changes, give turn to the first one(as faction index was reset to 0 before faction change was called)
     // useEffect(() => {
-    //     if (zoneStatus.creatures && zoneStatus.creatures[turn.faction].length) {
-    //         dispatch(SetCreatureTurn(zoneStatus.creatures[turn.faction][factionIndex].id));
+    //     if (status.creatures && status.creatures[turn.faction].length) {
+    //         dispatch(SetCreatureTurn(status.creatures[turn.faction][factionIndex].id));
     //         // dispatch(
     //         //     {
     //         //         type: ActionType.SET_CREATURE_TURN,
-    //         //         payload: zoneStatus.creatures[turn.faction][factionIndex].id
+    //         //         payload: status.creatures[turn.faction][factionIndex].id
     //         //     }
     //         // );
     //     }

@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 
 export default function useCamera() {
-    const zoneSize = useSelector((state: RootState) => state.zone.zoneStatus.size);
+    const zoneSize = useSelector((state: RootState) => state.zone.status.size);
     const dispatch = useDispatch();
 
     const displaySize = settings.displaySize;

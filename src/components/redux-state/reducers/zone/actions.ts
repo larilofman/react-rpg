@@ -13,10 +13,10 @@ import {
     ZoneActions
 } from './types';
 
-export function SetMap(zoneStatus: ZoneStatus): ZoneActions {
+export function SetMap(status: ZoneStatus): ZoneActions {
     return {
         type: SET_MAP,
-        payload: zoneStatus
+        payload: status
     };
 }
 
@@ -48,17 +48,17 @@ export const RemoveCreature = (creature: BaseCreature): ZoneActions => {
     };
 };
 
-export const LoadZone = (zoneStatus: ZoneStatus): ZoneActions => {
+export const LoadZone = (status: ZoneStatus): ZoneActions => {
     return {
         type: LOAD_ZONE,
-        payload: zoneStatus
+        payload: status
     };
 };
 
-export const SaveVisitedZone = (zoneStatus: ZoneStatus): ZoneActions => {
+export const SaveVisitedZone = (status: ZoneStatus): ZoneActions => {
     return {
         type: SAVE_VISITED_ZONE,
-        payload: zoneStatus
+        payload: status
     };
 };
 

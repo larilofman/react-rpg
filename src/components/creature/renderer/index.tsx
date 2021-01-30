@@ -16,9 +16,9 @@ const CreatureRenderer: React.FC<Props> = ({ useTurn }) => {
     const { player, cameraPosition, creatures, mapLoaded, gameOver } = useSelector((state: RootState) => (
         {
             cameraPosition: state.cameraPosition,
-            creatures: state.zone.zoneStatus.creatures,
+            creatures: state.zone.status.creatures,
             mapLoaded: state.zone.mapLoaded,
-            player: state.zone.zoneStatus.creatures[Faction.Player][0],
+            player: state.zone.status.creatures[Faction.Player][0],
             gameOver: state.zone.gameOver
         }
     ));

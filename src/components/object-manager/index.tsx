@@ -14,7 +14,7 @@ const ObjectManager: React.FC<Props> = ({ freshZone }) => {
     const { mapLoaded, zoneStatus } = useSelector((state: RootState) => (
         {
             mapLoaded: state.zone.mapLoaded,
-            zoneStatus: state.zone.zoneStatus
+            zoneStatus: state.zone.status
         }
     ));
     const dispatch = useDispatch();

@@ -8,7 +8,7 @@ import { LoadZone, RemoveVisitedZone } from '../../components/redux-state/reduce
 
 export default function useLoadZone() {
     const { addVisitedZone } = useAddVisitedZone();
-    const { visitedZones, zoneStatus } = useSelector((state: RootState) => ({ visitedZones: state.zone.visitedZones, zoneStatus: state.zone.zoneStatus }));
+    const { visitedZones, zoneStatus } = useSelector((state: RootState) => ({ visitedZones: state.zone.visitedZones, zoneStatus: state.zone.status }));
     const dispatch = useDispatch();
 
     const changeZone = (zoneRoute: ZoneRouteType) => {

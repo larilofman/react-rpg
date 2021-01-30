@@ -16,7 +16,7 @@ const GameManager: React.FC = () => {
         {
             mapLoaded: state.zone.mapLoaded,
             visitedZones: state.zone.visitedZones,
-            zoneStatus: state.zone.zoneStatus
+            zoneStatus: state.zone.status
         }
     ));
 

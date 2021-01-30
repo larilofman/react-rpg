@@ -67,7 +67,7 @@ export type ZoneActions =
     AddInteractableTiles
 
 export type ZoneState = {
-    zoneStatus: ZoneStatus,
+    status: ZoneStatus,
     mapLoaded: boolean,
     visitedZones: ZoneStatus[],
     gameOver: boolean

@@ -10,7 +10,7 @@ import {
 } from './types';
 
 const initialState: ZoneState = {
-    zoneStatus: {
+    status: {
         name: "zone0",
         size: { w: 0, h: 0 },
         tiles: [],
@@ -27,18 +27,18 @@ const reducer = (state = initialState, action: ZoneActions) => {
         case SET_MAP:
             return {
                 ...state,
-                zoneStatus: action.payload,
+                status: action.payload,
                 mapLoaded: true
             };
 
         case MOVE_CREATURE: {
             return {
                 ...state,
-                zoneStatus: {
-                    ...state.zoneStatus,
+                status: {
+                    ...state.status,
                     creatures: {
-                        ...state.zoneStatus.creatures,
-                        [action.payload.creature.faction]: state.zoneStatus.creatures[action.payload.creature.faction].map(
+                        ...state.status.creatures,
+                        [action.payload.creature.faction]: state.status.creatures[action.payload.creature.faction].map(
                             c => c.id !== action.payload.creature.id
                                 ? c
                                 : { ...c, pos: action.payload.pos }
@@ -51,22 +51,22 @@ const reducer = (state = initialState, action: ZoneActions) => {
         case ADD_CREATURES:
             return {
                 ...state,
-                zoneStatus: {
-                    ...state.zoneStatus,
+                status: {
+                    ...state.status,
                     creatures: {
-                        ...state.zoneStatus.creatures,
-                        [action.payload.faction]: state.zoneStatus.creatures[action.payload.faction].concat(action.payload.creatures)
+                        ...state.status.creatures,
+                        [action.payload.faction]: state.status.creatures[action.payload.faction].concat(action.payload.creatures)
                     }
                 }
             };
         case DAMAGE_CREATURE:
             return {
                 ...state,
-                zoneStatus: {
-                    ...state.zoneStatus,
+                status: {
+                    ...state.status,
                     creatures: {
-                        ...state.zoneStatus.creatures,
-                        [action.payload.faction]: state.zoneStatus.creatures[action.payload.faction].map(
+                        ...state.status.creatures,
+                        [action.payload.faction]: state.status.creatures[action.payload.faction].map(
                             c => c.id === action.payload.id ? action.payload : c
                         )
                     }
@@ -75,11 +75,11 @@ const reducer = (state = initialState, action: ZoneActions) => {
         case REMOVE_CREATURE: {
             return {
                 ...state,
-                zoneStatus: {
-                    ...state.zoneStatus,
+                status: {
+                    ...state.status,
                     creatures: {
-                        ...state.zoneStatus.creatures,
-                        [action.payload.faction]: state.zoneStatus.creatures[action.payload.faction].filter(c => c.id !== action.payload.id)
+                        ...state.status.creatures,
+                        [action.payload.faction]: state.status.creatures[action.payload.faction].filter(c => c.id !== action.payload.id)
                     }
                 }, gameOver: action.payload.faction === Faction.Player
             };
@@ -88,7 +88,7 @@ const reducer = (state = initialState, action: ZoneActions) => {
             return {
                 ...state,
                 mapLoaded: false,
-                zoneStatus: action.payload
+                status: action.payload
             };
         case SAVE_VISITED_ZONE: {
             const prevZones = state.visitedZones;
@@ -120,9 +120,9 @@ const reducer = (state = initialState, action: ZoneActions) => {
         case ADD_INTERACTABLE_TILES:
             return {
                 ...state,
-                zoneStatus: {
-                    ...state.zoneStatus,
-                    interactableTiles: state.zoneStatus.interactableTiles.concat(action.payload)
+                status: {
+                    ...state.status,
+                    interactableTiles: state.status.interactableTiles.concat(action.payload)
                 }
             };
         default:

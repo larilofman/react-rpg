@@ -8,8 +8,8 @@ import { RootState } from '../../redux-state/store';
 const HealthDisplay: React.FC = () => {
     const { health, maxHealth } = useSelector((state: RootState) => (
         {
-            health: state.zone.zoneStatus.creatures[Faction.Player][0] && state.zone.zoneStatus.creatures[Faction.Player][0].stats.health,
-            maxHealth: state.zone.zoneStatus.creatures[Faction.Player][0] && state.zone.zoneStatus.creatures[Faction.Player][0].stats.maxHealth
+            health: state.zone.status.creatures[Faction.Player][0] && state.zone.status.creatures[Faction.Player][0].stats.health,
+            maxHealth: state.zone.status.creatures[Faction.Player][0] && state.zone.status.creatures[Faction.Player][0].stats.maxHealth
         }));
 
     const healthFraction = health / maxHealth;

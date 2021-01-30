@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 
 export default function useInteract() {
-    const interactableTiles = useSelector((state: RootState) => state.zone.zoneStatus.interactableTiles);
+    const interactableTiles = useSelector((state: RootState) => state.zone.status.interactableTiles);
     const { changeZone } = useLoadZone();
 
     function interact(pos: Position) {
