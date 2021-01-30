@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import CreatureManager from '../npc/creature-manager';
+import CreatureManager from '../creature/manager';
 import Map from '../map/manager';
 import { ZoneType } from '../../types';
-import useUseTurn from '../../hooks/use-use-turn';
 import { loadZoneData, ZoneName } from '../../utils/load-data';
 import ObjectManager from '../object-manager';
 
@@ -11,7 +10,6 @@ import { RootState } from '../redux-state/store/index';
 import { SetMap } from '../redux-state/reducers/zone/actions';
 
 const GameManager: React.FC = () => {
-    const { useTurn } = useUseTurn();
     const [loadedZone, setLoadedZone] = useState<ZoneType | undefined>();
     const dispatch = useDispatch();
     const { mapLoaded, visitedZones, zoneStatus } = useSelector((state: RootState) => (
@@ -42,7 +40,7 @@ const GameManager: React.FC = () => {
     return (
         <>
             <Map loadedZone={loadedZone} setLoadedZone={setLoadedZone} />
-            <CreatureManager useTurn={useTurn} freshZone={freshZone} />
+            <CreatureManager freshZone={freshZone} />
             <ObjectManager freshZone={freshZone} />
         </>
     );

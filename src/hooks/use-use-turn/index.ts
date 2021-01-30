@@ -5,7 +5,7 @@ import { RootState } from '../../components/redux-state/store';
 import { SetCreatureTurn, SetFactionTurn } from '../../components/redux-state/reducers/turn/actions';
 
 export default function useUseTurn() {
-    const { turn, zoneStatus, mapLoaded } = useSelector((state: RootState) => ({ turn: state.turn, zoneStatus: state.zone.zoneStatus, mapLoaded: state.zone.mapLoaded }));
+    const { turn, creatures, mapLoaded } = useSelector((state: RootState) => ({ turn: state.turn, creatures: state.zone.zoneStatus.creatures, mapLoaded: state.zone.mapLoaded }));
     const dispatch = useDispatch();
     const [factionIndex, setFactionIndex] = useState(0);
 
@@ -17,8 +17,8 @@ export default function useUseTurn() {
     useEffect(() => {
         if (mapLoaded) {
             // More creatures on the faction left, so set next one's turn
-            if (factionIndex < zoneStatus.creatures[turn.faction].length) {
-                dispatch(SetCreatureTurn(zoneStatus.creatures[turn.faction][factionIndex].id));
+            if (factionIndex < creatures[turn.faction].length) {
+                dispatch(SetCreatureTurn(creatures[turn.faction][factionIndex].id));
             } else {
                 // Give turn to next faction and reset the index
                 setFactionIndex(0);
@@ -47,10 +47,10 @@ export default function useUseTurn() {
         let nextFaction = Faction.Player;
         switch (turn.faction) {
             case Faction.Player:
-                nextFaction = zoneStatus.creatures[Faction.Friendly].length ? Faction.Friendly : Faction.Hostile;
+                nextFaction = creatures[Faction.Friendly].length ? Faction.Friendly : Faction.Hostile;
                 break;
             case Faction.Friendly:
-                nextFaction = zoneStatus.creatures[Faction.Hostile].length ? Faction.Hostile : Faction.Player;
+                nextFaction = creatures[Faction.Hostile].length ? Faction.Hostile : Faction.Player;
                 break;
             case Faction.Hostile:
                 nextFaction = Faction.Player;
