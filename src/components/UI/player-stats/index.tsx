@@ -9,17 +9,16 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux-state/store';
 
 const PlayerStats: React.FC = () => {
-    const player = useSelector((state: RootState) => state.zone.zoneStatus.creatures[Faction.Player][0]);
-
-    if (!player) {
-        return null;
-    }
+    const { playerName } = useSelector((state: RootState) => (
+        {
+            playerName: state.zone.zoneStatus.creatures[Faction.Player][0] && state.zone.zoneStatus.creatures[Faction.Player][0].name
+        }));
 
     return (
         <Container height="100%">
-            <UIHeaderContainer bnb4>{player.name}</UIHeaderContainer>
+            <UIHeaderContainer bnb4>{playerName}</UIHeaderContainer>
             <Container p4 bnt4 height="100%">
-                <HealthBar player={player} />
+                <HealthBar />
             </Container>
         </Container>
     );
