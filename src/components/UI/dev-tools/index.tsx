@@ -34,7 +34,6 @@ const DevTools: React.FC = () => {
     };
 
     useEffect(() => {
-        console.log('set visitedZones', visitedZones);
         setSavedZones(visitedZones.map(z => z.name));
     }, [visitedZones.length]);
 

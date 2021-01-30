@@ -17,8 +17,8 @@ const HealthDisplay: React.FC<Props> = ({ player }) => {
     const fullBg = "#003300"; // dark green
     const emptyBg = "#330000"; // dark red
     const text = "#eae0d5"; // almond;
-    const lerpedFill = LerpColor(emptyFill, fullFill, healthFraction);
-    const lerpedEmpty = LerpColor(emptyBg, fullBg, healthFraction);
+    const lerpedFill = player.stats.health >= 0 ? LerpColor(emptyFill, fullFill, healthFraction) : emptyFill; // if health drops below 0, use the color for empty
+    const lerpedEmpty = player.stats.health >= 0 ? LerpColor(emptyBg, fullBg, healthFraction) : emptyBg;
 
     return (
         <FilledBar

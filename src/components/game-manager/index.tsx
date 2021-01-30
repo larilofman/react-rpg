@@ -25,7 +25,6 @@ const GameManager: React.FC = () => {
         if (!mapLoaded) {
             if (zoneStatus.tiles.length) { // A visited zone is loaded
                 dispatch(SetMap(zoneStatus));
-                return;
             } else { // A fresh zone is loaded
                 const zoneToLoad: ZoneType = loadZoneData(zoneStatus.name as ZoneName);
                 setLoadedZone(zoneToLoad);

@@ -28,7 +28,7 @@ const Npc: React.FC<Props> = (props) => {
     const { dir, step, setAnimState } = useAnimation(3);
     const { playerPosition, turn, mapLoaded } = useSelector((state: RootState) => (
         {
-            playerPosition: state.zone.zoneStatus.creatures[Faction.Player][0].pos,
+            playerPosition: state.zone.zoneStatus.creatures[Faction.Player][0] && state.zone.zoneStatus.creatures[Faction.Player][0].pos,
             turn: state.turn,
             mapLoaded: state.zone.mapLoaded
         }
@@ -81,6 +81,7 @@ interface InnerProps {
 
 const InnerNPC: React.FC<InnerProps> = (
     { data, useTurn, aggroDistance = 5, stationary = false, hostile = true, turn, playerPosition, walk, position, setAnimState }) => {
+    const gameOver = useSelector((state: RootState) => state.game.gameOver);
     const { contact } = useContact();
     const { findPath } = usePathFinding();
     const { getRandomNearbyPos } = useWander();
@@ -90,9 +91,9 @@ const InnerNPC: React.FC<InnerProps> = (
         if (turn.creature === data.id && turn.faction === data.faction) {
             if (stationary) { // Idle
                 useTurn(data);
-            } else if (hostile && isInMeleeRange(position, playerPosition)) { // Melee
+            } else if (hostile && !gameOver && isInMeleeRange(position, playerPosition)) { // Melee
                 contactCreature(playerPosition);
-            } else if (hostile && isInRange(position, playerPosition, aggroDistance)) { // Chase
+            } else if (hostile && !gameOver && isInRange(position, playerPosition, aggroDistance)) { // Chase
                 const nextPos = findPath(position, playerPosition);
                 if (nextPos) {
                     move(nextPos);

@@ -24,11 +24,12 @@ interface Props {
 }
 
 const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
-    const { turn, mapLoaded, player } = useSelector((state: RootState) => (
+    const { turn, mapLoaded, player, gameOver } = useSelector((state: RootState) => (
         {
             turn: state.turn,
             mapLoaded: state.zone.mapLoaded,
-            player: state.zone.zoneStatus.creatures[Faction.Player][0]
+            player: state.zone.zoneStatus.creatures[Faction.Player][0],
+            gameOver: state.game.gameOver
         }));
     const { walk, position } = useWalk(player.pos);
     const { dir, step, setAnimState } = useAnimation(3);
@@ -47,12 +48,20 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
             walk(data, player.pos);
             updateCamera(player.pos);
         }
-        // Toggles on and off so that player can only act every 50ms
-        const delayTicker = setInterval(() => {
-            setCanAct(prev => (!prev));
-        }, 20);
+        // Toggles on and off so that player can only act ever so often, increasing it when player has died so enemies act slower
+        let delayTicker: NodeJS.Timeout;
+        if (gameOver) {
+            delayTicker = setInterval(() => {
+                setCanAct(prev => (!prev));
+            }, 100);
+        } else {
+            delayTicker = setInterval(() => {
+                setCanAct(prev => (!prev));
+            }, 20);
+        }
+
         return () => clearInterval(delayTicker);
-    }, [mapLoaded]);
+    }, [mapLoaded, gameOver]);
 
     // If a tile is clicked on and standing next to an occupied tile, contact with the creature on the tile, otherwise find a path to the tile
     useEffect(() => {
@@ -69,6 +78,13 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     useEffect(() => {
         // canAct is toggled on by the interval and it's player's turn
         if (canAct && turn.faction === data.faction && turn.creature === data.id) {
+
+            // player has died, skip turn so npcs will keep wandering
+            if (gameOver) {
+                useTurn(data);
+                return;
+            }
+
             if (keyPressed) {
                 // cancel path on any key press
                 if (onRoute) {
@@ -174,6 +190,8 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     useEffect(() => {
         updateCamera(position);
     }, [position]);
+
+    if (gameOver) return null;
 
     return <Sprite
         data={{

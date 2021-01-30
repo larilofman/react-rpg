@@ -6,9 +6,15 @@ export function calculateDistance(pos1: Position, pos2: Position) {
 }
 
 export function isInMeleeRange(pos1: Position, pos2: Position) {
-    return calculateDistance(pos1, pos2) < (settings.diagonalMovement ? 1.6 : 1.2);
+    if (pos1 && pos2) {
+        return calculateDistance(pos1, pos2) < (settings.diagonalMovement ? 1.6 : 1.2);
+    }
+    return false;
 }
 
 export function isInRange(pos1: Position, pos2: Position, range: number) {
-    return calculateDistance(pos1, pos2) < range;
+    if (pos1 && pos2) {
+        return calculateDistance(pos1, pos2) < range;
+    }
+    return false;
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Npc from '../../npc';
 import { Faction, Position } from '../../../types';
 import settings from '../../../data/settings.json';
@@ -13,7 +13,6 @@ interface Props {
 }
 
 const CreatureRenderer: React.FC<Props> = ({ useTurn }) => {
-    // const { useTurn } = useUseTurn();
     const { player, cameraPosition, creatures, mapLoaded, gameOver } = useSelector((state: RootState) => (
         {
             cameraPosition: state.cameraPosition,
