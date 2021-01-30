@@ -24,22 +24,22 @@ export const reducer = (state: State, action: Action): State => {
     //     case ActionType.ADD_CREATURES:
     //         return {
     //             ...state,
-    //             zoneData: {
-    //                 ...state.zoneData,
+    //             zoneStatus: {
+    //                 ...state.zoneStatus,
     //                 creatures: {
-    //                     ...state.zoneData.creatures,
-    //                     [action.payload.faction]: state.zoneData.creatures[action.payload.faction].concat(action.payload.creatures)
+    //                     ...state.zoneStatus.creatures,
+    //                     [action.payload.faction]: state.zoneStatus.creatures[action.payload.faction].concat(action.payload.creatures)
     //                 }
     //             }
     //         };
     //     case ActionType.DAMAGE_CREATURE:
     //         return {
     //             ...state,
-    //             zoneData: {
-    //                 ...state.zoneData,
+    //             zoneStatus: {
+    //                 ...state.zoneStatus,
     //                 creatures: {
-    //                     ...state.zoneData.creatures,
-    //                     [action.payload.faction]: state.zoneData.creatures[action.payload.faction].map(
+    //                     ...state.zoneStatus.creatures,
+    //                     [action.payload.faction]: state.zoneStatus.creatures[action.payload.faction].map(
     //                         c => c.id === action.payload.id ? action.payload : c
     //                     )
     //                 }
@@ -48,11 +48,11 @@ export const reducer = (state: State, action: Action): State => {
     //     case ActionType.REMOVE_CREATURE: {
     //         return {
     //             ...state,
-    //             zoneData: {
-    //                 ...state.zoneData,
+    //             zoneStatus: {
+    //                 ...state.zoneStatus,
     //                 creatures: {
-    //                     ...state.zoneData.creatures,
-    //                     [action.payload.faction]: state.zoneData.creatures[action.payload.faction].filter(c => c.id !== action.payload.id)
+    //                     ...state.zoneStatus.creatures,
+    //                     [action.payload.faction]: state.zoneStatus.creatures[action.payload.faction].filter(c => c.id !== action.payload.id)
     //                 }
     //             }, gameOver: action.payload.faction === Faction.Player
     //         };
@@ -63,10 +63,10 @@ export const reducer = (state: State, action: Action): State => {
     //             mapLoaded: false,
     //             // playerPosition: action.payload.playerPosition || { x: 0, y: 0 },
     //             visitedZones: state.visitedZones.filter(z => z.name !== action.payload.zoneName),
-    //             zoneData: {
-    //                 ...state.zoneData,
+    //             zoneStatus: {
+    //                 ...state.zoneStatus,
     //                 name: action.payload.zoneName,
-    //                 creatures: { [Faction.Player]: state.zoneData.creatures[Faction.Player], [Faction.Friendly]: [], [Faction.Hostile]: [] },
+    //                 creatures: { [Faction.Player]: state.zoneStatus.creatures[Faction.Player], [Faction.Friendly]: [], [Faction.Hostile]: [] },
     //                 interactableTiles: [],
     //                 tiles: [],
     //                 size: { w: 0, h: 0 }
@@ -79,10 +79,10 @@ export const reducer = (state: State, action: Action): State => {
     //                 ...state,
     //                 mapLoaded: false,
     //                 // playerPosition: action.payload.playerPosition || visitedZone.creatures[Faction.Player][0].pos,
-    //                 zoneData: {
-    //                     ...state.zoneData,
+    //                 zoneStatus: {
+    //                     ...state.zoneStatus,
     //                     name: action.payload.zoneName,
-    //                     creatures: { ...visitedZone.creatures, [Faction.Player]: state.zoneData.creatures[Faction.Player] },
+    //                     creatures: { ...visitedZone.creatures, [Faction.Player]: state.zoneStatus.creatures[Faction.Player] },
     //                     interactableTiles: visitedZone.interactableTiles,
     //                     tiles: visitedZone.tiles,
     //                     size: visitedZone.size
@@ -117,9 +117,9 @@ export const reducer = (state: State, action: Action): State => {
     //     case ActionType.ADD_INTERACTABLE_TILES:
     //         return {
     //             ...state,
-    //             zoneData: {
-    //                 ...state.zoneData,
-    //                 interactableTiles: state.zoneData.interactableTiles.concat(action.payload)
+    //             zoneStatus: {
+    //                 ...state.zoneStatus,
+    //                 interactableTiles: state.zoneStatus.interactableTiles.concat(action.payload)
     //             }
     //         };
     //     default:

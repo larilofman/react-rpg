@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 
 export default function useFindRandomFloorTile() {
-    const zoneTiles = useSelector((state: RootState) => state.zone.zoneData.tiles);
+    const zoneTiles = useSelector((state: RootState) => state.zone.zoneStatus.tiles);
 
     const findRandomFloorTile = () => {
         const floorTiles: Tile[] = [];

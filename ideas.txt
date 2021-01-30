@@ -1,9 +1,10 @@
+gameManager katsoo useEffectissä onko state.game.currentZone muuttunut
+jos on, kutsutaan changeZonea joka asettaa zone.dataksi(eli vanhalta nimeltä ZoneType) jsonista haetut tiedot tai asettaa zone.stateksi visitedZoneista löytyneen
+map tarkkailee zone.data.namea useEffectillä ja sen muuttuessa buildaa/generöi tilet
+creatureManager tarkkailee zone.state.tilesiä ja kun ne on generoitu, spawnaa creaturet
+objectManager tekee saman
+
+
+
+
 usekeypress hookkiin kaikki keyboard jutut ja hakee nappi arrayt jostain conffista
-
-
-peli alkaa, turn faction on pelaaja. resetoidaan
-haetaan zonedatasta kaikki factionin creaturet, joiden määrä pidetään tallessa statessa indexinä
-
-annetaan vuoro faction creaturejen [i]:lle, joka on 0. asetetaan se turn.creatureksi
-
-kun creature kutsuu useTurnia, lisätään ++i kunhan i < creatures.length, muutoin kutsutaan factionin vaihtoa

@@ -1,4 +1,4 @@
-import { Dimensions, ZoneData, TileType, Tile, Position, WallTile, FloorTile, Rectangle } from '../../types';
+import { Dimensions, ZoneStatus, TileType, Tile, Position, WallTile, FloorTile, Rectangle } from '../../types';
 import getRandomArbitrary from '../../utils/random-between-values';
 import weightedRandom from '../../utils/weighted-random';
 import { collisionWithAny } from '../../utils/collision';

@@ -2,7 +2,7 @@ import React, { createContext, useContext, useReducer } from 'react';
 import { Action } from './action';
 
 export type State = {
-    // visitedZones: ZoneData[]
+    // visitedZones: ZoneStatus[]
     // mapLoaded: boolean
     // gameOver: boolean
 };

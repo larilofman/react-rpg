@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux-state/store';
 
 const PlayerStats: React.FC = () => {
-    const player = useSelector((state: RootState) => state.zone.zoneData.creatures[Faction.Player][0]);
+    const player = useSelector((state: RootState) => state.zone.zoneStatus.creatures[Faction.Player][0]);
 
     if (!player) {
         return null;

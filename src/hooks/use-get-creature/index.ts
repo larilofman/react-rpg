@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 
 export default function useGetCreature() {
-    const creatures = useSelector((state: RootState) => state.zone.zoneData.creatures);
+    const creatures = useSelector((state: RootState) => state.zone.zoneStatus.creatures);
 
     const getCreatureById = (id: string) => {
         let creature: Creature | undefined;

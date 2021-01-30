@@ -10,7 +10,7 @@ import {
 } from './types';
 
 const initialState: ZoneState = {
-    zoneData: {
+    zoneStatus: {
         name: "zone0",
         size: { w: 0, h: 0 },
         tiles: [],
@@ -27,18 +27,18 @@ const reducer = (state = initialState, action: ZoneActions) => {
         case SET_MAP:
             return {
                 ...state,
-                zoneData: action.payload,
+                zoneStatus: action.payload,
                 mapLoaded: true
             };
 
         case MOVE_CREATURE: {
             return {
                 ...state,
-                zoneData: {
-                    ...state.zoneData,
+                zoneStatus: {
+                    ...state.zoneStatus,
                     creatures: {
-                        ...state.zoneData.creatures,
-                        [action.payload.creature.faction]: state.zoneData.creatures[action.payload.creature.faction].map(
+                        ...state.zoneStatus.creatures,
+                        [action.payload.creature.faction]: state.zoneStatus.creatures[action.payload.creature.faction].map(
                             c => c.id !== action.payload.creature.id
                                 ? c
                                 : { ...c, pos: action.payload.pos }
@@ -51,22 +51,22 @@ const reducer = (state = initialState, action: ZoneActions) => {
         case ADD_CREATURES:
             return {
                 ...state,
-                zoneData: {
-                    ...state.zoneData,
+                zoneStatus: {
+                    ...state.zoneStatus,
                     creatures: {
-                        ...state.zoneData.creatures,
-                        [action.payload.faction]: state.zoneData.creatures[action.payload.faction].concat(action.payload.creatures)
+                        ...state.zoneStatus.creatures,
+                        [action.payload.faction]: state.zoneStatus.creatures[action.payload.faction].concat(action.payload.creatures)
                     }
                 }
             };
         case DAMAGE_CREATURE:
             return {
                 ...state,
-                zoneData: {
-                    ...state.zoneData,
+                zoneStatus: {
+                    ...state.zoneStatus,
                     creatures: {
-                        ...state.zoneData.creatures,
-                        [action.payload.faction]: state.zoneData.creatures[action.payload.faction].map(
+                        ...state.zoneStatus.creatures,
+                        [action.payload.faction]: state.zoneStatus.creatures[action.payload.faction].map(
                             c => c.id === action.payload.id ? action.payload : c
                         )
                     }
@@ -75,11 +75,11 @@ const reducer = (state = initialState, action: ZoneActions) => {
         case REMOVE_CREATURE: {
             return {
                 ...state,
-                zoneData: {
-                    ...state.zoneData,
+                zoneStatus: {
+                    ...state.zoneStatus,
                     creatures: {
-                        ...state.zoneData.creatures,
-                        [action.payload.faction]: state.zoneData.creatures[action.payload.faction].filter(c => c.id !== action.payload.id)
+                        ...state.zoneStatus.creatures,
+                        [action.payload.faction]: state.zoneStatus.creatures[action.payload.faction].filter(c => c.id !== action.payload.id)
                     }
                 }, gameOver: action.payload.faction === Faction.Player
             };
@@ -89,13 +89,13 @@ const reducer = (state = initialState, action: ZoneActions) => {
                 ...state,
                 mapLoaded: false,
                 // visitedZones: state.visitedZones.filter(z => z.name !== action.payload.zoneName),
-                zoneData: action.payload
+                zoneStatus: action.payload
             };
         // case LOAD_VISITED_ZONE: {
         //     return {
         //         ...state,
         //         mapLoaded: false,
-        //         zoneData: action
+        //         zoneStatus: action
         //     };
         //     // const visitedZone = state.visitedZones.find(z => z.name === action.payload.zoneName);
         //     // if (visitedZone) {
@@ -103,10 +103,10 @@ const reducer = (state = initialState, action: ZoneActions) => {
         //     //         ...state,
         //     //         mapLoaded: false,
         //     //         playerPosition: action.payload.playerPosition || visitedZone.creatures[Faction.Player][0].pos,
-        //     //         zoneData: {
-        //     //             ...state.zoneData,
+        //     //         zoneStatus: {
+        //     //             ...state.zoneStatus,
         //     //             name: action.payload.zoneName,
-        //     //             creatures: { ...visitedZone.creatures, [Faction.Player]: state.zoneData.creatures[Faction.Player] },
+        //     //             creatures: { ...visitedZone.creatures, [Faction.Player]: state.zoneStatus.creatures[Faction.Player] },
         //     //             interactableTiles: visitedZone.interactableTiles,
         //     //             tiles: visitedZone.tiles,
         //     //             size: visitedZone.size
@@ -147,9 +147,9 @@ const reducer = (state = initialState, action: ZoneActions) => {
         case ADD_INTERACTABLE_TILES:
             return {
                 ...state,
-                zoneData: {
-                    ...state.zoneData,
-                    interactableTiles: state.zoneData.interactableTiles.concat(action.payload)
+                zoneStatus: {
+                    ...state.zoneStatus,
+                    interactableTiles: state.zoneStatus.interactableTiles.concat(action.payload)
                 }
             };
         default:

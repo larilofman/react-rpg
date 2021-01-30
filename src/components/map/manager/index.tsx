@@ -11,10 +11,10 @@ interface Props {
 }
 
 const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
-    const { cameraPosition, zoneData, mapLoaded } = useSelector((state: RootState) => (
+    const { cameraPosition, zoneStatus, mapLoaded } = useSelector((state: RootState) => (
         {
             cameraPosition: state.cameraPosition,
-            zoneData: state.zone.zoneData,
+            zoneStatus: state.zone.zoneStatus,
             mapLoaded: state.zone.mapLoaded
         }
     ));
@@ -24,10 +24,10 @@ const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
             <MapLoader
                 loadedZone={loadedZone}
                 setLoadedZone={setLoadedZone}
-                zoneData={zoneData}
+                zoneStatus={zoneStatus}
             />
             <MapRenderer
-                zoneTiles={zoneData.tiles}
+                zoneTiles={zoneStatus.tiles}
                 cameraPosition={cameraPosition}
                 mapLoaded={mapLoaded}
             />

@@ -1,5 +1,5 @@
-import { Position, ZoneData, Creature, Faction, BaseCreature, InteractableTile } from '../../types';
-import { ZoneName } from '../../utils/load-zone-data';
+import { Position, ZoneStatus, Creature, Faction, BaseCreature, InteractableTile } from '../../types';
+import { ZoneName } from '../../utils/load-data';
 
 export enum ActionType {
     "MOVE_CREATURE",
@@ -39,7 +39,7 @@ export type Action =
     }
     | {
         type: ActionType.SAVE_VISITED_ZONE;
-        payload: ZoneData
+        payload: ZoneStatus
     }
     | {
         type: ActionType.ADD_INTERACTABLE_TILES;

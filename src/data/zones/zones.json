@@ -15,9 +15,9 @@
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       ],
     "creatures": [
-      {"name": "Ghost", "amount": 0, "faction": "Hostile"},
+      {"name": "Ghost", "amount": 1, "faction": "Hostile"},
       {"name": "Ninja", "amount": 0, "faction": "Hostile"},
-      {"name": "Distressed Man", "amount": 1, "faction": "Friendly"}
+      {"name": "Distressed Man", "amount": 0, "faction": "Friendly"}
     ],
     "zoneRoutes": [
       {"id": "zone0_route0" , 

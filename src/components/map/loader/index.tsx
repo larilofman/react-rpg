@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ZoneType, ZoneData } from '../../../types';
+import { ZoneType, ZoneStatus } from '../../../types';
 import useGenerateMap from '../../../hooks/use-generate-map';
 import { useDispatch } from 'react-redux';
 import { SetMap } from '../../redux-state/reducers/zone/actions';
@@ -7,10 +7,10 @@ import { SetMap } from '../../redux-state/reducers/zone/actions';
 interface Props {
     loadedZone: ZoneType | undefined
     setLoadedZone: React.Dispatch<React.SetStateAction<ZoneType | undefined>>
-    zoneData: ZoneData
+    zoneStatus: ZoneStatus
 }
 
-const MapLoader: React.FC<Props> = ({ loadedZone, setLoadedZone, zoneData }) => {
+const MapLoader: React.FC<Props> = ({ loadedZone, setLoadedZone, zoneStatus }) => {
     const dispatch = useDispatch();
     const { buildMap, generateMap } = useGenerateMap();
 
@@ -20,7 +20,7 @@ const MapLoader: React.FC<Props> = ({ loadedZone, setLoadedZone, zoneData }) => 
                 ? buildMap(loadedZone.tiles)
                 : generateMap(loadedZone.size);
             const zone = {
-                ...zoneData,
+                ...zoneStatus,
                 size: loadedZone.size,
                 tiles
             };

@@ -1,4 +1,4 @@
-import { ZoneName } from './utils/load-zone-data';
+import { ZoneName } from './utils/load-data';
 
 export interface Position {
     x: number,
@@ -65,7 +65,7 @@ export enum Faction {
     Hostile,
 }
 
-export interface ZoneData {
+export interface ZoneStatus {
     name: ZoneName,
     size: Dimensions,
     tiles: Tile[][],

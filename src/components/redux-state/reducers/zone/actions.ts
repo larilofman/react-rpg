@@ -1,5 +1,5 @@
-import { BaseCreature, Creature, Faction, InteractableTile, Position, ZoneData } from '../../../../types';
-import { ZoneName } from '../../../../utils/load-zone-data';
+import { BaseCreature, Creature, Faction, InteractableTile, Position, ZoneStatus } from '../../../../types';
+import { ZoneName } from '../../../../utils/load-data';
 import {
     ADD_CREATURES,
     ADD_INTERACTABLE_TILES,
@@ -13,10 +13,10 @@ import {
     ZoneActions
 } from './types';
 
-export function SetMap(zoneData: ZoneData): ZoneActions {
+export function SetMap(zoneStatus: ZoneStatus): ZoneActions {
     return {
         type: SET_MAP,
-        payload: zoneData
+        payload: zoneStatus
     };
 }
 
@@ -48,24 +48,17 @@ export const RemoveCreature = (creature: BaseCreature): ZoneActions => {
     };
 };
 
-export const LoadZone = (zoneData: ZoneData): ZoneActions => {
+export const LoadZone = (zoneStatus: ZoneStatus): ZoneActions => {
     return {
         type: LOAD_ZONE,
-        payload: zoneData
+        payload: zoneStatus
     };
 };
 
-// export const LoadVisitedZone = (zoneData: ZoneData): ZoneActions => {
-//     return {
-//         type: LOAD_VISITED_ZONE,
-//         payload: zoneData
-//     };
-// };
-
-export const SaveVisitedZone = (zoneData: ZoneData): ZoneActions => {
+export const SaveVisitedZone = (zoneStatus: ZoneStatus): ZoneActions => {
     return {
         type: SAVE_VISITED_ZONE,
-        payload: zoneData
+        payload: zoneStatus
     };
 };
 
@@ -82,11 +75,5 @@ export const AddInteractableTiles = (interactableTiles: InteractableTile[]): Zon
         payload: interactableTiles
     };
 };
-
-// interface AddInteractableTiles {
-//     type: typeof ADD_INTERACTABLE_TILES,
-//     payload: InteractableTile[]
-// }
-
 
 

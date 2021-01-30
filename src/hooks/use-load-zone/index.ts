@@ -1,5 +1,5 @@
-import { Faction, ZoneData, ZoneRouteType } from '../../types';
-import { loadZoneData, ZoneName } from '../../utils/load-zone-data';
+import { Faction, ZoneStatus, ZoneRouteType } from '../../types';
+import { loadZoneData, ZoneName } from '../../utils/load-data';
 import useAddVisitedZone from '../use-add-visited-zone';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
@@ -8,7 +8,7 @@ import { LoadZone, RemoveVisitedZone } from '../../components/redux-state/reduce
 
 export default function useLoadZone() {
     const { addVisitedZone } = useAddVisitedZone();
-    const { visitedZones, zoneData } = useSelector((state: RootState) => ({ visitedZones: state.zone.visitedZones, zoneData: state.zone.zoneData }));
+    const { visitedZones, zoneStatus } = useSelector((state: RootState) => ({ visitedZones: state.zone.visitedZones, zoneStatus: state.zone.zoneStatus }));
     const dispatch = useDispatch();
 
     const changeZone = (zoneRoute: ZoneRouteType) => {
@@ -19,11 +19,11 @@ export default function useLoadZone() {
         if (visitedZone) {
             // Find the linked counterpart
             const linkedRoute = loadZoneData(zoneRoute.linkedRoute.zone).zoneRoutes.find(route => route.id === zoneRoute.linkedRoute.id);
-            const zoneToLoad: ZoneData = {
+            const zoneToLoad: ZoneStatus = {
                 name: visitedZone.name,
                 creatures: {
                     ...visitedZone.creatures,
-                    [Faction.Player]: zoneData.creatures[Faction.Player].map(// set player's position as linkedRoute's position if one was found
+                    [Faction.Player]: zoneStatus.creatures[Faction.Player].map(// set player's position as linkedRoute's position if one was found
                         c => c.id === 'player' ? { ...c, pos: linkedRoute ? linkedRoute.position : c.pos } : c)
                 },
                 interactableTiles: visitedZone.interactableTiles,
@@ -34,10 +34,10 @@ export default function useLoadZone() {
         } else {
             const zone = loadZoneData(zoneRoute.linkedRoute.zone);
             const linkedRoute = zone.zoneRoutes.find(route => route.id === zoneRoute.linkedRoute.id);
-            const zoneToLoad: ZoneData = {
+            const zoneToLoad: ZoneStatus = {
                 name: zone.name,
                 creatures: {
-                    [Faction.Player]: zoneData.creatures[Faction.Player].map(
+                    [Faction.Player]: zoneStatus.creatures[Faction.Player].map(
                         c => c.id === 'player' ? { ...c, pos: linkedRoute ? linkedRoute.position : c.pos } : c),
                     [Faction.Friendly]: [], // Set npcs empty so creature manager can take care of that
                     [Faction.Hostile]: []
@@ -52,16 +52,16 @@ export default function useLoadZone() {
 
     // Mostly for dev purposes
     const loadZone = (zoneName: ZoneName, fresh = true, savePrevious = false) => {
-        if (zoneName !== zoneData.name && savePrevious) {
+        if (zoneName !== zoneStatus.name && savePrevious) {
             addVisitedZone();
         }
         if (fresh) {
             dispatch(RemoveVisitedZone(zoneName));
             const zone = loadZoneData(zoneName);
-            const zoneToLoad: ZoneData = {
+            const zoneToLoad: ZoneStatus = {
                 name: zone.name,
                 creatures: {
-                    [Faction.Player]: zoneData.creatures[Faction.Player].map(
+                    [Faction.Player]: zoneStatus.creatures[Faction.Player].map(
                         c => c.id === 'player' ? { ...c, pos: { x: 0, y: 0 } } : c),
                     [Faction.Friendly]: [],
                     [Faction.Hostile]: []

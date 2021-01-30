@@ -5,9 +5,9 @@ import { RootState } from '../../components/redux-state/store';
 export default function useGetTiles() {
     const { creatures, tiles, size } = useSelector((state: RootState) => (
         {
-            creatures: state.zone.zoneData.creatures,
-            tiles: state.zone.zoneData.tiles
-            , size: state.zone.zoneData.size
+            creatures: state.zone.zoneStatus.creatures,
+            tiles: state.zone.zoneStatus.tiles
+            , size: state.zone.zoneStatus.size
         }
     ));
 

@@ -3,9 +3,10 @@ import useFindRandomFloorTile from '../../../hooks/use-find-random-floor-tile';
 import Npc from '..';
 import { Creature, Faction, BaseCreature, CreatureType, Position } from '../../../types';
 import { nanoid } from 'nanoid';
-import creatures from '../../../data/creature/creatures.json';
-import { loadZoneData, ZoneName } from '../../../utils/load-zone-data';
+import creatures from '../../../data/creature/creatureData.json';
+import { loadZoneData, ZoneName, loadPlayerData } from '../../../utils/load-data';
 import settings from '../../../data/settings.json';
+import Player from '../../player';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux-state/store';
@@ -19,11 +20,13 @@ interface Props {
 }
 
 const CreatureManager: React.FC<Props> = ({ useTurn, freshZone }) => {
-    const { cameraPosition, zoneData, mapLoaded } = useSelector((state: RootState) => (
+    const { player, cameraPosition, zoneStatus, mapLoaded, gameOver } = useSelector((state: RootState) => (
         {
             cameraPosition: state.cameraPosition,
-            zoneData: state.zone.zoneData,
-            mapLoaded: state.zone.mapLoaded
+            zoneStatus: state.zone.zoneStatus,
+            mapLoaded: state.zone.mapLoaded,
+            player: state.zone.zoneStatus.creatures[Faction.Player][0],
+            gameOver: state.zone.gameOver
         }
     ));
     const dispatch = useDispatch();
@@ -33,11 +36,20 @@ const CreatureManager: React.FC<Props> = ({ useTurn, freshZone }) => {
         if (mapLoaded && freshZone()) {
             const creaturesToSpawn = getCreaturesToSpawn();
             spawnCreatures(creaturesToSpawn);
+            spawnPlayer();
         }
     }, [mapLoaded]);
 
+    const spawnPlayer = () => {
+        // the very start of the game when there is no player, later it will get passed on by useLoadZone hook
+        if (mapLoaded && !zoneStatus.creatures[0].length) {
+            const playerData = loadPlayerData();
+            dispatch(AddCreatures([playerData], playerData.faction));
+        }
+    };
+
     const getCreaturesToSpawn = () => {
-        const creatureData = loadZoneData(zoneData.name as ZoneName).creatures; // load list of enemies from data
+        const creatureData = loadZoneData(zoneStatus.name as ZoneName).creatures; // load list of enemies from data
         const creaturesToSpawn: { creature: CreatureType, amount: number, faction: Faction }[] = [];
         Object.values(creatureData).forEach(c => { // find the creature's data by its name
             creaturesToSpawn.push({ creature: creatures[c.name as CreatureName] as CreatureType, amount: c.amount, faction: c.faction as unknown as Faction });
@@ -77,11 +89,15 @@ const CreatureManager: React.FC<Props> = ({ useTurn, freshZone }) => {
         return false;
     };
 
-    if (!mapLoaded || (!zoneData.creatures[Faction.Hostile] && !zoneData.creatures[Faction.Friendly])) return null;
+    if (!mapLoaded) return null;
 
     return (
         <>
-            {zoneData.creatures[Faction.Hostile].map(e => (
+            {
+                player && !gameOver &&
+                <Player skin={player.sprite} data={{ id: player.id, faction: player.faction }} useTurn={useTurn} />
+            }
+            {zoneStatus.creatures[Faction.Hostile].map(e => (
                 <Npc
                     key={e.id}
                     skin={e.sprite}
@@ -90,7 +106,7 @@ const CreatureManager: React.FC<Props> = ({ useTurn, freshZone }) => {
                     useTurn={useTurn}
                     isVisible={isVisible(e.pos)} />
             ))}
-            {zoneData.creatures[Faction.Friendly].map(e => (
+            {zoneStatus.creatures[Faction.Friendly].map(e => (
                 <Npc
                     key={e.id}
                     skin={e.sprite}

@@ -4,7 +4,7 @@ import UIHeaderContainer from '../ui-header-container';
 import useDraggable from '../../../hooks/use-draggable';
 import Button from '../button';
 import Select from '../select';
-import { getAllZoneNames, ZoneName } from '../../../utils/load-zone-data';
+import { getAllZoneNames, ZoneName } from '../../../utils/load-data';
 import useLoadZone from '../../../hooks/use-load-zone';
 import './style.css';
 import useAddVisitedZone from '../../../hooks/use-add-visited-zone';
@@ -14,7 +14,7 @@ import { RootState } from '../../redux-state/store';
 
 
 const DevTools: React.FC = () => {
-    const { zoneName, visitedZones } = useSelector((state: RootState) => ({ zoneName: state.zone.zoneData.name, visitedZones: state.zone.visitedZones }));
+    const { zoneName, visitedZones } = useSelector((state: RootState) => ({ zoneName: state.zone.zoneStatus.name, visitedZones: state.zone.visitedZones }));
     const { position, handleMouseDown } = useDraggable('dev-tools-header', { x: 16, y: 16 });
     const [selectedZone, setSelectedZone] = useState<string>(zoneName as ZoneName);
     const [savedZones, setSavedZones] = useState<string[]>([]);
@@ -60,7 +60,7 @@ const DevTools: React.FC = () => {
                 </form>
                 <Container align>
                     <Button p4 m4 align width="80%" color="light-brown" onClick={addVisitedZone}>
-                        Save ZoneData
+                        Save ZoneStatus
                 </Button>
                 </Container>
 
