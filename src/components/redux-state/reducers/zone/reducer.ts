@@ -88,35 +88,8 @@ const reducer = (state = initialState, action: ZoneActions) => {
             return {
                 ...state,
                 mapLoaded: false,
-                // visitedZones: state.visitedZones.filter(z => z.name !== action.payload.zoneName),
                 zoneStatus: action.payload
             };
-        // case LOAD_VISITED_ZONE: {
-        //     return {
-        //         ...state,
-        //         mapLoaded: false,
-        //         zoneStatus: action
-        //     };
-        //     // const visitedZone = state.visitedZones.find(z => z.name === action.payload.zoneName);
-        //     // if (visitedZone) {
-        //     //     return {
-        //     //         ...state,
-        //     //         mapLoaded: false,
-        //     //         playerPosition: action.payload.playerPosition || visitedZone.creatures[Faction.Player][0].pos,
-        //     //         zoneStatus: {
-        //     //             ...state.zoneStatus,
-        //     //             name: action.payload.zoneName,
-        //     //             creatures: { ...visitedZone.creatures, [Faction.Player]: state.zoneStatus.creatures[Faction.Player] },
-        //     //             interactableTiles: visitedZone.interactableTiles,
-        //     //             tiles: visitedZone.tiles,
-        //     //             size: visitedZone.size
-        //     //         }
-        //     //     };
-        //     // }
-        //     // console.error(`visited zone ${action.payload.zoneName} failed to load`);
-        //     // return state;
-
-        // }
         case SAVE_VISITED_ZONE: {
             const prevZones = state.visitedZones;
 

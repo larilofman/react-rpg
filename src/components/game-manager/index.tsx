@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CreatureManager from '../creature/manager';
-import Map from '../map/manager';
+import MapManager from '../map/manager';
 import { ZoneType } from '../../types';
 import { loadZoneData, ZoneName } from '../../utils/load-data';
 import ObjectManager from '../object-manager';
@@ -39,7 +39,7 @@ const GameManager: React.FC = () => {
 
     return (
         <>
-            <Map loadedZone={loadedZone} setLoadedZone={setLoadedZone} />
+            <MapManager loadedZone={loadedZone} setLoadedZone={setLoadedZone} />
             <CreatureManager freshZone={freshZone} />
             <ObjectManager freshZone={freshZone} />
         </>

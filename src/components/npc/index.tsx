@@ -26,7 +26,6 @@ interface Props {
 const Npc: React.FC<Props> = (props) => {
     const { walk, position } = useWalk(props.startPosition);
     const { dir, step, setAnimState } = useAnimation(3);
-
     const { playerPosition, turn, mapLoaded } = useSelector((state: RootState) => (
         {
             playerPosition: state.zone.zoneStatus.creatures[Faction.Player][0].pos,
@@ -45,7 +44,7 @@ const Npc: React.FC<Props> = (props) => {
     // If not creature's turn and it's visible, just render the sprite
     return (
         <>
-            {turn.creature === props.data.id && <MemoizedInnerNPC
+            {turn.creature === props.data.id && <InnerNPC
                 {...props}
                 turn={turn}
                 playerPosition={playerPosition}
@@ -86,8 +85,6 @@ const InnerNPC: React.FC<InnerProps> = (
     const { findPath } = usePathFinding();
     const { getRandomNearbyPos } = useWander();
     const { getTileStatus } = useGetTiles();
-
-    // console.log('inner npc renders');
 
     useEffect(() => {
         if (turn.creature === data.id && turn.faction === data.faction) {
@@ -134,14 +131,5 @@ const InnerNPC: React.FC<InnerProps> = (
 
     return null;
 };
-
-// const areEqual = (prevProps: Readonly<React.PropsWithChildren<InnerProps>>, nextProps: Readonly<React.PropsWithChildren<InnerProps>>) => {
-//     // if (prevProps.playerPosition.x !== nextProps.playerPosition.x) return false;
-//     // if (prevProps.playerPosition.y !== nextProps.playerPosition.y) return false;
-//     // console.log('nothing changed on npc', prevProps.data.id);
-//     return true;
-// };
-
-const MemoizedInnerNPC = React.memo(InnerNPC);
 
 export default Npc;

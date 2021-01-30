@@ -29,14 +29,10 @@ const Select: React.FC<Props> = ({ width, height, label, options, initialOption,
     }, [value]);
 
     useEffect(() => {
-        // if (options.length && !value) {
-        //     setValue(options[0]);
-        // } else {
-        //     setValue(options[options.length - 1]);
-        // }
-        if (!value && options.length) {
+        if (options.length) {
             setValue(options[options.length - 1]);
         }
+        console.log(options);
     }, [options]);
 
     return (

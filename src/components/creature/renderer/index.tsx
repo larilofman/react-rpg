@@ -33,7 +33,6 @@ const CreatureRenderer: React.FC<Props> = ({ useTurn }) => {
         }
         return false;
     };
-    console.log('renders');
 
     if (!mapLoaded) return null;
 
@@ -65,5 +64,6 @@ const CreatureRenderer: React.FC<Props> = ({ useTurn }) => {
         </>
     );
 };
+
 
 export default CreatureRenderer;

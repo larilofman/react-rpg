@@ -16,7 +16,7 @@ const CreatureManager: React.FC<Props> = ({ freshZone }) => {
         {
             zoneName: state.zone.zoneStatus.name,
             mapLoaded: state.zone.mapLoaded,
-            player: state.zone.zoneStatus.creatures[Faction.Player][0],
+            player: state.zone.zoneStatus.creatures[Faction.Player][0]
         }
     ));
 

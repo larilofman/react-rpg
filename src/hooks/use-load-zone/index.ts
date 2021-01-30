@@ -52,6 +52,7 @@ export default function useLoadZone() {
 
     // Mostly for dev purposes
     const loadZone = (zoneName: ZoneName, fresh = true, savePrevious = false) => {
+        console.log('load', zoneName);
         if (zoneName !== zoneStatus.name && savePrevious) {
             addVisitedZone();
         }

@@ -10,7 +10,7 @@ interface Props {
     setLoadedZone: React.Dispatch<React.SetStateAction<ZoneType | undefined>>
 }
 
-const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
+const MapManager: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
     const { cameraPosition, zoneStatus, mapLoaded } = useSelector((state: RootState) => (
         {
             cameraPosition: state.cameraPosition,
@@ -36,5 +36,5 @@ const Map: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
 };
 
 
-export default Map;
+export default MapManager;
 
