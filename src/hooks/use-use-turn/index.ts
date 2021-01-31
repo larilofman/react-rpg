@@ -5,7 +5,7 @@ import { RootState } from '../../components/redux-state/store';
 import { SetCreatureTurn, SetFactionTurn } from '../../components/redux-state/reducers/turn/actions';
 
 export default function useUseTurn() {
-    const { turn, creatures, zoneLoaded } = useSelector((state: RootState) => ({ turn: state.turn, creatures: state.zone.status.creatures, zoneLoaded: state.zone.zoneLoaded }));
+    const { turn, creatures, zoneLoaded } = useSelector((state: RootState) => ({ turn: state.turn, creatures: state.zone.creatures, zoneLoaded: state.zone.zoneLoaded }));
     const dispatch = useDispatch();
     const [factionIndex, setFactionIndex] = useState(0);
 

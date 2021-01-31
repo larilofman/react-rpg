@@ -1,4 +1,4 @@
-import { BaseCreature, Creature, Faction, InteractableTile, Position, ZoneStatus } from '../../../../types';
+import { BaseCreature, Creature, Faction, InteractableTile, Position, Tile, ZoneStatus } from '../../../../types';
 import { ZoneName } from '../../../../utils/load-data';
 import {
     ADD_CREATURES,
@@ -9,14 +9,14 @@ import {
     REMOVE_CREATURE,
     SAVE_VISITED_ZONE,
     REMOVE_VISITED_ZONE,
-    SET_MAP,
+    SET_TILES,
     ZoneActions
 } from './types';
 
-export function SetMap(status: ZoneStatus): ZoneActions {
+export function SetTiles(tiles: Tile[][]): ZoneActions {
     return {
-        type: SET_MAP,
-        payload: status
+        type: SET_TILES,
+        payload: tiles
     };
 }
 

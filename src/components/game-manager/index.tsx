@@ -7,16 +7,16 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux-state/store/index';
 
 const GameManager: React.FC = () => {
-    const { visitedZones, zoneStatus } = useSelector((state: RootState) => (
+    const { visitedZones, zoneName } = useSelector((state: RootState) => (
         {
             zoneLoaded: state.zone.zoneLoaded,
             visitedZones: state.zone.visitedZones,
-            zoneStatus: state.zone.status
+            zoneName: state.zone.name
         }
     ));
 
     const freshZone = () => {
-        return !visitedZones.map(z => z.name).includes(zoneStatus.name);
+        return !visitedZones.map(z => z.name).includes(zoneName);
     };
 
     return (

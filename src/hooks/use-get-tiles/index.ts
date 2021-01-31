@@ -5,9 +5,9 @@ import { RootState } from '../../components/redux-state/store';
 export default function useGetTiles() {
     const { creatures, tiles, size } = useSelector((state: RootState) => (
         {
-            creatures: state.zone.status.creatures,
-            tiles: state.zone.status.tiles,
-            size: state.zone.status.size
+            creatures: state.zone.creatures,
+            tiles: state.zone.tiles,
+            size: state.zone.size
         }
     ));
 
@@ -36,7 +36,6 @@ export default function useGetTiles() {
             });
         }
         const tile = getTileAt(pos);
-
         if (!tile || !tile.passable) {
             walkable = TileStatus.NonPassable;
         }

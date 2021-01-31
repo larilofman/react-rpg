@@ -28,7 +28,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
         {
             turn: state.turn,
             zoneLoaded: state.zone.zoneLoaded,
-            player: state.zone.status.creatures[Faction.Player][0],
+            player: state.zone.creatures[Faction.Player][0],
             gameOver: state.game.gameOver
         }));
     const { walk, position } = useWalk(player.pos);

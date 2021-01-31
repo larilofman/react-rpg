@@ -28,7 +28,7 @@ const Npc: React.FC<Props> = (props) => {
     const { dir, step, setAnimState } = useAnimation(3);
     const { playerPosition, turn, zoneLoaded } = useSelector((state: RootState) => (
         {
-            playerPosition: state.zone.status.creatures[Faction.Player][0] && state.zone.status.creatures[Faction.Player][0].pos,
+            playerPosition: state.zone.creatures[Faction.Player][0] && state.zone.creatures[Faction.Player][0].pos,
             turn: state.turn,
             zoneLoaded: state.zone.zoneLoaded
         }

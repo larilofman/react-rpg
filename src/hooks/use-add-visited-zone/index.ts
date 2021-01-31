@@ -3,7 +3,7 @@ import { RootState } from '../../components/redux-state/store';
 import { SaveVisitedZone } from '../../components/redux-state/reducers/zone/actions';
 
 export default function useAddVisitedZone() {
-    const zoneStatus = useSelector((state: RootState) => state.zone.status);
+    const zoneStatus = useSelector((state: RootState) => state.zone);
     const dispatch = useDispatch();
 
     const addVisitedZone = () => {
@@ -13,7 +13,6 @@ export default function useAddVisitedZone() {
             tiles: zoneStatus.tiles,
             size: zoneStatus.size,
             interactableTiles: zoneStatus.interactableTiles
-
         };
         dispatch(SaveVisitedZone(savedZoneData));
     };

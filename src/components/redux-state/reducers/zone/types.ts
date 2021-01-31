@@ -1,6 +1,6 @@
-import { BaseCreature, Creature, Faction, InteractableTile, Position, ZoneStatus } from '../../../../types';
+import { BaseCreature, Creature, Dimensions, Faction, InteractableTile, Position, Tile, ZoneStatus } from '../../../../types';
 import { ZoneName } from '../../../../utils/load-data';
-export const SET_MAP = 'SET_MAP';
+export const SET_TILES = 'SET_TILES';
 export const MOVE_CREATURE = 'MOVE_CREATURE';
 export const ADD_CREATURES = 'ADD_CREATURES';
 export const DAMAGE_CREATURE = 'DAMAGE_CREATURE';
@@ -10,9 +10,9 @@ export const SAVE_VISITED_ZONE = 'SAVE_VISITED_ZONE';
 export const REMOVE_VISITED_ZONE = 'REMOVE_VISITED_ZONE';
 export const ADD_INTERACTABLE_TILES = 'ADD_INTERACTABLE_TILES';
 
-interface SetMap {
-    type: typeof SET_MAP,
-    payload: ZoneStatus
+interface SetTiles {
+    type: typeof SET_TILES,
+    payload: Tile[][]
 }
 
 interface MoveCreature {
@@ -56,7 +56,7 @@ interface AddInteractableTiles {
 }
 
 export type ZoneActions =
-    SetMap |
+    SetTiles |
     MoveCreature |
     AddCreatures |
     DamageCreature |
@@ -67,9 +67,18 @@ export type ZoneActions =
     AddInteractableTiles
 
 export type ZoneState = {
-    status: ZoneStatus,
-    zoneLoaded: boolean,
-    visitedZones: ZoneStatus[],
+    name: ZoneName
+    size: Dimensions
+    tiles: Tile[][]
+    creatures: {
+        [Faction.Player]: Creature[],
+        [Faction.Friendly]: Creature[],
+        [Faction.Hostile]: Creature[]
+    },
+    interactableTiles: InteractableTile[]
+    zoneLoaded: boolean
+    visitedZones: ZoneStatus[]
     gameOver: boolean
 }
+
 

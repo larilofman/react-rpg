@@ -12,7 +12,7 @@ export default function usePathfinding() {
         {
             diagonalMovement: settings.diagonalMovement ? PF.DiagonalMovement.Always : PF.DiagonalMovement.Never
         }));
-    const tiles = useSelector((state: RootState) => state.zone.status.tiles);
+    const tiles = useSelector((state: RootState) => state.zone.tiles);
     const { getTileStatus } = useGetTiles();
     const [onRoute, setOnRoute] = useState(false);
 

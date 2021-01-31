@@ -11,10 +11,11 @@ interface Props {
 }
 
 const ObjectManager: React.FC<Props> = ({ freshZone }) => {
-    const { zoneLoaded, zoneStatus } = useSelector((state: RootState) => (
+    const { zoneLoaded, zoneName, zoneInteractableTiles } = useSelector((state: RootState) => (
         {
             zoneLoaded: state.zone.zoneLoaded,
-            zoneStatus: state.zone.status
+            zoneName: state.zone.name,
+            zoneInteractableTiles: state.zone.interactableTiles
         }
     ));
     const dispatch = useDispatch();
@@ -26,13 +27,13 @@ const ObjectManager: React.FC<Props> = ({ freshZone }) => {
     }, [zoneLoaded]);
 
     const loadRoutes = () => {
-        const routesData = loadZoneData(zoneStatus.name as ZoneName).zoneRoutes;
+        const routesData = loadZoneData(zoneName).zoneRoutes;
         dispatch(AddInteractableTiles(routesData.map(route => ({ ...route, type: InteractableTileType.ZoneRoute }))));
     };
 
     return (
         <>
-            {zoneStatus.interactableTiles?.map(r => <ZoneRoute key={r.id} zoneRoute={r} />)}
+            {zoneInteractableTiles?.map(r => <ZoneRoute key={r.id} zoneRoute={r} />)}
         </>
     );
 };
