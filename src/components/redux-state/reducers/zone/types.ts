@@ -68,7 +68,7 @@ export type ZoneActions =
 
 export type ZoneState = {
     status: ZoneStatus,
-    mapLoaded: boolean,
+    zoneLoaded: boolean,
     visitedZones: ZoneStatus[],
     gameOver: boolean
 }

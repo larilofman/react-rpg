@@ -60,7 +60,7 @@ export const reducer = (state: State, action: Action): State => {
     //     case ActionType.LOAD_FRESH_ZONE:
     //         return {
     //             ...state,
-    //             mapLoaded: false,
+    //             zoneLoaded: false,
     //             // playerPosition: action.payload.playerPosition || { x: 0, y: 0 },
     //             visitedZones: state.visitedZones.filter(z => z.name !== action.payload.zoneName),
     //             status: {
@@ -77,7 +77,7 @@ export const reducer = (state: State, action: Action): State => {
     //         if (visitedZone) {
     //             return {
     //                 ...state,
-    //                 mapLoaded: false,
+    //                 zoneLoaded: false,
     //                 // playerPosition: action.payload.playerPosition || visitedZone.creatures[Faction.Player][0].pos,
     //                 status: {
     //                     ...state.status,

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Npc from '../../npc';
 import { Faction, Position } from '../../../types';
 import settings from '../../../data/settings.json';
@@ -6,18 +6,17 @@ import Player from '../../player';
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux-state/store';
-import useUseTurn from '../../../hooks/use-use-turn';
 
 interface Props {
     useTurn: () => void
 }
 
 const CreatureRenderer: React.FC<Props> = ({ useTurn }) => {
-    const { player, cameraPosition, creatures, mapLoaded, gameOver } = useSelector((state: RootState) => (
+    const { player, cameraPosition, creatures, zoneLoaded, gameOver } = useSelector((state: RootState) => (
         {
             cameraPosition: state.cameraPosition,
             creatures: state.zone.status.creatures,
-            mapLoaded: state.zone.mapLoaded,
+            zoneLoaded: state.zone.zoneLoaded,
             player: state.zone.status.creatures[Faction.Player][0],
             gameOver: state.zone.gameOver
         }
@@ -33,7 +32,7 @@ const CreatureRenderer: React.FC<Props> = ({ useTurn }) => {
         return false;
     };
 
-    if (!mapLoaded) return null;
+    if (!zoneLoaded) return null;
 
     return (
         <>

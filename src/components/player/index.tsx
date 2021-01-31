@@ -24,10 +24,10 @@ interface Props {
 }
 
 const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
-    const { turn, mapLoaded, player, gameOver } = useSelector((state: RootState) => (
+    const { turn, zoneLoaded, player, gameOver } = useSelector((state: RootState) => (
         {
             turn: state.turn,
-            mapLoaded: state.zone.mapLoaded,
+            zoneLoaded: state.zone.zoneLoaded,
             player: state.zone.status.creatures[Faction.Player][0],
             gameOver: state.game.gameOver
         }));
@@ -44,7 +44,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     const { interact } = useInteract();
 
     useEffect(() => {
-        if (mapLoaded) {
+        if (zoneLoaded) {
             walk(data, player.pos);
             updateCamera(player.pos);
         }
@@ -61,7 +61,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
         }
 
         return () => clearInterval(delayTicker);
-    }, [mapLoaded, gameOver]);
+    }, [zoneLoaded, gameOver]);
 
     // If a tile is clicked on and standing next to an occupied tile, contact with the creature on the tile, otherwise find a path to the tile
     useEffect(() => {

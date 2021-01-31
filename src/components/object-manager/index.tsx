@@ -11,19 +11,19 @@ interface Props {
 }
 
 const ObjectManager: React.FC<Props> = ({ freshZone }) => {
-    const { mapLoaded, zoneStatus } = useSelector((state: RootState) => (
+    const { zoneLoaded, zoneStatus } = useSelector((state: RootState) => (
         {
-            mapLoaded: state.zone.mapLoaded,
+            zoneLoaded: state.zone.zoneLoaded,
             zoneStatus: state.zone.status
         }
     ));
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (mapLoaded && freshZone()) {
+        if (zoneLoaded && freshZone()) {
             loadRoutes();
         }
-    }, [mapLoaded]);
+    }, [zoneLoaded]);
 
     const loadRoutes = () => {
         const routesData = loadZoneData(zoneStatus.name as ZoneName).zoneRoutes;

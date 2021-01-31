@@ -3,13 +3,13 @@ import { Action } from './action';
 
 export type State = {
     // visitedZones: ZoneStatus[]
-    // mapLoaded: boolean
+    // zoneLoaded: boolean
     // gameOver: boolean
 };
 
 const initialState: State = {
     // visitedZones: [],
-    // mapLoaded: false,
+    // zoneLoaded: false,
     // gameOver: false
 };
 

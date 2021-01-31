@@ -17,7 +17,7 @@ const initialState: ZoneState = {
         creatures: { [Faction.Player]: [], [Faction.Friendly]: [], [Faction.Hostile]: [] },
         interactableTiles: []
     },
-    mapLoaded: false,
+    zoneLoaded: false,
     visitedZones: [],
     gameOver: false
 };
@@ -28,7 +28,7 @@ const reducer = (state = initialState, action: ZoneActions) => {
             return {
                 ...state,
                 status: action.payload,
-                mapLoaded: true
+                zoneLoaded: true
             };
 
         case MOVE_CREATURE: {
@@ -87,7 +87,7 @@ const reducer = (state = initialState, action: ZoneActions) => {
         case LOAD_ZONE:
             return {
                 ...state,
-                mapLoaded: false,
+                zoneLoaded: false,
                 status: action.payload
             };
         case SAVE_VISITED_ZONE: {

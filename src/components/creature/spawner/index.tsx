@@ -14,24 +14,24 @@ interface Props {
     freshZone: () => boolean
     zoneName: ZoneName
     player: Creature
-    mapLoaded: boolean
+    zoneLoaded: boolean
 }
 
-const CreatureSpawner: React.FC<Props> = ({ freshZone, zoneName, mapLoaded, player }) => {
+const CreatureSpawner: React.FC<Props> = ({ freshZone, zoneName, zoneLoaded, player }) => {
     const dispatch = useDispatch();
     const { findRandomFloorTile } = useFindRandomFloorTile();
 
     useEffect(() => {
-        if (mapLoaded && freshZone()) {
+        if (zoneLoaded && freshZone()) {
             spawnPlayer();
             const creaturesToSpawn = getCreaturesToSpawn();
             spawnCreatures(creaturesToSpawn);
         }
-    }, [mapLoaded]);
+    }, [zoneLoaded]);
 
     const spawnPlayer = () => {
         // the very start of the game when there is no player, later it will get passed on by useLoadZone hook
-        if (mapLoaded && !player) {
+        if (zoneLoaded && !player) {
             const playerData = loadPlayerData();
             dispatch(AddCreatures([playerData], playerData.faction));
         }

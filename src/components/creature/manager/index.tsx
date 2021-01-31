@@ -12,15 +12,15 @@ interface Props {
 
 const CreatureManager: React.FC<Props> = ({ freshZone }) => {
     const { useTurn } = useUseTurn();
-    const { player, zoneName, mapLoaded } = useSelector((state: RootState) => (
+    const { player, zoneName, zoneLoaded } = useSelector((state: RootState) => (
         {
             zoneName: state.zone.status.name,
-            mapLoaded: state.zone.mapLoaded,
+            zoneLoaded: state.zone.zoneLoaded,
             player: state.zone.status.creatures[Faction.Player][0]
         }
     ));
 
-    if (!mapLoaded) return null;
+    if (!zoneLoaded) return null;
 
     return (
         <>
@@ -28,7 +28,7 @@ const CreatureManager: React.FC<Props> = ({ freshZone }) => {
                 freshZone={freshZone}
                 zoneName={zoneName}
                 player={player}
-                mapLoaded={mapLoaded} />
+                zoneLoaded={zoneLoaded} />
             <CreatureRenderer useTurn={useTurn} />
 
         </>

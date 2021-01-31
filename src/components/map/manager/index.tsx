@@ -1,35 +1,28 @@
 import React from 'react';
-import { ZoneType } from '../../../types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux-state/store/index';
 import MapLoader from '../loader';
 import MapRenderer from '../renderer';
 
-interface Props {
-    loadedZone: ZoneType | undefined
-    setLoadedZone: React.Dispatch<React.SetStateAction<ZoneType | undefined>>
-}
-
-const MapManager: React.FC<Props> = ({ loadedZone, setLoadedZone }) => {
-    const { cameraPosition, zoneStatus, mapLoaded } = useSelector((state: RootState) => (
+const MapManager: React.FC = () => {
+    const { cameraPosition, zoneStatus, zoneLoaded } = useSelector((state: RootState) => (
         {
             cameraPosition: state.cameraPosition,
             zoneStatus: state.zone.status,
-            mapLoaded: state.zone.mapLoaded
+            zoneLoaded: state.zone.zoneLoaded
         }
     ));
 
     return (
         <>
             <MapLoader
-                loadedZone={loadedZone}
-                setLoadedZone={setLoadedZone}
+                zoneLoaded={zoneLoaded}
                 zoneStatus={zoneStatus}
             />
             <MapRenderer
                 zoneTiles={zoneStatus.tiles}
                 cameraPosition={cameraPosition}
-                mapLoaded={mapLoaded}
+                zoneLoaded={zoneLoaded}
             />
         </>
     );

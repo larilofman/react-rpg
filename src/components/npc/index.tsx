@@ -26,19 +26,19 @@ interface Props {
 const Npc: React.FC<Props> = (props) => {
     const { walk, position } = useWalk(props.startPosition);
     const { dir, step, setAnimState } = useAnimation(3);
-    const { playerPosition, turn, mapLoaded } = useSelector((state: RootState) => (
+    const { playerPosition, turn, zoneLoaded } = useSelector((state: RootState) => (
         {
             playerPosition: state.zone.status.creatures[Faction.Player][0] && state.zone.status.creatures[Faction.Player][0].pos,
             turn: state.turn,
-            mapLoaded: state.zone.mapLoaded
+            zoneLoaded: state.zone.zoneLoaded
         }
     ));
 
     useEffect(() => {
-        if (mapLoaded) {
+        if (zoneLoaded) {
             walk(props.data, props.startPosition);
         }
-    }, [mapLoaded]);
+    }, [zoneLoaded]);
 
     // On creature's turn render the sprite and inner component, setting it idle if not visible on the camera
     // If not creature's turn and it's visible, just render the sprite

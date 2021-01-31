@@ -117,7 +117,7 @@ export interface CreatureType {
     sprite: string
 }
 
-export interface ZoneType {
+export interface ZoneData {
     name: ZoneName;
     size: {
         w: number;
