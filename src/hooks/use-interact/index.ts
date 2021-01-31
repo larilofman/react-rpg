@@ -6,7 +6,7 @@ import { RootState } from '../../components/redux-state/store';
 export default function useInteract() {
     const interactableTiles = useSelector((state: RootState) => state.zone.status.interactableTiles);
     const { changeZone } = useLoadZone();
-
+    console.log('renders');
     function interact(pos: Position) {
         const interactedTile = interactableTiles.find(t => t.position.x === pos.x && t.position.y === pos.y);
         switch (interactedTile?.type) {

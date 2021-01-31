@@ -91,24 +91,11 @@ const reducer = (state = initialState, action: ZoneActions) => {
                 status: action.payload
             };
         case SAVE_VISITED_ZONE: {
-            const prevZones = state.visitedZones;
-
-            let zoneFound = false;
-            for (let i = 0; i < prevZones.length; i++) {
-                if (prevZones[i].name === action.payload.name) {
-                    prevZones[i] = action.payload;
-                    zoneFound = true;
-                    break;
-                }
-            }
-
-            if (!zoneFound) {
-                prevZones.push(action.payload);
-            }
-
             return {
                 ...state,
-                visitedZones: prevZones
+                visitedZones: state.visitedZones.map(z => z.name).includes(action.payload.name)
+                    ? state.visitedZones.map(z => z.name === action.payload.name ? action.payload : z) // zone has already been saved so replace it
+                    : state.visitedZones.concat(action.payload) // zone hasn't been saved before
             };
         }
         case REMOVE_VISITED_ZONE: {
@@ -128,24 +115,6 @@ const reducer = (state = initialState, action: ZoneActions) => {
         default:
             return state;
     }
-
-    // case ActionType.SET_FACTION_TURN:
-    //         return {
-    //             ...state,
-    //             turn: {
-    //                 ...state.turn,
-    //                 count: action.payload === Faction.Player ? state.turn.count + 1 : state.turn.count,
-    //                 faction: action.payload
-    //             }
-    //         };
-    //     case ActionType.SET_CREATURE_TURN:
-    //         return {
-    //             ...state,
-    //             turn: {
-    //                 ...state.turn,
-    //                 creature: action.payload
-    //             }
-    //         };
 };
 
 export default reducer;
