@@ -41,7 +41,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     const { keyPressed } = useKeyPress();
     const [canAct, setCanAct] = useState(true);
     const { getCreatureById } = useGetCreature();
-    const { interact } = useInteract();
+    const { interact, checkInteraction } = useInteract();
 
     useEffect(() => {
         if (zoneLoaded) {
@@ -166,7 +166,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
                 useTurn(data);
                 return;
             case "KeyE":
-                interact(position);
+                interact();
                 break;
             default:
                 break;
@@ -189,6 +189,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
 
     useEffect(() => {
         updateCamera(position);
+        checkInteraction(position);
     }, [position]);
 
     if (gameOver) return null;

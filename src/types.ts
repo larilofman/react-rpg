@@ -140,10 +140,12 @@ export interface BaseInteractableTile {
     id: string
     position: Position
     name: string
-    type: InteractableTileType
+    type: InteractableTileType,
+    popUpMessage: string
 }
 
 export interface ZoneRouteType extends BaseInteractableTile {
+    type: InteractableTileType.ZoneRoute
     linkedRoute: { zone: ZoneName, id: string }
 }
 

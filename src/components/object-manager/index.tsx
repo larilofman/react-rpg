@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { InteractableTileType } from '../../types';
-import { loadZoneData, ZoneName } from '../../utils/load-data';
+import { loadZoneData } from '../../utils/load-data';
 import ZoneRoute from '../object/zoneRoute';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux-state/store';
@@ -28,7 +28,13 @@ const ObjectManager: React.FC<Props> = ({ freshZone }) => {
 
     const loadRoutes = () => {
         const routesData = loadZoneData(zoneName).zoneRoutes;
-        dispatch(AddInteractableTiles(routesData.map(route => ({ ...route, type: InteractableTileType.ZoneRoute }))));
+        dispatch(AddInteractableTiles(routesData.map(route => (
+            {
+                ...route,
+                type: InteractableTileType.ZoneRoute,
+                popUpMessage: `Press 'e' to travel to ${route.linkedRoute.zone}`
+            }
+        ))));
     };
 
     return (

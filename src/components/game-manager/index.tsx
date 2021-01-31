@@ -22,8 +22,8 @@ const GameManager: React.FC = () => {
     return (
         <>
             <MapManager />
-            <CreatureManager freshZone={freshZone} />
             <ObjectManager freshZone={freshZone} />
+            <CreatureManager freshZone={freshZone} />
         </>
     );
 };

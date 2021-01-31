@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Tile, ZoneData, ZoneStatus } from '../../../types';
+import { Tile, ZoneData } from '../../../types';
 import useGenerateMap from '../../../hooks/use-generate-map';
 import { useDispatch } from 'react-redux';
 import { SetTiles } from '../../redux-state/reducers/zone/actions';
