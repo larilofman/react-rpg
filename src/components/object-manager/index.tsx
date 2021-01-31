@@ -4,16 +4,16 @@ import { loadZoneData } from '../../utils/load-data';
 import ZoneRoute from '../object/zoneRoute';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux-state/store';
-import { AddInteractableTiles } from '../redux-state/reducers/zone/actions';
+import { SetInteractableTiles } from '../redux-state/reducers/zone/actions';
 
 interface Props {
     freshZone: () => boolean
 }
 
 const ObjectManager: React.FC<Props> = ({ freshZone }) => {
-    const { zoneLoaded, zoneName, zoneInteractableTiles } = useSelector((state: RootState) => (
+    const { tilesLoaded, zoneName, zoneInteractableTiles } = useSelector((state: RootState) => (
         {
-            zoneLoaded: state.zone.zoneLoaded,
+            tilesLoaded: state.zone.tilesLoaded,
             zoneName: state.zone.name,
             zoneInteractableTiles: state.zone.interactableTiles
         }
@@ -21,14 +21,16 @@ const ObjectManager: React.FC<Props> = ({ freshZone }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (zoneLoaded && freshZone()) {
+        if (tilesLoaded && freshZone()) {
             loadRoutes();
+        } else {
+            dispatch(SetInteractableTiles(zoneInteractableTiles));
         }
-    }, [zoneLoaded]);
+    }, [tilesLoaded]);
 
     const loadRoutes = () => {
         const routesData = loadZoneData(zoneName).zoneRoutes;
-        dispatch(AddInteractableTiles(routesData.map(route => (
+        dispatch(SetInteractableTiles(routesData.map(route => (
             {
                 ...route,
                 type: InteractableTileType.ZoneRoute,

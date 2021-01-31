@@ -4,7 +4,7 @@ import {
     ADD_CREATURES, ZoneActions,
     DAMAGE_CREATURE, REMOVE_CREATURE,
     LOAD_ZONE,
-    SAVE_VISITED_ZONE, ADD_INTERACTABLE_TILES,
+    SAVE_VISITED_ZONE, SET_INTERACTABLE_TILES,
     ZoneState,
     REMOVE_VISITED_ZONE
 } from './types';
@@ -15,6 +15,7 @@ const initialState: ZoneState = {
     tiles: [],
     creatures: { [Faction.Player]: [], [Faction.Friendly]: [], [Faction.Hostile]: [] },
     interactableTiles: [],
+    tilesLoaded: false,
     zoneLoaded: false,
     visitedZones: [],
     gameOver: false
@@ -27,6 +28,12 @@ const reducer = (state = initialState, action: ZoneActions) => {
                 ...state,
                 tiles: action.payload,
                 size: { w: action.payload.length, h: action.payload[0].length },
+                tilesLoaded: true
+            };
+        case SET_INTERACTABLE_TILES:
+            return {
+                ...state,
+                interactableTiles: action.payload,
                 zoneLoaded: true
             };
         case MOVE_CREATURE: {
@@ -75,6 +82,7 @@ const reducer = (state = initialState, action: ZoneActions) => {
         case LOAD_ZONE:
             return {
                 ...state,
+                tilesLoaded: false,
                 zoneLoaded: false,
                 name: action.payload.name,
                 tiles: action.payload.tiles,
@@ -96,11 +104,6 @@ const reducer = (state = initialState, action: ZoneActions) => {
                 visitedZones: state.visitedZones.filter(z => z.name !== action.payload)
             };
         }
-        case ADD_INTERACTABLE_TILES:
-            return {
-                ...state,
-                interactableTiles: state.interactableTiles.concat(action.payload)
-            };
         default:
             return state;
     }

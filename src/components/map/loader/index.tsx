@@ -7,17 +7,17 @@ import { loadZoneData, ZoneName } from '../../../utils/load-data';
 
 
 interface Props {
-    zoneLoaded: boolean
+    tilesLoaded: boolean
     zoneTiles: Tile[][]
     zoneName: ZoneName
 }
 
-const MapLoader: React.FC<Props> = ({ zoneLoaded, zoneTiles, zoneName }) => {
+const MapLoader: React.FC<Props> = ({ tilesLoaded, zoneTiles, zoneName }) => {
     const dispatch = useDispatch();
     const { buildMap, generateMap } = useGenerateMap();
 
     useEffect(() => {
-        if (!zoneLoaded) {
+        if (!tilesLoaded) {
             if (zoneTiles.length) { // A visited zone is loaded
                 dispatch(SetTiles(zoneTiles));
             } else { // A fresh zone is loaded
@@ -42,7 +42,7 @@ const MapLoader: React.FC<Props> = ({ zoneLoaded, zoneTiles, zoneName }) => {
 
 const areEqual = (prevProps: Readonly<React.PropsWithChildren<Props>>, nextProps: Readonly<React.PropsWithChildren<Props>>) => {
     if (prevProps.zoneName !== nextProps.zoneName) return false;
-    if (!nextProps.zoneLoaded) return false;
+    if (!nextProps.tilesLoaded) return false;
     return true;
 };
 

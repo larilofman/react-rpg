@@ -24,12 +24,13 @@ interface Props {
 }
 
 const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
-    const { turn, zoneLoaded, player, gameOver } = useSelector((state: RootState) => (
+    const { turn, zoneLoaded, player, gameOver, interactableTiles } = useSelector((state: RootState) => (
         {
             turn: state.turn,
             zoneLoaded: state.zone.zoneLoaded,
             player: state.zone.creatures[Faction.Player][0],
-            gameOver: state.game.gameOver
+            gameOver: state.game.gameOver,
+            interactableTiles: state.zone.interactableTiles
         }));
     const { walk, position } = useWalk(player.pos);
     const { dir, step, setAnimState } = useAnimation(3);
@@ -191,6 +192,10 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
         updateCamera(position);
         checkInteraction(position);
     }, [position]);
+
+    useEffect(() => {
+        checkInteraction(position);
+    }, [interactableTiles]);
 
     if (gameOver) return null;
 

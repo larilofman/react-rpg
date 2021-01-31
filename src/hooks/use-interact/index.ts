@@ -10,7 +10,8 @@ export default function useInteract() {
     const [interactedTile, setInteractedTile] = useState<InteractableTile | undefined>();
 
     const checkInteraction = (pos: Position) => {
-        setInteractedTile(interactableTiles.find(t => t.position.x === pos.x && t.position.y === pos.y));
+        const tile = interactableTiles.find(t => t.position.x === pos.x && t.position.y === pos.y);
+        setInteractedTile(tile);
     };
 
     function interact() {
@@ -24,7 +25,6 @@ export default function useInteract() {
     }
 
     useEffect(() => {
-        console.log(interactedTile);
         if (interactedTile) {
             console.log(interactedTile.popUpMessage);
         }

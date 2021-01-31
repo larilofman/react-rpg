@@ -8,11 +8,16 @@ export const REMOVE_CREATURE = 'REMOVE_CREATURE';
 export const LOAD_ZONE = 'LOAD_ZONE';
 export const SAVE_VISITED_ZONE = 'SAVE_VISITED_ZONE';
 export const REMOVE_VISITED_ZONE = 'REMOVE_VISITED_ZONE';
-export const ADD_INTERACTABLE_TILES = 'ADD_INTERACTABLE_TILES';
+export const SET_INTERACTABLE_TILES = 'SET_INTERACTABLE_TILES';
 
 interface SetTiles {
     type: typeof SET_TILES,
     payload: Tile[][]
+}
+
+interface SetInteractableTiles {
+    type: typeof SET_INTERACTABLE_TILES,
+    payload: InteractableTile[]
 }
 
 interface MoveCreature {
@@ -50,11 +55,6 @@ interface RemoveVisitedZone {
     payload: ZoneName
 }
 
-interface AddInteractableTiles {
-    type: typeof ADD_INTERACTABLE_TILES,
-    payload: InteractableTile[]
-}
-
 export type ZoneActions =
     SetTiles |
     MoveCreature |
@@ -64,7 +64,7 @@ export type ZoneActions =
     LoadZone |
     SaveVisitedZone |
     RemoveVisitedZone |
-    AddInteractableTiles
+    SetInteractableTiles
 
 export type ZoneState = {
     name: ZoneName
@@ -76,6 +76,7 @@ export type ZoneState = {
         [Faction.Hostile]: Creature[]
     },
     interactableTiles: InteractableTile[]
+    tilesLoaded: boolean
     zoneLoaded: boolean
     visitedZones: ZoneStatus[]
     gameOver: boolean
