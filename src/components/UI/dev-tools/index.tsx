@@ -5,32 +5,29 @@ import useDraggable from '../../../hooks/use-draggable';
 import Button from '../button';
 import Select from '../select';
 import { getAllZoneNames, ZoneName } from '../../../utils/load-data';
-import useLoadZone from '../../../hooks/use-load-zone';
 import './style.css';
-import useAddVisitedZone from '../../../hooks/use-add-visited-zone';
-
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux-state/store';
+import { LoadZoneByName, SaveVisitedZone } from '../../redux-state/reducers/zone/actions';
 
 
 const DevTools: React.FC = () => {
     const { zoneName, visitedZones } = useSelector((state: RootState) => ({ zoneName: state.zone.name, visitedZones: state.zone.visitedZones }));
+    const dispatch = useDispatch();
     const { position, handleMouseDown } = useDraggable('dev-tools-header', { x: 16, y: 16 });
     const [selectedZone, setSelectedZone] = useState<string>(zoneName as ZoneName);
     const [savedZones, setSavedZones] = useState<string[]>([]);
     const [selectedSave, setSelectedSave] = useState<string>();
     const [zoneNames] = useState<string[]>(getAllZoneNames());
-    const { loadZone, } = useLoadZone();
-    const { addVisitedZone } = useAddVisitedZone();
 
     const handleZoneChangeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        loadZone(selectedZone as ZoneName);
+        dispatch(LoadZoneByName(selectedZone as ZoneName, true, false));
     };
 
     const handleSavedZoneChangeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        loadZone(selectedSave as ZoneName, false);
+        dispatch(LoadZoneByName(selectedSave as ZoneName, false, false));
     };
 
     useEffect(() => {
@@ -59,7 +56,7 @@ const DevTools: React.FC = () => {
                 </Button>
                 </form>
                 <Container align>
-                    <Button p4 m4 align width="80%" color="light-brown" onClick={addVisitedZone}>
+                    <Button p4 m4 align width="80%" color="light-brown" onClick={() => dispatch(SaveVisitedZone())}>
                         Save ZoneStatus
                 </Button>
                 </Container>

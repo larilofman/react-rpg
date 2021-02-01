@@ -1,4 +1,4 @@
-import { BaseCreature, Creature, Dimensions, Faction, InteractableTile, Position, Tile, ZoneStatus } from '../../../../types';
+import { BaseCreature, Creature, Dimensions, Faction, InteractableTile, Position, Tile, ZoneStatus, ZoneRouteType } from '../../../../types';
 import { ZoneName } from '../../../../utils/load-data';
 export const SET_TILES = 'SET_TILES';
 export const MOVE_CREATURE = 'MOVE_CREATURE';
@@ -9,6 +9,7 @@ export const LOAD_ZONE = 'LOAD_ZONE';
 export const SAVE_VISITED_ZONE = 'SAVE_VISITED_ZONE';
 export const REMOVE_VISITED_ZONE = 'REMOVE_VISITED_ZONE';
 export const SET_INTERACTABLE_TILES = 'SET_INTERACTABLE_TILES';
+export const LOAD_ZONE_BY_NAME = 'LOAD_ZONE_BY_NAME';
 
 interface SetTiles {
     type: typeof SET_TILES,
@@ -42,17 +43,21 @@ interface RemoveCreature {
 
 interface LoadZone {
     type: typeof LOAD_ZONE,
-    payload: ZoneStatus
+    payload: ZoneRouteType
 }
 
 interface SaveVisitedZone {
-    type: typeof SAVE_VISITED_ZONE,
-    payload: ZoneStatus
+    type: typeof SAVE_VISITED_ZONE
 }
 
 interface RemoveVisitedZone {
     type: typeof REMOVE_VISITED_ZONE,
     payload: ZoneName
+}
+
+interface LoadZoneByName {
+    type: typeof LOAD_ZONE_BY_NAME,
+    payload: { zoneName: ZoneName, fresh: boolean, savePrevious: boolean }
 }
 
 export type ZoneActions =
@@ -64,7 +69,8 @@ export type ZoneActions =
     LoadZone |
     SaveVisitedZone |
     RemoveVisitedZone |
-    SetInteractableTiles
+    SetInteractableTiles |
+    LoadZoneByName
 
 export type ZoneState = {
     name: ZoneName
@@ -80,6 +86,7 @@ export type ZoneState = {
     zoneLoaded: boolean
     visitedZones: ZoneStatus[]
     gameOver: boolean
+    zoneRouteUsed: ZoneRouteType | undefined
 }
 
 

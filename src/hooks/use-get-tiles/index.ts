@@ -77,7 +77,7 @@ export default function useGetTiles() {
         return { status: getTileStatus(newPos), pos: newPos };
     };
 
-    const getRandomNearbyFloorTile = (pos: Position, diagonal = false, canBeOccupied = true) => {
+    const getRandomNearbyFloorTile = (pos: Position, diagonal = false) => {
         const nearbyFloors = [];
         for (let y = pos.y - 1; y < pos.y + 2; y++) {
             for (let x = pos.x - 1; x < pos.x + 2; x++) {

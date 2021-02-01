@@ -1,4 +1,4 @@
-import { BaseCreature, Creature, Faction, InteractableTile, Position, Tile, ZoneStatus } from '../../../../types';
+import { BaseCreature, Creature, Faction, InteractableTile, Position, Tile, ZoneRouteType } from '../../../../types';
 import { ZoneName } from '../../../../utils/load-data';
 import {
     ADD_CREATURES,
@@ -10,6 +10,7 @@ import {
     SAVE_VISITED_ZONE,
     REMOVE_VISITED_ZONE,
     SET_TILES,
+    LOAD_ZONE_BY_NAME,
     ZoneActions
 } from './types';
 
@@ -55,17 +56,16 @@ export const RemoveCreature = (creature: BaseCreature): ZoneActions => {
     };
 };
 
-export const LoadZone = (status: ZoneStatus): ZoneActions => {
+export const LoadZone = (zoneRouteUsed: ZoneRouteType): ZoneActions => {
     return {
         type: LOAD_ZONE,
-        payload: status
+        payload: zoneRouteUsed
     };
 };
 
-export const SaveVisitedZone = (status: ZoneStatus): ZoneActions => {
+export const SaveVisitedZone = (): ZoneActions => {
     return {
-        type: SAVE_VISITED_ZONE,
-        payload: status
+        type: SAVE_VISITED_ZONE
     };
 };
 
@@ -73,6 +73,13 @@ export const RemoveVisitedZone = (zoneName: ZoneName): ZoneActions => {
     return {
         type: REMOVE_VISITED_ZONE,
         payload: zoneName
+    };
+};
+
+export const LoadZoneByName = (zoneName: ZoneName, fresh: boolean, savePrevious: boolean): ZoneActions => {
+    return {
+        type: LOAD_ZONE_BY_NAME,
+        payload: { zoneName, fresh, savePrevious }
     };
 };
 
