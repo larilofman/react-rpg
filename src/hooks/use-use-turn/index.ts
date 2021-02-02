@@ -5,7 +5,13 @@ import { RootState } from '../../components/redux-state/store';
 import { SetCreatureTurn, SetFactionTurn } from '../../components/redux-state/reducers/turn/actions';
 
 export default function useUseTurn() {
-    const { turn, creatures, zoneLoaded } = useSelector((state: RootState) => ({ turn: state.turn, creatures: state.zone.creatures, zoneLoaded: state.zone.zoneLoaded }));
+    const { turn, creatures, creaturesLoaded } = useSelector((state: RootState) => (
+        {
+            turn: state.turn,
+            creatures: state.zone.creatures,
+            creaturesLoaded: state.zone.creaturesLoaded
+        }
+    ));
     const dispatch = useDispatch();
     const [factionIndex, setFactionIndex] = useState(0);
 
@@ -15,7 +21,7 @@ export default function useUseTurn() {
     };
 
     useEffect(() => {
-        if (zoneLoaded) {
+        if (creaturesLoaded) {
             // More creatures on the faction left, so set next one's turn
             if (factionIndex < creatures[turn.faction].length) {
                 dispatch(SetCreatureTurn(creatures[turn.faction][factionIndex].id));

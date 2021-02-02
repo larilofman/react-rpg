@@ -12,11 +12,11 @@ interface Props {
 }
 
 const CreatureRenderer: React.FC<Props> = ({ useTurn }) => {
-    const { player, cameraPosition, creatures, zoneLoaded, gameOver } = useSelector((state: RootState) => (
+    const { player, cameraPosition, creatures, creaturesLoaded, gameOver } = useSelector((state: RootState) => (
         {
             cameraPosition: state.cameraPosition,
             creatures: state.zone.creatures,
-            zoneLoaded: state.zone.zoneLoaded,
+            creaturesLoaded: state.zone.creaturesLoaded,
             player: state.zone.creatures[Faction.Player][0],
             gameOver: state.zone.gameOver
         }
@@ -32,7 +32,7 @@ const CreatureRenderer: React.FC<Props> = ({ useTurn }) => {
         return false;
     };
 
-    if (!zoneLoaded) return null;
+    if (!creaturesLoaded) return null;
 
     return (
         <>

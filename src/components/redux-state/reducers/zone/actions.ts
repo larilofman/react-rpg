@@ -2,7 +2,6 @@ import { BaseCreature, Creature, Faction, InteractableTile, Position, Tile, Zone
 import { ZoneName } from '../../../../utils/load-data';
 import {
     ADD_CREATURES,
-    SET_INTERACTABLE_TILES,
     DAMAGE_CREATURE,
     LOAD_ZONE,
     MOVE_CREATURE,
@@ -11,7 +10,10 @@ import {
     REMOVE_VISITED_ZONE,
     SET_TILES,
     LOAD_ZONE_BY_NAME,
-    ZoneActions
+    ZoneActions,
+    SET_OBJECTS_LOADED,
+    SET_CREATURES_LOADED,
+    SET_OBJECTS
 } from './types';
 
 export function SetTiles(tiles: Tile[][]): ZoneActions {
@@ -21,10 +23,10 @@ export function SetTiles(tiles: Tile[][]): ZoneActions {
     };
 }
 
-export const SetInteractableTiles = (interactableTiles: InteractableTile[]): ZoneActions => {
+export const SetObjects = (objects: InteractableTile[]): ZoneActions => {
     return {
-        type: SET_INTERACTABLE_TILES,
-        payload: interactableTiles
+        type: SET_OBJECTS,
+        payload: objects
     };
 };
 
@@ -80,6 +82,20 @@ export const LoadZoneByName = (zoneName: ZoneName, fresh: boolean, savePrevious:
     return {
         type: LOAD_ZONE_BY_NAME,
         payload: { zoneName, fresh, savePrevious }
+    };
+};
+
+export const SetObjectsLoaded = (loaded: boolean) => {
+    return {
+        type: SET_OBJECTS_LOADED,
+        payload: loaded
+    };
+};
+
+export const SetCreaturesLoaded = (loaded: boolean) => {
+    return {
+        type: SET_CREATURES_LOADED,
+        payload: loaded
     };
 };
 

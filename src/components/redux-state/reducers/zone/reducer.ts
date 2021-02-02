@@ -5,10 +5,12 @@ import {
     ADD_CREATURES, ZoneActions,
     DAMAGE_CREATURE, REMOVE_CREATURE,
     LOAD_ZONE,
-    SAVE_VISITED_ZONE, SET_INTERACTABLE_TILES,
+    SAVE_VISITED_ZONE, SET_OBJECTS,
     ZoneState,
     REMOVE_VISITED_ZONE,
-    LOAD_ZONE_BY_NAME
+    LOAD_ZONE_BY_NAME,
+    SET_OBJECTS_LOADED,
+    SET_CREATURES_LOADED
 } from './types';
 
 const initialState: ZoneState = {
@@ -18,7 +20,8 @@ const initialState: ZoneState = {
     creatures: { [Faction.Player]: [], [Faction.Friendly]: [], [Faction.Hostile]: [] },
     interactableTiles: [],
     tilesLoaded: false,
-    zoneLoaded: false,
+    objectsLoaded: false,
+    creaturesLoaded: false,
     visitedZones: [],
     gameOver: false,
     zoneRouteUsed: undefined
@@ -33,11 +36,21 @@ const reducer = (state = initialState, action: ZoneActions) => {
                 size: { w: action.payload.length, h: action.payload[0].length },
                 tilesLoaded: true
             };
-        case SET_INTERACTABLE_TILES:
+        case SET_OBJECTS:
             return {
                 ...state,
                 interactableTiles: action.payload,
-                zoneLoaded: true
+                objectsLoaded: true
+            };
+        case SET_OBJECTS_LOADED:
+            return {
+                ...state,
+                objectsLoaded: action.payload
+            };
+        case SET_CREATURES_LOADED:
+            return {
+                ...state,
+                creaturesLoaded: action.payload
             };
         case MOVE_CREATURE: {
             return {
@@ -104,7 +117,7 @@ const reducer = (state = initialState, action: ZoneActions) => {
                         [Faction.Player]: state.creatures[Faction.Player].map(// set player's position as linkedRoute's position if one was found
                             c => c.id === 'player' ? { ...c, pos: linkedRoute ? linkedRoute.position : c.pos } : c)
                     },
-                    interactableTiles: visitedZone.interactableTiles,
+                    interactableTiles: [],
                     tiles: visitedZone.tiles,
                     size: visitedZone.size
                 };
@@ -128,7 +141,7 @@ const reducer = (state = initialState, action: ZoneActions) => {
             return {
                 ...state,
                 tilesLoaded: false,
-                zoneLoaded: false,
+                objectsLoaded: false,
                 name: zoneToLoad.name,
                 tiles: zoneToLoad.tiles,
                 size: zoneToLoad.size,
@@ -157,7 +170,7 @@ const reducer = (state = initialState, action: ZoneActions) => {
                 return {
                     ...state,
                     tilesLoaded: false,
-                    zoneLoaded: false,
+                    objectsLoaded: false,
                     name: action.payload.zoneName,
                     creatures: {
                         [Faction.Player]: state.creatures[Faction.Player].map(
@@ -176,10 +189,10 @@ const reducer = (state = initialState, action: ZoneActions) => {
                     return {
                         ...state,
                         tilesLoaded: false,
-                        zoneLoaded: false,
+                        objectsLoaded: false,
                         name: zoneToLoad.name,
                         creatures: zoneToLoad.creatures,
-                        interactableTiles: zoneToLoad.interactableTiles,
+                        interactableTiles: [],
                         tiles: zoneToLoad.tiles,
                         size: zoneToLoad.size,
                         visitedZones

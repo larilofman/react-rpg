@@ -6,29 +6,26 @@ import CreatureSpawner from '../spawner';
 import CreatureRenderer from '../renderer';
 import useUseTurn from '../../../hooks/use-use-turn';
 
-interface Props {
-    freshZone: () => boolean
-}
 
-const CreatureManager: React.FC<Props> = ({ freshZone }) => {
+const CreatureManager: React.FC = () => {
     const { useTurn } = useUseTurn();
-    const { player, zoneName, zoneLoaded } = useSelector((state: RootState) => (
+    const { player, zoneName, creaturesLoaded, tilesLoaded } = useSelector((state: RootState) => (
         {
             zoneName: state.zone.name,
-            zoneLoaded: state.zone.zoneLoaded,
+            creaturesLoaded: state.zone.creaturesLoaded,
+            tilesLoaded: state.zone.tilesLoaded,
             player: state.zone.creatures[Faction.Player][0]
         }
     ));
 
-    if (!zoneLoaded) return null;
+    if (!tilesLoaded) return null;
 
     return (
         <>
             <CreatureSpawner
-                freshZone={freshZone}
                 zoneName={zoneName}
                 player={player}
-                zoneLoaded={zoneLoaded} />
+                creaturesLoaded={creaturesLoaded} />
             <CreatureRenderer useTurn={useTurn} />
 
         </>
