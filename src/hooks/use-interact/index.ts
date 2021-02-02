@@ -1,8 +1,9 @@
-import { Position, InteractableTileType, InteractableTile } from '../../types';
+import { Position, InteractableTileType, InteractableTile, Creature } from '../../types';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 import { useEffect, useState } from 'react';
 import { LoadZone } from '../../components/redux-state/reducers/zone/actions';
+import { SavePlayer } from '../../components/redux-state/reducers/game/actions';
 
 export default function useInteract() {
     const dispatch = useDispatch();
@@ -14,10 +15,11 @@ export default function useInteract() {
         setInteractedTile(tile);
     };
 
-    function interact() {
+    function interact(player: Creature) {
         switch (interactedTile?.type) {
             case InteractableTileType.ZoneRoute:
-                dispatch(LoadZone(interactedTile));
+                dispatch(SavePlayer({ ...player, pos: interactedTile.linkedRoute.position }));
+                dispatch(LoadZone(interactedTile.linkedRoute.zoneName));
                 break;
             default:
                 break;

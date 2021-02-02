@@ -4,8 +4,8 @@ import { ZoneData, Creature, Faction } from '../types';
 
 export type ZoneName = keyof typeof zones;
 
-export const loadZoneData = (name: ZoneName) => {
-    const zone = zones[name] as ZoneData;
+export const loadZoneData = (nameName: ZoneName) => {
+    const zone = zones[nameName] as unknown as ZoneData;
     return zone;
 };
 

@@ -2,6 +2,7 @@ import { BaseCreature, Creature, Faction, InteractableTile, Position, Tile, Zone
 import { ZoneName } from '../../../../utils/load-data';
 import {
     ADD_CREATURES,
+    SET_CREATURES,
     DAMAGE_CREATURE,
     LOAD_ZONE,
     MOVE_CREATURE,
@@ -44,6 +45,13 @@ export const AddCreatures = (creatures: Creature[], faction: Faction): ZoneActio
     };
 };
 
+export const SetCreatures = (creatures: { [Faction.Player]: Creature[], [Faction.Friendly]: Creature[], [Faction.Hostile]: Creature[] }): ZoneActions => {
+    return {
+        type: SET_CREATURES,
+        payload: creatures
+    };
+};
+
 export const DamageCreature = (creature: Creature): ZoneActions => {
     return {
         type: DAMAGE_CREATURE,
@@ -58,10 +66,10 @@ export const RemoveCreature = (creature: BaseCreature): ZoneActions => {
     };
 };
 
-export const LoadZone = (zoneRouteUsed: ZoneRouteType): ZoneActions => {
+export const LoadZone = (zoneName: ZoneName): ZoneActions => {
     return {
         type: LOAD_ZONE,
-        payload: zoneRouteUsed
+        payload: zoneName
     };
 };
 

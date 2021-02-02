@@ -21,8 +21,9 @@
     ],
     "zoneRoutes": [
       {"id": "zone0_route0" , 
-        "linkedRoute": {"zone": "zone1", "id": "zone1_route0"}, 
-        "position": {"x": 9, "y": 0}
+        "linkedRoute": {"zoneName": "zone1", "id": "zone1_route0", "position": {"x": 0, "y": 3}}, 
+        "position": {"x": 9, "y": 0},
+        "zoneName": "zone0"
       }
       ]
     },
@@ -37,8 +38,9 @@
       ],
       "zoneRoutes": [
         {"id": "zone1_route0" , 
-          "linkedRoute": {"zone": "zone0", "id": "zone0_route0"}, 
-          "position": {"x": 0, "y": 3}
+          "linkedRoute": {"zoneName": "zone0", "id": "zone0_route0", "position": {"x": 9, "y": 0}}, 
+          "position": {"x": 0, "y": 3},
+          "zoneName": "zone1"
         }
         ]
     }

@@ -20,7 +20,6 @@ const MapLoader: React.FC<Props> = ({ tilesLoaded, zoneName }) => {
     useEffect(() => {
         if (!tilesLoaded) {
             if (zoneTiles.length) { // A visited zone is loaded
-                dispatch(SetCreaturesLoaded(true));
                 dispatch(SetTiles(zoneTiles));
             } else { // A fresh zone is loaded
                 const zoneToLoad: ZoneData = loadZoneData(zoneName as ZoneName);
@@ -28,7 +27,6 @@ const MapLoader: React.FC<Props> = ({ tilesLoaded, zoneName }) => {
                     const tiles = zoneToLoad.tiles
                         ? buildMap(zoneToLoad.tiles)
                         : generateMap(zoneToLoad.size);
-                    dispatch(SetCreaturesLoaded(false));
                     dispatch(SetTiles(tiles));
                 }
             }

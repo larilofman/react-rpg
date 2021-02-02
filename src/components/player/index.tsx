@@ -167,7 +167,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
                 useTurn(data);
                 return;
             case "KeyE":
-                interact();
+                interact(player);
                 break;
             default:
                 break;

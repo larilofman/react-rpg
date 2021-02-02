@@ -14,7 +14,6 @@ const ObjectRenderer: React.FC<Props> = ({ cameraPosition, objectsLoaded }) => {
     const zoneInteractableTiles = useStore<RootState>().getState().zone.interactableTiles;
 
     const objectsOnCamera = React.useMemo(() => {
-        console.log('calculating objects');
         const cam_y = cameraPosition.y;
         const cam_x = cameraPosition.x;
         const objectsOnCam: ZoneRouteType[] = zoneInteractableTiles.filter(tile => (

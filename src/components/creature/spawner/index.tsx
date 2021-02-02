@@ -6,7 +6,7 @@ import creatures from '../../../data/creature/creatureData.json';
 import { loadZoneData, ZoneName, loadPlayerData } from '../../../utils/load-data';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { AddCreatures, SetCreaturesLoaded } from '../../redux-state/reducers/zone/actions';
+import { AddCreatures, SetCreatures, SetCreaturesLoaded } from '../../redux-state/reducers/zone/actions';
 import { RootState } from '../../redux-state/store';
 
 type CreatureName = keyof typeof creatures;
@@ -17,37 +17,27 @@ interface Props {
     creaturesLoaded: boolean
 }
 
-const CreatureSpawner: React.FC<Props> = ({ zoneName, creaturesLoaded, player }) => {
+const CreatureSpawner: React.FC<Props> = ({ zoneName, creaturesLoaded }) => {
     const dispatch = useDispatch();
-    // const visitedZones = useSelector((state: RootState) => state.zone.visitedZones);
+    const visitedZones = useSelector((state: RootState) => state.zone.visitedZones);
+    const player = useSelector((state: RootState) => state.game.player);
     const { findRandomFloorTile } = useFindRandomFloorTile();
 
     useEffect(() => {
-        if (!creaturesLoaded) {
-            spawnPlayer();
+        const visitedZone = visitedZones.find(z => z.name === zoneName);
+        if (visitedZone) {
+            dispatch(SetCreatures({
+                [Faction.Player]: [player],
+                [Faction.Friendly]: visitedZone.creatures[Faction.Friendly],
+                [Faction.Hostile]: visitedZone.creatures[Faction.Hostile]
+            }));
+        } else {
+            dispatch(AddCreatures([player], Faction.Player));
             const creaturesToSpawn = getCreaturesToSpawn();
             spawnCreatures(creaturesToSpawn);
             dispatch(SetCreaturesLoaded(true));
         }
     }, [creaturesLoaded]);
-
-    // useEffect(() => {
-    //     if (visitedZones.map(z => z.name).includes(zoneName)) {
-    //         dispatch(SetInteractableTiles(zoneInteractableTiles));
-    //         dispatch(SetObjectsLoaded(true));
-    //     } else {
-    //         loadRoutes();
-    //         dispatch(SetCreaturesLoaded(true));
-    //     }
-    // }, [creaturesLoaded]);
-
-    const spawnPlayer = () => {
-        // the very start of the game when there is no player, later it will get passed on by useLoadZone hook
-        if (!player) {
-            const playerData = loadPlayerData();
-            dispatch(AddCreatures([playerData], playerData.faction));
-        }
-    };
 
     const getCreaturesToSpawn = () => {
         const creatureData = loadZoneData(zoneName).creatures; // load list of enemies from data
@@ -84,7 +74,7 @@ const CreatureSpawner: React.FC<Props> = ({ zoneName, creaturesLoaded, player })
 
 const areEqual = (prevProps: Readonly<React.PropsWithChildren<Props>>, nextProps: Readonly<React.PropsWithChildren<Props>>) => {
     if (prevProps.zoneName !== nextProps.zoneName) return false;
-    if (prevProps.creaturesLoaded !== nextProps.creaturesLoaded) return false;
+    if (!nextProps.creaturesLoaded) return false;
     return true;
 };
 

@@ -29,7 +29,7 @@ const ObjectLoader: React.FC<Props> = ({ objectsLoaded, zoneName }) => {
             {
                 ...route,
                 type: InteractableTileType.ZoneRoute,
-                popUpMessage: `Press 'e' to travel to ${route.linkedRoute.zone}`
+                popUpMessage: `Press 'e' to travel to ${route.linkedRoute.zoneName}`
             }
         ))));
     };

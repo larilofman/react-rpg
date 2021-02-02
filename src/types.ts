@@ -145,8 +145,9 @@ export interface BaseInteractableTile {
 }
 
 export interface ZoneRouteType extends BaseInteractableTile {
+    zoneName: ZoneName
     type: InteractableTileType.ZoneRoute
-    linkedRoute: { zone: ZoneName, id: string }
+    linkedRoute: ZoneRouteType
 }
 
 export type InteractableTile = ZoneRouteType

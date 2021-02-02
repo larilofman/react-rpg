@@ -3,6 +3,7 @@ import { ZoneName } from '../../../../utils/load-data';
 export const SET_TILES = 'SET_TILES';
 export const MOVE_CREATURE = 'MOVE_CREATURE';
 export const ADD_CREATURES = 'ADD_CREATURES';
+export const SET_CREATURES = 'SET_CREATURES';
 export const DAMAGE_CREATURE = 'DAMAGE_CREATURE';
 export const REMOVE_CREATURE = 'REMOVE_CREATURE';
 export const LOAD_ZONE = 'LOAD_ZONE';
@@ -43,6 +44,15 @@ interface AddCreatures {
     payload: { creatures: Creature[], faction: Faction }
 }
 
+interface SetCreatures {
+    type: typeof SET_CREATURES,
+    payload: {
+        [Faction.Player]: Creature[],
+        [Faction.Friendly]: Creature[],
+        [Faction.Hostile]: Creature[]
+    }
+}
+
 interface DamageCreature {
     type: typeof DAMAGE_CREATURE,
     payload: BaseCreature
@@ -55,7 +65,7 @@ interface RemoveCreature {
 
 interface LoadZone {
     type: typeof LOAD_ZONE,
-    payload: ZoneRouteType
+    payload: ZoneName
 }
 
 interface SaveVisitedZone {
@@ -76,6 +86,7 @@ export type ZoneActions =
     SetTiles |
     MoveCreature |
     AddCreatures |
+    SetCreatures |
     DamageCreature |
     RemoveCreature |
     LoadZone |
@@ -101,7 +112,6 @@ export type ZoneState = {
     creaturesLoaded: boolean
     visitedZones: ZoneStatus[]
     gameOver: boolean
-    zoneRouteUsed: ZoneRouteType | undefined
 }
 
 

@@ -2,11 +2,11 @@ import { Faction, ZoneStatus } from '../../../../types';
 import { loadZoneData } from '../../../../utils/load-data';
 import {
     SET_TILES, MOVE_CREATURE,
-    ADD_CREATURES, ZoneActions,
+    ADD_CREATURES, SET_CREATURES,
     DAMAGE_CREATURE, REMOVE_CREATURE,
     LOAD_ZONE,
     SAVE_VISITED_ZONE, SET_OBJECTS,
-    ZoneState,
+    ZoneState, ZoneActions,
     REMOVE_VISITED_ZONE,
     LOAD_ZONE_BY_NAME,
     SET_OBJECTS_LOADED,
@@ -23,8 +23,7 @@ const initialState: ZoneState = {
     objectsLoaded: false,
     creaturesLoaded: false,
     visitedZones: [],
-    gameOver: false,
-    zoneRouteUsed: undefined
+    gameOver: false
 };
 
 const reducer = (state = initialState, action: ZoneActions) => {
@@ -74,6 +73,12 @@ const reducer = (state = initialState, action: ZoneActions) => {
                 }
 
             };
+        case SET_CREATURES:
+            return {
+                ...state,
+                creaturesLoaded: true,
+                creatures: action.payload
+            };
         case DAMAGE_CREATURE:
             return {
                 ...state,
@@ -106,29 +111,25 @@ const reducer = (state = initialState, action: ZoneActions) => {
 
             let zoneToLoad: ZoneStatus;
             // Find if the zone has already been visited
-            const visitedZone = state.visitedZones.find(z => z.name === action.payload.linkedRoute.zone);
+            const visitedZone = state.visitedZones.find(z => z.name === action.payload);
             if (visitedZone) {
-                // Find the linked counterpart
-                const linkedRoute = loadZoneData(action.payload.linkedRoute.zone).zoneRoutes.find(route => route.id === action.payload.linkedRoute.id);
                 zoneToLoad = {
                     name: visitedZone.name,
                     creatures: {
-                        ...visitedZone.creatures,
-                        [Faction.Player]: state.creatures[Faction.Player].map(// set player's position as linkedRoute's position if one was found
-                            c => c.id === 'player' ? { ...c, pos: linkedRoute ? linkedRoute.position : c.pos } : c)
+                        [Faction.Player]: [],
+                        [Faction.Friendly]: [],
+                        [Faction.Hostile]: []
                     },
                     interactableTiles: [],
                     tiles: visitedZone.tiles,
                     size: visitedZone.size
                 };
             } else {
-                const zone = loadZoneData(action.payload.linkedRoute.zone);
-                const linkedRoute = zone.zoneRoutes.find(route => route.id === action.payload.linkedRoute.id);
+                const zone = loadZoneData(action.payload);
                 zoneToLoad = {
                     name: zone.name,
                     creatures: {
-                        [Faction.Player]: state.creatures[Faction.Player].map(
-                            c => c.id === 'player' ? { ...c, pos: linkedRoute ? linkedRoute.position : c.pos } : c),
+                        [Faction.Player]: [],
                         [Faction.Friendly]: [], // Set npcs empty so creature manager can take care of that
                         [Faction.Hostile]: []
                     },
