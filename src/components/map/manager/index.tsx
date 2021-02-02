@@ -5,13 +5,11 @@ import MapLoader from '../loader';
 import MapRenderer from '../renderer';
 
 const MapManager: React.FC = () => {
-    const { cameraPosition, zoneName, zoneTiles, tilesLoaded, zoneRouteUsed } = useSelector((state: RootState) => (
+    const { cameraPosition, zoneName, tilesLoaded } = useSelector((state: RootState) => (
         {
             cameraPosition: state.cameraPosition,
             zoneName: state.zone.name,
-            zoneTiles: state.zone.tiles,
-            tilesLoaded: state.zone.tilesLoaded,
-            zoneRouteUsed: state.zone.zoneRouteUsed
+            tilesLoaded: state.zone.tilesLoaded
         }
     ));
 
@@ -20,11 +18,8 @@ const MapManager: React.FC = () => {
             <MapLoader
                 tilesLoaded={tilesLoaded}
                 zoneName={zoneName}
-                zoneTiles={zoneTiles}
-                zoneRouteUsed={zoneRouteUsed}
             />
             <MapRenderer
-                zoneTiles={zoneTiles}
                 cameraPosition={cameraPosition}
                 tilesLoaded={tilesLoaded}
             />

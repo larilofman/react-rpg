@@ -3,13 +3,16 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 
 export default function useGetTiles() {
-    const { creatures, tiles, size } = useSelector((state: RootState) => (
-        {
-            creatures: state.zone.creatures,
-            tiles: state.zone.tiles,
-            size: state.zone.size
-        }
-    ));
+    const creatures = useSelector((state: RootState) => state.zone.creatures);
+    const tiles = useSelector((state: RootState) => state.zone.tiles);
+    const size = useSelector((state: RootState) => state.zone.size);
+    // const { creatures, tiles, size } = useSelector((state: RootState) => (
+    //     {
+    //         creatures: state.zone.creatures,
+    //         tiles: state.zone.tiles,
+    //         size: state.zone.size
+    //     }
+    // ));
 
     const isInBounds = (pos: Position): boolean => {
         return (

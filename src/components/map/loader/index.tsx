@@ -1,20 +1,22 @@
 import React, { useEffect } from 'react';
 import { Tile, ZoneData, ZoneRouteType } from '../../../types';
 import useGenerateMap from '../../../hooks/use-generate-map';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { SetTiles } from '../../redux-state/reducers/zone/actions';
 import { loadZoneData, ZoneName } from '../../../utils/load-data';
+import { RootState } from '../../redux-state/store';
 
 interface Props {
     tilesLoaded: boolean
-    zoneTiles: Tile[][]
     zoneName: ZoneName
-    zoneRouteUsed: ZoneRouteType | undefined
 }
 
-const MapLoader: React.FC<Props> = ({ tilesLoaded, zoneTiles, zoneName }) => {
+const MapLoader: React.FC<Props> = ({ tilesLoaded, zoneName }) => {
     const dispatch = useDispatch();
     const { buildMap, generateMap } = useGenerateMap();
+
+    const zoneTiles = useStore<RootState>().getState().zone.tiles;
+    console.log("zTiles", zoneTiles);
 
     useEffect(() => {
         if (!tilesLoaded) {
@@ -31,6 +33,10 @@ const MapLoader: React.FC<Props> = ({ tilesLoaded, zoneTiles, zoneName }) => {
             }
         }
     });
+
+    // useEffect(() => {
+
+    // }, [zoneName]);
 
     return null;
 

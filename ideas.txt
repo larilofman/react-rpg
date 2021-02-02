@@ -1,10 +1,1 @@
-gameManager katsoo useEffectissä onko state.game.currentZone muuttunut
-jos on, kutsutaan changeZonea joka asettaa zone.dataksi(eli vanhalta nimeltä ZoneData) jsonista haetut tiedot tai asettaa zone.stateksi visitedZoneista löytyneen
-map tarkkailee zone.data.namea useEffectillä ja sen muuttuessa buildaa/generöi tilet
-creatureManager tarkkailee zone.state.tilesiä ja kun ne on generoitu, spawnaa creaturet
-objectManager tekee saman
-
-
-
-
 usekeypress hookkiin kaikki keyboard jutut ja hakee nappi arrayt jostain conffista

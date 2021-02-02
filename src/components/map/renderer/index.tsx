@@ -3,14 +3,17 @@ import Floor from '../../tile/floor';
 import Wall from '../../tile/wall';
 import { TileType, Tile, Position } from '../../../types';
 import settings from '../../../data/settings.json';
+import { useStore } from 'react-redux';
+import { RootState } from '../../redux-state/store';
 
 interface Props {
     cameraPosition: Position
-    zoneTiles: Tile[][]
     tilesLoaded: boolean
 }
 
-const MapRenderer: React.FC<Props> = ({ zoneTiles, cameraPosition, tilesLoaded }) => {
+const MapRenderer: React.FC<Props> = ({ cameraPosition, tilesLoaded }) => {
+
+    const zoneTiles = useStore<RootState>().getState().zone.tiles;
 
     const tilesOnCamera = React.useMemo(() => {
         const cam_y = cameraPosition.y;
