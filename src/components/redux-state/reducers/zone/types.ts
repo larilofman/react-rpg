@@ -69,7 +69,8 @@ interface LoadZone {
 }
 
 interface SaveVisitedZone {
-    type: typeof SAVE_VISITED_ZONE
+    type: typeof SAVE_VISITED_ZONE,
+    payload: ZoneStatus
 }
 
 interface RemoveVisitedZone {

@@ -109,45 +109,9 @@ const reducer = (state = initialState, action: ZoneActions) => {
                 interactableTiles: state.interactableTiles
             };
 
-            let zoneToLoad: ZoneStatus;
-            // Find if the zone has already been visited
-            const visitedZone = state.visitedZones.find(z => z.name === action.payload);
-            if (visitedZone) {
-                zoneToLoad = {
-                    name: visitedZone.name,
-                    creatures: {
-                        [Faction.Player]: [],
-                        [Faction.Friendly]: [],
-                        [Faction.Hostile]: []
-                    },
-                    interactableTiles: [],
-                    tiles: visitedZone.tiles,
-                    size: visitedZone.size
-                };
-            } else {
-                const zone = loadZoneData(action.payload);
-                zoneToLoad = {
-                    name: zone.name,
-                    creatures: {
-                        [Faction.Player]: [],
-                        [Faction.Friendly]: [], // Set npcs empty so creature manager can take care of that
-                        [Faction.Hostile]: []
-                    },
-                    interactableTiles: [], // object manager will fill these
-                    tiles: [], // map will load or generate tiles
-                    size: { w: 0, h: 0 }
-                };
-            }
-
             return {
-                ...state,
-                tilesLoaded: false,
-                objectsLoaded: false,
-                name: zoneToLoad.name,
-                tiles: zoneToLoad.tiles,
-                size: zoneToLoad.size,
-                creatures: zoneToLoad.creatures,
-                interactableTiles: zoneToLoad.interactableTiles,
+                ...initialState,
+                name: action.payload,
                 visitedZones: state.visitedZones.map(z => z.name).includes(state.name)
                     ? state.visitedZones.map(z => z.name === state.name ? savedZoneData : z) // zone has already been saved so replace it
                     : state.visitedZones.concat(savedZoneData) // zone hasn't been saved before

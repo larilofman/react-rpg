@@ -56,13 +56,13 @@ const DevTools: React.FC = () => {
                 </Button>
                 </form>
                 <Container align>
-                    <Button p4 m4 align width="80%" color="light-brown" onClick={() => dispatch(SaveVisitedZone())}>
+                    <Button p4 m4 align width="80%" color="light-brown" onClick={() => console.log('add save back')}>
                         Save ZoneStatus
                 </Button>
                 </Container>
 
             </Container>
-        </Container>
+        </Container >
     );
 };
 

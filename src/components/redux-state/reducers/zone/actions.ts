@@ -1,4 +1,4 @@
-import { BaseCreature, Creature, Faction, InteractableTile, Position, Tile, ZoneRouteType } from '../../../../types';
+import { BaseCreature, Creature, Faction, InteractableTile, Position, Tile, ZoneRouteType, ZoneStatus } from '../../../../types';
 import { ZoneName } from '../../../../utils/load-data';
 import {
     ADD_CREATURES,
@@ -73,9 +73,10 @@ export const LoadZone = (zoneName: ZoneName): ZoneActions => {
     };
 };
 
-export const SaveVisitedZone = (): ZoneActions => {
+export const SaveVisitedZone = (zoneStatus: ZoneStatus): ZoneActions => {
     return {
-        type: SAVE_VISITED_ZONE
+        type: SAVE_VISITED_ZONE,
+        payload: zoneStatus
     };
 };
 
