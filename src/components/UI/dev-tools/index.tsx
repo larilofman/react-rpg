@@ -6,13 +6,14 @@ import Button from '../button';
 import Select from '../select';
 import { getAllZoneNames, ZoneName } from '../../../utils/load-data';
 import './style.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { RootState } from '../../redux-state/store';
-import { LoadZoneByName, SaveVisitedZone } from '../../redux-state/reducers/game/actions';
+import { LoadZone, LoadZoneByName, RemoveVisitedZone, SaveVisitedZone } from '../../redux-state/reducers/game/actions';
 
 
 const DevTools: React.FC = () => {
     const { zoneName, visitedZones } = useSelector((state: RootState) => ({ zoneName: state.zone.name, visitedZones: state.game.visitedZones }));
+    const zoneStatus = useStore<RootState>().getState().zone;
     const dispatch = useDispatch();
     const { position, handleMouseDown } = useDraggable('dev-tools-header', { x: 16, y: 16 });
     const [selectedZone, setSelectedZone] = useState<string>(zoneName as ZoneName);
@@ -22,12 +23,13 @@ const DevTools: React.FC = () => {
 
     const handleZoneChangeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(LoadZoneByName(selectedZone as ZoneName, true, false));
+        dispatch(RemoveVisitedZone(selectedZone as ZoneName));
+        dispatch(LoadZone(selectedZone as ZoneName));
     };
 
     const handleSavedZoneChangeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(LoadZoneByName(selectedSave as ZoneName, false, false));
+        dispatch(LoadZone(selectedSave as ZoneName));
     };
 
     useEffect(() => {
@@ -56,7 +58,7 @@ const DevTools: React.FC = () => {
                 </Button>
                 </form>
                 <Container align>
-                    <Button p4 m4 align width="80%" color="light-brown" onClick={() => console.log('add save back')}>
+                    <Button p4 m4 align width="80%" color="light-brown" onClick={() => dispatch(SaveVisitedZone(zoneStatus))}>
                         Save ZoneStatus
                 </Button>
                 </Container>
