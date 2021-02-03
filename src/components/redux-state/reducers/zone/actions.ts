@@ -1,21 +1,23 @@
-import { BaseCreature, Creature, Faction, InteractableTile, Position, Tile, ZoneRouteType, ZoneStatus } from '../../../../types';
+import { BaseCreature, Creature, Faction, InteractableTile, Position, Tile } from '../../../../types';
 import { ZoneName } from '../../../../utils/load-data';
 import {
+    INIT_ZONE,
     ADD_CREATURES,
     SET_CREATURES,
     DAMAGE_CREATURE,
-    LOAD_ZONE,
     MOVE_CREATURE,
     REMOVE_CREATURE,
-    SAVE_VISITED_ZONE,
-    REMOVE_VISITED_ZONE,
     SET_TILES,
-    LOAD_ZONE_BY_NAME,
     ZoneActions,
-    SET_OBJECTS_LOADED,
-    SET_CREATURES_LOADED,
     SET_OBJECTS
 } from './types';
+
+export function InitZone(zoneName: ZoneName): ZoneActions {
+    return {
+        type: INIT_ZONE,
+        payload: zoneName
+    };
+}
 
 export function SetTiles(tiles: Tile[][]): ZoneActions {
     return {
@@ -66,47 +68,6 @@ export const RemoveCreature = (creature: BaseCreature): ZoneActions => {
     };
 };
 
-export const LoadZone = (zoneName: ZoneName): ZoneActions => {
-    return {
-        type: LOAD_ZONE,
-        payload: zoneName
-    };
-};
-
-export const SaveVisitedZone = (zoneStatus: ZoneStatus): ZoneActions => {
-    return {
-        type: SAVE_VISITED_ZONE,
-        payload: zoneStatus
-    };
-};
-
-export const RemoveVisitedZone = (zoneName: ZoneName): ZoneActions => {
-    return {
-        type: REMOVE_VISITED_ZONE,
-        payload: zoneName
-    };
-};
-
-export const LoadZoneByName = (zoneName: ZoneName, fresh: boolean, savePrevious: boolean): ZoneActions => {
-    return {
-        type: LOAD_ZONE_BY_NAME,
-        payload: { zoneName, fresh, savePrevious }
-    };
-};
-
-export const SetObjectsLoaded = (loaded: boolean) => {
-    return {
-        type: SET_OBJECTS_LOADED,
-        payload: loaded
-    };
-};
-
-export const SetCreaturesLoaded = (loaded: boolean) => {
-    return {
-        type: SET_CREATURES_LOADED,
-        payload: loaded
-    };
-};
 
 
 

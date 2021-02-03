@@ -56,7 +56,7 @@ const MapRenderer: React.FC<Props> = ({ cameraPosition, tilesLoaded }) => {
 const areEqual = (prevProps: Readonly<React.PropsWithChildren<Props>>, nextProps: Readonly<React.PropsWithChildren<Props>>) => {
     if (prevProps.cameraPosition.x !== nextProps.cameraPosition.x) return false;
     if (prevProps.cameraPosition.y !== nextProps.cameraPosition.y) return false;
-    if (prevProps.tilesLoaded !== nextProps.tilesLoaded) return false;
+    if (nextProps.tilesLoaded && prevProps.tilesLoaded !== nextProps.tilesLoaded) return false;
     return true;
 };
 

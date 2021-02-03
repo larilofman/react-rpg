@@ -60,7 +60,6 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
                 setCanAct(prev => (!prev));
             }, 20);
         }
-
         return () => clearInterval(delayTicker);
     }, [creaturesLoaded, gameOver]);
 
@@ -79,7 +78,6 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     useEffect(() => {
         // canAct is toggled on by the interval and it's player's turn
         if (canAct && turn.faction === data.faction && turn.creature === data.id) {
-
             // player has died, skip turn so npcs will keep wandering
             if (gameOver) {
                 useTurn(data);

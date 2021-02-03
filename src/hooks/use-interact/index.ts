@@ -1,9 +1,7 @@
-import { Position, InteractableTileType, InteractableTile, Creature } from '../../types';
-import { useSelector, useDispatch } from 'react-redux';
+import { Position, InteractableTileType, InteractableTile } from '../../types';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 import { useEffect, useState } from 'react';
-import { LoadZone, SaveVisitedZone } from '../../components/redux-state/reducers/zone/actions';
-import { SavePlayer } from '../../components/redux-state/reducers/game/actions';
 import useChangeZone from '../use-change-zone';
 
 export default function useInteract() {

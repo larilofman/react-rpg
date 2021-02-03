@@ -1,5 +1,4 @@
 import React from 'react';
-import { Faction, } from '../../../types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux-state/store';
 import CreatureSpawner from '../spawner';
@@ -9,12 +8,11 @@ import useUseTurn from '../../../hooks/use-use-turn';
 
 const CreatureManager: React.FC = () => {
     const { useTurn } = useUseTurn();
-    const { player, zoneName, creaturesLoaded, tilesLoaded } = useSelector((state: RootState) => (
+    const { zoneName, creaturesLoaded, tilesLoaded } = useSelector((state: RootState) => (
         {
-            zoneName: state.zone.name,
+            zoneName: state.game.currentZone,
             creaturesLoaded: state.zone.creaturesLoaded,
-            tilesLoaded: state.zone.tilesLoaded,
-            player: state.zone.creatures[Faction.Player][0]
+            tilesLoaded: state.zone.tilesLoaded
         }
     ));
 
@@ -24,7 +22,6 @@ const CreatureManager: React.FC = () => {
         <>
             <CreatureSpawner
                 zoneName={zoneName}
-                player={player}
                 creaturesLoaded={creaturesLoaded} />
             <CreatureRenderer useTurn={useTurn} />
 

@@ -8,7 +8,7 @@ const ObjectManager: React.FC = () => {
     const { tilesLoaded, zoneName, objectsLoaded, cameraPosition } = useSelector((state: RootState) => (
         {
             tilesLoaded: state.zone.tilesLoaded,
-            zoneName: state.zone.name,
+            zoneName: state.game.currentZone,
             objectsLoaded: state.zone.objectsLoaded,
             cameraPosition: state.cameraPosition
         }

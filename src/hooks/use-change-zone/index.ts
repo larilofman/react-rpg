@@ -1,8 +1,7 @@
-import { ZoneStatus, ZoneRouteType, Faction } from '../../types';
+import { ZoneRouteType, Faction } from '../../types';
 import { useDispatch, useStore } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
-import { LoadZone, SaveVisitedZone } from '../../components/redux-state/reducers/zone/actions';
-import { SavePlayer } from '../../components/redux-state/reducers/game/actions';
+import { SavePlayer, LoadZone, SaveVisitedZone } from '../../components/redux-state/reducers/game/actions';
 
 export default function useChangeZone() {
     const dispatch = useDispatch();

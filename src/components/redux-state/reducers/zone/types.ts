@@ -1,4 +1,4 @@
-import { BaseCreature, Creature, Dimensions, Faction, InteractableTile, Position, Tile, ZoneStatus, ZoneRouteType } from '../../../../types';
+import { BaseCreature, Creature, Dimensions, Faction, InteractableTile, Position, Tile } from '../../../../types';
 import { ZoneName } from '../../../../utils/load-data';
 export const SET_TILES = 'SET_TILES';
 export const MOVE_CREATURE = 'MOVE_CREATURE';
@@ -6,13 +6,13 @@ export const ADD_CREATURES = 'ADD_CREATURES';
 export const SET_CREATURES = 'SET_CREATURES';
 export const DAMAGE_CREATURE = 'DAMAGE_CREATURE';
 export const REMOVE_CREATURE = 'REMOVE_CREATURE';
-export const LOAD_ZONE = 'LOAD_ZONE';
-export const SAVE_VISITED_ZONE = 'SAVE_VISITED_ZONE';
-export const REMOVE_VISITED_ZONE = 'REMOVE_VISITED_ZONE';
 export const SET_OBJECTS = 'SET_OBJECTS';
-export const LOAD_ZONE_BY_NAME = 'LOAD_ZONE_BY_NAME';
-export const SET_OBJECTS_LOADED = 'SET_OBJECTS_LOADED';
-export const SET_CREATURES_LOADED = 'SET_CREATURES_LOADED';
+export const INIT_ZONE = 'INIT_ZONE';
+
+interface InitZone {
+    type: typeof INIT_ZONE,
+    payload: ZoneName
+}
 
 interface SetTiles {
     type: typeof SET_TILES,
@@ -22,16 +22,6 @@ interface SetTiles {
 interface SetObjects {
     type: typeof SET_OBJECTS,
     payload: InteractableTile[]
-}
-
-interface SetObjectsLoaded {
-    type: typeof SET_OBJECTS_LOADED,
-    payload: boolean
-}
-
-interface SetCreaturesLoaded {
-    type: typeof SET_CREATURES_LOADED,
-    payload: boolean
 }
 
 interface MoveCreature {
@@ -63,40 +53,15 @@ interface RemoveCreature {
     payload: BaseCreature
 }
 
-interface LoadZone {
-    type: typeof LOAD_ZONE,
-    payload: ZoneName
-}
-
-interface SaveVisitedZone {
-    type: typeof SAVE_VISITED_ZONE,
-    payload: ZoneStatus
-}
-
-interface RemoveVisitedZone {
-    type: typeof REMOVE_VISITED_ZONE,
-    payload: ZoneName
-}
-
-interface LoadZoneByName {
-    type: typeof LOAD_ZONE_BY_NAME,
-    payload: { zoneName: ZoneName, fresh: boolean, savePrevious: boolean }
-}
-
 export type ZoneActions =
+    InitZone |
     SetTiles |
     MoveCreature |
     AddCreatures |
     SetCreatures |
     DamageCreature |
     RemoveCreature |
-    LoadZone |
-    SaveVisitedZone |
-    RemoveVisitedZone |
-    SetObjects |
-    LoadZoneByName |
-    SetObjectsLoaded |
-    SetCreaturesLoaded
+    SetObjects
 
 export type ZoneState = {
     name: ZoneName
@@ -111,8 +76,6 @@ export type ZoneState = {
     tilesLoaded: boolean
     objectsLoaded: boolean
     creaturesLoaded: boolean
-    visitedZones: ZoneStatus[]
-    gameOver: boolean
 }
 
 

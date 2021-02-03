@@ -12,7 +12,7 @@ interface Props {
 
 const ObjectLoader: React.FC<Props> = ({ objectsLoaded, zoneName }) => {
     const dispatch = useDispatch();
-    const visitedZones = useSelector((state: RootState) => state.zone.visitedZones);
+    const visitedZones = useSelector((state: RootState) => state.game.visitedZones);
 
     useEffect(() => {
         const visitedZone = visitedZones.find(z => z.name === zoneName);

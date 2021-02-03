@@ -8,11 +8,11 @@ import { getAllZoneNames, ZoneName } from '../../../utils/load-data';
 import './style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux-state/store';
-import { LoadZoneByName, SaveVisitedZone } from '../../redux-state/reducers/zone/actions';
+import { LoadZoneByName, SaveVisitedZone } from '../../redux-state/reducers/game/actions';
 
 
 const DevTools: React.FC = () => {
-    const { zoneName, visitedZones } = useSelector((state: RootState) => ({ zoneName: state.zone.name, visitedZones: state.zone.visitedZones }));
+    const { zoneName, visitedZones } = useSelector((state: RootState) => ({ zoneName: state.zone.name, visitedZones: state.game.visitedZones }));
     const dispatch = useDispatch();
     const { position, handleMouseDown } = useDraggable('dev-tools-header', { x: 16, y: 16 });
     const [selectedZone, setSelectedZone] = useState<string>(zoneName as ZoneName);
