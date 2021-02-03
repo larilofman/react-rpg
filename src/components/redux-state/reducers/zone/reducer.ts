@@ -101,20 +101,10 @@ const reducer = (state = initialState, action: ZoneActions) => {
             };
         }
         case LOAD_ZONE: {
-            const savedZoneData = {
-                name: state.name,
-                creatures: state.creatures,
-                tiles: state.tiles,
-                size: state.size,
-                interactableTiles: state.interactableTiles
-            };
-
             return {
                 ...initialState,
                 name: action.payload,
-                visitedZones: state.visitedZones.map(z => z.name).includes(state.name)
-                    ? state.visitedZones.map(z => z.name === state.name ? savedZoneData : z) // zone has already been saved so replace it
-                    : state.visitedZones.concat(savedZoneData) // zone hasn't been saved before
+                visitedZones: state.visitedZones
             };
         }
         case LOAD_ZONE_BY_NAME: {
@@ -168,18 +158,18 @@ const reducer = (state = initialState, action: ZoneActions) => {
 
         }
         case SAVE_VISITED_ZONE: {
-            const zoneToSave = {
-                name: state.name,
-                creatures: state.creatures,
-                interactableTiles: state.interactableTiles,
-                tiles: state.tiles,
-                size: state.size
+            const savedZoneData = {
+                name: action.payload.name,
+                creatures: action.payload.creatures,
+                interactableTiles: action.payload.interactableTiles,
+                tiles: action.payload.tiles,
+                size: action.payload.size
             };
             return {
                 ...state,
-                visitedZones: state.visitedZones.map(z => z.name).includes(zoneToSave.name)
-                    ? state.visitedZones.map(z => z.name === zoneToSave.name ? zoneToSave : z) // zone has already been saved so replace it
-                    : state.visitedZones.concat(zoneToSave) // zone hasn't been saved before
+                visitedZones: state.visitedZones.map(z => z.name).includes(state.name)
+                    ? state.visitedZones.map(z => z.name === state.name ? savedZoneData : z) // zone has already been saved so replace it
+                    : state.visitedZones.concat(savedZoneData) // zone hasn't been saved before
             };
         }
         case REMOVE_VISITED_ZONE: {

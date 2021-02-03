@@ -10,7 +10,6 @@ export default function useChangeZone() {
     const zoneStatus = useStore<RootState>().getState().zone;
 
     const changeZone = (zoneRouteUsed: ZoneRouteType) => {
-        console.log(zoneStatus);
         dispatch(SavePlayer({ ...player, pos: zoneRouteUsed.linkedRoute.position }));
         dispatch(SaveVisitedZone(zoneStatus));
         dispatch(LoadZone(zoneRouteUsed.linkedRoute.zoneName));
