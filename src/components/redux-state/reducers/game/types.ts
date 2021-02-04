@@ -2,10 +2,11 @@ import { Creature, ZoneStatus } from "../../../../types";
 import { ZoneName } from "../../../../utils/load-data";
 export const SET_GAME_OVER = 'SET_GAME_OVER';
 export const SAVE_PLAYER = 'SAVE_PLAYER';
+export const RESET_PLAYER = 'RESET_PLAYER';
 export const LOAD_ZONE = 'LOAD_ZONE';
+export const LOAD_SAVED_ZONE = 'LOAD_SAVED_ZONE';
 export const SAVE_VISITED_ZONE = 'SAVE_VISITED_ZONE';
 export const REMOVE_VISITED_ZONE = 'REMOVE_VISITED_ZONE';
-export const LOAD_ZONE_BY_NAME = 'LOAD_ZONE_BY_NAME';
 
 interface SetGameOver {
     type: typeof SET_GAME_OVER,
@@ -17,8 +18,17 @@ interface SavePlayer {
     payload: Creature
 }
 
+interface ResetPlayer {
+    type: typeof RESET_PLAYER
+}
+
 interface LoadZone {
     type: typeof LOAD_ZONE,
+    payload: ZoneName
+}
+
+interface LoadSavedZone {
+    type: typeof LOAD_SAVED_ZONE,
     payload: ZoneName
 }
 
@@ -32,23 +42,19 @@ interface RemoveVisitedZone {
     payload: ZoneName
 }
 
-interface LoadZoneByName {
-    type: typeof LOAD_ZONE_BY_NAME,
-    payload: { zoneName: ZoneName, fresh: boolean, savePrevious: boolean }
-}
-
 export type GameActions =
     SetGameOver |
     SavePlayer |
+    ResetPlayer |
     LoadZone |
+    LoadSavedZone |
     SaveVisitedZone |
-    RemoveVisitedZone |
-    LoadZoneByName
+    RemoveVisitedZone
 
 export type GameState = {
     gameOver: boolean
     player: Creature
     visitedZones: ZoneStatus[]
-    currentZone: ZoneName
+    currentZone: { name: ZoneName }
 }
 

@@ -1,4 +1,4 @@
-import { Faction} from '../../../../types';
+import { Faction } from '../../../../types';
 import {
     SET_TILES, MOVE_CREATURE,
     ADD_CREATURES, SET_CREATURES,

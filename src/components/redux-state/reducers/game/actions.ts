@@ -5,7 +5,8 @@ import {
     LOAD_ZONE,
     SAVE_VISITED_ZONE,
     REMOVE_VISITED_ZONE,
-    LOAD_ZONE_BY_NAME,
+    RESET_PLAYER,
+    LOAD_SAVED_ZONE,
 } from './types';
 
 export function SetGameOver(gameOver: boolean): GameActions {
@@ -22,9 +23,22 @@ export function SavePlayer(player: Creature): GameActions {
     };
 }
 
+export function ResetPlayer(): GameActions {
+    return {
+        type: RESET_PLAYER
+    };
+}
+
 export const LoadZone = (zoneName: ZoneName): GameActions => {
     return {
         type: LOAD_ZONE,
+        payload: zoneName
+    };
+};
+
+export const LoadSavedZone = (zoneName: ZoneName): GameActions => {
+    return {
+        type: LOAD_SAVED_ZONE,
         payload: zoneName
     };
 };
@@ -40,13 +54,6 @@ export const RemoveVisitedZone = (zoneName: ZoneName): GameActions => {
     return {
         type: REMOVE_VISITED_ZONE,
         payload: zoneName
-    };
-};
-
-export const LoadZoneByName = (zoneName: ZoneName, fresh: boolean, savePrevious: boolean): GameActions => {
-    return {
-        type: LOAD_ZONE_BY_NAME,
-        payload: { zoneName, fresh, savePrevious }
     };
 };
 

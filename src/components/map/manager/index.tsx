@@ -8,7 +8,7 @@ const MapManager: React.FC = () => {
     const { cameraPosition, zoneName, tilesLoaded } = useSelector((state: RootState) => (
         {
             cameraPosition: state.cameraPosition,
-            zoneName: state.game.currentZone,
+            zoneName: state.game.currentZone.name,
             tilesLoaded: state.zone.tilesLoaded
         }
     ));

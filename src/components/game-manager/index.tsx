@@ -8,11 +8,11 @@ import { RootState } from '../redux-state/store';
 
 const GameManager: React.FC = () => {
     const dispatch = useDispatch();
-    const zoneName = useSelector((state: RootState) => state.game.currentZone);
+    const currentZone = useSelector((state: RootState) => state.game.currentZone);
 
     useEffect(() => {
-        dispatch(InitZone(zoneName));
-    }, [zoneName]);
+        dispatch(InitZone(currentZone.name));
+    }, [currentZone]);
 
     return (
         <>

@@ -10,7 +10,7 @@ const CreatureManager: React.FC = () => {
     const { useTurn } = useUseTurn();
     const { zoneName, creaturesLoaded, tilesLoaded } = useSelector((state: RootState) => (
         {
-            zoneName: state.game.currentZone,
+            zoneName: state.game.currentZone.name,
             creaturesLoaded: state.zone.creaturesLoaded,
             tilesLoaded: state.zone.tilesLoaded
         }
