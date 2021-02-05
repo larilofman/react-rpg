@@ -17,6 +17,7 @@
   * [Change Zone hook](#change-zone-hook)
   * [Use Turn hook](#use-turn-hook)
   * [Combat Log](#combat-log)
+  * [Dev Tools](#dev-tools)
 * [Usage](#usage)
   * [Movement](#movement)
   * [Attacking](#attacking)
@@ -74,7 +75,11 @@ The game(and any new zones loaded) starts with player's turn. Once player has ac
 
 ### Combat Log
 
-Combat log hook contains a set of message types that can be added to the log. The hook sends a dispatch to add these to the combat log state,
+Combat log hook contains a set of message types that can be added to the log. The hook sends a dispatch to add these to the combat log state which is tracked by the combag log UI component that renders them in a scrollable box of text.
+
+### Dev Tools
+
+Dev tools main purpose is for testing new features before they are implemented in the game, such as saving and loading zones. The component can also be freely moved around because why not!
 
 ## Usage
 
