@@ -9,6 +9,9 @@
 * [About the Project](#about-the-project)
   * [List Of Features](#list-of-features)
   * [Built With](#built-with)
+* [Getting Started](#getting-started)
+  * [Installation](#installation)
+  * [Running](#running)
 * [Major Components](#major-components)
   * [Redux State](#redux-state)
   * [Game Manager](#game-manager)
@@ -41,6 +44,17 @@ A tilebased game in progress. Idea is inspired by roguelike games such as ADOM b
 ### Built With
 
 * [React](https://reactjs.org)
+
+## Getting Started
+
+### Installation
+
+After cloning or downloading the project, install thedependencies with `npm install`.
+
+### Running
+
+Start the project on localhost port 3000 with `npm start`.
+Build and serve the project on localhost port 5000 with `npm run bns`
 
 ## Major Components
 
