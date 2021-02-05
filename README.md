@@ -1,70 +1,75 @@
-# Getting Started with Create React App
+<p align="center">
+  <h2 align="center">React RPG</h2>
+  <p align="center">
+    Tilebased game made with React, work very much in progress.
+    <br />
+    <a href="" target="_blank"><strong>Open game on Heroku (TBA) »</strong></a>
+    <br />
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of Contents
 
-## Available Scripts
+* [About the Project](#about-the-project)
+  * [List Of Features](#list-of-features)
+  * [Built With](#built-with)
+* [Usage](#usage)
+  * [Movement](#movement)
+  * [Attacking](#attacking)
+  * [Interaction](#interaction)
+* [Roadmap](#roadmap)
+* [Contact](#contact)
+* [Acknowledgements](#acknowledgements)
 
-In the project directory, you can run:
+## About The Project
 
-### `npm start`
+A tilebased game in progress. Idea is inspired by roguelike games such as ADOM but more than anything the project is about figuring out how to make a game with React, not so much about making a good game.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### List Of Features
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+* Tilebased movement
+* Following, clamped camera
+* Pathfinding
+* Zones created from JSON data
+* Tiles are placed by pre-determined mapping or randomly generated
 
-### `npm test`
+### Built With
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* [React](https://reactjs.org)
 
-### `npm run build`
+## Usage
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Movement
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Character can be moved with either clicking on the map or **_WASD_**, **_arrow keys_** or **_numpad_**(1, 3, 7 and 9 for diagonal movement.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Attacking
 
-### `npm run eject`
+Enemies can be attacked by walking towards them or clicking them when standing on a nearby tile.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Interaction
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Interaction happens with **_E_**-key. So far the only interactable object is the portal to change zone.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Roadmap
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Quite a bit of work to do for the "engine" before an actual game can be made. Some ideas in an order of rough importance:
 
-## Learn More
+* Pop-up messages to show relevant tips for player, for example prompt to press a button to perform certain action like changing zone.
+* Major refactoring of map generating to allow for different types of maps like dungeons, outdoors and what not.
+* Saving the current game state to local storage and perhaps to cloud too.
+* A quest system with quest givers, objectives and log.
+* Experience system and more advanced character stats.
+* System for items and gear.
+* Field of vision with fog of war.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Contact
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+larwazor@gmail.com
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Acknowledgements
+* [React Redux](https://react-redux.js.org/)
+* [Full Stack open 2020](https://fullstackopen.com/)
+* [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
+* [TypeScript](https://www.typescriptlang.org/)
+* [RPG Maker Vx Ace Characters](https://lanto.itch.io/free-characters)
+* [Dungeon Crawl 32x32 tiles supplemental](https://opengameart.org/content/dungeon-crawl-32x32-tiles-supplemental)
