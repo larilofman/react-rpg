@@ -103,7 +103,7 @@ Combat log hook contains a set of message types that can be added to the log. Th
 
 ### Dev Tools
 
-Dev tools main purpose is for testing new features before they are implemented in the game, such as saving and loading zones. The component can also be freely moved around because why not!
+The main purpose of dev tools is for testing new features before they are implemented in the game, such as saving and loading zones. The component can also be freely moved around because why not!
 
 ## Usage
 
