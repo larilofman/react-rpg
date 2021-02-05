@@ -19,6 +19,7 @@
   * [Creature Manager](#creature-manager)
   * [Change Zone hook](#change-zone-hook)
   * [Use Turn hook](#use-turn-hook)
+  * [Sprite](#sprite)
   * [Player](#player)
   * [Combat Log](#combat-log)
   * [Dev Tools](#dev-tools)
@@ -87,6 +88,10 @@ When player changes zone, the character is stored with the game reducer as is th
 ### Use Turn Hook
 
 The game(and any new zones loaded) starts with player's turn. Once player has acted, the turn is given to the next creature of the player faction, allowing followers to be added. Once all the creatures of a faction have had their turn, the turn is passed on to the next faction.
+
+### Sprite
+
+Sprite is a div with background image and it is rendered with an absolute position, its position moving to the opposite direction of camera. In case of "animated" sprite, offsets for the background image are passed as props and background position adjusted so the correct part of the tileset image is shown.
 
 ### Player
 
