@@ -10,6 +10,7 @@
   * [List Of Features](#list-of-features)
   * [Built With](#built-with)
 * [Major Components](#major-components)
+  * [Redux State](#redux-state)
   * [Game Manager](#game-manager)
 * [Usage](#usage)
   * [Movement](#movement)
@@ -36,6 +37,15 @@ A tilebased game in progress. Idea is inspired by roguelike games such as ADOM b
 * [React](https://reactjs.org)
 
 ## Major Components
+
+### Redux State
+
+The store consists of several slices of varying sizes:
+* Game reducer keeps track of general game wide information such as player, zones that have been visited and saving and loading zones.
+* Zone reducer manages the currently active zone like tiles, objects and creatures and any changes to them such as movement or damage.
+* Turn reducer manages the turn system of currently active zone. Once player(and possibly followers if/when they are added) has acted, turn is passed to the next       faction and its creatures take their turn one by one.
+* Combat log reducer stores all relevant information about combat and such.
+* Camera position reducer is responsible for... the position of camera!
 
 ### Game Manager
 
