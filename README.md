@@ -49,7 +49,11 @@ The store consists of several slices of varying sizes:
 
 ### Game Manager
 
-Handles stuff!
+When zone changes in the game reducer, game manager initializes a new map for the zone reducer.
+
+### Map Manager
+
+Map manager listens to changes to the current zone name and once it changes, information is passed to map loader letting it know a new map should be created. The map loader checks if the zone has already been visited and loads those tiles to the current zone state. In the case of previously unvisited zone, data is loaded from JSON and map generated based on either predefined mapping or randomly generated from definitions.
 
 ## Usage
 
