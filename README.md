@@ -19,6 +19,7 @@
   * [Creature Manager](#creature-manager)
   * [Change Zone hook](#change-zone-hook)
   * [Use Turn hook](#use-turn-hook)
+  * [Player](#player)
   * [Combat Log](#combat-log)
   * [Dev Tools](#dev-tools)
 * [Usage](#usage)
@@ -86,6 +87,10 @@ When player changes zone, the character is stored with the game reducer as is th
 ### Use Turn Hook
 
 The game(and any new zones loaded) starts with player's turn. Once player has acted, the turn is given to the next creature of the player faction, allowing followers to be added. Once all the creatures of a faction have had their turn, the turn is passed on to the next faction.
+
+### Player
+
+The player component uses hooks to handle different tasks. For movement, managing the animation state, collision checking, keyboard and mouse input and pathfinding to name a few. Player can act ever so often, defined by an interval ticking on and off every few milliseconds. Once it is player's turn and time to act, the component checks if there is a clicked path to follow or a keypressed and uses related hooks to perform those actions.
 
 ### Combat Log
 
