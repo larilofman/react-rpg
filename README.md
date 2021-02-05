@@ -1,17 +1,16 @@
-<p align="center">
-  <h2 align="center">React RPG</h2>
+  <h1 align="center">React RPG</h1>
   <p align="center">
     Tilebased game made with React, work very much in progress.
-    <br />
     <a href="" target="_blank"><strong>Open game on Heroku (TBA) »</strong></a>
-    <br />
-</p>
-
+  </p>
+  
 ## Table of Contents
 
 * [About the Project](#about-the-project)
   * [List Of Features](#list-of-features)
   * [Built With](#built-with)
+* [Major Components](#major-components)
+  * [Game Manager](#game-manager)
 * [Usage](#usage)
   * [Movement](#movement)
   * [Attacking](#attacking)
@@ -30,11 +29,17 @@ A tilebased game in progress. Idea is inspired by roguelike games such as ADOM b
 * Following, clamped camera
 * Pathfinding
 * Zones created from JSON data
-* Tiles are placed by pre-determined mapping or randomly generated
+* Tiles are placed by predefined mapping or randomly generated
 
 ### Built With
 
 * [React](https://reactjs.org)
+
+## Major Components
+
+### Game Manager
+
+Handles stuff!
 
 ## Usage
 
