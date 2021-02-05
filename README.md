@@ -137,7 +137,6 @@ larwazor@gmail.com
 
 ## Acknowledgements
 * [React Redux](https://react-redux.js.org/)
-* [Full Stack open 2020](https://fullstackopen.com/)
 * [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
 * [TypeScript](https://www.typescriptlang.org/)
 * [RPG Maker Vx Ace Characters](https://lanto.itch.io/free-characters)
