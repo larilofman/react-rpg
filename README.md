@@ -45,7 +45,7 @@ Handles stuff!
 
 ### Movement
 
-Character can be moved with either clicking on the map or **_WASD_**, **_arrow keys_** or **_numpad_**(1, 3, 7 and 9 for diagonal movement.
+Character can be moved with either clicking on the map or _WASD_, _arrow keys_ or _numpad_(1, 3, 7 and 9 for diagonal movement).
 
 ### Attacking
 
