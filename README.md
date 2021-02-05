@@ -12,6 +12,11 @@
 * [Major Components](#major-components)
   * [Redux State](#redux-state)
   * [Game Manager](#game-manager)
+  * [Map Manager](#map-manager)
+  * [Creature Manager](#creature-manager)
+  * [Change Zone hook](#change-zone-hook)
+  * [Use Turn hook](#use-turn-hook)
+  * [Combat Log](#combat-log)
 * [Usage](#usage)
   * [Movement](#movement)
   * [Attacking](#attacking)
@@ -53,7 +58,23 @@ When zone changes in the game reducer, game manager initializes a new map for th
 
 ### Map Manager
 
-Map manager listens to changes to the current zone name and once it changes, information is passed to map loader letting it know a new map should be created. The map loader checks if the zone has already been visited and loads those tiles to the current zone state. In the case of previously unvisited zone, data is loaded from JSON and map generated based on either predefined mapping or randomly generated from definitions.
+Map manager listens to changes to the current zone name and once it changes, information is passed to map loader letting it know a new map should be created. The map loader checks if the zone has already been visited and loads those tiles to the current zone state. In the case of previously unvisited zone, data is loaded from JSON and map generated based on either predefined mapping or randomly generated from definitions. Once tiles are set, the state of tiles loaded is changed to true.
+
+### Creature Manager
+
+Working with the same logic as map manager, creature manager passes along information of a changed zone to creature loader. The creature loader checks whether the zone has been visited or not and either places the existing creatures back or spawns new ones based on JSON data. The player and their position is loaded from the game state.
+
+### Change Zone Hook
+
+When player changes zone, the character is stored with the game reducer as is the state of the zone left. Each zone exit contains information of their counterpart on the other zone. Player's position is set by this counterpart's position.
+
+### Use Turn Hook
+
+The game(and any new zones loaded) starts with player's turn. Once player has acted, the turn is given to the next creature of the player faction, allowing followers to be added. Once all the creatures of a faction have had their turn, the turn is passed on to the next faction.
+
+### Combat Log
+
+Combat log hook contains a set of message types that can be added to the log. The hook sends a dispatch to add these to the combat log state,
 
 ## Usage
 
