@@ -130,6 +130,7 @@ Quite a bit of work to do for the "engine" before an actual game can be made. So
 * Experience system and more advanced character stats.
 * System for items and gear.
 * Field of vision with fog of war.
+* Separate map building tool.
 
 ## Contact
 
