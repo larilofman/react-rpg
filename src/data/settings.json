@@ -7,5 +7,6 @@
         "w": 20,
         "h": 16
     },
-    "diagonalMovement": true
+    "diagonalMovement": true,
+    "turnDelay": 40
 }

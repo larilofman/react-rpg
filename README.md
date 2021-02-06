@@ -20,8 +20,8 @@
   * [Creature Manager](#creature-manager)
   * [Change Zone hook](#change-zone-hook)
   * [Use Turn hook](#use-turn-hook)
-  * [Sprite](#sprite)
   * [Player](#player)
+  * [Sprite](#sprite)
   * [Combat Log](#combat-log)
   * [Dev Tools](#dev-tools)
 * [Usage](#usage)
@@ -88,15 +88,15 @@ When player changes zone, the character is stored with the game reducer as is th
 
 ### Use Turn Hook
 
-The game(and any new zones loaded) starts with player's turn. Once player has acted, the turn is given to the next creature of the player faction, allowing followers to be added. Once all the creatures of a faction have had their turn, the turn is passed on to the next faction.
+The game(and any new zones loaded) starts with player's turn. Once player has acted, the turn is given to the next creature of the player faction(allowing followers to be added later). Once all the creatures of a faction have had their turn, the turn is passed on to the next faction. Before each player turn there is a small delay, defined in settings file.
+
+### Player
+
+The player component uses hooks to handle different tasks. In the dependency array of useEffect hook It keeps track of changes to turn state, any keys pressed and whether a path should be found to a clicked position. When turn changes to player, the hook acts accordingly.
 
 ### Sprite
 
 Sprite is a div with background image and it is rendered with an absolute position, its position moving to the opposite direction of camera. In case of "animated" sprite, offsets for the background image are passed as props and background position adjusted so the correct part of the tileset image is shown.
-
-### Player
-
-The player component uses hooks to handle different tasks. For movement, managing the animation state, collision checking, keyboard and mouse input and pathfinding to name a few. Player can act ever so often, defined by an interval ticking on and off every few milliseconds. Once it is player's turn and time to act, the component checks if there is a clicked path to follow or a keypressed and uses related hooks to perform those actions.
 
 ### Combat Log
 

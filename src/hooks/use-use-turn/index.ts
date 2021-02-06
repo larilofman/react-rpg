@@ -3,6 +3,8 @@ import { Faction } from '../../types';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 import { SetCreatureTurn, SetFactionTurn } from '../../components/redux-state/reducers/turn/actions';
+import { turnDelay } from '../../data/settings.json';
+import delay from 'lodash.delay';
 
 export default function useUseTurn() {
     const { turn, creatures, creaturesLoaded } = useSelector((state: RootState) => (
@@ -26,9 +28,18 @@ export default function useUseTurn() {
             if (factionIndex < creatures[turn.faction].length) {
                 dispatch(SetCreatureTurn(creatures[turn.faction][factionIndex].id));
             } else {
-                // Give turn to next faction and reset the index
-                setFactionIndex(0);
-                dispatch(SetFactionTurn(getNextFaction()));
+                // Give turn to next faction and reset the index, adding a delay before each player turn
+                const nextFaction = getNextFaction();
+                if (nextFaction === Faction.Player) {
+                    delay((faction) => {
+                        dispatch(SetFactionTurn(faction));
+                        setFactionIndex(0);
+                    }, turnDelay, nextFaction);
+                } else {
+                    dispatch(SetFactionTurn(getNextFaction()));
+                    setFactionIndex(0);
+                }
+
             }
         }
     }, [factionIndex]);
