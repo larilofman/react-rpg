@@ -23,11 +23,3 @@ export default function useKeyPress() {
 
     return { keyPressed };
 }
-
-// export default function useKeyPress(fn: (e: KeyboardEvent) => void) {
-//     useEffect(() => {
-//         console.log('keypress')
-//         window.addEventListener("keydown", fn);
-//         return () => window.removeEventListener("keydown", fn);
-//     }, [fn]);
-// }

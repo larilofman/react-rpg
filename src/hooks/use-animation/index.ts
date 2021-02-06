@@ -20,13 +20,7 @@ export default function useAnimation(animSteps = 3) {
         } else if (xDir === 1) {
             dir = Direction.right;
         }
-        // if (xDir === 1) {
-        //     dir = Direction.right;
-        // } else if (xDir === -1) {
-        //     dir = Direction.left;
-        // } else if (yDir === -1) {
-        //     dir = Direction.up;
-        // }
+
         setDir(dir);
         if (updateStep) {
             setStep(prev => prev < animSteps - 1 ? prev + 1 : 0);
