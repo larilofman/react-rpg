@@ -1,5 +1,5 @@
 import React from 'react';
-import { InteractableTileType, Position, ZoneRouteType } from '../../../types';
+import { Position, ZoneRouteType } from '../../../types';
 import ZoneRoute from '../../static-object/zoneRoute';
 import { useStore } from 'react-redux';
 import { RootState } from '../../redux-state/store';
