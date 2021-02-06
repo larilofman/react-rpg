@@ -21,4 +21,4 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "react-peli"
-          heroku_email: "larwazor@gmail.com"
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
