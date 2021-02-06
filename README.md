@@ -52,7 +52,7 @@ A tilebased game in progress. Idea is inspired by roguelike games such as ADOM b
 
 ### Installation
 
-After cloning or downloading the project, install thedependencies with `npm install`.
+After cloning or downloading the project, install the dependencies with `npm install`.
 
 ### Running
 
@@ -122,7 +122,7 @@ Interaction happens with **_E_**-key. So far the only interactable object is the
 
 ## Roadmap
 
-Quite a bit of work to do for the "engine" before an actual game can be made. Some ideas in an order of rough importance:
+Quite a bit of work to do on the "engine" before an actual game can be made. Some ideas in an order of rough importance:
 
 * Pop-up messages to show relevant tips for player, for example prompt to press a button to perform certain action like changing zone.
 * Major refactoring of map generating to allow for different types of maps like dungeons, outdoors and what not.
