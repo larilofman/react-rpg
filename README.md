@@ -1,6 +1,7 @@
   <h1 align="center">React RPG</h1>
   <p align="center">
     Tilebased game made with React, work very much in progress.
+    <br />
     <a href="https://react-peli.herokuapp.com/" target="_blank"><strong>Open game on Heroku »</strong></a>
   </p>
   
