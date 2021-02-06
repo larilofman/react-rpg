@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Sprite from '../sprite';
 import useKeyPress from '../../hooks/use-key-press';
 import useMouseClick from '../../hooks/use-mouse-click';
@@ -40,7 +40,6 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     const { creatureClicked, posClicked } = useMouseClick();
     const { findPath, onRoute, cancelPath } = usePathFinding();
     const { keyPressed } = useKeyPress();
-    const [canAct, setCanAct] = useState(true);
     const { getCreatureById } = useGetCreature();
     const { interact, checkInteraction } = useInteract();
 
@@ -49,18 +48,6 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
             walk(data, player.pos);
             updateCamera(player.pos);
         }
-        // Toggles on and off so that player can only act ever so often, increasing it when player has died so enemies act slower
-        let delayTicker: NodeJS.Timeout;
-        if (gameOver) {
-            delayTicker = setInterval(() => {
-                setCanAct(prev => (!prev));
-            }, 100);
-        } else {
-            delayTicker = setInterval(() => {
-                setCanAct(prev => (!prev));
-            }, 20);
-        }
-        return () => clearInterval(delayTicker);
     }, [creaturesLoaded, gameOver]);
 
     // If a tile is clicked on and standing next to an occupied tile, contact with the creature on the tile, otherwise find a path to the tile
@@ -77,7 +64,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
 
     useEffect(() => {
         // canAct is toggled on by the interval and it's player's turn
-        if (canAct && turn.faction === data.faction && turn.creature === data.id) {
+        if (turn.faction === data.faction && turn.creature === data.id) {
             // player has died, skip turn so npcs will keep wandering
             if (gameOver) {
                 useTurn(data);
@@ -123,7 +110,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
                 }
             }
         }
-    }, [canAct]);
+    }, [turn.creature, turn.count, keyPressed, onRoute]); // creature is tracked for when there are other creatures on the zone, count for when player is alone
 
     const getDirectionFromKey = (key: string) => {
         let dir;
