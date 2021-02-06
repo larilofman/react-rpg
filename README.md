@@ -55,7 +55,7 @@ After cloning or downloading the project, install thedependencies with `npm inst
 
 ### Running
 
-Start the project on localhost port 3000 with `npm start`.  
+Start the project on localhost port 3000 with `npm run dev`.  
 Build and serve the project on localhost port 5000 with `npm run bns`
 
 ## Major Components
