@@ -33,21 +33,6 @@ export default function useUseTurn() {
         }
     }, [factionIndex]);
 
-    // When faction changes, give turn to the first one(as faction index was reset to 0 before faction change was called)
-    // useEffect(() => {
-    //     if (status.creatures && status.creatures[turn.faction].length) {
-    //         dispatch(SetCreatureTurn(status.creatures[turn.faction][factionIndex].id));
-    //         // dispatch(
-    //         //     {
-    //         //         type: ActionType.SET_CREATURE_TURN,
-    //         //         payload: status.creatures[turn.faction][factionIndex].id
-    //         //     }
-    //         // );
-    //     }
-
-    // }, [turn.faction]);
-
-
     // If other factions are empty, give turn to player. Otherwise give the turn to the next faction if it has creatures
     const getNextFaction = () => {
         let nextFaction = Faction.Player;

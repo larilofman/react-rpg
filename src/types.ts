@@ -151,10 +151,3 @@ export interface ZoneRouteType extends BaseInteractableTile {
 }
 
 export type InteractableTile = ZoneRouteType
-
-// type DiscriminateUnion<T, K extends keyof T, V extends T[K]> =
-//     T extends Record<K, V> ? T : never
-
-// type TypeToFunc<U extends InteractableTile> = {
-//     readonly [T in U['tag']]: (x: DiscriminateUnion<InteractableTile, 'tag', T>) => string
-// }
