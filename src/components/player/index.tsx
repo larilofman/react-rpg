@@ -10,10 +10,10 @@ import useCheckCollision from '../../hooks/use-get-tiles';
 import useContact from '../../hooks/use-contact';
 import usePathFinding from '../../hooks/use-pathfinding';
 import { isInMeleeRange } from '../../utils/calculate-distance';
-import settings from '../../data/settings.json';
 import useGetCreature from '../../hooks/use-get-creature';
 import useInteract from '../../hooks/use-interact';
-
+import settings from '../../data/settings/general.json';
+import { keyboardMap } from '../../data/settings/keyboard.json';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux-state/store';
 
@@ -78,7 +78,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
                 }
 
                 // find a direction of the key press or act other ways
-                const dir = getDirectionFromKey(keyPressed);
+                const dir = getActionFromKey(keyPressed);
                 if (dir !== undefined) {
                     const newTile = getTileInDirection(position, dir);
                     if (newTile) {
@@ -112,51 +112,18 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
         }
     }, [turn.creature, turn.count, keyPressed, onRoute]); // creature is tracked for when there are other creatures on the zone, count for when player is alone
 
-    const getDirectionFromKey = (key: string) => {
+    const getActionFromKey = (key: string) => {
         let dir;
-        switch (key) {
-            case "KeyS":
-            case "ArrowDown":
-            case "Numpad2":
-                dir = Direction.down;
-                break;
-            case "KeyD":
-            case "ArrowRight":
-            case "Numpad6":
-                dir = Direction.right;
-                break;
-            case "KeyW":
-            case "ArrowUp":
-            case "Numpad8":
-                dir = Direction.up;
-                break;
-            case "KeyA":
-            case "ArrowLeft":
-            case "Numpad4":
-                dir = Direction.left;
-                break;
-            case "Numpad7":
-                dir = settings.diagonalMovement ? Direction.upLeft : undefined;
-                break;
-            case "Numpad9":
-                dir = settings.diagonalMovement ? Direction.upRight : undefined;
-                break;
-            case "Numpad3":
-                dir = settings.diagonalMovement ? Direction.downRight : undefined;
-                break;
-            case "Numpad1":
-                dir = settings.diagonalMovement ? Direction.downLeft : undefined;
-                break;
-            case "Space":
-            case "Numpad5":
-                useTurn(data);
-                return;
-            case "KeyE":
-                interact();
-                break;
-            default:
-                break;
-        }
+        if (keyboardMap["up"].includes(key)) dir = Direction.up;
+        if (keyboardMap["right"].includes(key)) dir = Direction.right;
+        if (keyboardMap["down"].includes(key)) dir = Direction.down;
+        if (keyboardMap["left"].includes(key)) dir = Direction.left;
+        if (keyboardMap["upRight"].includes(key)) dir = settings.diagonalMovement ? Direction.upRight : undefined;
+        if (keyboardMap["downRight"].includes(key)) dir = settings.diagonalMovement ? Direction.downRight : undefined;
+        if (keyboardMap["downLeft"].includes(key)) dir = settings.diagonalMovement ? Direction.downLeft : undefined;
+        if (keyboardMap["upLeft"].includes(key)) dir = settings.diagonalMovement ? Direction.upLeft : undefined;
+        if (keyboardMap["useTurn"].includes(key)) useTurn(data);
+        if (keyboardMap["interact"].includes(key)) interact();
 
         return dir;
     };

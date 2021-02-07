@@ -3,7 +3,7 @@ import "./app.css";
 import GameManager from './components/game-manager';
 import UiContainer from './components/UI/ui-container';
 import DevTools from './components/UI/dev-tools';
-import settings from './data/settings.json';
+import settings from './data/settings/general.json';
 
 const App = () => {
 

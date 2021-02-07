@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Position } from '../../types';
 import useGetTiles from '../use-get-tiles';
 import useGetCreature from '../use-get-creature';
-import settings from '../../data/settings.json';
+import settings from '../../data/settings/general.json';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 
