@@ -63,7 +63,11 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     }, [posClicked]);
 
     useEffect(() => {
-        // canAct is toggled on by the interval and it's player's turn
+        act();
+
+    }, [turn.creature, turn.count, keyPressed, onRoute]); // creature is tracked for when there are other creatures on the zone, count for when player is alone
+
+    const act = () => {
         if (turn.faction === data.faction && turn.creature === data.id) {
             // player has died, skip turn so npcs will keep wandering
             if (gameOver) {
@@ -110,7 +114,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
                 }
             }
         }
-    }, [turn.creature, turn.count, keyPressed, onRoute]); // creature is tracked for when there are other creatures on the zone, count for when player is alone
+    };
 
     const getActionFromKey = (key: string) => {
         let dir;
