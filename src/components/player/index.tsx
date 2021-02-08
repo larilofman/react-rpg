@@ -80,7 +80,6 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
 
     useEffect(() => {
         act();
-
     }, [turn.creature, turn.count, keyPressed, onRoute, canAct]); // creature is tracked for when there are other creatures on the zone, count for when player is alone
 
     const act = () => {

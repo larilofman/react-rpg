@@ -29,7 +29,7 @@ const reducer = (state = initialState, action: ZoneActions) => {
             return {
                 ...state,
                 tiles: action.payload,
-                size: { w: action.payload.length, h: action.payload[0].length },
+                size: { h: action.payload.length, w: action.payload[0].length },
                 tilesLoaded: true
             };
         case SET_OBJECTS:
