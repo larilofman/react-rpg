@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sprite from '../sprite';
 import useKeyPress from '../../hooks/use-key-press';
 import useMouseClick from '../../hooks/use-mouse-click';
@@ -12,7 +12,7 @@ import usePathFinding from '../../hooks/use-pathfinding';
 import { isInMeleeRange } from '../../utils/calculate-distance';
 import useGetCreature from '../../hooks/use-get-creature';
 import useInteract from '../../hooks/use-interact';
-import settings from '../../data/settings/general.json';
+import { firstStepDelay, diagonalMovement } from '../../data/settings/general.json';
 import { keyboardMap } from '../../data/settings/keyboard.json';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux-state/store';
@@ -42,6 +42,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     const { keyPressed } = useKeyPress();
     const { getCreatureById } = useGetCreature();
     const { interact, checkInteraction } = useInteract();
+    const [canAct, setCanAct] = useState(true);
 
     useEffect(() => {
         if (creaturesLoaded) {
@@ -62,13 +63,28 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
         }
     }, [posClicked]);
 
+    // When pressing a new key, add a little delay after the first step before character starts running
+    useEffect(() => {
+        let actTimer: NodeJS.Timeout | undefined;
+        if (keyPressed) {
+            setCanAct(false);
+            actTimer = setTimeout(() => setCanAct(true), firstStepDelay);
+        } else {
+            setCanAct(true);
+            if (actTimer) {
+                clearTimeout(actTimer);
+            }
+        }
+        return () => actTimer && clearTimeout(actTimer);
+    }, [keyPressed]);
+
     useEffect(() => {
         act();
 
-    }, [turn.creature, turn.count, keyPressed, onRoute]); // creature is tracked for when there are other creatures on the zone, count for when player is alone
+    }, [turn.creature, turn.count, keyPressed, onRoute, canAct]); // creature is tracked for when there are other creatures on the zone, count for when player is alone
 
     const act = () => {
-        if (turn.faction === data.faction && turn.creature === data.id) {
+        if (turn.faction === data.faction && turn.creature === data.id && canAct) {
             // player has died, skip turn so npcs will keep wandering
             if (gameOver) {
                 useTurn(data);
@@ -122,10 +138,10 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
         if (keyboardMap["right"].includes(key)) dir = Direction.right;
         if (keyboardMap["down"].includes(key)) dir = Direction.down;
         if (keyboardMap["left"].includes(key)) dir = Direction.left;
-        if (keyboardMap["upRight"].includes(key)) dir = settings.diagonalMovement ? Direction.upRight : undefined;
-        if (keyboardMap["downRight"].includes(key)) dir = settings.diagonalMovement ? Direction.downRight : undefined;
-        if (keyboardMap["downLeft"].includes(key)) dir = settings.diagonalMovement ? Direction.downLeft : undefined;
-        if (keyboardMap["upLeft"].includes(key)) dir = settings.diagonalMovement ? Direction.upLeft : undefined;
+        if (keyboardMap["upRight"].includes(key)) dir = diagonalMovement ? Direction.upRight : undefined;
+        if (keyboardMap["downRight"].includes(key)) dir = diagonalMovement ? Direction.downRight : undefined;
+        if (keyboardMap["downLeft"].includes(key)) dir = diagonalMovement ? Direction.downLeft : undefined;
+        if (keyboardMap["upLeft"].includes(key)) dir = diagonalMovement ? Direction.upLeft : undefined;
         if (keyboardMap["useTurn"].includes(key)) useTurn(data);
         if (keyboardMap["interact"].includes(key)) interact();
 
