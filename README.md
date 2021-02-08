@@ -13,6 +13,10 @@
 * [Getting Started](#getting-started)
   * [Installation](#installation)
   * [Running](#running)
+* [Usage](#usage)
+  * [Movement](#movement)
+  * [Attacking](#attacking)
+  * [Interaction](#interaction)
 * [Major Components](#major-components)
   * [Redux State](#redux-state)
   * [Game Manager](#game-manager)
@@ -24,10 +28,6 @@
   * [Sprite](#sprite)
   * [Combat Log](#combat-log)
   * [Dev Tools](#dev-tools)
-* [Usage](#usage)
-  * [Movement](#movement)
-  * [Attacking](#attacking)
-  * [Interaction](#interaction)
 * [Roadmap](#roadmap)
 * [Contact](#contact)
 * [Acknowledgements](#acknowledgements)
@@ -58,6 +58,20 @@ After cloning or downloading the project, install the dependencies with `npm ins
 
 Start the project on localhost port 3000 with `npm run dev`.  
 Build and serve the project on localhost port 5000 with `npm run bns`
+
+## Usage
+
+### Movement
+
+Character can be moved by either _clicking_ on the map or using _WASD_, _arrow keys_ or _numpad_(1, 3, 7 and 9 for diagonal movement).
+
+### Attacking
+
+Enemies can be attacked by walking towards them or clicking them when standing on a nearby tile.
+
+### Interaction
+
+Interaction happens with **_E_**-key. So far the only interactable object is the portal to change zone.
 
 ## Major Components
 
@@ -105,20 +119,6 @@ Combat log hook contains a set of message types that can be added to the log. Th
 ### Dev Tools
 
 The main purpose of dev tools is for testing new features before they are implemented in the game, such as saving and loading zones. The component can also be freely moved around because why not!
-
-## Usage
-
-### Movement
-
-Character can be moved by either _clicking_ on the map or using _WASD_, _arrow keys_ or _numpad_(1, 3, 7 and 9 for diagonal movement).
-
-### Attacking
-
-Enemies can be attacked by walking towards them or clicking them when standing on a nearby tile.
-
-### Interaction
-
-Interaction happens with **_E_**-key. So far the only interactable object is the portal to change zone.
 
 ## Roadmap
 
