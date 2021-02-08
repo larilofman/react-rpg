@@ -7,11 +7,12 @@ import { turnDelay } from '../../data/settings/general.json';
 import delay from 'lodash.delay';
 
 export default function useUseTurn() {
-    const { turn, creatures, creaturesLoaded } = useSelector((state: RootState) => (
+    const { turn, creatures, creaturesLoaded, gameOver } = useSelector((state: RootState) => (
         {
             turn: state.turn,
             creatures: state.zone.creatures,
-            creaturesLoaded: state.zone.creaturesLoaded
+            creaturesLoaded: state.zone.creaturesLoaded,
+            gameOver: state.game.gameOver
         }
     ));
     const dispatch = useDispatch();
@@ -28,13 +29,13 @@ export default function useUseTurn() {
             if (factionIndex < creatures[turn.faction].length) {
                 dispatch(SetCreatureTurn(creatures[turn.faction][factionIndex].id));
             } else {
-                // Give turn to next faction and reset the index, adding a delay before each player turn
+                // Give turn to next faction and reset the index, adding a delay before each player turn, increasing it when player is dead
                 const nextFaction = getNextFaction();
                 if (nextFaction === Faction.Player) {
                     delay((faction) => {
                         dispatch(SetFactionTurn(faction));
                         setFactionIndex(0);
-                    }, turnDelay, nextFaction);
+                    }, gameOver ? turnDelay * 4 : turnDelay, nextFaction);
                 } else {
                     dispatch(SetFactionTurn(getNextFaction()));
                     setFactionIndex(0);
