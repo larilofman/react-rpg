@@ -2,7 +2,7 @@ import React from 'react';
 import Floor from '../../tile/floor';
 import Wall from '../../tile/wall';
 import { TileType, Tile, Position } from '../../../types';
-import settings from '../../../data/settings.json';
+import settings from '../../../data/settings/general.json';
 import { useStore } from 'react-redux';
 import { RootState } from '../../redux-state/store';
 

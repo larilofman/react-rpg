@@ -8,5 +8,6 @@
         "h": 16
     },
     "diagonalMovement": true,
-    "turnDelay": 40
+    "turnDelay": 40,
+    "firstStepDelay": 200
 }

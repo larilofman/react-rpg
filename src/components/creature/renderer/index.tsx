@@ -1,7 +1,7 @@
 import React from 'react';
 import Npc from '../../npc';
 import { Faction, Position } from '../../../types';
-import settings from '../../../data/settings.json';
+import settings from '../../../data/settings/general.json';
 import Player from '../../player';
 
 import { useSelector } from 'react-redux';

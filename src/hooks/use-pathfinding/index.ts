@@ -3,7 +3,7 @@ import { Position, TileStatus } from '../../types';
 import PF, { Grid } from 'pathfinding';
 import useGetTiles from '../use-get-tiles';
 import { isInMeleeRange } from '../../utils/calculate-distance';
-import settings from '../../data/settings.json';
+import settings from '../../data/settings/general.json';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 
