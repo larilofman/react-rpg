@@ -57,13 +57,14 @@ After cloning or downloading the project, install the dependencies with `npm ins
 ### Running
 
 Start the project on localhost port 3000 with `npm run dev`.  
-Build and serve the project on localhost port 5000 with `npm run bns`
+Build and serve the project on localhost port 5000 with `npm run bns`.
 
 ## Usage
 
 ### Movement
 
 Character can be moved by either _clicking_ on the map or using _WASD_, _arrow keys_ or _numpad_(1, 3, 7 and 9 for diagonal movement).
+Turn can be skipped by pressing _numpad 5_ or _spacebar_ or _clicking_ on your character.
 
 ### Attacking
 

@@ -10,21 +10,22 @@ const Instructions: React.FC = () => {
     return (
         <Container
             id="instructions"
-            width="500px"
+            width="530px"
             height="256px"
             style={{ position: "absolute", top: position.y, left: position.x, zIndex: 10 }}
         >
             <UIHeaderContainer onMouseDown={handleMouseDown} id={'instructions-header'} b4 size="xx-large">Instructions</UIHeaderContainer>
             <Container color="dark-brown" p4 bnt4 height="100%" style={{ justifyContent: "flex-start" }}>
-                <Container style={{ marginBottom: "16px" }}>
+                <Container style={{ marginBottom: "8px" }}>
                     <Text size="x-large" bold>
                         Movement
                 </Text>
                     <Text size="large">
                         Use {<i><b>wasd</b></i>}, {<i><b>arrows</b></i>} or {<i><b>numpad</b></i>}(1, 3, 7 and 9 for diagonal movement) or {<i><b>click</b></i>} to move.
+                        Press {<i><b>numpad 5</b></i>} or {<i><b>space bar</b></i>} or {<i><b>click</b></i>} on your character to skip turn.
                 </Text>
                 </Container>
-                <Container style={{ marginBottom: "16px" }}>
+                <Container style={{ marginBottom: "8px" }}>
                     <Text size="x-large" bold>
                         Attacking
                 </Text>
