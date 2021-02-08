@@ -40,7 +40,6 @@ export default function useUseTurn() {
                     dispatch(SetFactionTurn(getNextFaction()));
                     setFactionIndex(0);
                 }
-
             }
         }
     }, [factionIndex]);
