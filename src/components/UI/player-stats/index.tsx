@@ -15,8 +15,8 @@ const PlayerStats: React.FC = () => {
 
     return (
         <Container height="100%">
-            <UIHeaderContainer bnb4>{playerName}</UIHeaderContainer>
-            <Container p4 bnt4 height="100%">
+            <UIHeaderContainer bl4 bt4 bb4 br2>{playerName}</UIHeaderContainer>
+            <Container p4 bl4 bb4 br2 height="100%">
                 <HealthBar />
             </Container>
         </Container>
