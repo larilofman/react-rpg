@@ -22,7 +22,7 @@ const Scrollbox: React.FC<Props> = ({ contents, autoScroll = false }) => {
     useEffect(scrollToBottom, [contents]);
 
     return (
-        <div style={{ padding: "4px" }} className="scroll-box" ref={autoScroll ? contentsEndRef : null}>
+        <div className="scroll-box" ref={autoScroll ? contentsEndRef : null}>
             {Array.isArray(contents) ?
                 contents.map((line, index) => (
                     <Text color="dark" size="small" key={index}>{line}</Text>))

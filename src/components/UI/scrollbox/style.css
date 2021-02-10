@@ -1,13 +1,25 @@
 .scroll-box {
     overflow-y: auto;
     font-size: 12px;
-    background-color: var(--almond);
+    background-color: var(--khaki-web);
     flex-grow: 1;
+    padding: 0 4px 0 4px;
+    /* position: relative */
 }
 
-/* .scroll-box > div {
-    box-sizing: border-box;
-    border: 2px solid var(--almond);
-    border-left-width: 4px;
-    border-right-width: 4px;
+/*   
+.scroll-box:after {
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box;    
+    box-sizing: border-box;         
+    position: absolute;
+    bottom: 0;  
+    height: 100%;
+    width: 100%;
+    content: "";
+    background: linear-gradient(to top,
+       rgba(255,255,255, 1) 20%, 
+       rgba(255,255,255, 0) 80%
+    );
+    pointer-events: none;
 } */
