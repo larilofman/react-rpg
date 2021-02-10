@@ -1,13 +1,16 @@
 import { Position, InteractableTileType, InteractableTile } from '../../types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 import { useEffect, useState } from 'react';
 import useChangeZone from '../use-change-zone';
+import { SetInfoMessage } from '../../components/redux-state/reducers/messages/actions';
 
 export default function useInteract() {
     const { changeZone } = useChangeZone();
+    const dispatch = useDispatch();
     const interactableTiles = useSelector((state: RootState) => state.zone.interactableTiles);
     const [interactedTile, setInteractedTile] = useState<InteractableTile | undefined>();
+    const [prevInteractedTile, setPrevInteractedTile] = useState(false); // was last tile stood on interactable? used to keep welcome message on screen
 
     const checkInteraction = (pos: Position) => {
         const tile = interactableTiles.find(t => t.position.x === pos.x && t.position.y === pos.y);
@@ -26,7 +29,11 @@ export default function useInteract() {
 
     useEffect(() => {
         if (interactedTile) {
-            console.log(interactedTile.popUpMessage);
+            dispatch(SetInfoMessage(interactedTile.popUpMessage));
+            setPrevInteractedTile(true);
+        } else if (prevInteractedTile) {
+            dispatch(SetInfoMessage(""));
+            setPrevInteractedTile(false);
         }
     }, [interactedTile]);
 

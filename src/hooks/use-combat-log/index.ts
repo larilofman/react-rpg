@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { AddCombatLogEntry } from '../../components/redux-state/reducers/combat-log/actions';
+import { AddCombatLogEntry } from '../../components/redux-state/reducers/messages/actions';
 import { RootState } from '../../components/redux-state/store';
 import { Creature } from '../../types';
 
