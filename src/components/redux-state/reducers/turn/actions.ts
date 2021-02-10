@@ -1,5 +1,5 @@
 import { Faction } from '../../../../types';
-import { SET_CREATURE_TURN, SET_FACTION_TURN, TurnActions } from './types';
+import { RESET_TURN, SET_CREATURE_TURN, SET_FACTION_TURN, TurnActions } from './types';
 
 export function SetFactionTurn(faction: Faction): TurnActions {
     return {
@@ -12,5 +12,11 @@ export function SetCreatureTurn(creature: string): TurnActions {
     return {
         type: SET_CREATURE_TURN,
         payload: creature
+    };
+}
+
+export function ResetTurn(): TurnActions {
+    return {
+        type: RESET_TURN
     };
 }

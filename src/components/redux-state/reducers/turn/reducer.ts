@@ -1,7 +1,17 @@
 import { Faction } from '../../../../types';
-import { TurnActions, SET_CREATURE_TURN, SET_FACTION_TURN, TurnState } from './types';
+import {
+    TurnActions,
+    SET_CREATURE_TURN,
+    SET_FACTION_TURN,
+    RESET_TURN,
+    TurnState
+} from './types';
 
-const initialState: TurnState = { faction: Faction.Player, creature: 'player', count: 0 };
+const initialState: TurnState = {
+    faction: Faction.Player,
+    creature: 'player',
+    count: 0
+};
 
 const reducer = (state = initialState, action: TurnActions) => {
     switch (action.type) {
@@ -15,6 +25,12 @@ const reducer = (state = initialState, action: TurnActions) => {
             return {
                 ...state,
                 creature: action.payload
+            };
+        case RESET_TURN:
+            return {
+                ...state,
+                faction: Faction.Player,
+                creature: 'player'
             };
         default:
             return state;

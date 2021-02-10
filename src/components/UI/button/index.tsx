@@ -3,7 +3,7 @@ import './style.css';
 import Text from '../text';
 import classList from '../../../utils/class-list';
 
-interface Props extends React.HTMLProps<HTMLButtonElement> {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     width?: string | number
     height?: string | number
     color?: 'light' | 'dark' | 'gunmetal' | 'light-brown' | 'dark-brown'
@@ -14,15 +14,15 @@ interface Props extends React.HTMLProps<HTMLButtonElement> {
     id?: string
 }
 
-const Button: React.FC<Props> = ({ width, height, m4, p4, b4, color, align, className, style, id, children, onClick }) => {
+const Button: React.FC<Props> = ({ width, height, m4, p4, b4, color, align, className, style, id, children, onClick, ...props }) => {
 
     const classes = classList(
         'button',
-        color === ('dark' || undefined) && 'button-dark',
-        color === 'light' && 'button-light',
-        color === 'gunmetal' && 'button-gunmetal',
-        color === 'light-brown' && 'button-light-brown',
-        color === 'dark-brown' && 'button-dark-brown',
+        color === ('dark' || undefined) && (props.disabled ? 'button-dark-disabled' : 'button-dark'),
+        color === 'light' && (props.disabled ? 'button-light-disabled' : 'button-light'),
+        color === 'gunmetal' && (props.disabled ? 'button-gunmetal-disabled' : 'button-gunmetal'),
+        color === 'light-brown' && (props.disabled ? 'button-light-brown-disabled' : 'button-light-brown'),
+        color === 'dark-brown' && (props.disabled ? 'button-dark-brown-disabled' : 'button-dark-brown'),
         m4 && 'button-m4',
         p4 && 'button-p4',
         b4 && (color === 'light' || color === 'light-brown' ? 'button-b4d' : 'button-b4l'),
@@ -31,7 +31,7 @@ const Button: React.FC<Props> = ({ width, height, m4, p4, b4, color, align, clas
     );
 
     return (
-        <button onClick={onClick} className={classes} id={id} style={{ width, height, ...style }}>
+        <button {...props} onClick={onClick} className={classes} id={id} style={{ width, height, ...style }}>
             <Text size="medium" >{children}</Text>
         </button>
     );

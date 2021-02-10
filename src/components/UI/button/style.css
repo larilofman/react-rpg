@@ -10,6 +10,10 @@
     cursor:pointer
 }
 
+.button:disabled:hover{
+    cursor:default
+}
+
 .button:focus{
     outline:none;
 }
@@ -18,7 +22,7 @@
     align-items: center;
 }
 
-.button:active {
+.button:not(:disabled):active {
     font-weight: 500;
 }
 
@@ -55,6 +59,12 @@
     border-color: var(--khaki-web);
 }
 
+.button-light-disabled{
+    background-color: var(--almond);
+    color: var(--khaki-web);
+    border-color: var(--khaki-web);
+}
+
 
 .button-light-brown{
     background-color: var(--khaki-web);
@@ -69,6 +79,12 @@
 
 .button-light-brown:active{
     background-color: var(--khaki-web);
+    border-color: var(--almond);
+}
+
+.button-light-brown-disabled{
+    background-color: var(--khaki-web);
+    color: var(--almond);
     border-color: var(--almond);
 }
 
@@ -91,6 +107,12 @@
     border-color: var(--khaki-web);
 }
 
+.button-dark-brown-disabled{
+    background-color: var(--umber);
+    color: var(--khaki-web);
+    border-color: var(--almond);
+}
+
 
 .button-gunmetal{
     background-color: var(--gunmetal);
@@ -110,6 +132,12 @@
     border-color: var(--khaki-web);
 }
 
+.button-gunmetal-disabled{
+    background-color: var(--gunmetal);
+    color: var(--umber);
+    border-color: var(--umber);
+}
+
 
 .button-dark{
     background-color: var(--rich-black-fogra-39);
@@ -126,6 +154,12 @@
 .button-dark:active{
     background-color: var(--rich-black-fogra-39);
     color: var(--almond);
+    border-color: var(--gunmetal);
+}
+
+.button-dark-disabled{
+    background-color: var(--rich-black-fogra-39);
+    color: var(--gunmetal);
     border-color: var(--gunmetal);
 }
 

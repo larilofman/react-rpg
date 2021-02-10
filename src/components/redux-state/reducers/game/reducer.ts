@@ -31,7 +31,8 @@ const reducer = (state = initialState, action: GameActions) => {
         case RESET_PLAYER:
             return {
                 ...state,
-                player: loadPlayerData()
+                player: loadPlayerData(),
+                gameOver: false
             };
         case LOAD_ZONE: {
             return {
