@@ -1,0 +1,33 @@
+.message-box {
+    height: 22px;
+    background-color: var(--umber);
+}
+
+.message-box-flash {
+    height: 22px;
+    background-color: var(--umber);
+    animation-name: backgroundFlash;
+    animation-duration: 0.5s;
+}
+  
+@keyframes backgroundFlash {
+    0% {background-color: var(--umber);}
+    50% {background-color: var(--khaki-web);}
+    100% {background-color: var(--umber);}
+}
+
+.message-text {
+    color: var(--almond)
+}
+
+.message-text-flash {
+    color: var(--almond);
+    animation-name: textFlash;
+    animation-duration: 0.5s;
+}
+
+@keyframes textFlash {
+    0% {color: var(--almond);}
+    50% {color:  var(--gunmetal);}
+    100% {color: var(--almond);}
+}
