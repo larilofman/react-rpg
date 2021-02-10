@@ -4,7 +4,6 @@ import CombatLog from '../combat-log';
 import PlayerStats from '../player-stats';
 import { Dimensions } from '../../../types';
 import Instructions from '../instructions';
-import Container from '../container';
 import InfoMessageBox from '../info-message-box';
 
 interface Props {
