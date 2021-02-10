@@ -15,7 +15,7 @@ interface Props {
 const UiContainer: React.FC<Props> = ({ size }) => {
     return (
         <div id="ui-container-outer">
-            <Container bl4 br4 p4>
+            <Container bl4 br4 p4 color="dark-brown">
                 <Text size="large">{`Welcome to ${gameName}!`}</Text>
             </Container>
             <div id="ui-container-inner" style={{ width: size.w, height: size.h }}>
