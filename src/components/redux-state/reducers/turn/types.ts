@@ -1,6 +1,7 @@
 import { Faction } from '../../../../types';
 export const SET_FACTION_TURN = 'SET_FACTION_TURN';
 export const SET_CREATURE_TURN = 'SET_CREATURE_TURN';
+export const RESET_TURN = "RESET_TURN";
 
 export interface Turn {
     faction: Faction
@@ -18,7 +19,14 @@ interface SetCreatureturn {
     payload: string
 }
 
-export type TurnActions = SetFactionTurn | SetCreatureturn
+interface ResetTurn {
+    type: typeof RESET_TURN
+}
+
+export type TurnActions =
+    SetFactionTurn |
+    SetCreatureturn |
+    ResetTurn
 
 export type TurnState = Turn
 

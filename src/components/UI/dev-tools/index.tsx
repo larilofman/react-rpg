@@ -8,7 +8,7 @@ import { getAllZoneNames, ZoneName } from '../../../utils/load-data';
 import './style.css';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { RootState } from '../../redux-state/store';
-import { LoadSavedZone, LoadZone, RemoveVisitedZone, ResetPlayer, SavePlayer, SaveVisitedZone } from '../../redux-state/reducers/game/actions';
+import { LoadSavedZone, LoadZone, RemoveVisitedZone, ResetPlayer, SavePlayer, SaveVisitedZone, SetGameOver } from '../../redux-state/reducers/game/actions';
 import { Faction } from '../../../types';
 
 
@@ -36,7 +36,10 @@ const DevTools: React.FC = () => {
 
     const handleSavedZoneChangeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(LoadSavedZone(selectedSave as ZoneName));
+        if (selectedSave) {
+            dispatch(SetGameOver(false));
+            dispatch(LoadSavedZone(selectedSave as ZoneName));
+        }
     };
 
     const handleSaveZone = () => {
@@ -64,14 +67,14 @@ const DevTools: React.FC = () => {
                 </Button>
                 </form>
                 <form onSubmit={handleSavedZoneChangeSubmit} id="dev-tools-map-form">
-                    <Select onChange={(zone) => setSelectedSave(zone as ZoneName)} initialOption={selectedSave} width="80%" label="Load save" options={savedZones} />
-                    <Button color="light" p4 m4 align width="60%" type="submit">
-                        Load zone
+                    <Select onChange={(zone) => setSelectedSave(zone as ZoneName)} width="80%" label="Load save" options={savedZones} />
+                    <Button disabled={!selectedSave} color="light" p4 m4 align width="60%" type="submit">
+                        Load save
                 </Button>
                 </form>
                 <Container align>
                     <Button p4 m4 align width="80%" color="light-brown" onClick={handleSaveZone}>
-                        Save ZoneStatus
+                        Save zone
                 </Button>
                 </Container>
 
