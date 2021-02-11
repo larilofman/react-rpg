@@ -13,7 +13,7 @@ export default function useDraggable(id: string, startPos: Position = { x: 0, y:
         const elem = document.getElementById(id);
         if (elem) {
             setElement(elem);
-            elem.style.cursor = "move";
+            elem.style.cursor = "grab";
         }
 
     }, []);

@@ -1,20 +1,13 @@
 import React from 'react';
-import Container from '../container';
-import UIHeaderContainer from '../ui-header-container';
-import useDraggable from '../../../hooks/use-draggable';
-import Text from '../text';
+import Container from '../../container';
+import Text from '../../text';
 
 const Instructions: React.FC = () => {
-    const { position, handleMouseDown } = useDraggable('instructions-header', { x: 16, y: 532 });
-
     return (
         <Container
             id="instructions"
             width="530px"
-            height="256px"
-            style={{ position: "absolute", top: position.y, left: position.x, zIndex: 10 }}
         >
-            <UIHeaderContainer onMouseDown={handleMouseDown} id={'instructions-header'} b4 size="xx-large">Instructions</UIHeaderContainer>
             <Container color="dark-brown" p4 bnt4 height="100%" style={{ justifyContent: "flex-start" }}>
                 <Container style={{ marginBottom: "8px" }}>
                     <Text size="x-large" bold>

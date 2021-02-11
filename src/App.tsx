@@ -2,14 +2,14 @@ import React from 'react';
 import "./app.css";
 import GameManager from './components/game-manager';
 import UiContainer from './components/UI/ui-container';
-import DevTools from './components/UI/dev-tools';
 import settings from './data/settings/general.json';
+import Menu from './components/UI/menu/menu-bar';
 
 const App = () => {
 
     return (
         <div id="game-container">
-            <DevTools />
+            <Menu />
             <div
                 id="zone-container"
                 style={{

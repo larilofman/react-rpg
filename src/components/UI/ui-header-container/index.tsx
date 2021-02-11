@@ -9,13 +9,13 @@ interface Props extends ContainerProps {
     id?: string
 }
 
-const UIHeaderContainer: React.FC<Props> = ({ size, style, b4, center, id, children, onMouseDown, ...props }) => {
+const UIHeaderContainer: React.FC<Props> = ({ size, style, b4, center, id, children, ...props }) => {
     return (
         <Container
-            onMouseDown={onMouseDown}
+
             id={id}
             style={style}
-            color="gunmetal"
+            color={props.color || "gunmetal"}
             p4
             b4={b4}
             justify

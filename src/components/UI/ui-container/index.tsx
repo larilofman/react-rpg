@@ -3,7 +3,6 @@ import './style.css';
 import CombatLog from '../combat-log';
 import PlayerStats from '../player-stats';
 import { Dimensions } from '../../../types';
-import Instructions from '../instructions';
 import InfoMessageBox from '../info-message-box';
 
 interface Props {
@@ -17,7 +16,6 @@ const UiContainer: React.FC<Props> = ({ size }) => {
             <div id="ui-container-inner" style={{ width: size.w, height: size.h }}>
                 <PlayerStats />
                 <CombatLog />
-                <Instructions />
             </div>
         </div>
 

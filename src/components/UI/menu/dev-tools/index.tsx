@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import Container from '../container';
-import UIHeaderContainer from '../ui-header-container';
-import useDraggable from '../../../hooks/use-draggable';
-import Button from '../button';
-import Select from '../select';
-import { getAllZoneNames, ZoneName } from '../../../utils/load-data';
+import Container from '../../container';
+import Button from '../../button';
+import Select from '../../select';
+import { getAllZoneNames, ZoneName } from '../../../../utils/load-data';
 import './style.css';
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import { RootState } from '../../redux-state/store';
-import { LoadSavedZone, LoadZone, RemoveVisitedZone, ResetPlayer, SavePlayer, SaveVisitedZone, SetGameOver } from '../../redux-state/reducers/game/actions';
-import { Faction } from '../../../types';
+import { RootState } from '../../../redux-state/store';
+import { LoadSavedZone, LoadZone, RemoveVisitedZone, ResetPlayer, SavePlayer, SaveVisitedZone, SetGameOver } from '../../../redux-state/reducers/game/actions';
+import { Faction } from '../../../../types';
 
 
 const DevTools: React.FC = () => {
@@ -21,7 +19,6 @@ const DevTools: React.FC = () => {
     const player = useStore<RootState>().getState().zone.creatures[Faction.Player][0];
     const zoneStatus = useStore<RootState>().getState().zone;
     const dispatch = useDispatch();
-    const { position, handleMouseDown } = useDraggable('dev-tools-header', { x: 16, y: 16 });
     const [selectedZone, setSelectedZone] = useState<string>(zoneName as ZoneName);
     const [savedZones, setSavedZones] = useState<string[]>([]);
     const [selectedSave, setSelectedSave] = useState<string>();
@@ -56,9 +53,7 @@ const DevTools: React.FC = () => {
             id="dev-tools"
             width="200px"
             height="400px"
-            style={{ position: "absolute", top: position.y, left: position.x, zIndex: 10 }}
         >
-            <UIHeaderContainer onMouseDown={handleMouseDown} id={'dev-tools-header'} b4 size="xx-large">Dev Tools</UIHeaderContainer>
             <Container color="dark-brown" p4 bnt4 height="100%" style={{ justifyContent: "space-between" }}>
                 <form onSubmit={handleZoneChangeSubmit} id="dev-tools-map-form">
                     <Select onChange={(zone) => setSelectedZone(zone as ZoneName)} width="80%" label="Load zone" initialOption={selectedZone} options={zoneNames} />
