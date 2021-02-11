@@ -6,7 +6,7 @@ const Instructions: React.FC = () => {
     return (
         <Container
             id="instructions"
-            width="530px"
+            width="420px"
         >
             <Container color="dark-brown" p4 bnt4 height="100%" style={{ justifyContent: "flex-start" }}>
                 <Container style={{ marginBottom: "8px" }}>
@@ -14,7 +14,7 @@ const Instructions: React.FC = () => {
                         Movement
                 </Text>
                     <Text size="large">
-                        Use {<i><b>wasd</b></i>}, {<i><b>arrows</b></i>} or {<i><b>numpad</b></i>}(1, 3, 7 and 9 for diagonal movement) or {<i><b>click</b></i>} to move.
+                        Use {<i><b>wasd</b></i>}, {<i><b>arrows</b></i>} or {<i><b>numpad</b></i>}(1, 3, 7 and 9 for diagonal movement) or {<i><b>click</b></i>} to move. <br />
                         Press {<i><b>numpad 5</b></i>} or {<i><b>space bar</b></i>} or {<i><b>click</b></i>} on your character to skip turn.
                 </Text>
                 </Container>
