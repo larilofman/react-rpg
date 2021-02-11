@@ -25,7 +25,9 @@ export interface ContainerProps extends React.HTMLAttributes<HTMLElement> {
 
 const Container: React.FC<ContainerProps> = (
     {
-        width, height, m4, p4, br2, bl2, b4, bt4, br4, bb4, bl4, bnt4, bnb4, color, justify, align, className, row, style, id, children, onMouseDown
+        width, height, m4, p4, br2, bl2, b4, bt4, br4, bb4, bl4, bnt4, bnb4,
+        color, justify, align, className, row, style, id, children,
+        onMouseDown, onClick
     }
 ) => {
     const classes = classList(
@@ -53,7 +55,7 @@ const Container: React.FC<ContainerProps> = (
     );
 
     return (
-        <div onMouseDown={onMouseDown} className={classes} id={id} style={{ width, height, ...style }}>
+        <div onMouseDown={onMouseDown} className={classes} id={id} style={{ width, height, ...style }} onClick={onClick}>
             {children}
         </div>
 

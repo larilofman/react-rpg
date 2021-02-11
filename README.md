@@ -125,7 +125,6 @@ The main purpose of dev tools is for testing new features before they are implem
 
 Quite a bit of work to do on the "engine" before an actual game can be made. Some ideas in an order of rough importance:
 
-* Pop-up messages to show relevant tips for player, for example prompt to press a button to perform certain action like changing zone.
 * Major refactoring of map generating to allow for different types of maps like dungeons, outdoors and what not.
 * Saving the current game state to local storage and perhaps to cloud too.
 * A quest system with quest givers, objectives and log.
