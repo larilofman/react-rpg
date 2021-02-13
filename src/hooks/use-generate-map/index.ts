@@ -81,13 +81,7 @@ export default function useGenerateMap() {
                     y === pos.y + size.h - 1 ||
                     x === pos.x + size.w - 1) {
 
-                    const tile: WallTile = {
-                        type: TileType.wall,
-                        id: (mapSize.h * y) + x,
-                        position: { x, y },
-                        passable: false,
-                        spriteIndex: weightedRandom(0, 7, 2)
-                    };
+                    const tile = createWallTile({ x, y }, (mapSize.h * y) + x);
 
                     houseTiles.push(tile);
 
@@ -163,13 +157,7 @@ export default function useGenerateMap() {
         for (let y = 0; y < size.h; y++) {
             const row: Tile[] = [];
             for (let x = 0; x < size.w; x++) {
-                const tile: FloorTile = {
-                    type: TileType.floor,
-                    passable: true,
-                    id: (size.h * y) + x,
-                    position: { x, y },
-                    spriteIndex: weightedRandom(0, 8, 2)
-                };
+                const tile = createFloorTile({ x, y }, (size.h * y) + x);
                 row.push(tile);
             }
             floorTiles.push(row);
