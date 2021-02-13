@@ -19,7 +19,7 @@
   * [Interaction](#interaction)
 * [Major Components](#major-components)
   * [Redux State](#redux-state)
-  * [Game Manager](#game-manager)
+  * [Game](#game)
   * [Map Manager](#map-manager)
   * [Creature Manager](#creature-manager)
   * [Change Zone hook](#change-zone-hook)
@@ -85,7 +85,7 @@ The store consists of several slices of varying sizes:
 * Messages reducer stores combat log and info box message.
 * Camera position reducer is responsible for... the position of camera!
 
-### Game Manager
+### Game
 
 When zone changes in the game reducer, game manager initializes a new map for the zone reducer.
 
