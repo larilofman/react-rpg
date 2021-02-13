@@ -32,7 +32,6 @@ const MapLoader: React.FC<Props> = ({ tilesLoaded, zoneName }) => {
                 }
             }
         }
-
     });
 
     return null;
