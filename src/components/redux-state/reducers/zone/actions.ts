@@ -1,4 +1,4 @@
-import { BaseCreature, Creature, Faction, InteractableTile, Position, Tile } from '../../../../types';
+import { BaseCreature, Creature, Faction, InteractableTile, Position, TileType } from '../../../../types';
 import { ZoneName } from '../../../../utils/load-data';
 import {
     INIT_ZONE,
@@ -19,7 +19,7 @@ export function InitZone(zoneName: ZoneName): ZoneActions {
     };
 }
 
-export function SetTiles(tiles: Tile[][]): ZoneActions {
+export function SetTiles(tiles: TileType[][]): ZoneActions {
     return {
         type: SET_TILES,
         payload: tiles

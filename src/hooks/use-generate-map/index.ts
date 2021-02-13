@@ -1,7 +1,8 @@
-import { Dimensions, TileType, Tile, Position, WallTile, FloorTile, Rectangle } from '../../types';
+import { Dimensions, TileType, Position, Rectangle, ZoneData } from '../../types';
 import getRandomArbitrary from '../../utils/random-between-values';
 import weightedRandom from '../../utils/weighted-random';
 import { collisionWithAny } from '../../utils/collision';
+import { tileSprites } from '../../data/tile/tileSprites.json';
 
 export default function useGenerateMap() {
 
@@ -48,8 +49,8 @@ export default function useGenerateMap() {
 
     };
 
-    const generateHouses = (numHouses = 5, sizeMin: Dimensions, sizeMax: Dimensions, tiles: Tile[][], mapSize: Dimensions) => {
-        let wallTiles: Tile[] = [];
+    const generateHouses = (numHouses = 5, sizeMin: Dimensions, sizeMax: Dimensions, tiles: TileType[][], mapSize: Dimensions) => {
+        let wallTiles: TileType[] = [];
 
         // get positions and sizes for houses
         const houseDatas = generateHouseData(numHouses, sizeMin, sizeMax, mapSize);
@@ -70,8 +71,8 @@ export default function useGenerateMap() {
     };
 
     const generateHouse = (size: Dimensions, pos: Position, mapSize: Dimensions) => {
-        const houseTiles: Tile[] = [];
-        const nonCornerTiles: Tile[] = []; // flat walls of the house, used for finding a spot for door
+        const houseTiles: TileType[] = [];
+        const nonCornerTiles: TileType[] = []; // flat walls of the house, used for finding a spot for door
 
         // go through the edges of rectangle and place walls on those 
         for (let y = pos.y; y < pos.y + size.h; y++) {
@@ -81,7 +82,13 @@ export default function useGenerateMap() {
                     y === pos.y + size.h - 1 ||
                     x === pos.x + size.w - 1) {
 
-                    const tile = createWallTile({ x, y }, (mapSize.h * y) + x);
+                    const tile = createTile(
+                        { x, y },
+                        false,
+                        (mapSize.h * y) + x,
+                        tileSprites[1].url,
+                        tileSprites[1].maxIndex
+                    );
 
                     houseTiles.push(tile);
 
@@ -105,44 +112,35 @@ export default function useGenerateMap() {
         return wallTiles;
     };
 
-    const createFloorTile = (pos: Position, id: number) => {
-        const tile: FloorTile = {
-            type: TileType.floor,
-            passable: true,
-            id,
-            position: { x: pos.x, y: pos.y },
-            spriteIndex: weightedRandom(0, 8, 2)
-        };
-        return tile;
-    };
+    const createTile = (pos: Position, passable: boolean, id: number, spriteURL: string, maxSpriteIndex: number) => {
 
-    const createWallTile = (pos: Position, id: number) => {
-        const tile: WallTile = {
-            type: TileType.wall,
-            passable: false,
+        const tile: TileType = {
+            passable,
             id,
             position: { x: pos.x, y: pos.y },
-            spriteIndex: weightedRandom(0, 7, 2)
+            spriteURL,
+            spriteIndex: weightedRandom(0, maxSpriteIndex, 2)
         };
         return tile;
     };
 
     // Build map from given tiledata
-    const buildMap = (map: number[][]): Tile[][] => {
-        const size = { h: map.length, w: map[0].length };
-        const tiles: Tile[][] = [];
+    const buildMap = (map: ZoneData): TileType[][] => {
+        const size = map.size;
+        const tiles: TileType[][] = [];
+        if (!map.tiles) return tiles;
         if (size.h) {
             for (let y = 0; y < size.h; y++) {
-                const row: Tile[] = [];
+                const row: TileType[] = [];
                 for (let x = 0; x < size.w; x++) {
-                    let tile;
-                    if (map[y][x] === 0) {
-                        tile = createFloorTile({ x, y }, (size.h * y) + x);
-
-                    } else {
-                        tile = createWallTile({ x, y }, (size.h * y) + x);
-                    }
-
+                    const mapCharacter = map.tiles[y][x];
+                    const tile = createTile(
+                        { x, y },
+                        mapCharacter === 0,
+                        (size.h * y) + x,
+                        tileSprites[mapCharacter].url,
+                        tileSprites[mapCharacter].maxIndex
+                    );
                     row.push(tile);
                 }
                 tiles.push(row);
@@ -152,12 +150,18 @@ export default function useGenerateMap() {
     };
 
     // Generate random map of given dimensions
-    const generateMap = (size: Dimensions): Tile[][] => {
+    const generateMap = (size: Dimensions): TileType[][] => {
         const floorTiles = [];
         for (let y = 0; y < size.h; y++) {
-            const row: Tile[] = [];
+            const row: TileType[] = [];
             for (let x = 0; x < size.w; x++) {
-                const tile = createFloorTile({ x, y }, (size.h * y) + x);
+                const tile = createTile(
+                    { x, y },
+                    true,
+                    (size.h * y) + x,
+                    tileSprites[0].url,
+                    tileSprites[0].maxIndex
+                );
                 row.push(tile);
             }
             floorTiles.push(row);

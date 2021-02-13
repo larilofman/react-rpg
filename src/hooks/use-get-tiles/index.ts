@@ -1,4 +1,4 @@
-import { Position, Tile, Direction, TileStatus } from '../../types';
+import { Position, TileType, Direction, TileStatus } from '../../types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 
@@ -16,7 +16,7 @@ export default function useGetTiles() {
         );
     };
 
-    const getTileAt = (pos: Position): Tile | undefined => {
+    const getTileAt = (pos: Position): TileType | undefined => {
         if (isInBounds(pos)) {
             return tiles[pos.y][pos.x];
         }

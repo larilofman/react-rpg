@@ -1,4 +1,4 @@
-import { BaseCreature, Creature, Dimensions, Faction, InteractableTile, Position, Tile } from '../../../../types';
+import { BaseCreature, Creature, Dimensions, Faction, InteractableTile, Position, TileType } from '../../../../types';
 import { ZoneName } from '../../../../utils/load-data';
 export const SET_TILES = 'SET_TILES';
 export const MOVE_CREATURE = 'MOVE_CREATURE';
@@ -16,7 +16,7 @@ interface InitZone {
 
 interface SetTiles {
     type: typeof SET_TILES,
-    payload: Tile[][]
+    payload: TileType[][]
 }
 
 interface SetObjects {
@@ -66,7 +66,7 @@ export type ZoneActions =
 export type ZoneState = {
     name: ZoneName
     size: Dimensions
-    tiles: Tile[][]
+    tiles: TileType[][]
     creatures: {
         [Faction.Player]: Creature[],
         [Faction.Friendly]: Creature[],

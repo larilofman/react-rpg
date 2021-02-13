@@ -1,0 +1,19 @@
+{
+    "tileSprites": [
+        {
+            "id": 0,
+             "url": "floor/sand/floor_sand_stone",
+             "maxIndex": 8
+            },
+        {
+            "id": 1,
+             "url": "wall/vines/wall_vines",
+             "maxIndex": 7
+            },
+        {
+            "id": 2,
+             "url": "wall/catacombs/catacombs",
+             "maxIndex": 14
+            }
+    ]
+}

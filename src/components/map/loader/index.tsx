@@ -26,7 +26,7 @@ const MapLoader: React.FC<Props> = ({ tilesLoaded, zoneName }) => {
                 const zoneToLoad: ZoneData = loadZoneData(zoneName as ZoneName);
                 if (zoneToLoad) {
                     const tiles = zoneToLoad.tiles
-                        ? buildMap(zoneToLoad.tiles)
+                        ? buildMap(zoneToLoad)
                         : generateMap(zoneToLoad.size);
                     dispatch(SetTiles(tiles));
                 }
