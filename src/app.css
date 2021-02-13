@@ -15,22 +15,12 @@ body {
   font-size: 16px;
   background-color: var(--rich-black-fogra-39);
   color: var(--almond);
-  opacity: 1;
 }
 
 #game-container {
   display: flex;
   flex-direction: column;
-  width: 60vw;
   margin : 1rem auto;
-}
-
-#zone-container {
-  box-sizing: content-box;
-  border: 4px solid var(--almond);
-  margin: 0 auto 0 auto;
-  position: relative;
-  overflow: hidden;
 }
 
 .no-select {

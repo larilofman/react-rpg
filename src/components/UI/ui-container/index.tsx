@@ -2,18 +2,18 @@ import React from 'react';
 import './style.css';
 import CombatLog from '../combat-log';
 import PlayerStats from '../player-stats';
-import { Dimensions } from '../../../types';
 import InfoMessageBox from '../info-message-box';
+import { displaySize, tileSize } from '../../../data/settings/general.json';
 
-interface Props {
-    size: Dimensions
-}
 
-const UiContainer: React.FC<Props> = ({ size }) => {
+const UiContainer: React.FC = () => {
+    const width = displaySize.w * tileSize.w + 8; // add borders to width
+    const height = 256;
+
     return (
         <div id="ui-container-outer">
             <InfoMessageBox />
-            <div id="ui-container-inner" style={{ width: size.w, height: size.h }}>
+            <div id="ui-container-inner" style={{ width, height }}>
                 <PlayerStats />
                 <CombatLog />
             </div>
