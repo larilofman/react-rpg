@@ -3,7 +3,8 @@ import useFindRandomFloorTile from '../../../hooks/use-find-random-floor-tile';
 import { Creature, Faction, CreatureType } from '../../../types';
 import { nanoid } from 'nanoid';
 import creatures from '../../../data/creature/creatureData.json';
-import { loadZoneData, ZoneName } from '../../../utils/load-data';
+import { loadZoneData } from '../../../utils/load-data';
+import { ZoneName } from '../../../data/zones';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { SetCreatures } from '../../redux-state/reducers/zone/actions';

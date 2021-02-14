@@ -2,6 +2,7 @@ import { ZoneRouteType, Faction } from '../../types';
 import { useDispatch, useStore } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 import { SavePlayer, LoadZone, SaveVisitedZone } from '../../components/redux-state/reducers/game/actions';
+import { linkedRoutesById } from '../../data/zones';
 
 export default function useChangeZone() {
     const dispatch = useDispatch();
@@ -9,9 +10,10 @@ export default function useChangeZone() {
     const zoneStatus = useStore<RootState>().getState().zone;
 
     const changeZone = (zoneRouteUsed: ZoneRouteType) => {
-        dispatch(SavePlayer({ ...player, pos: zoneRouteUsed.linkedRoute.position }));
+        const linkedRoute = linkedRoutesById[zoneRouteUsed.id];
+        dispatch(SavePlayer({ ...player, pos: linkedRoute.position }));
         dispatch(SaveVisitedZone(zoneStatus));
-        dispatch(LoadZone(zoneRouteUsed.linkedRoute.zoneName));
+        dispatch(LoadZone(linkedRoute.zoneName));
     };
 
     return {

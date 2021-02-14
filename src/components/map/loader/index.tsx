@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { ZoneData } from '../../../types';
+import { ZoneData } from '../../../data/zones/types';
 import useGenerateMap from '../../../hooks/use-generate-map';
 import { useDispatch, useStore } from 'react-redux';
 import { SetTiles } from '../../redux-state/reducers/zone/actions';
-import { loadZoneData, ZoneName } from '../../../utils/load-data';
+import { loadZoneData } from '../../../utils/load-data';
+import { ZoneName } from '../../../data/zones';
 import { RootState } from '../../redux-state/store';
 
 interface Props {
@@ -14,7 +15,6 @@ interface Props {
 const MapLoader: React.FC<Props> = ({ tilesLoaded, zoneName }) => {
     const dispatch = useDispatch();
     const { buildMap, generateMap } = useGenerateMap();
-
     const visitedZones = useStore<RootState>().getState().game.visitedZones;
 
     useEffect(() => {

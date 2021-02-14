@@ -1,4 +1,4 @@
-import { ZoneName } from './utils/load-data';
+import { ZoneName } from './data/zones';
 
 export interface Position {
     x: number,
@@ -99,21 +99,6 @@ export interface CreatureType {
     sprite: string
 }
 
-export interface ZoneData {
-    name: ZoneName;
-    size: {
-        w: number;
-        h: number;
-    };
-    tiles: number[][] | null;
-    creatures: {
-        name: string;
-        amount: number;
-        faction: string;
-    }[];
-    zoneRoutes: ZoneRouteType[];
-}
-
 export enum InteractableTileType {
     ZoneRoute
 }
@@ -121,15 +106,13 @@ export enum InteractableTileType {
 export interface BaseInteractableTile {
     id: string
     position: Position
-    name: string
     type: InteractableTileType,
-    popUpMessage: string
+    popUpMessage?: string
 }
 
 export interface ZoneRouteType extends BaseInteractableTile {
     zoneName: ZoneName
     type: InteractableTileType.ZoneRoute
-    linkedRoute: ZoneRouteType
 }
 
 export type InteractableTile = ZoneRouteType

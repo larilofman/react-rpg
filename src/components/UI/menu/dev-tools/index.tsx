@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Container from '../../container';
 import Button from '../../button';
 import Select from '../../select';
-import { getAllZoneNames, ZoneName } from '../../../../utils/load-data';
+import { getAllZoneNames } from '../../../../utils/load-data';
 import './style.css';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { RootState } from '../../../redux-state/store';
 import { LoadSavedZone, LoadZone, RemoveVisitedZone, ResetPlayer, SavePlayer, SaveVisitedZone, SetGameOver } from '../../../redux-state/reducers/game/actions';
 import { Faction } from '../../../../types';
+import { ZoneName } from '../../../../data/zones';
 
 
 const DevTools: React.FC = () => {

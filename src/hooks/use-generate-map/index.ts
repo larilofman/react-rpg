@@ -1,8 +1,9 @@
-import { Dimensions, TileType, Position, Rectangle, ZoneData } from '../../types';
+import { Dimensions, TileType, Position, Rectangle } from '../../types';
 import getRandomArbitrary from '../../utils/random-between-values';
 import weightedRandom from '../../utils/weighted-random';
 import { collisionWithAny } from '../../utils/collision';
-import { tileSprites } from '../../data/tile/tileSprites.json';
+import { tileSprites } from '../../data/tile/tileSprites';
+import { ZoneData } from '../../data/zones';
 
 export default function useGenerateMap() {
 

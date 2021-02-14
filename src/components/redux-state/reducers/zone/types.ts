@@ -1,5 +1,5 @@
 import { BaseCreature, Creature, Dimensions, Faction, InteractableTile, Position, TileType } from '../../../../types';
-import { ZoneName } from '../../../../utils/load-data';
+import { ZoneName } from '../../../../data/zones';
 export const SET_TILES = 'SET_TILES';
 export const MOVE_CREATURE = 'MOVE_CREATURE';
 export const ADD_CREATURES = 'ADD_CREATURES';

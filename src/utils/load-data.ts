@@ -1,8 +1,7 @@
-import zones from '../data/zones/zones.json';
+import { zones } from '../data/zones/zones';
 import playerData from '../data/player/playerData.json';
-import { ZoneData, Creature, Faction } from '../types';
-
-export type ZoneName = keyof typeof zones;
+import { Creature, Faction } from '../types';
+import { ZoneData, ZoneName } from '../data/zones';
 
 export const loadZoneData = (nameName: ZoneName) => {
     const zone = zones[nameName] as unknown as ZoneData;
