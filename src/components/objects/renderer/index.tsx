@@ -3,7 +3,7 @@ import { Position, ZoneRouteType } from '../../../types';
 import ZoneRoute from '../../static-object/zoneRoute';
 import { useStore } from 'react-redux';
 import { RootState } from '../../redux-state/store';
-import settings from '../../../data/settings/general.json';
+import { displaySize } from '../../../data/settings/general';
 
 interface Props {
     cameraPosition: Position
@@ -18,9 +18,9 @@ const ObjectRenderer: React.FC<Props> = ({ cameraPosition, objectsLoaded }) => {
         const cam_x = cameraPosition.x;
         const objectsOnCam: ZoneRouteType[] = zoneInteractableTiles.filter(tile => (
             tile.position.x > cam_x - 2 &&
-            tile.position.x < cam_x + settings.displaySize.w + 2 &&
+            tile.position.x < cam_x + displaySize.w + 2 &&
             tile.position.y > cam_y - 2 &&
-            tile.position.y < cam_y + settings.displaySize.h + 2
+            tile.position.y < cam_y + displaySize.h + 2
         ));
 
         return objectsOnCam;

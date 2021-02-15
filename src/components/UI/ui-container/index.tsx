@@ -3,7 +3,7 @@ import './style.css';
 import CombatLog from '../combat-log';
 import PlayerStats from '../player-stats';
 import InfoMessageBox from '../info-message-box';
-import { displaySize, tileSize } from '../../../data/settings/general.json';
+import { displaySize, tileSize } from '../../../data/settings/general';
 
 
 const UiContainer: React.FC = () => {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Position } from '../../types';
 import useGetTiles from '../use-get-tiles';
 import useGetCreature from '../use-get-creature';
-import settings from '../../data/settings/general.json';
+import { tileSize } from '../../data/settings/general';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 
@@ -30,8 +30,8 @@ export default function useMouseClick() {
             const borderTop = getComputedStyle(zone, null).getPropertyValue('border-top-width').replace(/\D/g, "") as unknown as number;
 
             // Get click on viewport -> subtract display element's offset and the border -> divide by tileSize -> floor down -> add camera's position
-            const clickX = Math.floor(((e.clientX - zone.offsetLeft - borderLeft) / settings.tileSize.w)) + cameraPosition.x;
-            const clickY = Math.floor(((e.clientY - zone.offsetTop - borderTop) / settings.tileSize.h)) + cameraPosition.y;
+            const clickX = Math.floor(((e.clientX - zone.offsetLeft - borderLeft) / tileSize.w)) + cameraPosition.x;
+            const clickY = Math.floor(((e.clientY - zone.offsetTop - borderTop) / tileSize.h)) + cameraPosition.y;
 
             // If click happens on a tile
             if (getTileAt({ x: clickX, y: clickY })) {

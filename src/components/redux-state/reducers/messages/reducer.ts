@@ -4,7 +4,7 @@ import {
     MessagesActionTypes,
     MessagesState
 } from './types';
-import { gameName } from '../../../../data/settings/general.json';
+import { gameName } from '../../../../data/settings/general';
 
 const initialState: MessagesState = {
     combatLogEntries: [],

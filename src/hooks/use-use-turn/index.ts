@@ -3,7 +3,7 @@ import { Faction } from '../../types';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 import { SetCreatureTurn, SetFactionTurn } from '../../components/redux-state/reducers/turn/actions';
-import { turnDelay } from '../../data/settings/general.json';
+import { turnDelay } from '../../data/settings/general';
 import delay from 'lodash.delay';
 
 export default function useUseTurn() {

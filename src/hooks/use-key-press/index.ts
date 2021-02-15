@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import throttle from 'lodash.throttle';
-import { turnDelay } from '../../data/settings/general.json';
+import { turnDelay } from '../../data/settings/general';
 
 
 export default function useKeyPress() {

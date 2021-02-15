@@ -1,7 +1,7 @@
 import React from 'react';
 import Npc from '../../npc';
 import { Faction, Position } from '../../../types';
-import settings from '../../../data/settings/general.json';
+import { displaySize } from '../../../data/settings/general';
 import Player from '../../player';
 
 import { useSelector } from 'react-redux';
@@ -23,9 +23,9 @@ const CreatureRenderer: React.FC<Props> = ({ useTurn }) => {
 
     const isVisible = (pos: Position) => {
         if (pos.x >= cameraPosition.x &&
-            pos.x < cameraPosition.x + settings.displaySize.w &&
+            pos.x < cameraPosition.x + displaySize.w &&
             pos.y >= cameraPosition.y &&
-            pos.y < cameraPosition.y + settings.displaySize.h) {
+            pos.y < cameraPosition.y + displaySize.h) {
             return true;
         }
         return false;
