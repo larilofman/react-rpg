@@ -1,4 +1,4 @@
-import { Position, Tile, Direction, TileStatus } from '../../types';
+import { Position, TileType, Direction, TileStatus } from '../../types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 
@@ -16,7 +16,7 @@ export default function useGetTiles() {
         );
     };
 
-    const getTileAt = (pos: Position): Tile | undefined => {
+    const getTileAt = (pos: Position): TileType | undefined => {
         if (isInBounds(pos)) {
             return tiles[pos.y][pos.x];
         }
@@ -98,7 +98,32 @@ export default function useGetTiles() {
         return randomTile;
     };
 
+    const findRandomFloorTile = () => {
+        const floorTiles: TileType[] = [];
+        for (let y = 0; y < tiles.length; y++) {
+            for (let x = 0; x < tiles[y].length; x++) {
+                if (tiles[y][x].passable) {
+                    floorTiles.push(tiles[y][x]);
+                }
+            }
+        }
+        return floorTiles[Math.floor(Math.floor(Math.random() * floorTiles.length))];
+    };
+
+    const findFreeRandomFloorTile = (occupiedPositions: Position[]) => {
+        const floorTiles: TileType[] = [];
+        for (let y = 0; y < tiles.length; y++) {
+            for (let x = 0; x < tiles[y].length; x++) {
+                if (tiles[y][x].passable && !occupiedPositions.find((pos: Position) => pos.x === x && pos.y === y)) {
+                    floorTiles.push(tiles[y][x]);
+                }
+            }
+        }
+        return floorTiles[Math.floor(Math.floor(Math.random() * floorTiles.length))];
+    };
+
+
     return {
-        getTileInDirection, getTileStatus, getTileAt, getRandomNearbyFloorTile
+        getTileInDirection, getTileStatus, getTileAt, getRandomNearbyFloorTile, findRandomFloorTile, findFreeRandomFloorTile
     };
 }

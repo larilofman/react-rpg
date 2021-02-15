@@ -1,4 +1,4 @@
-import { ZoneName } from './utils/load-data';
+import { ZoneName } from './data/zones';
 
 export interface Position {
     x: number,
@@ -24,7 +24,6 @@ export enum Direction {
     downRight = 5,
     downLeft = 6,
     upLeft = 7
-
 }
 
 export interface SpriteData {
@@ -34,30 +33,13 @@ export interface SpriteData {
     layer: number
 }
 
-export enum TileType {
-    floor,
-    wall
-}
-
-interface BaseTile {
-    type: TileType,
+export interface TileType {
     id: number,
     position: Position,
-    passable?: boolean,
-    spriteIndex?: number,
+    passable: boolean,
+    spriteURL: string,
+    spriteIndex: number,
 }
-
-export interface FloorTile extends BaseTile {
-    type: TileType.floor
-    passable: true
-}
-
-export interface WallTile extends BaseTile {
-    type: TileType.wall
-    passable: false
-}
-
-export type Tile = FloorTile | WallTile
 
 export enum Faction {
     Player,
@@ -68,7 +50,7 @@ export enum Faction {
 export interface ZoneStatus {
     name: ZoneName,
     size: Dimensions,
-    tiles: Tile[][],
+    tiles: TileType[][],
     creatures: {
         [Faction.Player]: Creature[],
         [Faction.Friendly]: Creature[],
@@ -110,28 +92,6 @@ export enum TileStatus {
     NonPassable
 }
 
-export interface CreatureType {
-    name: string,
-    stats: Stats,
-    pos?: Position,
-    sprite: string
-}
-
-export interface ZoneData {
-    name: ZoneName;
-    size: {
-        w: number;
-        h: number;
-    };
-    tiles: number[][] | null;
-    creatures: {
-        name: string;
-        amount: number;
-        faction: string;
-    }[];
-    zoneRoutes: ZoneRouteType[];
-}
-
 export enum InteractableTileType {
     ZoneRoute
 }
@@ -139,15 +99,13 @@ export enum InteractableTileType {
 export interface BaseInteractableTile {
     id: string
     position: Position
-    name: string
     type: InteractableTileType,
-    popUpMessage: string
+    popUpMessage?: string
 }
 
 export interface ZoneRouteType extends BaseInteractableTile {
     zoneName: ZoneName
     type: InteractableTileType.ZoneRoute
-    linkedRoute: ZoneRouteType
 }
 
 export type InteractableTile = ZoneRouteType

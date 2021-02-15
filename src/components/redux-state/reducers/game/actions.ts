@@ -1,5 +1,5 @@
 import { Creature, ZoneStatus } from '../../../../types';
-import { ZoneName } from '../../../../utils/load-data';
+import { ZoneName } from '../../../../data/zones';
 import {
     SET_GAME_OVER, GameActions, SAVE_PLAYER,
     LOAD_ZONE,

@@ -7,9 +7,9 @@ import { turnDelay } from '../../data/settings/general.json';
 import delay from 'lodash.delay';
 
 export default function useUseTurn() {
-    const { turn, creatures, creaturesLoaded, gameOver } = useSelector((state: RootState) => (
+    const { turnOfFaction, creatures, creaturesLoaded, gameOver } = useSelector((state: RootState) => (
         {
-            turn: state.turn,
+            turnOfFaction: state.turn.faction,
             creatures: state.zone.creatures,
             creaturesLoaded: state.zone.creaturesLoaded,
             gameOver: state.game.gameOver
@@ -21,13 +21,16 @@ export default function useUseTurn() {
     // Called by a creature to increase the index keeping track which creature's turn inside the faction it is
     const useTurn = () => {
         setFactionIndex(prev => prev + 1);
+        // delay(() => {
+        //     setFactionIndex(prev => prev + 1);
+        // }, 1);
     };
 
     useEffect(() => {
         if (creaturesLoaded) {
             // More creatures on the faction left, so set next one's turn
-            if (factionIndex < creatures[turn.faction].length) {
-                dispatch(SetCreatureTurn(creatures[turn.faction][factionIndex].id));
+            if (factionIndex < creatures[turnOfFaction].length) {
+                dispatch(SetCreatureTurn(creatures[turnOfFaction][factionIndex].id));
             } else {
                 // Give turn to next faction and reset the index, adding a delay before each player turn, increasing it when player is dead
                 const nextFaction = getNextFaction();
@@ -47,7 +50,7 @@ export default function useUseTurn() {
     // If other factions are empty, give turn to player. Otherwise give the turn to the next faction if it has creatures
     const getNextFaction = () => {
         let nextFaction = Faction.Player;
-        switch (turn.faction) {
+        switch (turnOfFaction) {
             case Faction.Player:
                 nextFaction = creatures[Faction.Friendly].length ? Faction.Friendly : Faction.Hostile;
                 break;

@@ -1,16 +1,22 @@
 import React from 'react';
 import Sprite from '../sprite';
-import { Position, SpriteData } from '../../types';
+import { Position } from '../../types';
 
 interface Props {
     position: Position,
-    spriteData: SpriteData
+    spriteURL: string,
+    spriteIndex: number
 }
 
-const Tile: React.FC<Props> = ({ position = { x: 0, y: 0 }, spriteData }) => {
+const Tile: React.FC<Props> = ({ position = { x: 0, y: 0 }, spriteURL, spriteIndex }) => {
 
     return <Sprite
-        data={spriteData}
+        data={{
+            offset_x: 0,
+            offset_y: 0,
+            image: `/sprites/tiles/${spriteURL}_${spriteIndex}.png`,
+            layer: 0
+        }}
         position={position}
     />;
 

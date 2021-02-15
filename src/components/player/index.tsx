@@ -101,9 +101,9 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
                 if (dir !== undefined) {
                     const newTile = getTileInDirection(position, dir);
                     if (newTile) {
-                        if (getTileStatus(newTile.pos) === TileStatus.Occupied) {
+                        if (newTile.status === TileStatus.Occupied) {
                             contactCreature(newTile.pos);
-                        } else if (getTileStatus(newTile.pos) === TileStatus.Passable) {
+                        } else if (newTile.status === TileStatus.Passable) {
                             move(newTile.pos);
                             setAnimState(position, newTile.pos);
                         } else {

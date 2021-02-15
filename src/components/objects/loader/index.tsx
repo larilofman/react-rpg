@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { InteractableTileType } from '../../../types';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetObjects } from '../../redux-state/reducers/zone/actions';
-import { loadZoneData, ZoneName } from '../../../utils/load-data';
+import { loadZoneData } from '../../../utils/load-data';
+import { linkedRoutesById, ZoneName } from '../../../data/zones';
 import { RootState } from '../../redux-state/store';
 
 interface Props {
@@ -25,11 +26,12 @@ const ObjectLoader: React.FC<Props> = ({ objectsLoaded, zoneName }) => {
 
     const loadRoutes = () => {
         const routesData = loadZoneData(zoneName).zoneRoutes;
+
         dispatch(SetObjects(routesData.map(route => (
             {
                 ...route,
                 type: InteractableTileType.ZoneRoute,
-                popUpMessage: `Press 'e' to travel to ${route.linkedRoute.zoneName}`
+                popUpMessage: `Press 'e' to travel to ${linkedRoutesById[route.id].zoneName}`
             }
         ))));
     };

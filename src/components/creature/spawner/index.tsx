@@ -1,15 +1,13 @@
 import React, { useEffect } from 'react';
-import useFindRandomFloorTile from '../../../hooks/use-find-random-floor-tile';
-import { Creature, Faction, CreatureType } from '../../../types';
+import { Creature, Faction, Position } from '../../../types';
+import { CreatureType } from '../../../data/creature';
 import { nanoid } from 'nanoid';
-import creatures from '../../../data/creature/creatureData.json';
-import { loadZoneData, ZoneName } from '../../../utils/load-data';
-
+import { loadZoneData } from '../../../utils/load-data';
+import { ZoneName } from '../../../data/zones';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetCreatures } from '../../redux-state/reducers/zone/actions';
 import { RootState } from '../../redux-state/store';
-
-type CreatureName = keyof typeof creatures;
+import useGetTiles from '../../../hooks/use-get-tiles';
 
 interface Props {
     zoneName: ZoneName
@@ -20,7 +18,7 @@ const CreatureSpawner: React.FC<Props> = ({ zoneName, creaturesLoaded }) => {
     const dispatch = useDispatch();
     const visitedZones = useSelector((state: RootState) => state.game.visitedZones);
     const player = useSelector((state: RootState) => state.game.player);
-    const { findRandomFloorTile } = useFindRandomFloorTile();
+    const { findFreeRandomFloorTile } = useGetTiles();
 
     useEffect(() => {
         if (!creaturesLoaded) {
@@ -35,37 +33,29 @@ const CreatureSpawner: React.FC<Props> = ({ zoneName, creaturesLoaded }) => {
                 const spawnedPlayer = {
                     [Faction.Player]: [player]
                 };
-                const loadedCreatures = loadCreatures();
-                const spawnedCreatures = spawnCreatures(loadedCreatures);
+                const loadedCreatures = loadZoneData(zoneName).creatures;
+                const spawnedCreatures = spawnCreatures(loadedCreatures, player.pos);
                 dispatch(SetCreatures({ ...spawnedPlayer, ...spawnedCreatures }));
             }
         }
 
     }, [creaturesLoaded]);
 
-    const loadCreatures = () => {
-        const creatureData = loadZoneData(zoneName).creatures; // load list of enemies from data
-        const creaturesToSpawn: { creature: CreatureType, amount: number, faction: Faction }[] = [];
-        Object.values(creatureData).forEach(c => { // find the creature's data by its name
-            creaturesToSpawn.push({ creature: creatures[c.name as CreatureName] as CreatureType, amount: c.amount, faction: c.faction as unknown as Faction });
-        });
-
-        return creaturesToSpawn;
-    };
-
-    const spawnCreatures = (creaturesToSpawn: { creature: CreatureType, amount: number, faction: Faction }[]) => {
+    const spawnCreatures = (creaturesToSpawn: { creature: CreatureType, amount: number, faction: Faction }[], playerPos: Position) => {
+        const occupiedPositions: Position[] = [playerPos];
         const allEnemies: Creature[] = [];
         const allFriendlies: Creature[] = [];
         creaturesToSpawn.forEach(({ creature, amount, faction }) => {
             for (let i = 0; i < amount; i++) {
                 const creatureToAdd: Creature = {
-                    faction: Faction[faction] as unknown as Faction,
-                    pos: findRandomFloorTile().position,
+                    faction,
+                    pos: findFreeRandomFloorTile(occupiedPositions).position,
                     id: nanoid(),
                     stats: creature.stats,
                     name: creature.name,
                     sprite: creature.sprite
                 };
+                occupiedPositions.push(creatureToAdd.pos);
                 creatureToAdd.faction === Faction.Hostile ? allEnemies.push(creatureToAdd) : allFriendlies.push(creatureToAdd);
             }
         });

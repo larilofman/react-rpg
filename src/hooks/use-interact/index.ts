@@ -29,7 +29,9 @@ export default function useInteract() {
 
     useEffect(() => {
         if (interactedTile) {
-            dispatch(SetInfoMessage(interactedTile.popUpMessage));
+            if (interactedTile.popUpMessage) {
+                dispatch(SetInfoMessage(interactedTile.popUpMessage));
+            }
             setPrevInteractedTile(true);
         } else if (prevInteractedTile) {
             dispatch(SetInfoMessage(""));

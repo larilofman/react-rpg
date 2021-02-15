@@ -1,5 +1,5 @@
 import { Creature, ZoneStatus } from "../../../../types";
-import { ZoneName } from "../../../../utils/load-data";
+import { ZoneName } from '../../../../data/zones';
 export const SET_GAME_OVER = 'SET_GAME_OVER';
 export const SAVE_PLAYER = 'SAVE_PLAYER';
 export const RESET_PLAYER = 'RESET_PLAYER';
