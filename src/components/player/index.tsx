@@ -12,8 +12,8 @@ import usePathFinding from '../../hooks/use-pathfinding';
 import { isInMeleeRange } from '../../utils/calculate-distance';
 import useGetCreature from '../../hooks/use-get-creature';
 import useInteract from '../../hooks/use-interact';
-import { firstStepDelay, diagonalMovement } from '../../data/settings/general.json';
-import { keyboardMap } from '../../data/settings/keyboard.json';
+import { firstStepDelay, diagonalMovement } from '../../data/settings/general';
+import { keyboardMap } from '../../data/settings/keyboard';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux-state/store';
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './style.css';
-import { displaySize, tileSize } from '../../data/settings/general.json';
+import { displaySize, tileSize } from '../../data/settings/general';
 import { useDispatch, useSelector } from 'react-redux';
 import CreatureManager from '../creature/manager';
 import MapManager from '../map/manager';

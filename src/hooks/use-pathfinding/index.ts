@@ -3,14 +3,14 @@ import { Position, TileStatus } from '../../types';
 import PF, { Grid } from 'pathfinding';
 import useGetTiles from '../use-get-tiles';
 import { isInMeleeRange } from '../../utils/calculate-distance';
-import settings from '../../data/settings/general.json';
+import { diagonalMovement } from '../../data/settings/general';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 
 export default function usePathfinding() {
     const [finder] = useState<PF.AStarFinder>(new PF.AStarFinder(
         {
-            diagonalMovement: settings.diagonalMovement ? PF.DiagonalMovement.Always : PF.DiagonalMovement.Never
+            diagonalMovement: diagonalMovement ? PF.DiagonalMovement.Always : PF.DiagonalMovement.Never
         }));
     const tiles = useSelector((state: RootState) => state.zone.tiles);
     const { getTileStatus } = useGetTiles();

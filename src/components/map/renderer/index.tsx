@@ -1,6 +1,6 @@
 import React from 'react';
 import { TileType, Position } from '../../../types';
-import settings from '../../../data/settings/general.json';
+import { displaySize } from '../../../data/settings/general';
 import { useStore } from 'react-redux';
 import { RootState } from '../../redux-state/store';
 import Tile from '../../tile';
@@ -19,8 +19,8 @@ const MapRenderer: React.FC<Props> = ({ cameraPosition, tilesLoaded }) => {
         const cam_x = cameraPosition.x;
         const tilesOnCam: TileType[] = [];
         // Get tiles visible on camera and two tiles to each direction to avoid flickering
-        for (let y = cam_y - 2; y < cam_y + settings.displaySize.h + 2; y++) {
-            for (let x = cam_x - 2; x < cam_x + settings.displaySize.w + 2; x++) {
+        for (let y = cam_y - 2; y < cam_y + displaySize.h + 2; y++) {
+            for (let x = cam_x - 2; x < cam_x + displaySize.w + 2; x++) {
                 if (zoneTiles[y] && zoneTiles[y][x]) {
                     tilesOnCam.push(zoneTiles[y][x]);
                 }

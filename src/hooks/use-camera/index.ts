@@ -1,6 +1,6 @@
 import { Position } from '../../types';
 import clamp from '../../utils/clamp';
-import { displaySize } from '../../data/settings/general.json';
+import { displaySize } from '../../data/settings/general';
 import { useDispatch } from 'react-redux';
 import { SetCameraPosition } from '../../components/redux-state/reducers/camera-position/actions';
 
