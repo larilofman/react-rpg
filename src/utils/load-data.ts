@@ -1,5 +1,5 @@
 import { zones } from '../data/zones/zones';
-import playerData from '../data/player/playerData.json';
+import { creatures } from '../data/creature';
 import { Creature, Faction } from '../types';
 import { ZoneData, ZoneName } from '../data/zones';
 
@@ -9,9 +9,12 @@ export const loadZoneData = (nameName: ZoneName) => {
 };
 
 export const loadPlayerData = () => {
+    const female1 = creatures['female1'];
     const player: Creature = {
-        ...playerData.female1,
-        faction: Faction[playerData.female1.faction as unknown as Faction] as unknown as Faction
+        ...female1,
+        faction: Faction.Player,
+        id: 'player',
+        pos: { x: 0, y: 0 }
     };
     return player;
 };

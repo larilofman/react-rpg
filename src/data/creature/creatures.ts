@@ -1,7 +1,17 @@
 import { CreatureType } from "./types";
 
 export const creatures: Record<string, CreatureType> = {
-    Ghost:
+    female1:
+    {
+        stats: {
+            health: 100,
+            maxHealth: 100,
+            damage: 5
+        },
+        name: "Player",
+        sprite: "f1"
+    },
+    ghost:
     {
         name: "Ghost",
         stats: {
@@ -11,7 +21,7 @@ export const creatures: Record<string, CreatureType> = {
         },
         sprite: "e1"
     },
-    Ninja:
+    ninja:
     {
         name: "Ninja",
         stats: {
@@ -21,7 +31,7 @@ export const creatures: Record<string, CreatureType> = {
         },
         sprite: "m2"
     },
-    DistressedMan:
+    distressedMan:
     {
         name: "Distressed Man",
         stats: {

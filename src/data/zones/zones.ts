@@ -1,6 +1,6 @@
 import { Faction, InteractableTileType, ZoneRouteType } from '../../types';
 import { ZoneDataMap } from './types';
-import { creatures, CreatureType } from '../creature';
+import { creatures } from '../creature';
 
 export const zones: ZoneDataMap = {
   zone0: {
@@ -31,9 +31,9 @@ export const zones: ZoneDataMap = {
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ],
     creatures: [
-      { creature: creatures["Ghost"], amount: 1, faction: Faction.Hostile },
-      { creature: creatures["Ninja"], amount: 0, faction: Faction.Hostile },
-      { creature: creatures["DistressedMan"], amount: 0, faction: Faction.Friendly },
+      { creature: creatures["ghost"], amount: 1, faction: Faction.Hostile },
+      { creature: creatures["ninja"], amount: 0, faction: Faction.Hostile },
+      { creature: creatures["distressedMan"], amount: 0, faction: Faction.Friendly },
     ],
     zoneRoutes: [
       {
@@ -50,9 +50,9 @@ export const zones: ZoneDataMap = {
     size: { w: 28, h: 28 },
     tiles: null,
     creatures: [
-      { creature: creatures["Ghost"], amount: 3, faction: Faction.Hostile },
-      { creature: creatures["Ninja"], amount: 1, faction: Faction.Hostile },
-      { creature: creatures["DistressedMan"], amount: 1, faction: Faction.Friendly },
+      { creature: creatures["ghost"], amount: 3, faction: Faction.Hostile },
+      { creature: creatures["ninja"], amount: 1, faction: Faction.Hostile },
+      { creature: creatures["distressedMan"], amount: 1, faction: Faction.Friendly },
     ],
     zoneRoutes: [
       {
