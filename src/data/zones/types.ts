@@ -1,4 +1,5 @@
-import { ZoneRouteType } from '../../types';
+import { Faction, ZoneRouteType } from '../../types';
+import { CreatureType } from '../creature';
 import { zones } from './zones';
 
 const zoneNames: string[] = Object.keys(zones);
@@ -12,9 +13,9 @@ export interface ZoneData {
     };
     tiles: number[][] | null;
     creatures: {
-        name: string;
+        creature: CreatureType;
         amount: number;
-        faction: string;
+        faction: Faction;
     }[];
     zoneRoutes: ZoneRouteType[];
 }

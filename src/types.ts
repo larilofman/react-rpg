@@ -92,13 +92,6 @@ export enum TileStatus {
     NonPassable
 }
 
-export interface CreatureType {
-    name: string,
-    stats: Stats,
-    pos?: Position,
-    sprite: string
-}
-
 export enum InteractableTileType {
     ZoneRoute
 }
