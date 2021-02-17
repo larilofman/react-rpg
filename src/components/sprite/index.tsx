@@ -13,6 +13,10 @@ const Sprite: React.FC<Props> = ({ data, position }) => {
     const cameraPosition = useSelector((state: RootState) => state.cameraPosition);
     const { offset_x, offset_y } = data;
 
+    // for future FoV tiles
+    // backgroundColor: "rgba(0, 0, 0, 0.5)",
+    // backgroundBlendMode: "darken",
+
     return (
         <div
             style={{

@@ -88,7 +88,7 @@ export default function useGenerateMap() {
                         false,
                         (mapSize.h * y) + x,
                         tileSprites[1].url,
-                        tileSprites[1].maxIndex
+                        tileSprites[1].variants
                     );
 
                     houseTiles.push(tile);
@@ -140,7 +140,7 @@ export default function useGenerateMap() {
                         mapCharacter === 0,
                         (size.h * y) + x,
                         tileSprites[mapCharacter].url,
-                        tileSprites[mapCharacter].maxIndex
+                        tileSprites[mapCharacter].variants
                     );
                     row.push(tile);
                 }
@@ -161,7 +161,7 @@ export default function useGenerateMap() {
                     true,
                     (size.h * y) + x,
                     tileSprites[0].url,
-                    tileSprites[0].maxIndex
+                    tileSprites[0].variants
                 );
                 row.push(tile);
             }

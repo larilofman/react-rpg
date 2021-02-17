@@ -16,14 +16,14 @@ import { firstStepDelay, diagonalMovement } from '../../data/settings/general';
 import { keyboardMap } from '../../data/settings/keyboard';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux-state/store';
+import useUseTurn from '../../hooks/use-use-turn';
 
 interface Props {
     skin: string
     data: BaseCreature
-    useTurn: (creature: BaseCreature) => void
 }
 
-const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
+const Player: React.FC<Props> = ({ skin, data }) => {
     const { turn, creaturesLoaded, player, gameOver, interactableTiles } = useSelector((state: RootState) => (
         {
             turn: state.turn,
@@ -43,6 +43,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     const { getCreatureById } = useGetCreature();
     const { interact, checkInteraction } = useInteract();
     const [canAct, setCanAct] = useState(true);
+    const { useTurn } = useUseTurn();
 
     useEffect(() => {
         if (creaturesLoaded) {
@@ -86,7 +87,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
         if (turn.faction === data.faction && turn.creature === data.id && canAct) {
             // player has died, skip turn so npcs will keep wandering
             if (gameOver) {
-                useTurn(data);
+                useTurn();
                 return;
             }
 
@@ -141,7 +142,7 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
         if (keyboardMap["downRight"].includes(key)) dir = diagonalMovement ? Direction.downRight : undefined;
         if (keyboardMap["downLeft"].includes(key)) dir = diagonalMovement ? Direction.downLeft : undefined;
         if (keyboardMap["upLeft"].includes(key)) dir = diagonalMovement ? Direction.upLeft : undefined;
-        if (keyboardMap["useTurn"].includes(key)) useTurn(data);
+        if (keyboardMap["useTurn"].includes(key)) useTurn();
         if (keyboardMap["interact"].includes(key)) interact();
 
         return dir;
@@ -150,12 +151,12 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     const move = (newPos: Position) => {
         walk(data, newPos);
         setAnimState(position, newPos);
-        useTurn(data);
+        useTurn();
     };
 
     const contactCreature = (contactPos: Position) => {
         contact(data, contactPos);
-        useTurn(data);
+        useTurn();
         setAnimState(position, contactPos);
     };
 
@@ -169,7 +170,6 @@ const Player: React.FC<Props> = ({ skin, data, useTurn }) => {
     }, [interactableTiles]);
 
     if (gameOver) return null;
-
     return <Sprite
         data={{
             offset_x: step,

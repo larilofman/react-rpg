@@ -4,12 +4,15 @@ import {
     SET_CREATURE_TURN,
     SET_FACTION_TURN,
     RESET_TURN,
-    TurnState
+    TurnState,
+    INCREMENT_CREATURE_INDEX,
+    RESET_CREATURE_INDEX
 } from './types';
 
 const initialState: TurnState = {
     faction: Faction.Player,
     creature: 'player',
+    creatureIndex: 0,
     count: 0
 };
 
@@ -26,9 +29,20 @@ const reducer = (state = initialState, action: TurnActions) => {
                 ...state,
                 creature: action.payload
             };
+        case INCREMENT_CREATURE_INDEX:
+            return {
+                ...state,
+                creatureIndex: state.creatureIndex + 1
+            };
+        case RESET_CREATURE_INDEX:
+            return {
+                ...state,
+                creatureIndex: 0
+            };
         case RESET_TURN:
             return {
                 ...state,
+                creatureIndex: 0,
                 faction: Faction.Player,
                 creature: 'player'
             };
