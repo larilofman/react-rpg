@@ -18,6 +18,6 @@ export const tileSprites: TileSpriteMap = {
     },
     2: {
         url: "wall/catacombs/catacombs",
-        variants: 14
+        variants: 16
     }
 };

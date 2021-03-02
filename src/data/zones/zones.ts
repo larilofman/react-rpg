@@ -1,10 +1,16 @@
 import { Faction, InteractableTileType, ZoneRouteType } from '../../types';
 import { ZoneDataMap } from './types';
 import { creatures } from '../creature';
+import { ZoneEnvironment } from '../../utils/map/types';
 
 export const zones: ZoneDataMap = {
   zone0: {
     name: "zone0",
+    zoneType: {
+      environment: ZoneEnvironment.Village,
+      floorSprite: 0,
+      wallSprite: 1
+    },
     size: { w: 22, h: 22 },
     tiles: [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -47,6 +53,12 @@ export const zones: ZoneDataMap = {
   },
   zone1: {
     name: "zone1",
+    zoneType: {
+      environment: ZoneEnvironment.Village,
+      floorSprite: 0,
+      wallSprite: 1,
+      numRandomRooms: 5
+    },
     size: { w: 28, h: 28 },
     tiles: null,
     creatures: [

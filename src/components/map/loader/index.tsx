@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { ZoneData } from '../../../data/zones/types';
-import useGenerateMap from '../../../hooks/use-generate-map';
 import { useDispatch, useStore } from 'react-redux';
 import { SetTiles } from '../../redux-state/reducers/zone/actions';
 import { loadZoneData } from '../../../utils/load-data';
 import { ZoneName } from '../../../data/zones';
 import { RootState } from '../../redux-state/store';
+import { buildMap } from '../../../utils/map/build-map';
+import { generateMap } from '../../../utils/map/generate-map';
 
 interface Props {
     tilesLoaded: boolean
@@ -14,7 +15,6 @@ interface Props {
 
 const MapLoader: React.FC<Props> = ({ tilesLoaded, zoneName }) => {
     const dispatch = useDispatch();
-    const { buildMap, generateMap } = useGenerateMap();
     const visitedZones = useStore<RootState>().getState().game.visitedZones;
 
     useEffect(() => {
@@ -27,7 +27,7 @@ const MapLoader: React.FC<Props> = ({ tilesLoaded, zoneName }) => {
                 if (zoneToLoad) {
                     const tiles = zoneToLoad.tiles
                         ? buildMap(zoneToLoad)
-                        : generateMap(zoneToLoad.size);
+                        : generateMap(zoneToLoad.size, zoneToLoad.zoneType);
                     dispatch(SetTiles(tiles));
                 }
             }

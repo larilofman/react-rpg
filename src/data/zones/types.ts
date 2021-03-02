@@ -1,4 +1,5 @@
 import { Faction, ZoneRouteType } from '../../types';
+import { ZoneType } from '../../utils/map/types';
 import { CreatureType } from '../creature';
 import { zones } from './zones';
 
@@ -7,6 +8,7 @@ export type ZoneName = typeof zoneNames[number];
 
 export interface ZoneData {
     name: ZoneName;
+    zoneType: ZoneType;
     size: {
         w: number;
         h: number;
