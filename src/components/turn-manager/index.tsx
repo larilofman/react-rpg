@@ -17,7 +17,7 @@ const TurnManager: React.FC = () => {
     const gameOver = useSelector((state: RootState) => state.game.gameOver);
     const dispatch = useDispatch();
 
-    // used for adding a delay for every nth turn if more than x creatures on faction
+    // used for adding a delay for every nth turn if more than x creatures on faction to avoid reaching max render depth
     const amountForDelay = 20;
     const delayModulo = 10;
     const creatureDelay = 5;
