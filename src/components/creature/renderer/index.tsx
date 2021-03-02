@@ -7,11 +7,7 @@ import Player from '../../player';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux-state/store';
 
-interface Props {
-    useTurn: () => void
-}
-
-const CreatureRenderer: React.FC<Props> = ({ useTurn }) => {
+const CreatureRenderer: React.FC = () => {
     const { player, cameraPosition, creatures, creaturesLoaded } = useSelector((state: RootState) => (
         {
             cameraPosition: state.cameraPosition,
@@ -36,7 +32,11 @@ const CreatureRenderer: React.FC<Props> = ({ useTurn }) => {
     return (
         <>
             {
-                player && <Player skin={player.sprite} data={{ id: player.id, faction: player.faction }} useTurn={useTurn} />
+                player &&
+                <Player
+                    skin={player.sprite}
+                    data={{ id: player.id, faction: player.faction }}
+                />
             }
             {creatures[Faction.Hostile].map(e => (
                 <Npc
@@ -44,7 +44,6 @@ const CreatureRenderer: React.FC<Props> = ({ useTurn }) => {
                     skin={e.sprite}
                     startPosition={e.pos}
                     data={{ id: e.id, faction: e.faction }}
-                    useTurn={useTurn}
                     isVisible={isVisible(e.pos)} />
             ))}
             {creatures[Faction.Friendly].map(e => (
@@ -53,7 +52,6 @@ const CreatureRenderer: React.FC<Props> = ({ useTurn }) => {
                     skin={e.sprite}
                     startPosition={e.pos}
                     data={{ id: e.id, faction: e.faction }}
-                    useTurn={useTurn}
                     isVisible={isVisible(e.pos)}
                     hostile={false} />
             ))}

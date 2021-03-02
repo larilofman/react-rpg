@@ -11,12 +11,13 @@ import usePathFinding from '../../hooks/use-pathfinding';
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux-state/store/';
+import useUseTurn from '../../hooks/use-use-turn';
+import { Turn } from '../redux-state/reducers/turn/types';
 
 interface Props {
     skin: string,
     startPosition: Position
     data: BaseCreature
-    useTurn: (creature: BaseCreature) => void
     aggroDistance?: number
     stationary?: boolean,
     hostile?: boolean
@@ -26,13 +27,9 @@ interface Props {
 const Npc: React.FC<Props> = (props) => {
     const { walk, position } = useWalk(props.startPosition);
     const { dir, step, setAnimState } = useAnimation(3);
-    const { playerPosition, turn, creaturesLoaded } = useSelector((state: RootState) => (
-        {
-            playerPosition: state.zone.creatures[Faction.Player][0] && state.zone.creatures[Faction.Player][0].pos,
-            turn: state.turn,
-            creaturesLoaded: state.zone.creaturesLoaded
-        }
-    ));
+    const playerPosition = useSelector((state: RootState) => state.zone.creatures[Faction.Player][0] && state.zone.creatures[Faction.Player][0].pos);
+    const turn = useSelector((state: RootState) => state.turn);
+    const creaturesLoaded = useSelector((state: RootState) => state.zone.creaturesLoaded);
 
     useEffect(() => {
         if (creaturesLoaded) {
@@ -68,11 +65,10 @@ const Npc: React.FC<Props> = (props) => {
 
 interface InnerProps {
     data: BaseCreature
-    useTurn: (creature: BaseCreature) => void
     aggroDistance?: number
     stationary?: boolean
     hostile?: boolean
-    turn: { faction: Faction, count: number, creature: string }
+    turn: Turn
     playerPosition: Position
     walk: (creature: BaseCreature, pos: Position) => void
     position: Position
@@ -80,17 +76,18 @@ interface InnerProps {
 }
 
 const InnerNPC: React.FC<InnerProps> = (
-    { data, useTurn, aggroDistance = 5, stationary = false, hostile = true, turn, playerPosition, walk, position, setAnimState }) => {
+    { data, aggroDistance = 5, stationary = false, hostile = true, turn, playerPosition, walk, position, setAnimState }) => {
     const gameOver = useSelector((state: RootState) => state.game.gameOver);
     const { contact } = useContact();
     const { findPath } = usePathFinding();
     const { getRandomNearbyPos } = useWander();
     const { getTileStatus } = useGetTiles();
+    const { useTurn } = useUseTurn();
 
     useEffect(() => {
         if (turn.creature === data.id && turn.faction === data.faction) {
             if (stationary) { // Idle
-                useTurn(data);
+                useTurn();
             } else if (hostile && !gameOver && isInMeleeRange(position, playerPosition)) { // Melee
                 contactCreature(playerPosition);
             } else if (hostile && !gameOver && isInRange(position, playerPosition, aggroDistance)) { // Chase
@@ -98,23 +95,23 @@ const InnerNPC: React.FC<InnerProps> = (
                 if (nextPos) {
                     move(nextPos);
                 } else {
-                    useTurn(data);
+                    useTurn();
                 }
             } else {
                 wander(); // Wander
             }
         }
-    }, [turn.creature]);
+    }, [turn.count]);
 
     const move = (newPos: Position) => {
         walk(data, newPos);
         setAnimState(position, newPos);
-        useTurn(data);
+        useTurn();
     };
 
     const contactCreature = (contactPos: Position) => {
         contact(data, contactPos);
-        useTurn(data);
+        useTurn();
         setAnimState(position, contactPos);
     };
 
@@ -126,7 +123,7 @@ const InnerNPC: React.FC<InnerProps> = (
             walk(data, newPos);
         }
 
-        useTurn(data);
+        useTurn();
         setAnimState(position, newPos);
     };
 
