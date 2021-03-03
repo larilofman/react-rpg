@@ -1,11 +1,11 @@
 import React from 'react';
 import Npc from '../../npc';
-import { Faction, Position } from '../../../types';
 import { displaySize } from '../../../data/settings/general';
 import Player from '../../player';
-
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux-state/store';
+import { Faction } from '../../../types/creature';
+import { Position } from '../../../types/general';
 
 const CreatureRenderer: React.FC = () => {
     const { player, cameraPosition, creatures, creaturesLoaded } = useSelector((state: RootState) => (

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Direction, Position } from '../../types';
+import { Direction, Position } from '../../types/general';
 
 export default function useAnimation(animSteps = 3) {
 

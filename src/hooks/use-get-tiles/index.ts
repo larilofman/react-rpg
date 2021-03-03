@@ -1,6 +1,7 @@
-import { Position, TileType, Direction, TileStatus } from '../../types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
+import { Position, Direction } from '../../types/general';
+import { TileType, TileStatus } from '../../types/tile';
 
 export default function useGetTiles() {
     const creatures = useSelector((state: RootState) => state.zone.creatures);

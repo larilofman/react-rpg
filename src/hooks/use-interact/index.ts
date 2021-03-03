@@ -1,9 +1,10 @@
-import { Position, InteractableTileType, InteractableTile } from '../../types';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 import { useEffect, useState } from 'react';
 import useChangeZone from '../use-change-zone';
 import { SetInfoMessage } from '../../components/redux-state/reducers/messages/actions';
+import { Position } from '../../types/general';
+import { InteractableTile, InteractableTileType } from '../../types/tile';
 
 export default function useInteract() {
     const { changeZone } = useChangeZone();

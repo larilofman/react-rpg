@@ -1,9 +1,10 @@
 import React from 'react';
-import { TileType, Position } from '../../../types';
+import { Position } from '../../../types/general';
 import { displaySize } from '../../../data/settings/general';
 import { useStore } from 'react-redux';
 import { RootState } from '../../redux-state/store';
 import Tile from '../../tile';
+import { TileType } from '../../../types/tile';
 
 interface Props {
     cameraPosition: Position

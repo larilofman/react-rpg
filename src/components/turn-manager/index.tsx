@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Faction } from '../../types';
+import { Faction } from '../../types/creature';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
 import { ResetCreatureIndex, SetCreatureTurn, SetFactionTurn } from '../../components/redux-state/reducers/turn/actions';

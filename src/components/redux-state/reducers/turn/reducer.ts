@@ -1,4 +1,4 @@
-import { Faction } from '../../../../types';
+import { Faction } from '../../../../types/creature';
 import {
     TurnActions,
     SET_CREATURE_TURN,

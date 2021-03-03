@@ -7,9 +7,8 @@ import './style.css';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { RootState } from '../../../redux-state/store';
 import { LoadSavedZone, LoadZone, RemoveVisitedZone, ResetPlayer, SavePlayer, SaveVisitedZone, SetGameOver } from '../../../redux-state/reducers/game/actions';
-import { Faction } from '../../../../types';
+import { Faction } from '../../../../types/creature';
 import { ZoneName } from '../../../../data/zones';
-
 
 const DevTools: React.FC = () => {
     const { zoneName, visitedZones } = useSelector((state: RootState) => (

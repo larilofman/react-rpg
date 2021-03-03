@@ -5,7 +5,7 @@ import useMouseClick from '../../hooks/use-mouse-click';
 import useWalk from '../../hooks/use-walk';
 import useAnimation from '../../hooks/use-animation';
 import useCamera from '../../hooks/use-camera';
-import { Direction, Position, TileStatus, BaseCreature, Faction } from '../../types';
+import { Direction, Position } from '../../types/general';
 import useCheckCollision from '../../hooks/use-get-tiles';
 import useContact from '../../hooks/use-contact';
 import usePathFinding from '../../hooks/use-pathfinding';
@@ -17,6 +17,8 @@ import { keyboardMap } from '../../data/settings/keyboard';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux-state/store';
 import useUseTurn from '../../hooks/use-use-turn';
+import { BaseCreature, Faction } from '../../types/creature';
+import { TileStatus } from '../../types/tile';
 
 interface Props {
     skin: string

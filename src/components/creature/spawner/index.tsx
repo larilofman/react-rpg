@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import { Creature, Faction, Position } from '../../../types';
-import { CreatureType } from '../../../data/creature';
 import { nanoid } from 'nanoid';
 import { loadZoneData } from '../../../utils/load-data';
-import { ZoneName } from '../../../data/zones';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetCreatures } from '../../redux-state/reducers/zone/actions';
 import { RootState } from '../../redux-state/store';
 import useGetTiles from '../../../hooks/use-get-tiles';
+import { Faction, CreatureType, Creature } from '../../../types/creature';
+import { Position } from '../../../types/general';
+import { ZoneName } from '../../../data/zones';
 
 interface Props {
     zoneName: ZoneName

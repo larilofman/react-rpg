@@ -1,4 +1,4 @@
-import { Position } from '../../types';
+import { Position } from '../../types/general';
 import clamp from '../../utils/clamp';
 import { displaySize } from '../../data/settings/general';
 import { useDispatch } from 'react-redux';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Position, SpriteData } from '../../types';
+import { Position, SpriteData } from '../../types/general';
 import { tileSize } from '../../data/settings/general';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux-state/store';

@@ -1,5 +1,7 @@
-import { BaseCreature, Creature, Faction, InteractableTile, Position, TileType } from '../../../../types';
 import { ZoneName } from '../../../../data/zones';
+import { BaseCreature, Creature, Faction } from '../../../../types/creature';
+import { Position } from '../../../../types/general';
+import { TileType, InteractableTile } from '../../../../types/tile';
 import {
     INIT_ZONE,
     ADD_CREATURES,

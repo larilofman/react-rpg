@@ -1,4 +1,4 @@
-import { Faction } from '../../../../types';
+import { Faction } from '../../../../types/creature';
 import { loadPlayerData } from '../../../../utils/load-data';
 import {
     SET_GAME_OVER, GameState,

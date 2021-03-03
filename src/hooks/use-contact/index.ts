@@ -1,6 +1,7 @@
-import { BaseCreature, Position, Faction } from '../../types';
 import useGetCreature from '../use-get-creature';
 import useDamageCreature from '../use-damage-creature';
+import { BaseCreature, Faction } from '../../types/creature';
+import { Position } from '../../types/general';
 
 export default function useContact() {
     const { getCreatureByPos } = useGetCreature();

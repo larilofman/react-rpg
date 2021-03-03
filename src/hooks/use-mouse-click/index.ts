@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Position } from '../../types';
+import { Position } from '../../types/general';
 import useGetTiles from '../use-get-tiles';
 import useGetCreature from '../use-get-creature';
 import { tileSize } from '../../data/settings/general';

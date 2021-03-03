@@ -1,6 +1,7 @@
-import { Position, Creature } from '../../types';
+import { Position } from '../../types/general';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
+import { Creature } from '../../types/creature';
 
 export default function useGetCreature() {
     const creatures = useSelector((state: RootState) => state.zone.creatures);

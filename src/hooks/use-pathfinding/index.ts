@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Position, TileStatus } from '../../types';
 import PF, { Grid } from 'pathfinding';
 import useGetTiles from '../use-get-tiles';
 import { isInMeleeRange } from '../../utils/calculate-distance';
 import { diagonalMovement } from '../../data/settings/general';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
+import { Position } from "../../types/general";
+import { TileStatus } from "../../types/tile";
 
 export default function usePathfinding() {
     const [finder] = useState<PF.AStarFinder>(new PF.AStarFinder(

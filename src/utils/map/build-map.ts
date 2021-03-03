@@ -1,6 +1,6 @@
 import { tileSprites } from "../../data/tile/tileSprites";
-import { ZoneData } from "../../data/zones";
-import { TileType } from "../../types";
+import { TileType } from "../../types/tile";
+import { ZoneData } from "../../types/zone";
 import { createTile } from "./create-tile";
 
 // Build map from given tiledata

@@ -1,4 +1,4 @@
-import { Position } from '../types';
+import { Position } from '../types/general';
 import { diagonalMovement } from '../data/settings/general';
 
 export function calculateDistance(pos1: Position, pos2: Position) {

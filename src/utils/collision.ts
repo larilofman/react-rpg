@@ -1,4 +1,4 @@
-import { Rectangle } from '../types';
+import { Rectangle } from '../types/general';
 
 export function collision(rect1: Rectangle, rect2: Rectangle, gap = 0) {
 

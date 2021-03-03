@@ -1,6 +1,6 @@
 import React from 'react';
-import { ZoneRouteType } from '../../types';
 import StaticObject from '.';
+import { ZoneRouteType } from '../../types/tile';
 
 interface Props {
     zoneRoute: ZoneRouteType

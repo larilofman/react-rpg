@@ -1,4 +1,4 @@
-import { Faction } from '../../../../types';
+import { Faction } from '../../../../types/creature';
 export const SET_FACTION_TURN = 'SET_FACTION_TURN';
 export const SET_CREATURE_TURN = 'SET_CREATURE_TURN';
 export const INCREMENT_CREATURE_INDEX = 'INCREMENT_CREATURE_INDEX';

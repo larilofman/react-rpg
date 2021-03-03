@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.css';
 import HealthBar from '../health-bar';
-import { Faction } from '../../../types';
+import { Faction } from '../../../types/creature';
 import Container from '../container';
 import UIHeaderContainer from '../ui-header-container';
 import { useSelector } from 'react-redux';

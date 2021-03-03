@@ -1,4 +1,4 @@
-import { Faction } from '../../../../types';
+import { Faction } from '../../../../types/creature';
 import { INCREMENT_CREATURE_INDEX, RESET_CREATURE_INDEX, RESET_TURN, SET_CREATURE_TURN, SET_FACTION_TURN, TurnActions } from './types';
 
 export function SetFactionTurn(faction: Faction): TurnActions {

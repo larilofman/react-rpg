@@ -1,6 +1,6 @@
-import { TileType } from '../../types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/redux-state/store';
+import { TileType } from '../../types/tile';
 
 export default function useFindRandomFloorTile() {
     const zoneTiles = useSelector((state: RootState) => state.zone.tiles);

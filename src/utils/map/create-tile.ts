@@ -1,4 +1,5 @@
-import { Position, TileType } from "../../types";
+import { Position } from "../../types/general";
+import { TileType } from "../../types/tile";
 import weightedRandom from "../weighted-random";
 
 export const createTile = (pos: Position, passable: boolean, id: number, spriteURL: string, maxSpriteIndex: number) => {

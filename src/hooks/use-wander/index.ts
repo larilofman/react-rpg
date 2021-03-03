@@ -1,4 +1,4 @@
-import { Direction, Position } from '../../types';
+import { Direction, Position } from '../../types/general';
 import randomEnum from '../../utils/random-enum';
 
 export default function useWander() {

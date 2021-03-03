@@ -1,5 +1,6 @@
 import { tileSprites } from "../../data/tile/tileSprites";
-import { Dimensions, Rectangle, TileType, Position } from "../../types";
+import { Dimensions, Rectangle, Position } from "../../types/general";
+import { TileType } from "../../types/tile";
 import { collisionWithAny } from "../collision";
 import getRandomArbitrary from "../random-between-values";
 import { createTile } from "./create-tile";

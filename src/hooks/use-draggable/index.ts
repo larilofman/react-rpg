@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Position } from '../../types';
+import { Position } from '../../types/general';
 
 export default function useDraggable(id: string, startPos: Position = { x: 0, y: 0 }) {
     const [element, setElement] = useState(document.getElementById(id));

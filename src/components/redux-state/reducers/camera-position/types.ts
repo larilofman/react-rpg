@@ -1,4 +1,4 @@
-import { Position } from '../../../../types';
+import { Position } from '../../../../types/general';
 export const SET_CAMERA_POSITION = 'SET_CAMERA_POSITION';
 
 interface SetCameraPosition {

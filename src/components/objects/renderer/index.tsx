@@ -1,9 +1,10 @@
 import React from 'react';
-import { Position, ZoneRouteType } from '../../../types';
+import { Position } from '../../../types/general';
 import ZoneRoute from '../../static-object/zoneRoute';
 import { useStore } from 'react-redux';
 import { RootState } from '../../redux-state/store';
 import { displaySize } from '../../../data/settings/general';
+import { ZoneRouteType } from '../../../types/tile';
 
 interface Props {
     cameraPosition: Position

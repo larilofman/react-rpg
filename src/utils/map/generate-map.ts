@@ -1,8 +1,9 @@
-import { Dimensions, TileType } from '../../types';
 import { tileSprites } from '../../data/tile/tileSprites';
+import { Dimensions } from '../../types/general';
+import { TileType } from '../../types/tile';
+import { ZoneType } from '../../types/zone';
 import { createTile } from './create-tile';
 import { generateHouses } from './generate-houses';
-import { ZoneType } from './types';
 
 // Generate random map of given dimensions
 export const generateMap = (size: Dimensions, zoneType: ZoneType): TileType[][] => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Sprite from '../sprite';
-import { Position } from '../../types';
+import { Position } from '../../types/general';
 
 interface Props {
     position: Position,

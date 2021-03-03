@@ -1,4 +1,4 @@
-import { Creature } from '../../types';
+import { Creature } from '../../types/creature';
 import useGetCreature from '../use-get-creature';
 import UseCombatLog, { CombatLogEntryType, CombatLogEntry } from '../use-combat-log';
 import { useDispatch } from 'react-redux';

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { ZoneData } from '../../../data/zones/types';
 import { useDispatch, useStore } from 'react-redux';
 import { SetTiles } from '../../redux-state/reducers/zone/actions';
 import { loadZoneData } from '../../../utils/load-data';
-import { ZoneName } from '../../../data/zones';
 import { RootState } from '../../redux-state/store';
 import { buildMap } from '../../../utils/map/build-map';
 import { generateMap } from '../../../utils/map/generate-map';
+import { ZoneData } from '../../../types/zone';
+import { ZoneName } from '../../../data/zones';
 
 interface Props {
     tilesLoaded: boolean

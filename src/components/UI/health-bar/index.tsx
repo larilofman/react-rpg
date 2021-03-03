@@ -1,5 +1,5 @@
 import React from 'react';
-import { Faction } from '../../../types';
+import { Faction } from '../../../types/creature';
 import FilledBar from '../filled-bar';
 import { LerpColor } from '../../../utils/lerp-color';
 import { useSelector } from 'react-redux';

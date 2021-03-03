@@ -3,16 +3,17 @@ import Sprite from '../sprite';
 import useWalk from '../../hooks/use-walk';
 import useAnimation from '../../hooks/use-animation';
 import useWander from '../../hooks/use-wander';
-import { Position, BaseCreature, TileStatus, Faction } from '../../types';
 import useGetTiles from '../../hooks/use-get-tiles';
 import useContact from '../../hooks/use-contact';
 import { isInMeleeRange, isInRange } from '../../utils/calculate-distance';
 import usePathFinding from '../../hooks/use-pathfinding';
-
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux-state/store/';
 import useUseTurn from '../../hooks/use-use-turn';
 import { Turn } from '../redux-state/reducers/turn/types';
+import { BaseCreature, Faction } from '../../types/creature';
+import { Position } from '../../types/general';
+import { TileStatus } from '../../types/tile';
 
 interface Props {
     skin: string,

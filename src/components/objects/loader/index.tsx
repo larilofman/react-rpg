@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { InteractableTileType } from '../../../types';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetObjects } from '../../redux-state/reducers/zone/actions';
 import { loadZoneData } from '../../../utils/load-data';
-import { linkedRoutesById, ZoneName } from '../../../data/zones';
 import { RootState } from '../../redux-state/store';
+import { linkedRoutesById, ZoneName } from '../../../data/zones';
+import { InteractableTileType } from '../../../types/tile';
 
 interface Props {
     objectsLoaded: boolean
